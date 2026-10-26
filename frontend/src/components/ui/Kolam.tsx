@@ -16,7 +16,7 @@ function roseLoopPath(radius: number, cx: number, cy: number) {
 
 const MARK_PATH = roseLoopPath(40, 50, 50);
 const MARK_DOTS = [45, 135, 225, 315].map((deg) => {
-  const a = ((deg + 45) * Math.PI) / 180;
+  const a = (deg * Math.PI) / 180;
   return { x: 50 + 24 * Math.cos(a), y: 50 + 24 * Math.sin(a) };
 });
 

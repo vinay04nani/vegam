@@ -22,7 +22,7 @@ export function Trust() {
             <span className="absolute -bottom-[90px] left-1/2 h-[260px] w-[260px] -translate-x-1/2 rounded-full bg-periwinkle/42" />
             <RipplePattern className="absolute inset-0 h-full w-full" opacity={0.26} />
             <div className="bg-grain absolute inset-0 opacity-70" />
-            <span className="frosted absolute top-[24%] left-1/2 -translate-x-1/2">
+            <span className="frosted absolute top-1/2 left-1/2 -translate-1/2">
               <VegamMark size={120} strokeWidth={5} />
             </span>
           </div>
