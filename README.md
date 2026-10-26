@@ -13,7 +13,7 @@ Vegam does not create customers. It stops a business from losing the customers w
 
 ## Status
 
-**Planning and early build.** The product vision and build specification are complete; the codebase scaffold is the next step. See [Roadmap](#roadmap).
+**Planning and early build.** The product vision and build specification are complete. The landing page is built in [`frontend/`](frontend/README.md); the product codebase scaffold is next. See [Roadmap](#roadmap).
 
 ---
 
@@ -157,6 +157,7 @@ Multi-tenant SaaS: every business is an **organization**, and all data is scoped
 
 ```
 vegam/
+├─ frontend/        # Next.js landing page (built), later the dashboard
 ├─ apps/
 │  ├─ web/          # Next.js: landing page, dashboard, API routes, webhooks
 │  ├─ worker/       # background jobs: follow-ups, reminders, reports, retries
@@ -214,7 +215,15 @@ vegam/
 
 ## Getting started
 
-The codebase has not been scaffolded yet. Once it is, setup will be:
+**Landing page** (Next.js, in `frontend/`):
+
+```bash
+cd frontend
+pnpm install
+pnpm dev               # http://localhost:3000
+```
+
+**Product** (not scaffolded yet). Setup will be:
 
 ```bash
 pnpm install
