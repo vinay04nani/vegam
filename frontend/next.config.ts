@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
   trailingSlash: true,
+  // Set when the site is served from a sub-path, e.g. /vegam on GitHub Pages.
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || undefined,
 };
 
 export default nextConfig;

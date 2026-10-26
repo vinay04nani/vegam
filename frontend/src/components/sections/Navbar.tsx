@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { links, navLinks } from "@/content/site";
+import { withBase } from "@/lib/paths";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 
@@ -37,7 +38,7 @@ export function Navbar() {
           solid ? "py-3" : "py-5"
         }`}
       >
-        <a href="/#top" aria-label="Vegam home" className="text-[34px] leading-none font-extrabold tracking-[-0.045em] text-ink">
+        <a href={withBase("/#top")} aria-label="Vegam home" className="text-[34px] leading-none font-extrabold tracking-[-0.045em] text-ink">
           vegam
         </a>
 

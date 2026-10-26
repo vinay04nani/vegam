@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Figtree, JetBrains_Mono, Newsreader } from "next/font/google";
+import { withBase } from "@/lib/paths";
 import "./globals.css";
 
 const figtree = Figtree({
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
   title: "Vegam · Every customer, answered in seconds",
   description:
     "Vegam is the AI front desk for every business. It replies on WhatsApp, Instagram and your website, answers calls and books appointments, day and night.",
-  icons: { icon: "/icon.svg" },
+  icons: { icon: withBase("/icon.svg") },
 };
 
 export const viewport: Viewport = {

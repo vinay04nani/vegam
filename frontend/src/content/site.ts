@@ -1,12 +1,14 @@
 // All landing page copy and demo data lives here so it can be edited without
 // touching layout code. Values in [brackets] are placeholders to fill in.
 
+import { withBase } from "@/lib/paths";
+
 export const links = {
-  home: "/",
-  login: "/login/",
-  signup: "/signup/",
-  contact: "/contact/",
-  demo: "/contact/?topic=demo",
+  home: withBase("/"),
+  login: withBase("/login/"),
+  signup: withBase("/signup/"),
+  contact: withBase("/contact/"),
+  demo: withBase("/contact/?topic=demo"),
   sampleCall: "#call",
   sampleReport: "#report",
   privacy: "#privacy",
@@ -16,10 +18,10 @@ export const links = {
 export const companyLegalName = "[Company legal name]";
 
 export const navLinks = [
-  { label: "Product", href: "/#product" },
-  { label: "Features", href: "/#features" },
-  { label: "Pricing", href: "/#plans" },
-  { label: "Company", href: "/#company" },
+  { label: "Product", href: withBase("/#product") },
+  { label: "Features", href: withBase("/#features") },
+  { label: "Pricing", href: withBase("/#plans") },
+  { label: "Company", href: withBase("/#company") },
 ];
 
 export type Channel = { name: string; color: string };

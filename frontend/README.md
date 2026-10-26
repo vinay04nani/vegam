@@ -36,6 +36,8 @@ The image (about 76 MB) includes:
 - the real 404 page, `/login` → `/login/` redirects
 - a `/healthz` endpoint used by the container health check
 
+**GitHub Pages (live site):** `.github/workflows/pages.yml` publishes the site to https://vinay04nani.github.io/vegam/ on every push to `main`, so merging `dev` into `main` releases the UI. The build sets `NEXT_PUBLIC_BASE_PATH=/vegam` because Pages serves the site from that sub-path. Use `withBase()` from `src/lib/paths.ts` for any new link that starts with `/`. If a custom domain is added later, the base path becomes empty automatically.
+
 **Static host:** run `pnpm build` and publish the `out/` folder. Use Node 22 (`.nvmrc`) and pnpm 10.28 (`packageManager` in `package.json`).
 
 **CI:** `.github/workflows/frontend.yml` runs on every push and pull request that touches `frontend/`. It installs with the lockfile, type-checks, builds, then builds the Docker image and smoke-tests every page.
