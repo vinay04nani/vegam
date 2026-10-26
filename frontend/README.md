@@ -28,7 +28,9 @@ src/
 ├─ content/
 │  └─ site.ts             # ALL copy, links, demo data and placeholders
 └─ components/
-   ├─ ui/                 # Button, Heading, Icon, Ornament (the pulse), Reveal (scroll fade-in)
+   ├─ ui/                 # Button, Heading, Icon, Reveal (scroll fade-in),
+   │                      # Kolam (ornament, Vegam mark, ripple + lattice patterns),
+   │                      # ArtTile (grain gradient tiles, frosted icons)
    └─ sections/           # Navbar, Hero, ProductShowcase, Features, ChatDemo,
                           # Languages, Trust, Plans, SeeItInAction, FinalCta, Footer
 ```
@@ -50,3 +52,5 @@ Change text, links and demo conversations in `src/content/site.ts`; layout code 
 - Never name an industry in the copy; Vegam is for any business.
 - Never invent testimonials or numbers. The figures in the demo panels are illustrative sample data.
 - All motion respects `prefers-reduced-motion`.
+- Visual motifs come from kolam (muggu): dots joined by one looping line. Dots are customers; the loop is Vegam. Use the `Kolam` components rather than borrowing other brands' ornaments.
+- Premium surfaces stack three layers: a soft gradient, faint line art, and film grain (`bg-grain`), with frosted white glyphs on top.

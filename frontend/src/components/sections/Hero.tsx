@@ -1,7 +1,7 @@
 import { channels, links } from "@/content/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { DisplayHeading } from "@/components/ui/Heading";
-import { PulseOrnament } from "@/components/ui/Ornament";
+import { KolamOrnament } from "@/components/ui/Kolam";
 
 function Rule() {
   return (
@@ -25,7 +25,7 @@ export function Hero() {
         className="mx-auto flex max-w-[1000px] flex-col items-center gap-7 px-4 pt-[clamp(140px,16vw,220px)] pb-[clamp(64px,8vw,110px)] text-center sm:px-10"
       >
         <div className="reveal is-visible">
-          <PulseOrnament />
+          <KolamOrnament />
         </div>
         <div className="flex flex-col items-center">
           <Rule />

@@ -1,13 +1,13 @@
 import { links, plans, type Plan } from "@/content/site";
 import { DisplayHeading } from "@/components/ui/Heading";
+import { ArtTile, type Palette } from "@/components/ui/ArtTile";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 
-const coverStyle: Record<Plan["style"], string> = {
-  orange:
-    "text-white bg-[radial-gradient(70%_80%_at_50%_40%,rgb(255_255_255/0)_30%,rgb(255_255_255/0.35)_100%),linear-gradient(170deg,#F2A65A_0%,#EE7A2E_55%,#F6C79A_100%)]",
-  indigo: "text-white bg-[linear-gradient(180deg,#3B35D0_0%,#6E77E6_55%,#E9B49A_100%)]",
-  light: "text-brand bg-[linear-gradient(180deg,#F7F8FE_0%,#DCE0FB_60%,#B9C2F7_100%)]",
+const cover: Record<Plan["style"], { palette: Palette; text: string }> = {
+  orange: { palette: "saffron", text: "text-white" },
+  indigo: { palette: "indigo", text: "text-white" },
+  light: { palette: "mist", text: "text-brand" },
 };
 
 export function Plans() {
@@ -24,9 +24,11 @@ export function Plans() {
               href={links.demo}
               className="group flex h-full flex-col rounded-[20px] border border-line bg-white p-3 text-ink transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgb(21_16_173/0.12)]"
             >
-              <div className={`flex h-[220px] items-center justify-center overflow-hidden rounded-[14px] ${coverStyle[p.style]}`}>
-                <span className="text-[44px] font-bold tracking-[-0.02em] transition duration-500 group-hover:scale-105">{p.name}</span>
-              </div>
+              <ArtTile palette={cover[p.style].palette} className="h-[220px] rounded-[14px]">
+                <span className={`text-[44px] font-bold tracking-[-0.02em] transition duration-500 group-hover:scale-105 ${cover[p.style].text}`}>
+                  {p.name}
+                </span>
+              </ArtTile>
               <div className="flex flex-col gap-1.5 px-3.5 pt-4.5 pb-2.5">
                 <div className="flex items-center justify-between text-[21px] font-medium">
                   <span>{p.price}</span>

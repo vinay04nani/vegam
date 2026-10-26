@@ -10,7 +10,6 @@ export type IconName =
   | "check"
   | "arrow"
   | "play"
-  | "sparkle"
   | "menu"
   | "close"
   | "linkedin"
@@ -50,14 +49,6 @@ const paths: Record<IconName, React.ReactNode> = {
   ),
   arrow: <path d="M7 17L17 7M9 7h8v8" />,
   play: <path d="M8 5v14l11-7z" fill="currentColor" stroke="none" />,
-  sparkle: (
-    <path
-      d="M12 1.5c.6 4.6 2.9 6.9 7.5 7.5v.1c-4.6.6-6.9 2.9-7.5 7.5h-.1c-.6-4.6-2.9-6.9-7.5-7.5V9c4.6-.6 6.9-2.9 7.5-7.5z"
-      fill="currentColor"
-      stroke="none"
-      transform="translate(0 3)"
-    />
-  ),
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   close: <path d="M6 6l12 12M18 6L6 18" />,
   linkedin: (

@@ -1,11 +1,12 @@
 import type { ComponentProps } from "react";
 
-type Variant = "dark" | "light";
+type Variant = "dark" | "light" | "glass";
 type Size = "md" | "lg" | "xl";
 
 const variants: Record<Variant, string> = {
-  dark: "bg-button text-white hover:bg-ink hover:shadow-[0_10px_30px_rgb(30_31_43/0.25)]",
-  light: "bg-white text-ink shadow-[0_1px_2px_rgb(30_31_43/0.08)] hover:shadow-[0_10px_30px_rgb(30_31_43/0.12)]",
+  dark: "border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16),0_1px_2px_rgb(15_16_30/0.3)] hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_12px_30px_rgb(30_31_43/0.28)]",
+  light: "border border-line-strong bg-white text-ink shadow-[inset_0_-1px_0_rgb(30_31_43/0.04),0_1px_2px_rgb(30_31_43/0.06)] hover:shadow-[0_12px_30px_rgb(30_31_43/0.12)]",
+  glass: "border border-white/30 bg-white/12 text-white backdrop-blur-md shadow-[inset_0_1px_0_rgb(255_255_255/0.25)] hover:bg-white/20",
 };
 
 const sizes: Record<Size, string> = {

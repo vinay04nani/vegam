@@ -1,5 +1,6 @@
 import { links } from "@/content/site";
 import { DisplayHeading } from "@/components/ui/Heading";
+import { ArtTile } from "@/components/ui/ArtTile";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -40,7 +41,8 @@ export function SeeItInAction() {
       </Reveal>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-9">
         <Card href={links.sampleCall} meta="2 min · Audio and transcript" title="Hear Vegam take a real booking call" delay={0}>
-          <div className="absolute inset-0 bg-white">
+          <div className="absolute inset-0 isolate bg-white">
+            <div className="bg-grain absolute inset-0 z-10 opacity-50" />
             <span className="absolute top-7.5 left-8 text-[34px] font-semibold tracking-[-0.02em]">Sample call</span>
             <span className="absolute bottom-12.5 left-5.5 h-[90px] w-[90px] rounded-full bg-[#2B27C4] transition duration-500 group-hover:-translate-y-2" />
             <span className="absolute bottom-6.5 left-[120px] h-[58px] w-[58px] rounded-full bg-[#FF5C8A] transition duration-500 group-hover:translate-x-2" />
@@ -53,18 +55,18 @@ export function SeeItInAction() {
           </div>
         </Card>
         <Card href={links.demo} meta="15 minutes · Video call" title="Book a demo and see Vegam set up for your business" delay={90}>
-          <div className="absolute inset-0 flex items-center justify-center bg-[linear-gradient(180deg,#2B27C4_0%,#6A6FE0_55%,#F1C3A6_100%)]">
+          <ArtTile palette="indigo" className="h-full">
             <span className="font-serif text-[52px] tracking-[-0.03em] text-white transition duration-500 group-hover:scale-105">Live demo</span>
-          </div>
+          </ArtTile>
         </Card>
         <Card href={links.sampleReport} meta="Sample · Sent daily at 8 AM" title="See what lands on your phone each morning" delay={180}>
-          <div className="absolute inset-0 flex items-center justify-center bg-[radial-gradient(40%_50%_at_50%_50%,#F4A25A_0%,rgb(244_162_90/0)_100%),linear-gradient(160deg,#E98A4A_0%,#D9672C_50%,#F0A35E_100%)] text-center">
+          <ArtTile palette="saffron" className="h-full text-center">
             <span className="text-[46px] leading-[1.08] font-bold tracking-[-0.02em] text-white transition duration-500 group-hover:scale-105">
               Morning
               <br />
               report
             </span>
-          </div>
+          </ArtTile>
         </Card>
       </div>
     </section>

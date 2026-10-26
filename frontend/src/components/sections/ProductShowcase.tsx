@@ -5,7 +5,7 @@ import { links, showcaseViews, type ViewRow } from "@/content/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { DisplayHeading, Eyebrow } from "@/components/ui/Heading";
 import { Icon } from "@/components/ui/Icon";
-import { SmallOrnament } from "@/components/ui/Ornament";
+import { KolamOrnament } from "@/components/ui/Kolam";
 import { Reveal } from "@/components/ui/Reveal";
 
 const toneClass: Record<ViewRow["tone"], string> = {
@@ -22,7 +22,7 @@ export function ProductShowcase() {
   return (
     <section id="product" className="bg-peri scroll-mt-20 px-4 py-[clamp(72px,9vw,120px)] sm:px-10">
       <Reveal className="mx-auto flex max-w-[1100px] flex-col items-center gap-6 text-center">
-        <SmallOrnament />
+        <KolamOrnament color="#B9BED6" width={190} animated={false} />
         <Eyebrow>Vegam front desk</Eyebrow>
         <DisplayHeading className="max-w-[980px] text-[clamp(40px,5.2vw,76px)]">
           An AI front desk that catches every customer

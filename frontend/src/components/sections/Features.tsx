@@ -1,15 +1,15 @@
 import { links, primaryFeatures, secondaryFeatures, type Feature } from "@/content/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { DisplayHeading } from "@/components/ui/Heading";
-import { Icon } from "@/components/ui/Icon";
+import { ArtTile, FrostedIcon, type Palette } from "@/components/ui/ArtTile";
 import { Reveal } from "@/components/ui/Reveal";
 import { ChatDemo } from "./ChatDemo";
 
-const iconStyle: Record<Feature["icon"], string> = {
-  message: "bg-periwinkle text-white",
-  phone: "bg-[#FFF2DC] text-[#C26A00]",
-  missed: "bg-[#FDECEC] text-danger",
-  calendar: "bg-[#E8F3EA] text-success",
+const tilePalette: Record<Feature["icon"], Palette> = {
+  message: "periwinkle",
+  phone: "saffron",
+  missed: "rose",
+  calendar: "leaf",
 };
 
 const card = "rounded-[22px] border border-line bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgb(21_16_173/0.08)]";
@@ -42,22 +42,12 @@ export function Features() {
 
         <div className="grid min-w-0 flex-[1_1_560px] grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-4">
           {primaryFeatures.map((f, i) => (
-            <Reveal
-              key={f.title}
-              delay={i * 80}
-              className={`${card} relative flex min-h-[260px] flex-col gap-3 overflow-hidden px-9 py-10 ${i === 0 ? "border-periwinkle-line" : ""}`}
-            >
-              {i === 0 && (
-                <span
-                  aria-hidden="true"
-                  className="absolute -top-10 -right-10 h-[150px] w-[150px] animate-float rounded-full bg-[radial-gradient(circle_at_70%_30%,#9FAAF5_0%,#C9CFF8_35%,rgb(255_176_32/0.9)_62%,rgb(255_176_32/0)_72%)]"
-                />
-              )}
-              <span aria-hidden="true" className={`flex h-10 w-10 items-center justify-center rounded-[10px] ${iconStyle[f.icon]}`}>
-                <Icon name={f.icon} />
-              </span>
-              <h3 className="m-0 mt-auto text-2xl font-semibold tracking-[-0.01em]">{f.title}</h3>
-              <p className="m-0 text-[17px] text-subtle">{f.body}</p>
+            <Reveal key={f.title} delay={i * 80} className={`${card} group flex flex-col gap-1 p-3`}>
+              <ArtTile palette={tilePalette[f.icon]} className="h-[150px] rounded-[16px]">
+                <FrostedIcon name={f.icon} size={54} />
+              </ArtTile>
+              <h3 className="m-0 px-4 pt-4 text-2xl font-semibold tracking-[-0.01em]">{f.title}</h3>
+              <p className="m-0 px-4 pb-4 text-[17px] text-subtle">{f.body}</p>
             </Reveal>
           ))}
         </div>
