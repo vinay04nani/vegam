@@ -53,12 +53,19 @@ src/
 │  ├─ page.tsx            # landing page: sections in order
 │  ├─ login/, signup/     # auth pages (pixel scene + sign-in form)
 │  ├─ pricing/            # pricing page (picker, plans, comparison, FAQ)
+│  ├─ onboarding/         # sign-up wizard: business, plan, assistant, channels, test, go live
+│  ├─ app/                # dashboard after go-live: Home with pilot, setup checklist, today
 │  ├─ contact/            # contact page (glyph field + two-step form)
 │  ├─ careers/, support/, press/  # "coming soon" pages, each with its own pixel scene
 │  └─ globals.css         # design tokens, signature gradients, animations
 ├─ content/
 │  ├─ site.ts             # landing copy, links, demo data and placeholders
-│  └─ pricing.ts          # plans and prices, picker, feature table, FAQ
+│  ├─ pricing.ts          # plans and prices, picker, feature table, FAQ
+│  ├─ onboarding.ts       # wizard steps, channels, setup checklist, dashboard nav
+│  └─ dashboard.ts        # dashboard sample data
+├─ lib/
+│  ├─ onboarding.ts       # wizard state (saved in the browser for now), plan helpers
+│  └─ demoAssistant.ts    # rule-based stand-in for the AI in the test chat
 └─ components/
    ├─ ui/                 # Button, Heading, Icon, Reveal (scroll fade-in),
    │                      # Kolam (ornament, Vegam mark, ripple + lattice patterns),
@@ -68,6 +75,9 @@ src/
    ├─ auth/               # AuthShell, AuthForm, BrandIcons
    ├─ pricing/            # PricingPage, PlanPicker, PlanCards, ComparisonTable, Faq
    ├─ contact/            # ContactForm, GlyphField
+   ├─ phone/              # Phone, Bubble, Chip (chat-app phone mockup)
+   ├─ onboarding/         # OnboardingWizard, StepRail, LivePreview, one file per step
+   ├─ dashboard/          # Dashboard (sidebar, phone tabs, Home, section placeholders)
    └─ pixel/              # pixel scenes (coast, sunrise, lighthouse, kites), PixelBackdrop, ComingSoon
 ```
 
@@ -86,6 +96,7 @@ Change text, links and demo conversations in `src/content/site.ts`, and plans an
 ## Not wired yet
 
 - **Log in / sign up** validate input and show the "check your email / phone" screen, but no email or code is sent. Connect Supabase Auth in `src/components/auth/AuthForm.tsx` (marked `TODO(auth)`). Google, Microsoft and Apple buttons show a "coming soon" note.
+- **Onboarding and dashboard** are a clickable demo. Answers are kept in the browser (`localStorage`), channel buttons only change their status, "Read it" fills in sample services, the test chat uses `src/lib/demoAssistant.ts`, and the dashboard shows labelled sample data. Each spot is marked `TODO(backend)`. The flow is described in `docs/product/onboarding.md`.
 - **Contact form** shows the thank-you screen but sends nothing until `forms.contactEndpoint` is set (marked `TODO(contact)`).
 
 ## Design rules

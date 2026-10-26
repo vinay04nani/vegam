@@ -22,7 +22,8 @@ export type Plan = {
   /** Show the price as a starting point ("From ₹19,999"). */
   from?: boolean;
   priceNote: string;
-  cta: { label: string; topic: string };
+  /** Button on the plan card; it starts sign-up with this plan selected. */
+  cta: string;
   highlights: string[];
   limits: string[];
 };
@@ -36,7 +37,7 @@ export const plans: Plan[] = [
     bestFor: "A single location losing customers to slow replies and missed calls",
     price: { INR: { monthly: 2999, annual: 2499 }, USD: { monthly: 49, annual: 41 } },
     priceNote: "WhatsApp fees passed on at cost.",
-    cta: { label: "Start a pilot", topic: "pricing" },
+    cta: "Start free pilot",
     highlights: [
       "AI replies on WhatsApp, 24/7, in any language",
       "Missed call → WhatsApp in seconds",
@@ -55,7 +56,7 @@ export const plans: Plan[] = [
     popular: true,
     price: { INR: { monthly: 7999, annual: 6666 }, USD: { monthly: 149, annual: 124 } },
     priceNote: "WhatsApp fees passed on at cost.",
-    cta: { label: "Start a pilot", topic: "pricing" },
+    cta: "Start free pilot",
     highlights: [
       "Everything in Starter",
       "AI answers incoming calls, with summaries",
@@ -74,7 +75,7 @@ export const plans: Plan[] = [
     price: { INR: { monthly: 19999, annual: 16666 }, USD: { monthly: 399, annual: 333 } },
     from: true,
     priceNote: "Final price depends on locations and usage.",
-    cta: { label: "Talk to us", topic: "pricing" },
+    cta: "Start free pilot",
     highlights: [
       "Everything in Growth",
       "AI calls new leads who enquired",

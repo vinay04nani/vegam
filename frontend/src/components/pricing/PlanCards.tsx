@@ -110,13 +110,14 @@ export function PlanCards({ highlight }: { highlight: PlanId | null }) {
                 <div className={`my-7 h-px ${dark ? "bg-white/15" : "bg-line"}`} />
                 <Price plan={plan} billing={billing} currency={currency} dark={dark} />
                 <ButtonLink
-                  href={withBase(`/contact/?topic=${plan.cta.topic}`)}
+                  href={withBase(`/signup/?plan=${plan.id}`)}
                   variant={dark ? "light" : "dark"}
                   block
                   className="mt-5"
                 >
-                  {plan.cta.label}
+                  {plan.cta}
                 </ButtonLink>
+                <p className={`m-0 mt-2.5 text-center text-[13.5px] ${dark ? "text-white/70" : "text-subtle"}`}>30 days free · No card needed</p>
 
                 <ul className="m-0 mt-7 flex list-none flex-col gap-3.5 p-0">
                   {plan.highlights.map((h, j) => (

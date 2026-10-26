@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent, type ReactNode } from "react";
 import { countryCodes, links } from "@/content/site";
+import { withBase } from "@/lib/paths";
 import { Icon } from "@/components/ui/Icon";
 import { VegamMark } from "@/components/ui/Kolam";
 import { AppleLogo, GoogleLogo, MicrosoftLogo } from "./BrandIcons";
@@ -26,6 +27,12 @@ const copy = {
     switchHref: links.login,
   },
 } as const;
+
+/** Carries ?plan= from the pricing page through sign-up into the wizard. */
+function planQuery() {
+  const plan = new URLSearchParams(window.location.search).get("plan");
+  return plan && /^(starter|growth|pro)$/.test(plan) ? `?plan=${plan}` : "";
+}
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -65,6 +72,16 @@ export function AuthForm({ mode }: { mode: Mode }) {
           {method === "email" ? "We sent a sign-in link to" : "We sent a 6-digit code to"}{" "}
           <strong className="font-semibold text-ink">{sentTo}</strong>.
         </p>
+        <p className="m-0 rounded-[14px] bg-periwinkle-soft px-4 py-3 text-[14.5px] text-brand">
+          Demo: no {method === "email" ? "email" : "code"} is sent yet. Continue as if you’d opened the link.
+        </p>
+        <a
+          href={mode === "signup" ? withBase(`/onboarding/${planQuery()}`) : withBase("/app/")}
+          className="inline-flex min-h-13 items-center gap-2 rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] px-7 text-[17px] font-semibold text-white"
+        >
+          {mode === "signup" ? "Set up your front desk" : "Open your dashboard"}
+          <Icon name="chevron-right" size={18} />
+        </a>
         <button
           type="button"
           onClick={() => setSentTo(null)}

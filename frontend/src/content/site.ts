@@ -197,6 +197,7 @@ export const countryCodes = [
 
 export const contactTopics = [
   { id: "demo", label: "Book a demo" },
+  { id: "setup", label: "Set it up for me" },
   { id: "pricing", label: "Pricing" },
   { id: "partnership", label: "Partnership" },
   { id: "support", label: "Support" },
