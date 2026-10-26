@@ -14,7 +14,12 @@ function Rule() {
 
 export function Hero() {
   return (
-    <div className="bg-hero relative">
+    <div className="relative isolate">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[clamp(820px,64vw,1040px)]">
+        <div className="bg-hero absolute inset-0" />
+        <div className="bg-grain absolute inset-0 opacity-70" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-page" />
+      </div>
       <section
         id="top"
         className="mx-auto flex max-w-[1000px] flex-col items-center gap-7 px-4 pt-[clamp(140px,16vw,220px)] pb-[clamp(64px,8vw,110px)] text-center sm:px-10"

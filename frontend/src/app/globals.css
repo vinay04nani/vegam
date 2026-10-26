@@ -81,21 +81,28 @@
 }
 
 /* Signature backgrounds */
+/* Hero glow: a wide saffron band over periwinkle sides, fading to the page. */
 @utility bg-hero {
   background:
-    linear-gradient(to bottom, #fbfbfd 0%, rgb(251 251 253 / 0) 9%),
-    radial-gradient(48% 40% at 50% 14%, #ee7a2e 0%, rgb(238 122 46 / 0.85) 30%, rgb(242 150 80 / 0.45) 58%, rgb(242 150 80 / 0) 80%),
-    radial-gradient(38% 62% at 0% 38%, #a9b4f6 0%, rgb(169 180 246 / 0.6) 40%, rgb(169 180 246 / 0) 78%),
-    radial-gradient(38% 62% at 100% 38%, #a9b4f6 0%, rgb(169 180 246 / 0.6) 40%, rgb(169 180 246 / 0) 78%),
-    radial-gradient(70% 50% at 50% 55%, #d5dbfa 0%, rgb(213 219 250 / 0) 75%),
-    linear-gradient(to bottom, rgb(251 251 253 / 0) 60%, #fbfbfd 100%),
-    #fbfbfd;
+    linear-gradient(to bottom, rgb(251 251 253 / 0.9) 0%, rgb(251 251 253 / 0) 9%),
+    linear-gradient(to bottom, rgb(251 251 253 / 0) 58%, #fbfbfd 94%),
+    radial-gradient(60% 34% at 50% 13%, #f7740f 0%, #f7740f 34%, rgb(247 116 15 / 0.8) 54%, rgb(249 146 72 / 0.36) 78%, rgb(249 146 72 / 0) 100%),
+    radial-gradient(30% 44% at 0% 52%, #a6b4f8 0%, rgb(166 180 248 / 0.7) 42%, rgb(166 180 248 / 0) 100%),
+    radial-gradient(30% 44% at 100% 52%, #a6b4f8 0%, rgb(166 180 248 / 0.7) 42%, rgb(166 180 248 / 0) 100%),
+    radial-gradient(62% 42% at 50% 56%, #c5cffa 0%, rgb(197 207 250 / 0.6) 45%, rgb(197 207 250 / 0) 100%),
+    #f3f4fc;
+}
+/* Fine film grain laid over the glow. */
+@utility bg-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
 }
 @utility bg-cta {
   background:
-    radial-gradient(45% 70% at 50% 0%, rgb(238 122 46 / 0.75) 0%, rgb(242 150 80 / 0.3) 45%, rgb(242 150 80 / 0) 75%),
-    radial-gradient(40% 80% at 0% 100%, rgb(169 180 246 / 0.8) 0%, rgb(169 180 246 / 0) 70%),
-    radial-gradient(40% 80% at 100% 100%, rgb(169 180 246 / 0.8) 0%, rgb(169 180 246 / 0) 70%),
+    linear-gradient(to bottom, #fbfbfd 0%, rgb(251 251 253 / 0) 22%),
+    radial-gradient(58% 62% at 50% 0%, rgb(247 116 15 / 0.85) 0%, rgb(247 116 15 / 0.55) 35%, rgb(249 146 72 / 0.2) 65%, rgb(249 146 72 / 0) 85%),
+    radial-gradient(38% 80% at 0% 100%, rgb(166 180 248 / 0.85) 0%, rgb(166 180 248 / 0) 72%),
+    radial-gradient(38% 80% at 100% 100%, rgb(166 180 248 / 0.85) 0%, rgb(166 180 248 / 0) 72%),
     #fbfbfd;
 }
 @utility bg-languages {
