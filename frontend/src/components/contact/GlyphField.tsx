@@ -2,13 +2,11 @@
 
 import { useEffect, useRef } from "react";
 import { seededRandom } from "@/lib/random";
-import { CarvedMark } from "./CarvedMark";
 
 // A dark field of letters from many of the world's scripts. Letters inside
 // the Vegam mark glow brighter, so the mark appears out of every language.
 // A few letters change at a time, like a quiet conversation. With a mouse,
-// a carved bronze mark follows the pointer: letters clear beneath it, glow
-// around it and ripple outward, and the mark tilts with the movement.
+// letters near the pointer glow and ripple gently outward.
 
 const GLYPHS = [
   ..."అఆఇఈఉకగచజటడతదనపబమయరలవసహ", // Telugu
@@ -24,25 +22,20 @@ const GLYPHS = [
 ];
 
 const CELL = 22;
-const MARK_SIZE = 220;
-const HOLE = 78; // letters clear inside this radius
 const HALO = 200; // letters glow and ripple inside this radius
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
 export function GlyphField({ className = "" }: { className?: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const markRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const wrap = wrapRef.current;
     const canvas = canvasRef.current;
-    const mark = markRef.current;
     const ctx = canvas?.getContext("2d");
     const host = wrap?.parentElement;
-    if (!wrap || !canvas || !mark || !ctx || !host) return;
+    if (!wrap || !canvas || !ctx || !host) return;
 
     const rand = seededRandom(7);
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -54,7 +47,6 @@ export function GlyphField({ className = "" }: { className?: string }) {
 
     const pointer = { x: 0, y: 0, inside: false };
     const pos = { x: 0, y: 0 };
-    const tilt = { x: 0, y: 0, spin: 0 };
     let intensity = 0;
     let frame = 0;
 
@@ -114,7 +106,6 @@ export function GlyphField({ className = "" }: { className?: string }) {
           ox = (dx / d) * push;
           oy = (dy / d) * push;
         }
-        if (d < HOLE) a *= 1 - intensity * (1 - (d / HOLE) ** 2);
         glyph(i, a, ox, oy);
       }
     };
@@ -148,26 +139,15 @@ export function GlyphField({ className = "" }: { className?: string }) {
 
     const tick = () => {
       intensity = lerp(intensity, pointer.inside ? 1 : 0, 0.09);
-      const prevX = pos.x;
-      const prevY = pos.y;
       pos.x = lerp(pos.x, pointer.x, 0.16);
       pos.y = lerp(pos.y, pointer.y, 0.16);
-      // Tilt follows velocity, like an object swinging as it is dragged.
-      tilt.y = lerp(tilt.y, clamp((pos.x - prevX) * 2.2, -40, 40), 0.12);
-      tilt.x = lerp(tilt.x, clamp(-(pos.y - prevY) * 2.2, -40, 40), 0.12);
-      tilt.spin += 0.25 * intensity;
-
       drawAll();
-      const scale = 0.55 + 0.45 * intensity;
-      mark.style.opacity = String(intensity);
-      mark.style.transform = `translate3d(${pos.x - MARK_SIZE / 2}px, ${pos.y - MARK_SIZE / 2}px, 0) perspective(700px) rotateX(${tilt.x + 14}deg) rotateY(${tilt.y}deg) rotateZ(${tilt.spin}deg) scale(${scale})`;
 
       if (pointer.inside || intensity > 0.01) {
         frame = requestAnimationFrame(tick);
       } else {
         intensity = 0;
         frame = 0;
-        mark.style.opacity = "0";
         drawAll();
       }
     };
@@ -224,17 +204,6 @@ export function GlyphField({ className = "" }: { className?: string }) {
   return (
     <div ref={wrapRef} aria-hidden="true" className={`pointer-events-none overflow-hidden ${className}`}>
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
-      <div
-        ref={markRef}
-        className="absolute top-0 left-0 opacity-0 will-change-transform"
-        style={{
-          width: MARK_SIZE,
-          height: MARK_SIZE,
-          filter: "drop-shadow(0 0 34px rgb(238 122 46 / 0.45)) drop-shadow(0 24px 30px rgb(0 0 0 / 0.65))",
-        }}
-      >
-        <CarvedMark size={MARK_SIZE} />
-      </div>
     </div>
   );
 }
