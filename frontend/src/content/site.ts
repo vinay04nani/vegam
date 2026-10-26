@@ -4,14 +4,12 @@
 export const links = {
   login: "#login",
   demo: "#demo",
-  whatsappDemo: "#demo", // e.g. https://wa.me/<demo number>
   sampleCall: "#call",
   sampleReport: "#report",
   privacy: "#privacy",
   terms: "#terms",
 };
 
-export const demoNumber = "[DEMO NUMBER]";
 export const companyLegalName = "[Company legal name]";
 
 export const navLinks = [
@@ -249,7 +247,6 @@ export const footerColumns = [
   {
     title: "Try it",
     links: [
-      { label: "WhatsApp demo", href: links.whatsappDemo },
       { label: "Sample call", href: links.sampleCall },
       { label: "Pricing", href: "#plans" },
       { label: "Book a demo", href: links.demo },

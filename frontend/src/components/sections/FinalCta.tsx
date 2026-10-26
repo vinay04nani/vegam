@@ -1,4 +1,4 @@
-import { demoNumber, links } from "@/content/site";
+import { links } from "@/content/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { DisplayHeading } from "@/components/ui/Heading";
 import { Reveal } from "@/components/ui/Reveal";
@@ -11,15 +11,14 @@ export function FinalCta() {
           Your next customer is messaging you right now
         </DisplayHeading>
         <p className="m-0 text-xl text-ink-soft">
-          Message our demo on WhatsApp at <strong className="font-semibold text-ink">{demoNumber}</strong>, or book a
-          15-minute call.
+          Book a 15-minute demo and see how Vegam would answer your customers.
         </p>
         <div className="flex flex-wrap justify-center gap-3.5">
-          <ButtonLink href={links.whatsappDemo} size="xl">
-            Try it on WhatsApp
-          </ButtonLink>
-          <ButtonLink href={links.demo} variant="light" size="xl">
+          <ButtonLink href={links.demo} size="xl">
             Book a demo
+          </ButtonLink>
+          <ButtonLink href="#plans" variant="light" size="xl">
+            See plans
           </ButtonLink>
         </div>
       </Reveal>

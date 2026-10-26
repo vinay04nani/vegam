@@ -35,11 +35,11 @@ export function Hero() {
           night, in your customers&apos; language.
         </p>
         <div className="mt-2 flex flex-wrap justify-center gap-3.5">
-          <ButtonLink href={links.whatsappDemo} size="xl">
-            Try it on WhatsApp
-          </ButtonLink>
-          <ButtonLink href={links.demo} variant="light" size="xl">
+          <ButtonLink href={links.demo} size="xl">
             Book a demo
+          </ButtonLink>
+          <ButtonLink href="#product" variant="light" size="xl">
+            See how it works
           </ButtonLink>
         </div>
         <p className="m-0 text-[15px] text-muted">No new app to learn · Your team can take over any chat, any time</p>

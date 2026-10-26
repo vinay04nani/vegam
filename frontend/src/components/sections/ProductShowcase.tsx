@@ -32,7 +32,7 @@ export function ProductShowcase() {
           what it did. You step in only when it matters.
         </p>
         <div className="mt-2 flex flex-wrap justify-center gap-3.5">
-          <ButtonLink href={links.whatsappDemo}>Try it on WhatsApp</ButtonLink>
+          <ButtonLink href={links.demo}>Book a demo</ButtonLink>
           <ButtonLink href="#features" variant="light">
             See how it works
           </ButtonLink>

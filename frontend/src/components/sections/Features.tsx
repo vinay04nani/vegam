@@ -35,8 +35,8 @@ export function Features() {
             from one place
           </h3>
           <ChatDemo />
-          <ButtonLink href={links.whatsappDemo} size="xl" block className="mt-auto">
-            Try the live demo on WhatsApp
+          <ButtonLink href={links.demo} size="xl" block className="mt-auto">
+            Book a demo
           </ButtonLink>
         </Reveal>
 

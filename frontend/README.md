@@ -39,7 +39,7 @@ Change text, links and demo conversations in `src/content/site.ts`; layout code 
 
 | Placeholder | Where |
 |---|---|
-| `[DEMO NUMBER]` and the WhatsApp link | `demoNumber`, `links.whatsappDemo` |
+| Demo booking link (e.g. Calendly or Cal.com) | `links.demo` |
 | `$[XX]`, `$[XXX]` plan prices | `plans` |
 | `[Company legal name]` | `companyLegalName` |
 | `[Your business]` in sample chats | `chatTabs` |

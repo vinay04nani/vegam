@@ -52,7 +52,7 @@ export function SeeItInAction() {
             </span>
           </div>
         </Card>
-        <Card href={links.whatsappDemo} meta="WhatsApp · Takes 1 minute" title="Message Vegam's own AI and ask it anything" delay={90}>
+        <Card href={links.demo} meta="15 minutes · Video call" title="Book a demo and see Vegam set up for your business" delay={90}>
           <div className="absolute inset-0 flex items-center justify-center bg-[linear-gradient(180deg,#2B27C4_0%,#6A6FE0_55%,#F1C3A6_100%)]">
             <span className="font-serif text-[52px] tracking-[-0.03em] text-white transition duration-500 group-hover:scale-105">Live demo</span>
           </div>
