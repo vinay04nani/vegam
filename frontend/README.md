@@ -24,6 +24,8 @@ src/
 ├─ app/
 │  ├─ layout.tsx          # fonts, metadata
 │  ├─ page.tsx            # landing page: sections in order
+│  ├─ login/, signup/     # auth pages (pixel coast + sign-in form)
+│  ├─ contact/            # contact page (glyph field + two-step form)
 │  └─ globals.css         # design tokens, signature gradients, animations
 ├─ content/
 │  └─ site.ts             # ALL copy, links, demo data and placeholders
@@ -31,8 +33,10 @@ src/
    ├─ ui/                 # Button, Heading, Icon, Reveal (scroll fade-in),
    │                      # Kolam (ornament, Vegam mark, ripple + lattice patterns),
    │                      # ArtTile (grain gradient tiles, frosted icons)
-   └─ sections/           # Navbar, Hero, ProductShowcase, Features, ChatDemo,
-                          # Languages, Trust, Plans, SeeItInAction, FinalCta, Footer
+   ├─ sections/           # Navbar, Hero, ProductShowcase, Features, ChatDemo,
+   │                      # Languages, Trust, Plans, SeeItInAction, FinalCta, Footer
+   ├─ auth/               # AuthShell, AuthForm, PixelScene, PixelIcon, BrandIcons
+   └─ contact/            # ContactForm, GlyphField
 ```
 
 ## Editing content
@@ -46,6 +50,13 @@ Change text, links and demo conversations in `src/content/site.ts`; layout code 
 | `[Company legal name]` | `companyLegalName` |
 | `[Your business]` in sample chats | `chatTabs` |
 | Login, privacy, terms, social links | `links`, `socials`, `footerColumns` |
+| Contact form endpoint (nothing is sent until set) | `forms.contactEndpoint` |
+| Careers, support, press links | `contactCards` |
+
+## Not wired yet
+
+- **Log in / sign up** validate input and show the "check your email / phone" screen, but no email or code is sent. Connect Supabase Auth in `src/components/auth/AuthForm.tsx` (marked `TODO(auth)`). Google, Microsoft and Apple buttons show a "coming soon" note.
+- **Contact form** shows the thank-you screen but sends nothing until `forms.contactEndpoint` is set (marked `TODO(contact)`).
 
 ## Design rules
 

@@ -15,7 +15,15 @@ export type IconName =
   | "linkedin"
   | "x"
   | "instagram"
-  | "youtube";
+  | "youtube"
+  | "briefcase"
+  | "headset"
+  | "news"
+  | "external"
+  | "chevron-down"
+  | "chevron-right"
+  | "chevron-left"
+  | "mail";
 
 const paths: Record<IconName, React.ReactNode> = {
   message: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
@@ -69,6 +77,36 @@ const paths: Record<IconName, React.ReactNode> = {
     <>
       <rect x="2" y="5" width="20" height="14" rx="4" />
       <path d="M10 9l5 3-5 3z" />
+    </>
+  ),
+  briefcase: (
+    <>
+      <rect x="3" y="7" width="18" height="13" rx="2.5" />
+      <path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 12.5h18M10.5 12.5v1.5h3v-1.5" />
+    </>
+  ),
+  headset: (
+    <>
+      <path d="M4 14v-2a8 8 0 0 1 16 0v2" />
+      <rect x="3" y="13.5" width="4" height="6" rx="1.8" />
+      <rect x="17" y="13.5" width="4" height="6" rx="1.8" />
+      <path d="M19 19.5c0 1.4-1.6 2-4 2h-2" />
+    </>
+  ),
+  news: (
+    <>
+      <rect x="4" y="3.5" width="16" height="17" rx="2.5" />
+      <path d="M8 8h8M8 12h8M8 16h5" />
+    </>
+  ),
+  external: <path d="M14 4h6v6M20 4l-8.5 8.5M18 13.5V18a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4.5" />,
+  "chevron-down": <path d="M6 9l6 6 6-6" />,
+  "chevron-right": <path d="M9 6l6 6-6 6" />,
+  "chevron-left": <path d="M15 6l-6 6 6 6" />,
+  mail: (
+    <>
+      <rect x="3" y="5" width="18" height="14" rx="2.5" />
+      <path d="M3.5 6.5l8.5 6.5 8.5-6.5" />
     </>
   ),
 };

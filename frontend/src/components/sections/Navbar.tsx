@@ -37,7 +37,7 @@ export function Navbar() {
           solid ? "py-3" : "py-5"
         }`}
       >
-        <a href="#top" aria-label="Vegam home" className="text-[34px] leading-none font-extrabold tracking-[-0.045em] text-ink">
+        <a href="/#top" aria-label="Vegam home" className="text-[34px] leading-none font-extrabold tracking-[-0.045em] text-ink">
           vegam
         </a>
 
@@ -51,10 +51,13 @@ export function Navbar() {
         </div>
 
         <div className="hidden items-center gap-2.5 md:flex">
-          <ButtonLink href={links.login} size="md">
+          <a href={links.login} className="px-3 text-[16px] font-semibold text-ink hover:underline hover:underline-offset-4">
             Log in
+          </a>
+          <ButtonLink href={links.contact} variant="light" size="md">
+            Contact us
           </ButtonLink>
-          <ButtonLink href={links.demo} variant="light" size="md">
+          <ButtonLink href={links.demo} size="md">
             Book a demo
           </ButtonLink>
         </div>
@@ -86,10 +89,13 @@ export function Navbar() {
             ))}
           </div>
           <div className="mt-5 flex flex-col gap-2.5">
-            <ButtonLink href={links.demo} variant="light" block onClick={() => setOpen(false)}>
+            <ButtonLink href={links.demo} block onClick={() => setOpen(false)}>
               Book a demo
             </ButtonLink>
-            <ButtonLink href={links.login} block onClick={() => setOpen(false)}>
+            <ButtonLink href={links.contact} variant="light" block onClick={() => setOpen(false)}>
+              Contact us
+            </ButtonLink>
+            <ButtonLink href={links.login} variant="light" block onClick={() => setOpen(false)}>
               Log in
             </ButtonLink>
           </div>

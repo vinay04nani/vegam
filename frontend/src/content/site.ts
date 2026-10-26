@@ -2,8 +2,11 @@
 // touching layout code. Values in [brackets] are placeholders to fill in.
 
 export const links = {
-  login: "#login",
-  demo: "#demo",
+  home: "/",
+  login: "/login/",
+  signup: "/signup/",
+  contact: "/contact/",
+  demo: "/contact/?topic=demo",
   sampleCall: "#call",
   sampleReport: "#report",
   privacy: "#privacy",
@@ -13,10 +16,10 @@ export const links = {
 export const companyLegalName = "[Company legal name]";
 
 export const navLinks = [
-  { label: "Product", href: "#product" },
-  { label: "Features", href: "#features" },
-  { label: "Pricing", href: "#plans" },
-  { label: "Company", href: "#company" },
+  { label: "Product", href: "/#product" },
+  { label: "Features", href: "/#features" },
+  { label: "Pricing", href: "/#plans" },
+  { label: "Company", href: "/#company" },
 ];
 
 export type Channel = { name: string; color: string };
@@ -257,7 +260,7 @@ export const footerColumns = [
     links: [
       { label: "About us", href: "#about" },
       { label: "Careers", href: "#careers" },
-      { label: "Contact us", href: "#contact" },
+      { label: "Contact us", href: links.contact },
     ],
   },
   {
@@ -275,3 +278,52 @@ export const socials = [
   { label: "Instagram", href: "#instagram", icon: "instagram" },
   { label: "YouTube", href: "#youtube", icon: "youtube" },
 ] as const;
+
+// Where form submissions go. Leave empty until a backend exists: forms then
+// show their success state without sending anything.
+export const forms = {
+  contactEndpoint: "",
+};
+
+// Log in / sign up page: the card over the pixel scene.
+export const authHighlights = [
+  { icon: "chat", title: "AI chat replies", body: "Answers every WhatsApp, Instagram and website message in seconds, in your customer’s language." },
+  { icon: "phone", title: "AI phone answering", body: "Picks up when you’re busy, books visits and writes a summary of every call." },
+  { icon: "missed", title: "Missed-call recovery", body: "Every missed caller gets a WhatsApp within seconds, with options to book." },
+  { icon: "sun", title: "Morning report", body: "Yesterday’s enquiries, bookings and calls on your phone at 8 AM." },
+] as const;
+
+export type ContactCard = { icon: "briefcase" | "headset" | "news"; label: string; href: string };
+
+export const contactCards: ContactCard[] = [
+  { icon: "briefcase", label: "Careers", href: "#careers" },
+  { icon: "headset", label: "Technical support", href: "#support" },
+  { icon: "news", label: "Press / Media", href: "#press" },
+];
+
+export const countryCodes = [
+  { code: "+91", label: "India (+91)" },
+  { code: "+1", label: "United States (+1)" },
+  { code: "+44", label: "United Kingdom (+44)" },
+  { code: "+971", label: "UAE (+971)" },
+  { code: "+65", label: "Singapore (+65)" },
+  { code: "+61", label: "Australia (+61)" },
+  { code: "+1", label: "Canada (+1)" },
+  { code: "+49", label: "Germany (+49)" },
+  { code: "+33", label: "France (+33)" },
+  { code: "+34", label: "Spain (+34)" },
+  { code: "+55", label: "Brazil (+55)" },
+  { code: "+966", label: "Saudi Arabia (+966)" },
+  { code: "+27", label: "South Africa (+27)" },
+  { code: "+81", label: "Japan (+81)" },
+];
+
+export const contactTopics = [
+  { id: "demo", label: "Book a demo" },
+  { id: "pricing", label: "Pricing" },
+  { id: "partnership", label: "Partnership" },
+  { id: "support", label: "Support" },
+  { id: "other", label: "Something else" },
+];
+
+export const teamSizes = ["Just me", "2–10", "11–50", "51–200", "200+"];
