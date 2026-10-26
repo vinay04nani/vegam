@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { authHighlights, channels, links } from "@/content/site";
 import { PixelIcon } from "./PixelIcon";
-import { PixelScene } from "./PixelScene";
+import { PixelBackdrop } from "@/components/pixel/PixelBackdrop";
 
 /** Split screen for log in and sign up: pixel coast and product card on the left, form on the right. */
 export function AuthShell({ children }: { children: ReactNode }) {
@@ -9,7 +9,7 @@ export function AuthShell({ children }: { children: ReactNode }) {
     <div className="min-h-svh bg-page p-0 lg:p-2.5">
       <div className="flex min-h-svh overflow-hidden bg-white lg:min-h-[calc(100svh-20px)] lg:rounded-[22px] lg:border lg:border-line">
         <aside className="relative hidden w-1/2 overflow-hidden lg:block">
-          <PixelScene className="absolute inset-0" />
+          <PixelBackdrop scene="coast" className="absolute inset-0" />
           <div className="bg-grain absolute inset-0 opacity-40" />
           <div className="relative flex h-full items-center justify-center p-[clamp(24px,4vw,64px)]">
             <div className="w-full max-w-[540px] rounded-[28px] bg-white/95 p-[clamp(28px,3vw,44px)] shadow-[0_30px_80px_rgb(14_11_61/0.25)] backdrop-blur">

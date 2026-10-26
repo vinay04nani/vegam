@@ -63,9 +63,9 @@ src/
    │                      # ArtTile (grain gradient tiles, frosted icons)
    ├─ sections/           # Navbar, Hero, ProductShowcase, Features, ChatDemo,
    │                      # Languages, Trust, Plans, SeeItInAction, FinalCta, Footer
-   ├─ auth/               # AuthShell, AuthForm, PixelScene, PixelIcon, BrandIcons
+   ├─ auth/               # AuthShell, AuthForm, PixelIcon, BrandIcons
    ├─ contact/            # ContactForm, GlyphField
-   └─ pixel/              # coming-soon scenes (sunrise, lighthouse, kites), PixelBackdrop, ComingSoon
+   └─ pixel/              # pixel scenes (coast, sunrise, lighthouse, kites), PixelBackdrop, ComingSoon
 ```
 
 ## Editing content
@@ -93,4 +93,5 @@ Change text, links and demo conversations in `src/content/site.ts`; layout code 
 - Never invent testimonials or numbers. The figures in the demo panels are illustrative sample data.
 - All motion respects `prefers-reduced-motion`.
 - Visual motifs come from kolam (muggu): dots joined by one looping line. Dots are customers; the loop is Vegam. Use the `Kolam` components rather than borrowing other brands' ornaments.
+- Pixel art (`src/lib/pixel.ts`) uses limited colour ramps, ordered (Bayer) dithering only at band edges, stepped glows and value noise for organic shapes. Never add random per-pixel noise; it reads as static.
 - Premium surfaces stack three layers: a soft gradient, faint line art, and film grain (`bg-grain`), with frosted white glyphs on top.
