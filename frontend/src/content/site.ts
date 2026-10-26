@@ -9,6 +9,7 @@ export const links = {
   signup: withBase("/signup/"),
   contact: withBase("/contact/"),
   demo: withBase("/contact/?topic=demo"),
+  pricing: withBase("/pricing/"),
   sampleCall: "#call",
   sampleReport: "#report",
   privacy: "#privacy",
@@ -20,7 +21,7 @@ export const companyLegalName = "[Company legal name]";
 export const navLinks = [
   { label: "Product", href: withBase("/#product") },
   { label: "Features", href: withBase("/#features") },
-  { label: "Pricing", href: withBase("/#plans") },
+  { label: "Pricing", href: withBase("/pricing/") },
   { label: "Company", href: withBase("/#company") },
 ];
 
@@ -219,20 +220,20 @@ export type Plan = { name: string; price: string; description: string; style: "o
 export const plans: Plan[] = [
   {
     name: "Starter",
-    price: "From $[XX] / month",
-    description: "Chat inbox, AI replies, missed-call recovery, morning report",
+    price: "Never miss a message",
+    description: "AI replies on WhatsApp, missed-call recovery, bookings and reminders, morning report",
     style: "orange",
   },
   {
     name: "Growth",
-    price: "From $[XXX] / month",
-    description: "Everything in Starter, plus AI calls, bookings, lead follow-up, 5 team seats",
+    price: "Every channel and every call",
+    description: "Everything in Starter, plus AI call answering, Instagram and website chat, lead scoring",
     style: "indigo",
   },
   {
-    name: "Scale",
-    price: "Talk to us",
-    description: "Several branches, outgoing AI calls, more call minutes, priority support",
+    name: "Pro",
+    price: "Grow and bring customers back",
+    description: "Everything in Growth, plus AI calls to new leads, payments, broadcasts, multi-branch",
     style: "light",
   },
 ];
@@ -253,7 +254,7 @@ export const footerColumns = [
     title: "Try it",
     links: [
       { label: "Sample call", href: links.sampleCall },
-      { label: "Pricing", href: "#plans" },
+      { label: "Pricing", href: links.pricing },
       { label: "Book a demo", href: links.demo },
     ],
   },

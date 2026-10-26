@@ -52,11 +52,13 @@ src/
 │  ├─ layout.tsx          # fonts, metadata
 │  ├─ page.tsx            # landing page: sections in order
 │  ├─ login/, signup/     # auth pages (pixel coast + sign-in form)
+│  ├─ pricing/            # pricing page (picker, plans, journeys, comparison, FAQ)
 │  ├─ contact/            # contact page (glyph field + two-step form)
 │  ├─ careers/, support/, press/  # "coming soon" pages, each with its own pixel scene
 │  └─ globals.css         # design tokens, signature gradients, animations
 ├─ content/
-│  └─ site.ts             # ALL copy, links, demo data and placeholders
+│  ├─ site.ts             # landing copy, links, demo data and placeholders
+│  └─ pricing.ts          # plans, picker, journeys, feature table, usage, FAQ
 └─ components/
    ├─ ui/                 # Button, Heading, Icon, Reveal (scroll fade-in),
    │                      # Kolam (ornament, Vegam mark, ripple + lattice patterns),
@@ -64,6 +66,7 @@ src/
    ├─ sections/           # Navbar, Hero, ProductShowcase, Features, ChatDemo,
    │                      # Languages, Trust, Plans, SeeItInAction, FinalCta, Footer
    ├─ auth/               # AuthShell, AuthForm, PixelIcon, BrandIcons
+   ├─ pricing/            # PricingPage, PlanPicker, PlanCards, HowItWorks, ComparisonTable, Faq
    ├─ contact/            # ContactForm, GlyphField
    └─ pixel/              # pixel scenes (coast, sunrise, lighthouse, kites), PixelBackdrop, ComingSoon
 ```
@@ -75,7 +78,7 @@ Change text, links and demo conversations in `src/content/site.ts`; layout code 
 | Placeholder | Where |
 |---|---|
 | Demo booking link (e.g. Calendly or Cal.com) | `links.demo` |
-| `$[XX]`, `$[XXX]` plan prices | `plans` |
+| Plan prices (the billing and currency switches appear once set) | `price` on each plan in `src/content/pricing.ts` |
 | `[Company legal name]` | `companyLegalName` |
 | `[Your business]` in sample chats | `chatTabs` |
 | Login, privacy, terms, social links | `links`, `socials`, `footerColumns` |

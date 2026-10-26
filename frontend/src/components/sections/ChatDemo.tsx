@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { chatTabs } from "@/content/site";
+import { chatTabs as defaultTabs, type ChatTab } from "@/content/site";
 
 const STEP_MS = 1100;
 
 /** Tabbed sample conversations that play out message by message. */
-export function ChatDemo() {
+export function ChatDemo({ tabs: chatTabs = defaultTabs, label = "Sample conversations" }: { tabs?: ChatTab[]; label?: string }) {
   const [tabId, setTabId] = useState(chatTabs[0].id);
   const [shown, setShown] = useState(1);
   const [started, setStarted] = useState(false);
@@ -48,7 +48,7 @@ export function ChatDemo() {
 
   return (
     <div ref={rootRef} className="overflow-hidden rounded-[14px] border border-line bg-white">
-      <div role="tablist" aria-label="Sample conversations" className="flex flex-wrap border-b border-line bg-[#F8F8FB]">
+      <div role="tablist" aria-label={label} className="flex flex-wrap border-b border-line bg-[#F8F8FB]">
         {chatTabs.map((t) => {
           const active = t.id === tab.id;
           return (
@@ -58,7 +58,7 @@ export function ChatDemo() {
               role="tab"
               id={`chat-tab-${t.id}`}
               aria-selected={active}
-              aria-controls="chat-panel"
+              aria-controls={`chat-panel-${chatTabs[0].id}`}
               onClick={() => selectTab(t.id)}
               className={`flex min-h-13 cursor-pointer items-center gap-2 border-t-2 border-r border-r-line px-5.5 text-base transition-colors ${
                 active ? "border-t-indigo bg-white font-semibold text-ink" : "border-t-transparent font-medium text-muted hover:text-ink"
@@ -71,7 +71,7 @@ export function ChatDemo() {
         })}
       </div>
       <div
-        id="chat-panel"
+        id={`chat-panel-${chatTabs[0].id}`}
         role="tabpanel"
         aria-labelledby={`chat-tab-${tab.id}`}
         aria-live="polite"

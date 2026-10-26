@@ -16,12 +16,16 @@ export function Plans() {
       <Reveal className="flex flex-col items-center gap-3.5 text-center">
         <DisplayHeading className="text-[clamp(38px,4.4vw,60px)]">Simple plans</DisplayHeading>
         <p className="m-0 text-[19px] text-subtle">Start small. Switch on more as you grow.</p>
+        <a href={links.pricing} className="inline-flex items-center gap-1.5 font-semibold text-indigo hover:underline hover:underline-offset-4">
+          Compare plans and features
+          <Icon name="chevron-right" size={18} />
+        </a>
       </Reveal>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-6">
         {plans.map((p, i) => (
           <Reveal key={p.name} delay={i * 90}>
             <a
-              href={links.demo}
+              href={`${links.pricing}#plan-${p.name.toLowerCase()}`}
               className="group flex h-full flex-col rounded-[20px] border border-line bg-white p-3 text-ink transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgb(21_16_173/0.12)]"
             >
               <ArtTile palette={cover[p.style].palette} className="h-[220px] rounded-[14px]">
