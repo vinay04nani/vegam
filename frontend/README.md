@@ -17,6 +17,31 @@ pnpm typecheck    # TypeScript check
 pnpm build        # static site in out/
 ```
 
+## Deploy
+
+The site builds to static files, so it runs anywhere: a static host (Vercel, Netlify, Cloudflare Pages, S3 + CloudFront) or the Docker image below.
+
+**Docker** (Node builds the site, nginx serves it on port 8080):
+
+```bash
+docker compose up --build        # from the repo root, then open http://localhost:8080
+# or
+docker build -t vegam-frontend ./frontend
+docker run -p 8080:8080 vegam-frontend
+```
+
+The image (about 76 MB) includes:
+- gzip, one-year caching for hashed assets, `no-cache` for pages
+- security headers (`nosniff`, `DENY` framing, referrer and permissions policies)
+- the real 404 page, `/login` → `/login/` redirects
+- a `/healthz` endpoint used by the container health check
+
+**Static host:** run `pnpm build` and publish the `out/` folder. Use Node 22 (`.nvmrc`) and pnpm 10.28 (`packageManager` in `package.json`).
+
+**CI:** `.github/workflows/frontend.yml` runs on every push and pull request that touches `frontend/`. It installs with the lockfile, type-checks, builds, then builds the Docker image and smoke-tests every page.
+
+The build downloads the Google fonts once (`next/font`) and serves them from the site itself, so the build machine needs internet access, but visitors never contact Google.
+
 ## Structure
 
 ```

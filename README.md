@@ -157,7 +157,7 @@ Multi-tenant SaaS: every business is an **organization**, and all data is scoped
 
 ```
 vegam/
-├─ frontend/        # Next.js landing page (built), later the dashboard
+├─ frontend/        # Next.js site: landing, log in, sign up, contact (Dockerfile + nginx)
 ├─ apps/
 │  ├─ web/          # Next.js: landing page, dashboard, API routes, webhooks
 │  ├─ worker/       # background jobs: follow-ups, reminders, reports, retries
@@ -221,6 +221,12 @@ vegam/
 cd frontend
 pnpm install
 pnpm dev               # http://localhost:3000
+```
+
+Or run it the way it is deployed (Docker + nginx):
+
+```bash
+docker compose up --build   # http://localhost:8080
 ```
 
 **Product** (not scaffolded yet). Setup will be:

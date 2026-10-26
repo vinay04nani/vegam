@@ -1,0 +1,9 @@
+# Run the Vegam website locally in the production setup:
+#   docker compose up --build
+# then open http://localhost:8080
+services:
+  web:
+    build: ./frontend
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
