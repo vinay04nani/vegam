@@ -2,10 +2,13 @@
 
 import { useEffect, useRef } from "react";
 import { seededRandom } from "@/lib/random";
+import { CarvedMark } from "./CarvedMark";
 
 // A dark field of letters from many of the world's scripts. Letters inside
 // the Vegam mark glow brighter, so the mark appears out of every language.
-// A few letters change at a time, like a quiet conversation.
+// A few letters change at a time, like a quiet conversation. With a mouse,
+// a carved bronze mark follows the pointer: letters clear beneath it, glow
+// around it and ripple outward, and the mark tilts with the movement.
 
 const GLYPHS = [
   ..."అఆఇఈఉకగచజటడతదనపబమయరలవసహ", // Telugu
@@ -21,27 +24,47 @@ const GLYPHS = [
 ];
 
 const CELL = 22;
+const MARK_SIZE = 220;
+const HOLE = 78; // letters clear inside this radius
+const HALO = 200; // letters glow and ripple inside this radius
+
+const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
 
 export function GlyphField({ className = "" }: { className?: string }) {
-  const ref = useRef<HTMLCanvasElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const markRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = ref.current;
+    const wrap = wrapRef.current;
+    const canvas = canvasRef.current;
+    const mark = markRef.current;
     const ctx = canvas?.getContext("2d");
-    if (!canvas || !ctx) return;
+    const host = wrap?.parentElement;
+    if (!wrap || !canvas || !mark || !ctx || !host) return;
+
     const rand = seededRandom(7);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let width = 0;
+    let height = 0;
     let cols = 0;
-    let rows = 0;
     let alpha: number[] = [];
     let chars: string[] = [];
 
-    const brightness = (cx: number, cy: number, w: number, h: number) => {
+    const pointer = { x: 0, y: 0, inside: false };
+    const pos = { x: 0, y: 0 };
+    const tilt = { x: 0, y: 0, spin: 0 };
+    let intensity = 0;
+    let frame = 0;
+
+    const brightness = (cx: number, cy: number) => {
       // On small screens the panel is a short header behind text: no mark.
-      if (w < 480) return 0;
+      if (width < 480) return 0;
       // Rose curve r = R|cos 2(θ - 45°)|: four petals on the diagonals, like the Vegam mark.
-      const ox = w * 0.5;
-      const oy = h * 0.47;
-      const R = Math.min(w, h) * 0.34;
+      const ox = width * 0.5;
+      const oy = height * 0.47;
+      const R = Math.min(width, height) * 0.34;
       const dx = cx - ox;
       const dy = cy - oy;
       const r = Math.hypot(dx, dy);
@@ -56,19 +79,51 @@ export function GlyphField({ className = "" }: { className?: string }) {
       return dots ? 1 : onLine;
     };
 
-    const drawCell = (i: number) => {
-      const x = (i % cols) * CELL;
-      const y = Math.floor(i / cols) * CELL;
-      ctx.clearRect(x, y, CELL, CELL);
-      const a = alpha[i];
-      if (a <= 0) return;
+    const glyph = (i: number, a: number, dx = 0, dy = 0) => {
+      if (a <= 0.004) return;
+      const x = (i % cols) * CELL + CELL / 2 + dx;
+      const y = Math.floor(i / cols) * CELL + CELL / 2 + 1 + dy;
       ctx.fillStyle = a > 0.5 ? `rgba(255, 186, 120, ${a})` : `rgba(238, 122, 46, ${a})`;
-      ctx.fillText(chars[i], x + CELL / 2, y + CELL / 2 + 1);
+      ctx.fillText(chars[i], x, y);
+    };
+
+    const drawCell = (i: number) => {
+      ctx.clearRect((i % cols) * CELL, Math.floor(i / cols) * CELL, CELL, CELL);
+      glyph(i, alpha[i]);
+    };
+
+    const drawAll = () => {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < alpha.length; i++) {
+        if (intensity < 0.01) {
+          glyph(i, alpha[i]);
+          continue;
+        }
+        const cx = (i % cols) * CELL + CELL / 2;
+        const cy = Math.floor(i / cols) * CELL + CELL / 2;
+        const dx = cx - pos.x;
+        const dy = cy - pos.y;
+        const d = Math.hypot(dx, dy) || 1;
+        let a = alpha[i];
+        let ox = 0;
+        let oy = 0;
+        if (d < HALO) {
+          const near = 1 - d / HALO;
+          a = Math.min(1, a + near * near * 0.85 * intensity + (a > 0 ? 0 : near * 0.25 * intensity));
+          const push = near * 16 * intensity;
+          ox = (dx / d) * push;
+          oy = (dy / d) * push;
+        }
+        if (d < HOLE) a *= 1 - intensity * (1 - (d / HOLE) ** 2);
+        glyph(i, a, ox, oy);
+      }
     };
 
     const layout = () => {
       const dpr = Math.min(2, window.devicePixelRatio || 1);
-      const { width, height } = canvas.getBoundingClientRect();
+      const rect = canvas.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -76,27 +131,76 @@ export function GlyphField({ className = "" }: { className?: string }) {
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
       cols = Math.ceil(width / CELL);
-      rows = Math.ceil(height / CELL);
+      const rows = Math.ceil(height / CELL);
       alpha = [];
       chars = [];
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < cols; c++) {
-          const glow = brightness(c * CELL + CELL / 2, r * CELL + CELL / 2, width, height);
+          const glow = brightness(c * CELL + CELL / 2, r * CELL + CELL / 2);
           const fadeY = Math.min(1, (r / rows) * 1.6 + 0.25);
           const empty = rand() < (glow ? 0.05 : 0.32);
           alpha.push(empty ? 0 : glow ? 0.6 + glow * 0.4 * rand() : (0.05 + rand() * 0.16) * fadeY);
           chars.push(GLYPHS[Math.floor(rand() * GLYPHS.length)]);
         }
       }
-      ctx.clearRect(0, 0, width, height);
-      for (let i = 0; i < alpha.length; i++) drawCell(i);
+      drawAll();
+    };
+
+    const tick = () => {
+      intensity = lerp(intensity, pointer.inside ? 1 : 0, 0.09);
+      const prevX = pos.x;
+      const prevY = pos.y;
+      pos.x = lerp(pos.x, pointer.x, 0.16);
+      pos.y = lerp(pos.y, pointer.y, 0.16);
+      // Tilt follows velocity, like an object swinging as it is dragged.
+      tilt.y = lerp(tilt.y, clamp((pos.x - prevX) * 2.2, -40, 40), 0.12);
+      tilt.x = lerp(tilt.x, clamp(-(pos.y - prevY) * 2.2, -40, 40), 0.12);
+      tilt.spin += 0.25 * intensity;
+
+      drawAll();
+      const scale = 0.55 + 0.45 * intensity;
+      mark.style.opacity = String(intensity);
+      mark.style.transform = `translate3d(${pos.x - MARK_SIZE / 2}px, ${pos.y - MARK_SIZE / 2}px, 0) perspective(700px) rotateX(${tilt.x + 14}deg) rotateY(${tilt.y}deg) rotateZ(${tilt.spin}deg) scale(${scale})`;
+
+      if (pointer.inside || intensity > 0.01) {
+        frame = requestAnimationFrame(tick);
+      } else {
+        intensity = 0;
+        frame = 0;
+        mark.style.opacity = "0";
+        drawAll();
+      }
+    };
+
+    const start = () => {
+      if (!frame) frame = requestAnimationFrame(tick);
+    };
+
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType !== "mouse" || reduce) return;
+      const rect = canvas.getBoundingClientRect();
+      pointer.x = e.clientX - rect.left;
+      pointer.y = e.clientY - rect.top;
+      if (!pointer.inside) {
+        pointer.inside = true;
+        if (intensity < 0.01) {
+          pos.x = pointer.x;
+          pos.y = pointer.y;
+        }
+      }
+      start();
+    };
+    const onLeave = () => {
+      pointer.inside = false;
+      start();
     };
 
     layout();
     const observer = new ResizeObserver(layout);
     observer.observe(canvas);
+    host.addEventListener("pointermove", onMove);
+    host.addEventListener("pointerleave", onLeave);
 
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const timer = reduce
       ? undefined
       : window.setInterval(() => {
@@ -104,15 +208,33 @@ export function GlyphField({ className = "" }: { className?: string }) {
           for (let k = 0; k < n; k++) {
             const i = Math.floor(Math.random() * alpha.length);
             chars[i] = GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
-            drawCell(i);
+            if (!frame) drawCell(i);
           }
         }, 140);
 
     return () => {
       observer.disconnect();
+      host.removeEventListener("pointermove", onMove);
+      host.removeEventListener("pointerleave", onLeave);
       if (timer) window.clearInterval(timer);
+      if (frame) cancelAnimationFrame(frame);
     };
   }, []);
 
-  return <canvas ref={ref} aria-hidden="true" className={className} />;
+  return (
+    <div ref={wrapRef} aria-hidden="true" className={`pointer-events-none overflow-hidden ${className}`}>
+      <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
+      <div
+        ref={markRef}
+        className="absolute top-0 left-0 opacity-0 will-change-transform"
+        style={{
+          width: MARK_SIZE,
+          height: MARK_SIZE,
+          filter: "drop-shadow(0 0 34px rgb(238 122 46 / 0.45)) drop-shadow(0 24px 30px rgb(0 0 0 / 0.65))",
+        }}
+      >
+        <CarvedMark size={MARK_SIZE} />
+      </div>
+    </div>
+  );
 }

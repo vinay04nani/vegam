@@ -13,7 +13,7 @@ export default function ContactPage() {
   return (
     <div className="flex min-h-svh flex-col bg-[#FAFAFB] lg:flex-row">
       <aside className="relative isolate flex min-h-[340px] flex-col overflow-hidden bg-[radial-gradient(70%_60%_at_50%_45%,#24162a_0%,#120e18_70%,#0c0a10_100%)] p-[clamp(24px,3.5vw,64px)] lg:sticky lg:top-0 lg:h-svh lg:w-[40%]">
-        <GlyphField className="absolute inset-0 -z-10 h-full w-full" />
+        <GlyphField className="absolute inset-0 -z-10" />
         <a href={links.home} className="text-[26px] leading-none font-extrabold tracking-[-0.045em] text-white/90">
           vegam
         </a>
