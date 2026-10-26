@@ -1,11 +1,9 @@
 # Vegam plans: what's included and how businesses use it
 
-> Draft for pilots. Prices are proposals to validate with the first customers.
+> Draft for pilots. Prices to be decided.
 
 | | **Starter** | **Growth** (recommended) | **Pro** |
 |---|---|---|---|
-| **Price (India)** | ₹2,999 / month | ₹7,999 / month | From ₹19,999 / month |
-| **Price (global)** | ~$49 / month | ~$149 / month | ~$399 / month, or talk to us |
 | **Best for** | A single-location business losing customers to slow replies and missed calls | A busy business with steady calls and social media enquiries | Multi-location businesses and teams that sell actively |
 | **Promise** | Never miss a message | Every channel and every call answered | Grow and bring customers back |
 
@@ -67,8 +65,8 @@
 | Item | Detail |
 |---|---|
 | **Setup** | Done for the customer: WhatsApp connection, services and prices loaded, 50 test replies reviewed with the owner. |
-| **Billing** | Annual: 2 months free, setup included. Monthly: one-time setup fee of ₹4,999 (~$99). |
-| **Usage beyond allowance** | Extra voice minutes ~₹6 (~$0.15) each. WhatsApp marketing messages at Meta's cost plus a small margin. |
+| **Billing** | Monthly or annual (to be decided). |
+| **Usage beyond allowance** | Extra voice minutes and WhatsApp marketing messages billed separately (rates to be decided). |
 | **Always included** | Honest AI (says it's an AI), human takeover anytime, STOP and opt-out handling, consent records, data export and deletion. |
 | **Trial** | 30-day measured pilot: week 1 measures the baseline, weeks 2–4 show the difference in the morning report. |
 
