@@ -1,14 +1,13 @@
 import { links } from "@/content/site";
-import { PixelIcon, type PixelIconName } from "@/components/auth/PixelIcon";
 import { ButtonLink } from "@/components/ui/Button";
-import { Icon } from "@/components/ui/Icon";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { withBase } from "@/lib/paths";
 import { PixelBackdrop } from "./PixelBackdrop";
 import type { SceneName } from "./scenes";
 
 type Props = {
   scene: SceneName;
-  icon: PixelIconName;
+  icon: IconName;
   label: string;
   body: string;
   contactTopic: string;
@@ -33,7 +32,9 @@ export function ComingSoon({ scene, icon, label, body, contactTopic }: Props) {
       <main className="flex flex-1 items-center justify-center px-4 pb-16">
         <div className="reveal is-visible w-full max-w-[560px] rounded-[28px] bg-white/92 p-[clamp(28px,5vw,52px)] text-center shadow-[0_30px_80px_rgb(14_11_61/0.3)] backdrop-blur">
           <div className="flex justify-center">
-            <PixelIcon name={icon} size={52} />
+            <span className="flex h-16 w-16 items-center justify-center rounded-[20px] bg-periwinkle-soft text-indigo">
+              <Icon name={icon} size={30} />
+            </span>
           </div>
           <p className="m-0 mt-5 text-sm font-semibold tracking-[0.2em] text-muted uppercase">{label}</p>
           <h1 className="m-0 mt-3 font-serif text-[clamp(44px,6vw,68px)] leading-none font-normal tracking-[-0.03em] text-ink">Coming soon</h1>

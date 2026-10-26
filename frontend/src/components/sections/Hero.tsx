@@ -2,6 +2,7 @@ import { channels, links } from "@/content/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { DisplayHeading } from "@/components/ui/Heading";
 import { KolamOrnament } from "@/components/ui/Kolam";
+import { ProductPreview } from "./ProductPreview";
 
 function Rule() {
   return (
@@ -22,7 +23,7 @@ export function Hero() {
       </div>
       <section
         id="top"
-        className="mx-auto flex max-w-[1000px] flex-col items-center gap-7 px-4 pt-[clamp(140px,16vw,220px)] pb-[clamp(64px,8vw,110px)] text-center sm:px-10"
+        className="mx-auto flex max-w-[1000px] flex-col items-center gap-6 px-4 pt-[clamp(112px,12vw,168px)] pb-[clamp(32px,4vw,56px)] text-center sm:px-10"
       >
         <div className="reveal is-visible">
           <KolamOrnament />
@@ -32,7 +33,7 @@ export function Hero() {
           <p className="m-0 py-3 text-xl font-medium text-brand">The AI front desk for every business</p>
           <Rule />
         </div>
-        <DisplayHeading as="h1" className="text-[clamp(46px,6.4vw,92px)] leading-[1.02]">
+        <DisplayHeading as="h1" className="text-[clamp(44px,5.8vw,84px)] leading-[1.02]">
           Every customer, answered in seconds
         </DisplayHeading>
         <p className="m-0 max-w-[760px] text-[clamp(18px,1.7vw,23px)] leading-relaxed text-ink-soft">
@@ -43,11 +44,13 @@ export function Hero() {
           <ButtonLink href={links.demo} size="xl">
             Book a demo
           </ButtonLink>
-          <ButtonLink href="#product" variant="light" size="xl">
-            See how it works
+          <ButtonLink href={links.pricing} variant="light" size="xl">
+            See pricing
           </ButtonLink>
         </div>
-        <p className="m-0 text-[15px] text-muted">No new app to learn · Your team can take over any chat, any time</p>
+        <div className="mt-[clamp(16px,3vw,40px)] w-full">
+          <ProductPreview />
+        </div>
       </section>
 
       <section className="flex flex-col items-center gap-7 pt-6 pb-18">

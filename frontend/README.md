@@ -51,36 +51,34 @@ src/
 ├─ app/
 │  ├─ layout.tsx          # fonts, metadata
 │  ├─ page.tsx            # landing page: sections in order
-│  ├─ login/, signup/     # auth pages (pixel coast + sign-in form)
-│  ├─ pricing/            # pricing page (picker, plans, journeys, comparison, FAQ)
+│  ├─ login/, signup/     # auth pages (pixel scene + sign-in form)
+│  ├─ pricing/            # pricing page (picker, plans, comparison, FAQ)
 │  ├─ contact/            # contact page (glyph field + two-step form)
 │  ├─ careers/, support/, press/  # "coming soon" pages, each with its own pixel scene
 │  └─ globals.css         # design tokens, signature gradients, animations
 ├─ content/
 │  ├─ site.ts             # landing copy, links, demo data and placeholders
-│  └─ pricing.ts          # plans, picker, journeys, feature table, usage, FAQ
+│  └─ pricing.ts          # plans and prices, picker, feature table, FAQ
 └─ components/
    ├─ ui/                 # Button, Heading, Icon, Reveal (scroll fade-in),
    │                      # Kolam (ornament, Vegam mark, ripple + lattice patterns),
    │                      # ArtTile (grain gradient tiles, frosted icons)
-   ├─ sections/           # Navbar, Hero, ProductShowcase, Features, ChatDemo,
-   │                      # Languages, Trust, Plans, SeeItInAction, FinalCta, Footer
-   ├─ auth/               # AuthShell, AuthForm, PixelIcon, BrandIcons
-   ├─ pricing/            # PricingPage, PlanPicker, PlanCards, HowItWorks, ComparisonTable, Faq
+   ├─ sections/           # Navbar, Hero, ProductPreview (phone mockups), Features,
+   │                      # ChatDemo, Languages, Trust, Plans, FinalCta, Footer
+   ├─ auth/               # AuthShell, AuthForm, BrandIcons
+   ├─ pricing/            # PricingPage, PlanPicker, PlanCards, ComparisonTable, Faq
    ├─ contact/            # ContactForm, GlyphField
    └─ pixel/              # pixel scenes (coast, sunrise, lighthouse, kites), PixelBackdrop, ComingSoon
 ```
 
 ## Editing content
 
-Change text, links and demo conversations in `src/content/site.ts`; layout code doesn't need to change. Fill in these placeholders before launch:
+Change text, links and demo conversations in `src/content/site.ts`, and plans and prices in `src/content/pricing.ts` (the home page and pricing page both read them); layout code doesn't need to change. The sample business in the demos is "Nila & Co". Fill in these placeholders before launch:
 
 | Placeholder | Where |
 |---|---|
 | Demo booking link (e.g. Calendly or Cal.com) | `links.demo` |
-| Plan prices (the billing and currency switches appear once set) | `price` on each plan in `src/content/pricing.ts` |
 | `[Company legal name]` | `companyLegalName` |
-| `[Your business]` in sample chats | `chatTabs` |
 | Login, privacy, terms, social links | `links`, `socials`, `footerColumns` |
 | Contact form endpoint (nothing is sent until set) | `forms.contactEndpoint` |
 | Careers, support, press pages (currently "coming soon") | `src/app/careers`, `support`, `press` |
@@ -97,4 +95,10 @@ Change text, links and demo conversations in `src/content/site.ts`; layout code 
 - All motion respects `prefers-reduced-motion`.
 - Visual motifs come from kolam (muggu): dots joined by one looping line. Dots are customers; the loop is Vegam. Use the `Kolam` components rather than borrowing other brands' ornaments.
 - Pixel art (`src/lib/pixel.ts`) uses limited colour ramps, ordered (Bayer) dithering only at band edges, stepped glows and value noise for organic shapes. Never add random per-pixel noise; it reads as static.
+- One art style per job, so pages feel like one product:
+  - **Surfaces and cards:** kolam line art over a soft gradient with film grain (`ArtTile`, `bg-hero`, `bg-banner`). Tile palettes are brand only: periwinkle, indigo, saffron, mist.
+  - **Full-bleed backgrounds only:** pixel scenes (`PixelBackdrop`) behind the auth and "coming soon" pages. Never inside cards.
+  - **Icons:** the line icons in `Icon`, on a soft periwinkle chip or a frosted glyph. No pixel icons.
+  - **Dark panels:** the ink gradient `#1B1C2E → #22233A → #2E2220` (pricing hero, contact, dark plan card).
+- Text contrast is at least 4.5:1. The lightest grey for text is `text-faint` (`#6b6d7c`), and only on white or the page background.
 - Premium surfaces stack three layers: a soft gradient, faint line art, and film grain (`bg-grain`), with frosted white glyphs on top.

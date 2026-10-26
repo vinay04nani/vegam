@@ -1,7 +1,8 @@
 // Everything on the pricing page comes from here: plans, the plan picker,
 // the comparison table and the FAQ.
-// To publish prices, fill in `price` on each plan (monthly and annual, per
-// currency); the billing and currency switches appear automatically.
+// Prices are per month. Annual prices are the monthly equivalent with two
+// months free (monthly × 10 / 12, rounded). Meta's WhatsApp template fees are
+// passed on at cost and are not included.
 
 
 export type PlanId = "starter" | "growth" | "pro";
@@ -16,8 +17,10 @@ export type Plan = {
   /** Loops in the plan's kolam tier mark. */
   dots: number;
   popular?: boolean;
-  /** Leave undefined until prices are decided. */
+  /** Leave undefined to show `priceNote` instead. */
   price?: Record<Currency, Record<Billing, number>>;
+  /** Show the price as a starting point ("From ₹19,999"). */
+  from?: boolean;
   priceNote: string;
   cta: { label: string; topic: string };
   highlights: string[];
@@ -31,7 +34,8 @@ export const plans: Plan[] = [
     name: "Starter",
     promise: "Never miss a message",
     bestFor: "A single location losing customers to slow replies and missed calls",
-    priceNote: "Pilot pricing on request",
+    price: { INR: { monthly: 2999, annual: 2499 }, USD: { monthly: 49, annual: 41 } },
+    priceNote: "WhatsApp fees passed on at cost.",
     cta: { label: "Start a pilot", topic: "pricing" },
     highlights: [
       "AI replies on WhatsApp, 24/7, in any language",
@@ -49,7 +53,8 @@ export const plans: Plan[] = [
     promise: "Every channel and every call",
     bestFor: "A busy business with steady calls and social media enquiries",
     popular: true,
-    priceNote: "Pilot pricing on request",
+    price: { INR: { monthly: 7999, annual: 6666 }, USD: { monthly: 149, annual: 124 } },
+    priceNote: "WhatsApp fees passed on at cost.",
     cta: { label: "Start a pilot", topic: "pricing" },
     highlights: [
       "Everything in Starter",
@@ -66,7 +71,9 @@ export const plans: Plan[] = [
     name: "Pro",
     promise: "Grow and bring customers back",
     bestFor: "Multi-location businesses and teams that sell actively",
-    priceNote: "Custom pricing",
+    price: { INR: { monthly: 19999, annual: 16666 }, USD: { monthly: 399, annual: 333 } },
+    from: true,
+    priceNote: "Final price depends on locations and usage.",
     cta: { label: "Talk to us", topic: "pricing" },
     highlights: [
       "Everything in Growth",
@@ -208,6 +215,10 @@ export const faqs: { q: string; a: string }[] = [
     a: "Replies within 24 hours of a customer's message are free. Reminders and follow-ups sent after that use Meta's message templates, which have a small fee per message. We pass these on at cost.",
   },
   {
+    q: "Are taxes included?",
+    a: "Prices in rupees are shown before 18% GST, which is added to your invoice. Prices in dollars are for customers outside India.",
+  },
+  {
     q: "Can I switch plans later?",
     a: "Yes. Move up or down at any time; changes apply from your next billing period.",
   },
@@ -217,7 +228,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What happens if I go over my allowance?",
-    a: "Nothing stops working. Extra conversations and voice minutes are billed at a published rate, and we'll tell you before you reach your limit.",
+    a: "Nothing stops working. Extra AI conversations are ₹1.5 ($0.02) each and extra voice minutes ₹6 ($0.08) each, and we'll tell you before you reach your limit.",
   },
   {
     q: "Will customers know they're talking to an AI?",

@@ -1,4 +1,4 @@
-import { links, primaryFeatures, secondaryFeatures, type Feature } from "@/content/site";
+import { links, primaryFeatures, type Feature } from "@/content/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { DisplayHeading } from "@/components/ui/Heading";
 import { ArtTile, FrostedIcon, type Palette } from "@/components/ui/ArtTile";
@@ -6,10 +6,11 @@ import { Reveal } from "@/components/ui/Reveal";
 import { ChatDemo } from "./ChatDemo";
 
 const tilePalette: Record<Feature["icon"], Palette> = {
+  // Brand palettes only, placed diagonally so neighbours never match.
   message: "periwinkle",
-  phone: "saffron",
-  missed: "rose",
-  calendar: "leaf",
+  phone: "indigo",
+  missed: "saffron",
+  calendar: "periwinkle",
 };
 
 const card = "rounded-[22px] border border-line bg-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_rgb(21_16_173/0.08)]";
@@ -52,14 +53,6 @@ export function Features() {
           ))}
         </div>
 
-        <div className="grid flex-[1_1_100%] grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-4">
-          {secondaryFeatures.map((f, i) => (
-            <Reveal key={f.title} delay={i * 80} className={`${card} flex flex-col gap-2 px-9 py-8`}>
-              <h3 className="m-0 text-2xl font-semibold">{f.title}</h3>
-              <p className="m-0 text-[17px] text-subtle">{f.body}</p>
-            </Reveal>
-          ))}
-        </div>
       </div>
     </section>
   );

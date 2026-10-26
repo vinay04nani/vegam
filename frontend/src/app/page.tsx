@@ -5,8 +5,6 @@ import { Hero } from "@/components/sections/Hero";
 import { Languages } from "@/components/sections/Languages";
 import { Navbar } from "@/components/sections/Navbar";
 import { Plans } from "@/components/sections/Plans";
-import { ProductShowcase } from "@/components/sections/ProductShowcase";
-import { SeeItInAction } from "@/components/sections/SeeItInAction";
 import { Trust } from "@/components/sections/Trust";
 
 export default function Home() {
@@ -21,12 +19,10 @@ export default function Home() {
       <Navbar />
       <main id="main" className="text-lg leading-[1.55]">
         <Hero />
-        <ProductShowcase />
         <Features />
         <Languages />
         <Trust />
         <Plans />
-        <SeeItInAction />
         <FinalCta />
       </main>
       <Footer />

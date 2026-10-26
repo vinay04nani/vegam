@@ -1,9 +1,9 @@
 import type { ReactNode } from "react";
 import { authHighlights, channels, links } from "@/content/site";
-import { PixelIcon } from "./PixelIcon";
+import { Icon } from "@/components/ui/Icon";
 import { PixelBackdrop } from "@/components/pixel/PixelBackdrop";
 
-/** Split screen for log in and sign up: pixel coast and product card on the left, form on the right. */
+/** Split screen for log in and sign up: pixel scene behind a product card on the left, form on the right. */
 export function AuthShell({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-svh bg-page p-0 lg:p-2.5">
@@ -17,8 +17,8 @@ export function AuthShell({ children }: { children: ReactNode }) {
               <ul className="m-0 mt-8 flex list-none flex-col gap-6 p-0">
                 {authHighlights.map((h) => (
                   <li key={h.title} className="flex items-start gap-4">
-                    <span className="mt-0.5 flex-none">
-                      <PixelIcon name={h.icon} size={38} />
+                    <span className="flex h-11 w-11 flex-none items-center justify-center rounded-[14px] bg-periwinkle-soft text-indigo">
+                      <Icon name={h.icon} size={22} />
                     </span>
                     <span className="flex flex-col gap-1">
                       <span className="text-[17px] font-semibold">{h.title}</span>

@@ -1,11 +1,16 @@
 # Vegam plans: what's included and how businesses use it
 
-> Draft for pilots. Prices to be decided.
+> Proposed launch prices. The website reads them from `frontend/src/content/pricing.ts`; change both together.
 
 | | **Starter** | **Growth** (recommended) | **Pro** |
 |---|---|---|---|
 | **Best for** | A single-location business losing customers to slow replies and missed calls | A busy business with steady calls and social media enquiries | Multi-location businesses and teams that sell actively |
 | **Promise** | Never miss a message | Every channel and every call answered | Grow and bring customers back |
+| **Price in India** (per month, plus 18% GST) | ₹2,999 | ₹7,999 | From ₹19,999 |
+| **Price outside India** (per month) | $49 | $149 | From $399 |
+| **Annual billing** (2 months free, per month) | ₹2,499 / $41 | ₹6,666 / $124 | From ₹16,666 / $333 |
+
+Every plan starts with a 30-day measured pilot. Meta's WhatsApp template fees are passed on at cost. Extra AI conversations are ₹1.5 ($0.02) each and extra voice minutes ₹6 ($0.08) each. Pro is priced from the listed amount; the final price depends on locations and usage.
 
 ---
 

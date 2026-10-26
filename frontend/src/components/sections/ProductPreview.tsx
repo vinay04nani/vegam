@@ -1,0 +1,166 @@
+import type { ReactNode } from "react";
+import { Icon } from "@/components/ui/Icon";
+import { VegamMark } from "@/components/ui/Kolam";
+import { Reveal } from "@/components/ui/Reveal";
+
+// Two phone screens that show the product at a glance: what a customer sees
+// on WhatsApp, and the report the owner gets each morning. Built in code (not
+// screenshots) so the text stays sharp, translatable and easy to edit. The
+// business, times and numbers are a labelled sample.
+
+const business = "Nila & Co";
+
+function Phone({ time, title, status, avatar, children }: { time: string; title: string; status: string; avatar: ReactNode; children: ReactNode }) {
+  return (
+    <div className="w-[300px] flex-none rounded-[46px] bg-ink p-2.5 shadow-[0_16px_36px_rgb(21_16_173/0.18),0_4px_12px_rgb(30_31_43/0.16)] md:shadow-[0_40px_90px_rgb(21_16_173/0.22),0_8px_24px_rgb(30_31_43/0.18)] ring-1 ring-black/10">
+      <div className="flex h-[580px] flex-col overflow-hidden rounded-[37px] bg-[#EFEAE2] text-left">
+        <div className="flex items-center justify-between bg-white px-6 pt-3 text-[12px] font-semibold text-ink" aria-hidden="true">
+          <span>{time}</span>
+          <span className="h-5 w-20 rounded-full bg-ink" />
+          <span className="flex items-center gap-1">
+            <span className="h-2 w-3.5 rounded-[2px] bg-ink" />
+            <span className="h-2.5 w-5 rounded-[3px] border-[1.5px] border-ink" />
+          </span>
+        </div>
+        <div className="flex items-center gap-3 border-b border-black/5 bg-white px-4 pt-2.5 pb-3">
+          <Icon name="chevron-left" size={20} className="-ml-1 text-ink" />
+          {avatar}
+          <div className="flex min-w-0 flex-col leading-tight">
+            <span className="text-[15px] font-semibold text-ink">{title}</span>
+            <span className="text-[12px] text-subtle">{status}</span>
+          </div>
+        </div>
+        <div className="bg-dots flex flex-1 flex-col gap-2 overflow-hidden px-3 py-3 text-[14px] leading-snug">{children}</div>
+      </div>
+    </div>
+  );
+}
+
+function Bubble({ from, time, children }: { from: "them" | "me"; time: string; children: ReactNode }) {
+  const me = from === "me";
+  return (
+    <div className={`max-w-[86%] rounded-[14px] px-3 pt-2 pb-1.5 text-ink shadow-[0_1px_1px_rgb(0_0_0/0.08)] ${me ? "self-end rounded-tr-[4px] bg-[#D9FDD3]" : "self-start rounded-tl-[4px] bg-white"}`}>
+      {children}
+      <span className="mt-0.5 flex items-center justify-end gap-1 text-[11px] text-[#5d6b63]">
+        {time}
+        {me && <Icon name="check" size={13} strokeWidth={2.4} className="text-[#2B7DBF] [&_circle]:hidden" />}
+      </span>
+    </div>
+  );
+}
+
+function Chip({ children }: { children: ReactNode }) {
+  return <span className="mx-auto rounded-lg bg-white/90 px-2.5 py-1 text-[11.5px] font-medium text-subtle shadow-[0_1px_1px_rgb(0_0_0/0.06)]">{children}</span>;
+}
+
+function CustomerChat() {
+  return (
+    <Phone
+      time="9:41"
+      title={business}
+      status="AI assistant · replies instantly"
+      avatar={<span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-indigo text-[15px] font-bold text-white">N</span>}
+    >
+      <Chip>Today</Chip>
+      <Bubble from="me" time="9:41 PM">
+        Hi, are you open tomorrow? I’d like to come in around 6.
+      </Bubble>
+      <Bubble from="them" time="9:41 PM">
+        Hi! I’m {business}’s AI assistant. 6:00 PM is taken, but <strong className="font-semibold">6:30 PM</strong> is free. Shall I book it for you?
+      </Bubble>
+      <Bubble from="me" time="9:42 PM">
+        Yes, 6:30 works
+      </Bubble>
+      <Bubble from="them" time="9:42 PM">
+        <span className="mb-1.5 flex items-center gap-2 rounded-[10px] bg-[#F1F7F2] px-2.5 py-2">
+          <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-success text-white">
+            <Icon name="check" size={16} strokeWidth={2.6} className="[&_circle]:hidden" />
+          </span>
+          <span className="flex flex-col leading-tight">
+            <strong className="text-[14px] font-semibold">Booked</strong>
+            <span className="text-[12.5px] text-subtle">Tomorrow · 6:30 PM</span>
+          </span>
+        </span>
+        You’re all set. I’ll send a reminder tomorrow morning. Reply here any time to change it.
+      </Bubble>
+      <span className="mt-auto flex items-center gap-2 self-center rounded-full bg-white/90 px-3 py-1 text-[11.5px] text-subtle">
+        <Icon name="sun" size={12} />
+        Booked after hours, no staff needed
+      </span>
+    </Phone>
+  );
+}
+
+function Stat({ value, label, note }: { value: string; label: string; note: string }) {
+  return (
+    <div className="flex items-baseline gap-2.5 border-t border-line py-1.5 first:border-t-0">
+      <span className="w-6 text-right text-[17px] font-bold text-ink">{value}</span>
+      <span className="flex flex-col leading-tight">
+        <span className="font-semibold text-ink">{label}</span>
+        <span className="text-[12.5px] text-subtle">{note}</span>
+      </span>
+    </div>
+  );
+}
+
+function MorningReport() {
+  return (
+    <Phone
+      time="8:00"
+      title="Vegam"
+      status={`Your assistant at ${business}`}
+      avatar={
+        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink text-accent">
+          <VegamMark size={22} strokeWidth={9} />
+        </span>
+      }
+    >
+      <Bubble from="them" time="8:00 AM">
+        <strong className="font-semibold">Good morning. Here’s yesterday:</strong>
+        <span className="mt-1.5 block rounded-[10px] bg-panel px-2.5 py-1">
+          <Stat value="14" label="Enquiries" note="All replied within seconds" />
+          <Stat value="6" label="New bookings" note="2 made after closing time" />
+          <Stat value="2" label="Missed calls" note="Both sent a WhatsApp" />
+        </span>
+        <span className="mt-2 block">
+          <strong className="font-semibold text-warning">Needs you:</strong> 1 customer asked about a refund.
+        </span>
+      </Bubble>
+      <Bubble from="me" time="8:03 AM">
+        Block Friday afternoon
+      </Bubble>
+      <Bubble from="them" time="8:03 AM">
+        Done. Friday 2–6 PM is blocked.
+      </Bubble>
+    </Phone>
+  );
+}
+
+function Label({ step, children }: { step: string; children: ReactNode }) {
+  return (
+    <p className="m-0 flex items-center gap-2.5 text-[15px] font-semibold text-ink">
+      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-ink text-[12px] text-white">{step}</span>
+      {children}
+    </p>
+  );
+}
+
+export function ProductPreview() {
+  return (
+    <section id="product" aria-label="Sample conversations" className="w-full scroll-mt-24">
+      <div className="-mx-4 flex snap-x snap-mandatory gap-6 overflow-x-auto px-4 pt-2 pb-16 md:mx-0 md:justify-center md:gap-12 md:overflow-visible md:px-0 md:pb-8 [&::-webkit-scrollbar]:hidden">
+        <Reveal className="flex snap-center flex-col items-center gap-4">
+          <Label step="1">Your customer, at 9:41 PM</Label>
+          <CustomerChat />
+        </Reveal>
+        <Reveal delay={150} className="flex snap-center flex-col items-center gap-4 md:mt-16">
+          <Label step="2">You, the next morning</Label>
+          <MorningReport />
+        </Reveal>
+      </div>
+      <p className="m-0 -mt-8 px-4 text-center text-[14px] text-subtle md:mt-0">
+        Sample conversation. Your assistant uses your own name, hours and services.
+      </p>
+    </section>
+  );
+}

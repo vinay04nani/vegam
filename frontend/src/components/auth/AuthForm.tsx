@@ -180,7 +180,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
         <button
           type="submit"
           disabled={!valid}
-          className="mt-2 min-h-14 w-full cursor-pointer rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] text-[17px] font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16)] transition hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_12px_30px_rgb(30_31_43/0.25)] disabled:cursor-not-allowed disabled:border-transparent disabled:bg-none disabled:bg-[#B9BAC4] disabled:shadow-none"
+          className="mt-2 min-h-14 w-full cursor-pointer rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] text-[17px] font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16)] transition hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_12px_30px_rgb(30_31_43/0.25)] disabled:cursor-not-allowed disabled:border-transparent disabled:bg-none disabled:bg-[#E4E6F0] disabled:text-muted disabled:shadow-none"
         >
           Continue
         </button>

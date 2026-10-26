@@ -10,8 +10,6 @@ export const links = {
   contact: withBase("/contact/"),
   demo: withBase("/contact/?topic=demo"),
   pricing: withBase("/pricing/"),
-  sampleCall: "#call",
-  sampleReport: "#report",
   privacy: "#privacy",
   terms: "#terms",
 };
@@ -36,99 +34,6 @@ export const channels: Channel[] = [
   { name: "Ad lead forms", color: "#8B6CFF" },
 ];
 
-export type ViewRow = { status: string; count: string; action: string; tone: "success" | "warning" | "danger" | "neutral" };
-
-export type ShowcaseView = {
-  id: string;
-  icon: "message" | "phone" | "lead" | "sun";
-  title: string;
-  subtitle: string;
-  tag: string;
-  steps: string[];
-  summary: string;
-  columns: [string, string];
-  rows: ViewRow[];
-};
-
-export const showcaseViews: ShowcaseView[] = [
-  {
-    id: "msg",
-    icon: "message",
-    title: "Customer messages",
-    subtitle: "Front desk",
-    tag: "FRONT DESK",
-    steps: [
-      "Replied to every new message in seconds",
-      "Answered questions from your price list",
-      "Booked appointments into your calendar",
-    ],
-    summary: "Done. 38 conversations handled since 9 AM:",
-    columns: ["Status", "Chats"],
-    rows: [
-      { status: "Booked", count: "12", action: "Confirmed, reminders scheduled", tone: "success" },
-      { status: "Follow-up", count: "23", action: "Sent, waiting for a reply", tone: "warning" },
-      { status: "Needs you", count: "3", action: "Flagged for your team", tone: "danger" },
-    ],
-  },
-  {
-    id: "call",
-    icon: "phone",
-    title: "Phone calls",
-    subtitle: "Voice",
-    tag: "VOICE",
-    steps: [
-      "Answered 11 calls while you were busy",
-      "Told every caller it is an AI assistant",
-      "Wrote a short summary for each call",
-    ],
-    summary: "Done. 11 calls handled today:",
-    columns: ["Outcome", "Calls"],
-    rows: [
-      { status: "Booked", count: "5", action: "Slot added to your calendar", tone: "success" },
-      { status: "Callback", count: "4", action: "Callback requested, details noted", tone: "warning" },
-      { status: "Urgent", count: "2", action: "Passed straight to you", tone: "danger" },
-    ],
-  },
-  {
-    id: "lead",
-    icon: "lead",
-    title: "New leads",
-    subtitle: "Follow-up",
-    tag: "FOLLOW-UP",
-    steps: [
-      "Contacted every new lead within a minute",
-      "Asked your qualifying questions",
-      "Sorted leads by how interested they are",
-    ],
-    summary: "Done. 24 leads contacted this week:",
-    columns: ["Interest", "Leads"],
-    rows: [
-      { status: "High", count: "7", action: "Call these first", tone: "success" },
-      { status: "Medium", count: "11", action: "Follow-up message scheduled", tone: "warning" },
-      { status: "Not now", count: "6", action: "Paused, will check back in 30 days", tone: "danger" },
-    ],
-  },
-  {
-    id: "report",
-    icon: "sun",
-    title: "Morning report",
-    subtitle: "Daily at 8 AM",
-    tag: "DAILY",
-    steps: [
-      "Counted yesterday’s enquiries, bookings and calls",
-      "Checked today’s schedule",
-      "Picked out what needs your attention",
-    ],
-    summary: "Good morning. Here is yesterday:",
-    columns: ["Item", "Count"],
-    rows: [
-      { status: "Enquiries", count: "14", action: "All replied to", tone: "neutral" },
-      { status: "Bookings", count: "6", action: "2 still need confirming", tone: "neutral" },
-      { status: "Missed calls", count: "2", action: "Both recovered on WhatsApp", tone: "neutral" },
-    ],
-  },
-];
-
 export type ChatMessage = { ai: boolean; text: string };
 export type ChatTab = { id: string; label: string; color: string; chat: ChatMessage[] };
 
@@ -139,7 +44,7 @@ export const chatTabs: ChatTab[] = [
     color: "#2BB673",
     chat: [
       { ai: false, text: "Hi! Do you have anything free tomorrow evening?" },
-      { ai: true, text: "Hi, I’m the AI assistant for [Your business]. Tomorrow at 6:30 PM is free. Shall I book it?" },
+      { ai: true, text: "Hi, I’m Nila & Co’s AI assistant. Tomorrow at 6:30 PM is free. Shall I book it?" },
       { ai: false, text: "Yes please." },
       { ai: true, text: "Done: tomorrow, 6:30 PM. I’ll send a reminder in the morning." },
     ],
@@ -149,7 +54,7 @@ export const chatTabs: ChatTab[] = [
     label: "Phone call",
     color: "#3D8BFF",
     chat: [
-      { ai: true, text: "Thanks for calling [Your business]. I’m the AI assistant. How can I help?" },
+      { ai: true, text: "Thanks for calling Nila & Co. I’m the AI assistant. How can I help?" },
       { ai: false, text: "What time do you close on Saturday?" },
       { ai: true, text: "We’re open until 4 PM on Saturday. Would you like to book a visit?" },
       { ai: false, text: "Not today, thanks." },
@@ -185,12 +90,6 @@ export const primaryFeatures: Feature[] = [
   { icon: "calendar", title: "Bookings and reminders", body: "Customers book in a chat or a call. Reminders go out on their own." },
 ];
 
-export const secondaryFeatures = [
-  { title: "Lead follow-up", body: "Every enquiry contacted within a minute, and sorted by interest." },
-  { title: "Morning report", body: "Yesterday's enquiries, bookings and calls on WhatsApp at 8 AM." },
-  { title: "Team handover", body: "Take over any chat or call with one tap. The AI steps back." },
-];
-
 export const languageBubbles = [
   { lang: "es", text: "Hola, ¿tienen hora el sábado?", pos: "left-[4%] top-[6%] sm:left-[6%] sm:top-[10%]", side: "left", mobile: true },
   { lang: "fr", text: "Bonjour, vous êtes ouverts ?", pos: "right-[4%] top-[20%] sm:right-[6%] sm:top-[14%]", side: "right", mobile: true },
@@ -215,45 +114,21 @@ export const trustPoints = [
   },
 ];
 
-export type Plan = { name: string; price: string; description: string; style: "orange" | "indigo" | "light" };
-
-export const plans: Plan[] = [
-  {
-    name: "Starter",
-    price: "Never miss a message",
-    description: "AI replies on WhatsApp, missed-call recovery, bookings and reminders, morning report",
-    style: "orange",
-  },
-  {
-    name: "Growth",
-    price: "Every channel and every call",
-    description: "Everything in Starter, plus AI call answering, Instagram and website chat, lead scoring",
-    style: "indigo",
-  },
-  {
-    name: "Pro",
-    price: "Grow and bring customers back",
-    description: "Everything in Growth, plus AI calls to new leads, payments, broadcasts, multi-branch",
-    style: "light",
-  },
-];
-
 export const footerColumns = [
   {
     title: "Product",
     links: [
-      { label: "Front desk", href: "#product" },
-      { label: "AI calls", href: "#features" },
-      { label: "Missed-call recovery", href: "#features" },
-      { label: "Lead follow-up", href: "#features" },
-      { label: "Bookings", href: "#features" },
-      { label: "Morning report", href: "#features" },
+      { label: "Front desk", href: withBase("/#product") },
+      { label: "AI calls", href: withBase("/#features") },
+      { label: "Missed-call recovery", href: withBase("/#features") },
+      { label: "Bookings", href: withBase("/#features") },
+      { label: "Morning report", href: withBase("/#product") },
     ],
   },
   {
     title: "Try it",
     links: [
-      { label: "Sample call", href: links.sampleCall },
+      { label: "See a sample chat", href: withBase("/#product") },
       { label: "Pricing", href: links.pricing },
       { label: "Book a demo", href: links.demo },
     ],
@@ -261,7 +136,6 @@ export const footerColumns = [
   {
     title: "Company",
     links: [
-      { label: "About us", href: "#about" },
       { label: "Careers", href: withBase("/careers/") },
       { label: "Contact us", href: links.contact },
     ],
@@ -290,7 +164,7 @@ export const forms = {
 
 // Log in / sign up page: the card over the pixel scene.
 export const authHighlights = [
-  { icon: "chat", title: "AI chat replies", body: "Answers every WhatsApp, Instagram and website message in seconds, in your customer’s language." },
+  { icon: "message", title: "AI chat replies", body: "Answers every WhatsApp, Instagram and website message in seconds, in your customer’s language." },
   { icon: "phone", title: "AI phone answering", body: "Picks up when you’re busy, books visits and writes a summary of every call." },
   { icon: "missed", title: "Missed-call recovery", body: "Every missed caller gets a WhatsApp within seconds, with options to book." },
   { icon: "sun", title: "Morning report", body: "Yesterday’s enquiries, bookings and calls on your phone at 8 AM." },

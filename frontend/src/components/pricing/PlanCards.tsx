@@ -34,14 +34,23 @@ function Price({ plan, billing, currency, dark }: { plan: Plan; billing: Billing
     return <p className={`m-0 text-[22px] font-semibold tracking-[-0.01em] ${dark ? "text-white" : "text-ink"}`}>{plan.priceNote}</p>;
   }
   const monthly = plan.price[currency][billing];
+  const soft = dark ? "text-white/70" : "text-subtle";
   return (
-    <p className={`m-0 flex items-baseline gap-1.5 ${dark ? "text-white" : "text-ink"}`}>
-      <span className="text-[44px] leading-none font-bold tracking-[-0.03em]">
-        {currencySymbol[currency]}
-        {monthly.toLocaleString(currency === "INR" ? "en-IN" : "en-US")}
-      </span>
-      <span className={`text-base ${dark ? "text-white/60" : "text-subtle"}`}>/ month{billing === "annual" ? ", billed yearly" : ""}</span>
-    </p>
+    <div className={dark ? "text-white" : "text-ink"}>
+      <p className="m-0 flex flex-wrap items-baseline gap-x-1.5">
+        {plan.from && <span className={`text-base font-medium ${soft}`}>From</span>}
+        <span className="text-[44px] leading-none font-bold tracking-[-0.03em]">
+          {currencySymbol[currency]}
+          {monthly.toLocaleString(currency === "INR" ? "en-IN" : "en-US")}
+        </span>
+        <span className={`text-base ${soft}`}>/ month</span>
+      </p>
+      <p className={`m-0 mt-2 text-[13.5px] ${soft}`}>
+        {billing === "annual" ? "Billed yearly. " : ""}
+        {currency === "INR" ? "Plus GST. " : ""}
+        {plan.priceNote}
+      </p>
+    </div>
   );
 }
 
