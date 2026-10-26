@@ -31,7 +31,7 @@ export default function ContactPage() {
               <Icon name={c.icon} size={24} className="text-[#B4500A]" />
               <span className="flex items-end justify-between gap-2 text-[15px] leading-snug font-medium sm:text-[17px]">
                 {c.label}
-                <Icon name="external" size={16} className="mb-0.5 flex-none text-subtle transition group-hover:text-ink" />
+                <Icon name="arrow" size={16} className="mb-0.5 flex-none text-subtle transition group-hover:text-ink" />
               </span>
             </a>
           ))}

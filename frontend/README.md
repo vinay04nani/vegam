@@ -53,6 +53,7 @@ src/
 │  ├─ page.tsx            # landing page: sections in order
 │  ├─ login/, signup/     # auth pages (pixel coast + sign-in form)
 │  ├─ contact/            # contact page (glyph field + two-step form)
+│  ├─ careers/, support/, press/  # "coming soon" pages, each with its own pixel scene
 │  └─ globals.css         # design tokens, signature gradients, animations
 ├─ content/
 │  └─ site.ts             # ALL copy, links, demo data and placeholders
@@ -63,7 +64,8 @@ src/
    ├─ sections/           # Navbar, Hero, ProductShowcase, Features, ChatDemo,
    │                      # Languages, Trust, Plans, SeeItInAction, FinalCta, Footer
    ├─ auth/               # AuthShell, AuthForm, PixelScene, PixelIcon, BrandIcons
-   └─ contact/            # ContactForm, GlyphField
+   ├─ contact/            # ContactForm, GlyphField
+   └─ pixel/              # coming-soon scenes (sunrise, lighthouse, kites), PixelBackdrop, ComingSoon
 ```
 
 ## Editing content
@@ -78,7 +80,7 @@ Change text, links and demo conversations in `src/content/site.ts`; layout code 
 | `[Your business]` in sample chats | `chatTabs` |
 | Login, privacy, terms, social links | `links`, `socials`, `footerColumns` |
 | Contact form endpoint (nothing is sent until set) | `forms.contactEndpoint` |
-| Careers, support, press links | `contactCards` |
+| Careers, support, press pages (currently "coming soon") | `src/app/careers`, `support`, `press` |
 
 ## Not wired yet
 

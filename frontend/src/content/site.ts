@@ -261,7 +261,7 @@ export const footerColumns = [
     title: "Company",
     links: [
       { label: "About us", href: "#about" },
-      { label: "Careers", href: "#careers" },
+      { label: "Careers", href: withBase("/careers/") },
       { label: "Contact us", href: links.contact },
     ],
   },
@@ -298,9 +298,9 @@ export const authHighlights = [
 export type ContactCard = { icon: "briefcase" | "headset" | "news"; label: string; href: string };
 
 export const contactCards: ContactCard[] = [
-  { icon: "briefcase", label: "Careers", href: "#careers" },
-  { icon: "headset", label: "Technical support", href: "#support" },
-  { icon: "news", label: "Press / Media", href: "#press" },
+  { icon: "briefcase", label: "Careers", href: withBase("/careers/") },
+  { icon: "headset", label: "Technical support", href: withBase("/support/") },
+  { icon: "news", label: "Press / Media", href: withBase("/press/") },
 ];
 
 export const countryCodes = [
@@ -325,6 +325,8 @@ export const contactTopics = [
   { id: "pricing", label: "Pricing" },
   { id: "partnership", label: "Partnership" },
   { id: "support", label: "Support" },
+  { id: "careers", label: "Careers" },
+  { id: "press", label: "Press / media" },
   { id: "other", label: "Something else" },
 ];
 

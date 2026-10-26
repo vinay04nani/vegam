@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { gradient, hex, mix, type RGB, type Stops } from "@/lib/pixel";
 import { seededRandom } from "@/lib/random";
 
 // A pixel-art coast at sunset: dithered sky, saffron sun, sea with fishing
@@ -14,28 +15,14 @@ const H = Math.round(112 * K);
 const HORIZON = Math.round(64 * K);
 const SHORE = Math.round(88 * K);
 
-type RGB = [number, number, number];
-
-const hex = (h: string): RGB => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
-const mix = (a: RGB, b: RGB, t: number): RGB => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
-
-function gradient(stops: [number, string][], t: number): RGB {
-  for (let i = 1; i < stops.length; i++) {
-    const [p1, c1] = stops[i];
-    const [p0, c0] = stops[i - 1];
-    if (t <= p1) return mix(hex(c0), hex(c1), (t - p0) / (p1 - p0));
-  }
-  return hex(stops[stops.length - 1][1]);
-}
-
-const SKY: [number, string][] = [
+const SKY: Stops = [
   [0, "#5f78e2"],
   [0.4, "#9fb0f4"],
   [0.72, "#e9c3c0"],
   [0.9, "#f6b07e"],
   [1, "#f59a5c"],
 ];
-const SEA: [number, string][] = [
+const SEA: Stops = [
   [0, "#8a9cf0"],
   [0.35, "#5672de"],
   [1, "#2c47c4"],
