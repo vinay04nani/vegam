@@ -240,3 +240,5 @@ Copyright (c) 2026 Vinay Kumar. All rights reserved.
 Vegam is **proprietary software** owned by Vinay Kumar. It is not open source. No one may use, copy, modify or distribute any part of it without a written agreement signed by the owner. See [LICENSE](LICENSE).
 
 Contributions are by invitation only and require a signed IP assignment agreement. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Draft customer-facing policies (terms, privacy, data processing, acceptable use, refunds, cookies) and internal legal templates are in [docs/legal](docs/legal/README.md).
