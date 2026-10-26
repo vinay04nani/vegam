@@ -94,6 +94,15 @@
     radial-gradient(62% 42% at 50% 56%, #c5cffa 0%, rgb(197 207 250 / 0.6) 45%, rgb(197 207 250 / 0) 100%),
     #f3f4fc;
 }
+/* Kolam dot grid (pulli): the dots a kolam is drawn around. */
+@utility bg-dots {
+  background-image: radial-gradient(circle at 1px 1px, rgb(30 31 43 / 0.16) 1.2px, transparent 1.6px);
+  background-size: 26px 26px;
+}
+@utility bg-dots-light {
+  background-image: radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.14) 1.2px, transparent 1.6px);
+  background-size: 26px 26px;
+}
 /* Fine film grain laid over the glow. */
 @utility bg-grain {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");

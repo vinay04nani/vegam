@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { currencySymbol, plans, type Billing, type Currency, type Plan, type PlanId } from "@/content/pricing";
-import { ArtTile } from "@/components/ui/ArtTile";
 import { ButtonLink } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
-import { VegamMark } from "@/components/ui/Kolam";
+import { TierMark } from "@/components/ui/Kolam";
 import { Reveal } from "@/components/ui/Reveal";
 import { withBase } from "@/lib/paths";
 
@@ -30,18 +29,18 @@ function Toggle<T extends string>({ value, options, onChange, label }: { value: 
   );
 }
 
-function Price({ plan, billing, currency }: { plan: Plan; billing: Billing; currency: Currency }) {
+function Price({ plan, billing, currency, dark }: { plan: Plan; billing: Billing; currency: Currency; dark: boolean }) {
   if (!plan.price) {
-    return <p className="m-0 text-[22px] font-semibold tracking-[-0.01em] text-ink">{plan.priceNote}</p>;
+    return <p className={`m-0 text-[22px] font-semibold tracking-[-0.01em] ${dark ? "text-white" : "text-ink"}`}>{plan.priceNote}</p>;
   }
   const monthly = plan.price[currency][billing];
   return (
-    <p className="m-0 flex items-baseline gap-1.5 text-ink">
-      <span className="text-[40px] leading-none font-bold tracking-[-0.03em]">
+    <p className={`m-0 flex items-baseline gap-1.5 ${dark ? "text-white" : "text-ink"}`}>
+      <span className="text-[44px] leading-none font-bold tracking-[-0.03em]">
         {currencySymbol[currency]}
         {monthly.toLocaleString(currency === "INR" ? "en-IN" : "en-US")}
       </span>
-      <span className="text-base text-subtle">/ month{billing === "annual" ? ", billed yearly" : ""}</span>
+      <span className={`text-base ${dark ? "text-white/60" : "text-subtle"}`}>/ month{billing === "annual" ? ", billed yearly" : ""}</span>
     </p>
   );
 }
@@ -65,58 +64,70 @@ export function PlanCards({ highlight }: { highlight: PlanId | null }) {
         </div>
       )}
 
-      <div className="grid w-full grid-cols-1 items-stretch gap-6 lg:grid-cols-3">
+      <div className="grid w-full grid-cols-1 items-stretch gap-5 lg:grid-cols-3">
         {plans.map((plan, i) => {
-          const featured = highlight ? highlight === plan.id : plan.popular;
+          // The popular plan is always the dark card; the picker's choice gets the ring.
+          const dark = !!plan.popular;
+          const chosen = highlight === plan.id;
           return (
             <Reveal key={plan.id} delay={i * 90} className="h-full">
               <article
                 id={`plan-${plan.id}`}
                 aria-label={`${plan.name} plan`}
-                className={`group relative flex h-full scroll-mt-28 flex-col rounded-[26px] bg-white p-3 transition duration-500 ${
-                  featured
-                    ? "border-2 border-ink shadow-[0_30px_80px_rgb(21_16_173/0.18)] lg:-translate-y-3"
-                    : "border border-line shadow-[0_1px_2px_rgb(30_31_43/0.04)] hover:-translate-y-1 hover:shadow-[0_24px_60px_rgb(21_16_173/0.1)]"
-                }`}
+                className={`relative isolate flex h-full scroll-mt-28 flex-col overflow-hidden rounded-[28px] p-[clamp(24px,2.6vw,36px)] transition duration-500 ${
+                  dark
+                    ? "bg-[linear-gradient(165deg,#22233A_0%,#1B1C2E_55%,#2B2A6E_100%)] text-white shadow-[0_30px_80px_rgb(21_16_173/0.25)]"
+                    : "border border-line bg-white text-ink hover:-translate-y-1 hover:shadow-[0_24px_60px_rgb(21_16_173/0.08)]"
+                } ${chosen ? "ring-4 ring-accent ring-offset-4 ring-offset-page" : ""}`}
               >
-                {featured && (
-                  <span className="absolute -top-3.5 left-1/2 z-10 inline-flex -translate-x-1/2 items-center gap-1.5 rounded-full bg-ink px-4 py-1.5 text-[13px] font-semibold whitespace-nowrap text-white shadow-[0_0_0_4px_#fbfbfd,0_8px_24px_rgb(238_122_46/0.45)]">
-                    <VegamMark size={14} strokeWidth={9} className="text-accent" />
-                    {highlight ? "Best fit for you" : "Most popular"}
-                  </span>
-                )}
-                <ArtTile palette={plan.palette} className="h-[150px] rounded-[18px]">
-                  <div className="text-center">
-                    <p className={`m-0 text-[36px] leading-none font-bold tracking-[-0.02em] ${plan.palette === "mist" ? "text-brand" : "text-white"}`}>{plan.name}</p>
-                    <p className={`m-0 mt-2 text-[15px] font-medium ${plan.palette === "mist" ? "text-brand/80" : "text-white/90"}`}>{plan.promise}</p>
-                  </div>
-                </ArtTile>
-
-                <div className="flex flex-1 flex-col gap-5 px-4 pt-6 pb-4">
-                  <p className="m-0 text-[15px] leading-snug text-subtle">
-                    <span className="font-semibold text-ink">Best for: </span>
-                    {plan.bestFor}
-                  </p>
-                  <Price plan={plan} billing={billing} currency={currency} />
-                  <ButtonLink href={withBase(`/contact/?topic=${plan.cta.topic}`)} variant={featured ? "dark" : "light"} block>
-                    {plan.cta.label}
-                  </ButtonLink>
-                  <ul className="m-0 flex list-none flex-col gap-3 p-0">
-                    {plan.highlights.map((h, j) => (
-                      <li key={h} className={`flex items-start gap-3 text-[15.5px] leading-snug ${j === 0 && i > 0 ? "font-semibold text-ink" : "text-ink-soft"}`}>
-                        <Icon name="check" size={19} strokeWidth={1.8} className="mt-0.5 flex-none text-success" />
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto flex flex-wrap gap-2 border-t border-line pt-4">
-                    {plan.limits.map((l) => (
-                      <span key={l} className="rounded-full bg-panel px-3 py-1.5 text-[13px] font-medium text-muted">
-                        {l}
-                      </span>
-                    ))}
-                  </div>
+                {dark && <div aria-hidden="true" className="bg-dots-light absolute inset-0 -z-10 [mask-image:linear-gradient(180deg,#000,transparent_60%)]" />}
+                <div className="flex items-start justify-between gap-3">
+                  <TierMark dots={plan.dots} className={dark ? "text-white" : "text-ink"} />
+                  {(chosen || plan.popular) && (
+                    <span
+                      className={`rounded-full px-3 py-1 text-[12px] font-semibold tracking-[0.06em] uppercase ${
+                        chosen ? "bg-accent text-ink" : "bg-white/12 text-white ring-1 ring-white/25"
+                      }`}
+                    >
+                      {chosen ? "Best fit for you" : "Most popular"}
+                    </span>
+                  )}
                 </div>
+
+                <h3 className="m-0 mt-7 font-serif text-[46px] leading-none font-normal tracking-[-0.03em]">{plan.name}</h3>
+                <p className={`m-0 mt-2 text-[17px] font-medium ${dark ? "text-accent" : "text-indigo"}`}>{plan.promise}</p>
+                <p className={`m-0 mt-4 text-[15px] leading-snug ${dark ? "text-white/70" : "text-subtle"}`}>{plan.bestFor}</p>
+
+                <div className={`my-7 h-px ${dark ? "bg-white/15" : "bg-line"}`} />
+                <Price plan={plan} billing={billing} currency={currency} dark={dark} />
+                <ButtonLink
+                  href={withBase(`/contact/?topic=${plan.cta.topic}`)}
+                  variant={dark ? "light" : "dark"}
+                  block
+                  className="mt-5"
+                >
+                  {plan.cta.label}
+                </ButtonLink>
+
+                <ul className="m-0 mt-7 flex list-none flex-col gap-3.5 p-0">
+                  {plan.highlights.map((h, j) => (
+                    <li key={h} className={`flex items-start gap-3 text-[15.5px] leading-snug ${j === 0 && i > 0 ? "font-semibold" : ""} ${dark ? "text-white/90" : "text-ink-soft"}`}>
+                      <span className={`mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full ${dark ? "bg-accent text-ink" : "bg-[#E8F3EA] text-success"}`}>
+                        <Icon name="check" size={14} strokeWidth={2.4} className="[&_circle]:hidden" />
+                      </span>
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+
+                <dl className={`m-0 mt-auto grid grid-cols-1 gap-2 pt-8 text-[13.5px]`}>
+                  {plan.limits.map((l) => (
+                    <div key={l} className={`flex items-center gap-2 ${dark ? "text-white/60" : "text-muted"}`}>
+                      <span className={`h-1.5 w-1.5 rounded-full ${dark ? "bg-accent" : "bg-periwinkle"}`} />
+                      <dd className="m-0">{l}</dd>
+                    </div>
+                  ))}
+                </dl>
               </article>
             </Reveal>
           );

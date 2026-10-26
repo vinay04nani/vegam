@@ -17,6 +17,8 @@ export type Plan = {
   promise: string;
   bestFor: string;
   palette: Palette;
+  /** Loops in the plan's kolam tier mark. */
+  dots: number;
   popular?: boolean;
   /** Leave undefined until prices are decided. */
   price?: Record<Currency, Record<Billing, number>>;
@@ -29,6 +31,7 @@ export type Plan = {
 export const plans: Plan[] = [
   {
     id: "starter",
+    dots: 1,
     name: "Starter",
     promise: "Never miss a message",
     bestFor: "A single location losing customers to slow replies and missed calls",
@@ -46,6 +49,7 @@ export const plans: Plan[] = [
   },
   {
     id: "growth",
+    dots: 2,
     name: "Growth",
     promise: "Every channel and every call",
     bestFor: "A busy business with steady calls and social media enquiries",
@@ -64,6 +68,7 @@ export const plans: Plan[] = [
   },
   {
     id: "pro",
+    dots: 3,
     name: "Pro",
     promise: "Grow and bring customers back",
     bestFor: "Multi-location businesses and teams that sell actively",

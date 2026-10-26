@@ -30,9 +30,9 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
   const result = complete ? plans.find((p) => p.id === recommend(answers)) : undefined;
 
   return (
-    <div className="rounded-[26px] border border-line bg-white p-[clamp(20px,3.5vw,40px)] shadow-[0_20px_60px_rgb(21_16_173/0.07)]">
+    <div className="rounded-[28px] border border-line bg-white/95 p-[clamp(20px,3vw,32px)] shadow-[0_30px_80px_rgb(21_16_173/0.12)] backdrop-blur">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="m-0 font-serif text-[clamp(28px,3vw,38px)] font-normal tracking-[-0.02em]">Which plan fits you?</h2>
+        <h2 className="m-0 text-[20px] font-semibold tracking-[-0.01em]">Which plan fits you?</h2>
         <span className="text-sm font-medium text-subtle" aria-live="polite">
           {answered} of {pickerQuestions.length} answered
         </span>
@@ -41,10 +41,10 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
         <div className="h-full rounded-full bg-[linear-gradient(90deg,#ee7a2e,#6e77e6)] transition-[width] duration-500" style={{ width: `${(answered / pickerQuestions.length) * 100}%` }} />
       </div>
 
-      <div className="mt-7 grid gap-6 md:grid-cols-2">
+      <div className="mt-6 flex flex-col gap-5">
         {pickerQuestions.map((q) => (
           <fieldset key={q.id} className="m-0 flex flex-col gap-3 border-0 p-0">
-            <legend className="mb-3 p-0 text-[16px] font-semibold text-ink">{q.question}</legend>
+            <legend className="mb-2.5 p-0 text-[15px] font-semibold text-ink">{q.question}</legend>
             <div className="flex flex-wrap gap-2">
               {q.options.map((o, i) => {
                 const active = answers[q.id] === i;
@@ -54,7 +54,7 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
                     type="button"
                     aria-pressed={active}
                     onClick={() => choose(q.id, i)}
-                    className={`min-h-11 cursor-pointer rounded-full border px-4 text-[14.5px] font-medium transition ${
+                    className={`min-h-10 cursor-pointer rounded-full border px-3.5 text-[14px] font-medium transition ${
                       active ? "border-ink bg-ink text-white" : "border-line-strong bg-white text-ink hover:border-subtle"
                     }`}
                   >
@@ -67,7 +67,7 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
         ))}
       </div>
 
-      <div className="mt-7 flex min-h-14 flex-wrap items-center justify-between gap-4 rounded-[18px] bg-panel px-5 py-4" aria-live="polite">
+      <div className="mt-6 flex min-h-14 flex-wrap items-center justify-between gap-3 rounded-[18px] bg-panel px-5 py-4" aria-live="polite">
         {result ? (
           <>
             <p className="m-0 text-[17px] text-ink">

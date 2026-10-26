@@ -132,3 +132,23 @@ export function CircleLattice({ className = "" }: { className?: string }) {
     </svg>
   );
 }
+
+/** Plan tier mark: a chain of kolam loops, one per dot (1, 2 or 3). */
+export function TierMark({ dots, className = "" }: { dots: number; className?: string }) {
+  const step = 18;
+  const r = 11;
+  const w = (dots - 1) * step + r * 2 + 4;
+  return (
+    <svg width={w} height={r * 2 + 4} viewBox={`0 0 ${w} ${r * 2 + 4}`} fill="none" aria-hidden="true" className={className}>
+      {Array.from({ length: dots }, (_, i) => {
+        const cx = r + 2 + i * step;
+        return (
+          <g key={i}>
+            <circle cx={cx} cy={r + 2} r={r} stroke="currentColor" strokeWidth="2" opacity="0.9" />
+            <circle cx={cx} cy={r + 2} r="3" fill="#EE7A2E" />
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
