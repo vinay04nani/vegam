@@ -76,9 +76,9 @@ export function PlanCards({ highlight }: { highlight: PlanId | null }) {
                 aria-label={`${plan.name} plan`}
                 className={`relative isolate flex h-full scroll-mt-28 flex-col overflow-hidden rounded-[28px] p-[clamp(24px,2.6vw,36px)] transition duration-500 ${
                   dark
-                    ? "bg-[linear-gradient(165deg,#22233A_0%,#1B1C2E_55%,#2B2A6E_100%)] text-white shadow-[0_30px_80px_rgb(21_16_173/0.25)]"
-                    : "border border-line bg-white text-ink hover:-translate-y-1 hover:shadow-[0_24px_60px_rgb(21_16_173/0.08)]"
-                } ${chosen ? "ring-4 ring-accent ring-offset-4 ring-offset-page" : ""}`}
+                    ? "bg-[linear-gradient(165deg,#22233A_0%,#1B1C2E_55%,#3A2618_100%)] text-white shadow-[0_30px_80px_rgb(30_31_43/0.3)]"
+                    : "border border-line bg-white text-ink hover:-translate-y-1 hover:shadow-[0_24px_60px_rgb(30_31_43/0.08)]"
+                } ${chosen ? "ring-4 ring-orange ring-offset-4 ring-offset-page" : ""}`}
               >
                 {dark && <div aria-hidden="true" className="bg-dots-light absolute inset-0 -z-10 [mask-image:linear-gradient(180deg,#000,transparent_60%)]" />}
                 <div className="flex items-start justify-between gap-3">
@@ -86,7 +86,7 @@ export function PlanCards({ highlight }: { highlight: PlanId | null }) {
                   {(chosen || plan.popular) && (
                     <span
                       className={`rounded-full px-3 py-1 text-[12px] font-semibold tracking-[0.06em] uppercase ${
-                        chosen ? "bg-accent text-ink" : "bg-white/12 text-white ring-1 ring-white/25"
+                        chosen ? "bg-orange text-white" : "bg-accent text-ink"
                       }`}
                     >
                       {chosen ? "Best fit for you" : "Most popular"}
@@ -95,7 +95,7 @@ export function PlanCards({ highlight }: { highlight: PlanId | null }) {
                 </div>
 
                 <h3 className="m-0 mt-7 font-serif text-[46px] leading-none font-normal tracking-[-0.03em]">{plan.name}</h3>
-                <p className={`m-0 mt-2 text-[17px] font-medium ${dark ? "text-accent" : "text-indigo"}`}>{plan.promise}</p>
+                <p className={`m-0 mt-2 text-[17px] font-medium ${dark ? "text-[#FFC27A]" : "text-[#B4500A]"}`}>{plan.promise}</p>
                 <p className={`m-0 mt-4 text-[15px] leading-snug ${dark ? "text-white/70" : "text-subtle"}`}>{plan.bestFor}</p>
 
                 <div className={`my-7 h-px ${dark ? "bg-white/15" : "bg-line"}`} />
@@ -112,7 +112,7 @@ export function PlanCards({ highlight }: { highlight: PlanId | null }) {
                 <ul className="m-0 mt-7 flex list-none flex-col gap-3.5 p-0">
                   {plan.highlights.map((h, j) => (
                     <li key={h} className={`flex items-start gap-3 text-[15.5px] leading-snug ${j === 0 && i > 0 ? "font-semibold" : ""} ${dark ? "text-white/90" : "text-ink-soft"}`}>
-                      <span className={`mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full ${dark ? "bg-accent text-ink" : "bg-[#E8F3EA] text-success"}`}>
+                      <span className={`mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full ${dark ? "bg-orange text-white" : "bg-ink text-white"}`}>
                         <Icon name="check" size={14} strokeWidth={2.4} className="[&_circle]:hidden" />
                       </span>
                       {h}
@@ -123,7 +123,7 @@ export function PlanCards({ highlight }: { highlight: PlanId | null }) {
                 <dl className={`m-0 mt-auto grid grid-cols-1 gap-2 pt-8 text-[13.5px]`}>
                   {plan.limits.map((l) => (
                     <div key={l} className={`flex items-center gap-2 ${dark ? "text-white/60" : "text-muted"}`}>
-                      <span className={`h-1.5 w-1.5 rounded-full ${dark ? "bg-accent" : "bg-periwinkle"}`} />
+                      <span className="h-1.5 w-1.5 rounded-full bg-orange" />
                       <dd className="m-0">{l}</dd>
                     </div>
                   ))}
@@ -133,7 +133,7 @@ export function PlanCards({ highlight }: { highlight: PlanId | null }) {
           );
         })}
       </div>
-      <a href="#compare" className="inline-flex items-center gap-1.5 font-semibold text-indigo hover:underline hover:underline-offset-4">
+      <a href="#compare" className="inline-flex items-center gap-1.5 font-semibold text-ink underline-offset-4 hover:underline">
         Compare every feature
         <Icon name="chevron-down" size={18} />
       </a>

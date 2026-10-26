@@ -1,11 +1,8 @@
 // Everything on the pricing page comes from here: plans, the plan picker,
-// how-it-works journeys, the comparison table, usage notes and the FAQ.
+// the comparison table and the FAQ.
 // To publish prices, fill in `price` on each plan (monthly and annual, per
 // currency); the billing and currency switches appear automatically.
 
-import type { ChatTab } from "./site";
-import type { IconName } from "@/components/ui/Icon";
-import type { Palette } from "@/components/ui/ArtTile";
 
 export type PlanId = "starter" | "growth" | "pro";
 export type Currency = "INR" | "USD";
@@ -16,7 +13,6 @@ export type Plan = {
   name: string;
   promise: string;
   bestFor: string;
-  palette: Palette;
   /** Loops in the plan's kolam tier mark. */
   dots: number;
   popular?: boolean;
@@ -35,7 +31,6 @@ export const plans: Plan[] = [
     name: "Starter",
     promise: "Never miss a message",
     bestFor: "A single location losing customers to slow replies and missed calls",
-    palette: "saffron",
     priceNote: "Pilot pricing on request",
     cta: { label: "Start a pilot", topic: "pricing" },
     highlights: [
@@ -53,7 +48,6 @@ export const plans: Plan[] = [
     name: "Growth",
     promise: "Every channel and every call",
     bestFor: "A busy business with steady calls and social media enquiries",
-    palette: "indigo",
     popular: true,
     priceNote: "Pilot pricing on request",
     cta: { label: "Start a pilot", topic: "pricing" },
@@ -72,7 +66,6 @@ export const plans: Plan[] = [
     name: "Pro",
     promise: "Grow and bring customers back",
     bestFor: "Multi-location businesses and teams that sell actively",
-    palette: "mist",
     priceNote: "Custom pricing",
     cta: { label: "Talk to us", topic: "pricing" },
     highlights: [
@@ -134,109 +127,6 @@ export const pickerQuestions: PickerQuestion[] = [
   },
 ];
 
-// ---------- How it works: one journey per plan ----------
-
-export const journeys: Record<PlanId, { intro: string; steps: { icon: IconName; title: string; body: string }[]; chat: ChatTab[] }> = {
-  starter: {
-    intro: "A customer messages or calls while you're busy. Vegam answers, books and reminds, and you see it all in the morning.",
-    steps: [
-      { icon: "missed", title: "Missed call", body: "A caller rings out while you're with someone." },
-      { icon: "message", title: "WhatsApp in seconds", body: "Vegam sends a friendly message with booking options." },
-      { icon: "calendar", title: "Booked + reminded", body: "The slot is booked; a reminder goes the day before." },
-      { icon: "sun", title: "Morning report", body: "You see every enquiry and booking at 8 AM." },
-    ],
-    chat: [
-      {
-        id: "starter-missed",
-        label: "Missed call",
-        color: "#C41010",
-        chat: [
-          { ai: true, text: "Hi, this is [Your business]. Sorry we missed your call! Want to book a visit or ask a question?" },
-          { ai: false, text: "Do you have anything tomorrow morning?" },
-          { ai: true, text: "Tomorrow at 10:30 AM is free. Shall I book it for you?" },
-          { ai: false, text: "Yes please" },
-          { ai: true, text: "Booked: tomorrow, 10:30 AM. I’ll remind you this evening." },
-        ],
-      },
-      {
-        id: "starter-reminder",
-        label: "Reminder",
-        color: "#2BB673",
-        chat: [
-          { ai: true, text: "Reminder: your visit with [Your business] is tomorrow at 10:30 AM. Confirm or reschedule?" },
-          { ai: false, text: "Can we make it 12?" },
-          { ai: true, text: "12:00 PM is free. Moved. See you tomorrow!" },
-        ],
-      },
-    ],
-  },
-  growth: {
-    intro: "Calls, Instagram and ad leads all get answered. Hot leads go to your team first, and happy customers leave reviews.",
-    steps: [
-      { icon: "phone", title: "AI answers the call", body: "Introduces itself as an AI, answers and books." },
-      { icon: "instagram", title: "Every channel", body: "Instagram and website chats land in the same inbox." },
-      { icon: "lead", title: "Hot leads first", body: "Leads are scored so your team calls the best ones." },
-      { icon: "check", title: "Reviews", body: "After a visit, happy customers are asked for a review." },
-    ],
-    chat: [
-      {
-        id: "growth-call",
-        label: "Phone call",
-        color: "#3D8BFF",
-        chat: [
-          { ai: true, text: "Thanks for calling [Your business]. I’m the AI assistant. How can I help?" },
-          { ai: false, text: "How much is a full service, and are you open Sunday?" },
-          { ai: true, text: "It starts at [price]. We’re open Sunday until 2 PM. Would you like a slot?" },
-          { ai: false, text: "Sunday 11 is good." },
-          { ai: true, text: "Booked for Sunday, 11 AM. I’ve sent the details on WhatsApp." },
-        ],
-      },
-      {
-        id: "growth-instagram",
-        label: "Instagram",
-        color: "#FF5C8A",
-        chat: [
-          { ai: false, text: "price?" },
-          { ai: true, text: "Hi! Prices start at [price]. Here’s our full list and a booking link. Want me to find you a time?" },
-          { ai: false, text: "This week evening" },
-          { ai: true, text: "Thursday 6 PM or Friday 7 PM are free. Which one works?" },
-        ],
-      },
-    ],
-  },
-  pro: {
-    intro: "New leads get a call within a minute, deposits are collected, and regulars are reminded to come back.",
-    steps: [
-      { icon: "lead", title: "New enquiry", body: "Someone fills your website form." },
-      { icon: "phone", title: "AI calls in a minute", body: "Only people who enquired, within the legal window." },
-      { icon: "check", title: "Deposit paid", body: "A payment link secures the booking." },
-      { icon: "calendar", title: "Comes back", body: "A rebooking reminder at the right time." },
-    ],
-    chat: [
-      {
-        id: "pro-payment",
-        label: "Deposit",
-        color: "#FFB020",
-        chat: [
-          { ai: true, text: "Your booking for Saturday 4 PM is held. Pay the deposit here to confirm: [payment link]" },
-          { ai: false, text: "Paid" },
-          { ai: true, text: "Received, thank you! You’re confirmed for Saturday at 4 PM." },
-        ],
-      },
-      {
-        id: "pro-rebook",
-        label: "Rebooking",
-        color: "#8B6CFF",
-        chat: [
-          { ai: true, text: "Hi Priya, it’s been 6 weeks since your last visit. Shall I book your next one?" },
-          { ai: false, text: "Yes, same time as last time" },
-          { ai: true, text: "Booked: Tuesday at 5 PM, same as before. See you then!" },
-        ],
-      },
-    ],
-  },
-};
-
 // ---------- Comparison table ----------
 
 type Cell = boolean | string;
@@ -294,52 +184,28 @@ export const featureGroups: FeatureGroup[] = [
   },
 ];
 
-// ---------- Usage explained ----------
-
-export const usageNotes: { icon: IconName; title: string; body: string; example: string }[] = [
-  {
-    icon: "message",
-    title: "AI conversation",
-    body: "Everything one customer says to Vegam within 24 hours counts as one conversation, however many messages.",
-    example: "Asks the price, picks a slot, confirms = 1 conversation",
-  },
-  {
-    icon: "phone",
-    title: "Voice minute",
-    body: "Each minute the AI spends on a call. Short calls are counted to the nearest minute.",
-    example: "A 2½ minute booking call = 3 minutes",
-  },
-  {
-    icon: "mail",
-    title: "WhatsApp fees",
-    body: "Replies within 24 hours of a customer's message are free. Reminders and follow-ups after that use Meta's message templates, passed on at cost.",
-    example: "A day-before reminder = one small Meta fee",
-  },
-];
-
-// ---------- Every plan ----------
-
-export const everyPlan: { icon: IconName; title: string; body: string; palette: Palette }[] = [
-  { icon: "headset", title: "Set up for you", body: "We connect WhatsApp, load your services and test 50 replies with you.", palette: "periwinkle" },
-  { icon: "message", title: "Human takeover", body: "Step into any chat or call, any time. The AI steps back.", palette: "saffron" },
-  { icon: "check", title: "Honest AI", body: "Always says it's an AI assistant, and never invents prices.", palette: "leaf" },
-  { icon: "close", title: "STOP means stop", body: "Opt-outs are honoured instantly, on every channel.", palette: "rose" },
-];
-
-// ---------- Pilot ----------
-
-export const pilotSteps = [
-  { title: "Week 1: measure", body: "We set you up and measure today's baseline: replies, missed calls, bookings." },
-  { title: "Weeks 2–4: Vegam runs", body: "Vegam answers, books and follows up. You see the difference every morning." },
-  { title: "Day 30: decide", body: "Keep going on the plan that fits, or stop. Your data is yours to export." },
-];
-
 // ---------- FAQ ----------
 
 export const faqs: { q: string; a: string }[] = [
   {
     q: "Which plan should I start with?",
     a: "Most businesses start with Growth because it answers calls as well as messages. If customers mainly reach you on WhatsApp, Starter is enough. Use the plan picker above, or ask us.",
+  },
+  {
+    q: "How does the 30-day pilot work?",
+    a: "In week 1 we set you up and measure today's baseline: replies, missed calls and bookings. In weeks 2–4 Vegam runs your front desk and you see the difference in your morning report. On day 30 you choose a plan or stop, and your data is yours to export.",
+  },
+  {
+    q: "What counts as an AI conversation?",
+    a: "Everything one customer says to Vegam within 24 hours counts as one conversation, however many messages. For example, asking the price, picking a slot and confirming is one conversation.",
+  },
+  {
+    q: "How are voice minutes counted?",
+    a: "Each minute the AI spends on a call, rounded up to the nearest minute. A 2½ minute booking call uses 3 minutes.",
+  },
+  {
+    q: "Who pays WhatsApp's fees?",
+    a: "Replies within 24 hours of a customer's message are free. Reminders and follow-ups sent after that use Meta's message templates, which have a small fee per message. We pass these on at cost.",
   },
   {
     q: "Can I switch plans later?",

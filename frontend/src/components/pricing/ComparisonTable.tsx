@@ -46,9 +46,9 @@ export function ComparisonTable() {
               Features
             </th>
             {plans.map((p) => (
-              <th key={p.id} scope="col" className={`border-b border-line px-4 py-5 text-center ${p.popular ? "bg-periwinkle-soft/60" : ""} ${p.id === "pro" ? "rounded-tr-[26px]" : ""}`}>
+              <th key={p.id} scope="col" className={`border-b border-line px-4 py-5 text-center ${p.popular ? "bg-[#FFF3E6]" : ""} ${p.id === "pro" ? "rounded-tr-[26px]" : ""}`}>
                 <span className="block text-[18px] font-bold text-ink">{p.name}</span>
-                {p.popular && <span className="mt-0.5 block text-[12px] font-semibold tracking-[0.08em] text-indigo uppercase">Most popular</span>}
+                {p.popular && <span className="mt-0.5 block text-[12px] font-semibold tracking-[0.08em] text-[#B4500A] uppercase">Most popular</span>}
               </th>
             ))}
           </tr>
@@ -80,7 +80,7 @@ export function ComparisonTable() {
                   {plans.map((p) => (
                     <td
                       key={p.id}
-                      className={`min-w-[96px] px-3 py-4 text-center align-middle whitespace-nowrap sm:px-4 ${p.popular ? "bg-periwinkle-soft/40" : ""} ${mobilePlan === p.id ? "table-cell" : "hidden md:table-cell"}`}
+                      className={`min-w-[96px] px-3 py-4 text-center align-middle whitespace-nowrap sm:px-4 ${p.popular ? "bg-[#FFF8F0]" : ""} ${mobilePlan === p.id ? "table-cell" : "hidden md:table-cell"}`}
                     >
                       <span className="inline-flex justify-center">
                         <Value v={r.values[p.id]} />

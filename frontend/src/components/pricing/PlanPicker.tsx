@@ -30,7 +30,7 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
   const result = complete ? plans.find((p) => p.id === recommend(answers)) : undefined;
 
   return (
-    <div className="rounded-[28px] border border-line bg-white/95 p-[clamp(20px,3vw,32px)] shadow-[0_30px_80px_rgb(21_16_173/0.12)] backdrop-blur">
+    <div className="rounded-[28px] bg-white p-[clamp(20px,3vw,32px)] shadow-[0_30px_80px_rgb(0_0_0/0.3)]">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="m-0 text-[20px] font-semibold tracking-[-0.01em]">Which plan fits you?</h2>
         <span className="text-sm font-medium text-subtle" aria-live="polite">
@@ -38,7 +38,7 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
         </span>
       </div>
       <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-panel" aria-hidden="true">
-        <div className="h-full rounded-full bg-[linear-gradient(90deg,#ee7a2e,#6e77e6)] transition-[width] duration-500" style={{ width: `${(answered / pickerQuestions.length) * 100}%` }} />
+        <div className="h-full rounded-full bg-[linear-gradient(90deg,#ffb020,#ee7a2e)] transition-[width] duration-500" style={{ width: `${(answered / pickerQuestions.length) * 100}%` }} />
       </div>
 
       <div className="mt-6 flex flex-col gap-5">
@@ -74,7 +74,7 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
               We recommend <strong className="font-semibold">{result.name}</strong>: {result.promise.toLowerCase()}.
             </p>
             <div className="flex gap-3">
-              <a href={`#plan-${result.id}`} className="inline-flex items-center gap-1 font-semibold text-indigo hover:underline hover:underline-offset-4">
+              <a href={`#plan-${result.id}`} className="inline-flex items-center gap-1 font-semibold text-ink underline-offset-4 hover:underline">
                 See {result.name}
                 <Icon name="chevron-down" size={18} />
               </a>
