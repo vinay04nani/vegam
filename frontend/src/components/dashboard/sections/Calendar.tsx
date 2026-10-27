@@ -81,7 +81,13 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
 
   const todays = bookings.filter((b) => b.day === 0);
   const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
-  const nextUp = todays.filter((b) => toMin(b.start) > nowMin).sort((a, b) => toMin(a.start) - toMin(b.start))[0];
+  const upNext = todays.filter((b) => toMin(b.start) + b.minutes > nowMin).sort((a, b) => toMin(a.start) - toMin(b.start));
+  const tomorrowFirst = bookings.filter((b) => b.day === 1).sort((a, b) => toMin(a.start) - toMin(b.start))[0];
+  const until = (b: Booking) => {
+    const m = toMin(b.start) - nowMin;
+    if (m <= 0) return "Now";
+    return m < 60 ? `in ${m} min` : `in ${Math.floor(m / 60)} h ${m % 60 ? `${m % 60} min` : ""}`.trim();
+  };
 
   // ----- Booking dialog -----
   const draftService = draft ? services[draft.service] : undefined;
@@ -161,7 +167,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
         </div>
       </div>
 
-      <div className="grid items-start gap-5 lg:grid-cols-[264px_minmax(0,1fr)]">
+      <div className="grid items-start gap-5 lg:grid-cols-[248px_minmax(0,1fr)]">
         {/* Sidebar */}
         <aside className="hidden flex-col gap-4 lg:flex">
           <div className="rounded-[18px] border border-line bg-white p-4">
@@ -177,28 +183,43 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
             />
           </div>
           <div className="flex flex-col gap-3 rounded-[18px] border border-line bg-white p-4">
-            <p className="m-0 text-[14.5px] font-semibold text-ink">Today at a glance</p>
-            <div className="grid grid-cols-3 gap-2 text-center">
-              {[
-                { n: todays.length, l: "Booked" },
-                { n: todays.filter((b) => b.status === "confirmed").length, l: "Confirmed" },
-                { n: todays.filter((b) => b.status === "pending").length, l: "Waiting" },
-              ].map((x) => (
-                <div key={x.l} className="rounded-[12px] bg-panel py-2">
-                  <p className="m-0 text-[20px] leading-tight font-bold text-ink">{x.n}</p>
-                  <p className="m-0 text-[11.5px] text-subtle">{x.l}</p>
-                </div>
-              ))}
+            <div className="flex flex-col gap-1.5">
+              <p className="m-0 text-[14.5px] font-semibold text-ink">Up next</p>
+              <p className="m-0 flex flex-wrap items-center gap-1.5 text-[12.5px] text-subtle">
+                {todays.length} booking{todays.length === 1 ? "" : "s"} today
+                {todays.some((b) => b.status === "pending") && <Badge tone="warning">{todays.filter((b) => b.status === "pending").length} waiting</Badge>}
+              </p>
             </div>
-            <p className="m-0 text-[13.5px] text-subtle">
-              {nextUp ? (
-                <>
-                  Next: <strong className="font-semibold text-ink">{nextUp.who}</strong> at {fmtMin(toMin(nextUp.start))}
-                </>
-              ) : (
-                "No more bookings today."
-              )}
-            </p>
+            {upNext.length ? (
+              <ul className="m-0 flex list-none flex-col gap-1 p-0">
+                {upNext.slice(0, 4).map((b, i) => (
+                  <li key={b.id}>
+                    <button
+                      type="button"
+                      onClick={() => setSelected({ kind: "booking", ...b })}
+                      className={`flex w-full cursor-pointer items-center gap-2.5 rounded-[12px] p-2 text-left transition hover:bg-panel ${i === 0 ? "bg-[#F7F8FF]" : ""}`}
+                    >
+                      <span className="w-[60px] flex-none text-[12.5px] leading-tight font-semibold whitespace-nowrap text-ink tabular-nums">{fmtMin(toMin(b.start))}</span>
+                      <span className="h-8 w-[3px] flex-none rounded-full" style={{ background: serviceColors[b.service % serviceColors.length][0] }} />
+                      <span className="flex min-w-0 flex-1 flex-col leading-tight">
+                        <span className="truncate text-[13.5px] font-semibold text-ink">{b.who}</span>
+                        <span className="truncate text-[12px] text-subtle">{i === 0 ? until(b) : serviceName(b.service)}</span>
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="m-0 text-[13.5px] text-subtle">
+                Nothing else today.
+                {tomorrowFirst && (
+                  <>
+                    {" "}
+                    Tomorrow starts with <strong className="font-semibold text-ink">{tomorrowFirst.who}</strong> at {fmtMin(toMin(tomorrowFirst.start))}.
+                  </>
+                )}
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-2.5 rounded-[18px] border border-line bg-white p-4">
             <p className="m-0 text-[14.5px] font-semibold text-ink">Services</p>
@@ -216,15 +237,22 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                 </label>
               );
             })}
-            <div className="mt-1 flex flex-col gap-1.5 border-t border-line pt-3 text-[12.5px] text-subtle">
+            <div className="mt-1 flex flex-col gap-2 border-t border-line pt-3 text-[12.5px] text-subtle">
               <span className="flex items-center gap-2">
-                <span className="h-3 w-5 rounded-[4px] border border-[#EEF0FF] bg-[#EEF0FF] shadow-[inset_3px_0_0_#4A47E0]" /> Confirmed
+                <span className="relative h-4 w-6 overflow-hidden rounded-[4px] bg-[#EEF0FF]">
+                  <span className="absolute inset-y-0 left-0 w-[3px] bg-[#4A47E0]" />
+                </span>
+                Confirmed
               </span>
               <span className="flex items-center gap-2">
-                <span className="h-3 w-5 rounded-[4px] border-[1.5px] border-dashed border-[#4A47E0] bg-white" /> Waiting to confirm
+                <span className="relative flex h-4 w-6 items-center justify-center overflow-hidden rounded-[4px] bg-[#EEF0FF] text-[#1E1C6E] shadow-[inset_0_0_0_1px_#4A47E0]">
+                  <Icon name="clock" size={10} />
+                </span>
+                Waiting to confirm
               </span>
               <span className="flex items-center gap-2">
-                <span className="h-3 w-5 rounded-[4px] border border-line-strong bg-[repeating-linear-gradient(135deg,#F4F4F8_0,#F4F4F8_3px,#E9EAF0_3px,#E9EAF0_6px)]" /> Blocked
+                <span className="h-4 w-6 rounded-[4px] bg-[repeating-linear-gradient(135deg,#F1F2F6_0,#F1F2F6_3px,#E6E7EE_3px,#E6E7EE_6px)]" />
+                Blocked
               </span>
             </div>
           </div>

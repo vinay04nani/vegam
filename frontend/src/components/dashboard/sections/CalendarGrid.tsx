@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { serviceColors, type Booking } from "@/content/dashboard";
-import { Badge } from "../kit";
+import { Icon } from "@/components/ui/Icon";
+import { Badge, sourceIcon } from "../kit";
 import { addDays, diffDays, fmtDate, fmtMin, layoutColumns, toMin, weekday } from "./calendarUtils";
 
 // The calendar's three views: a time grid (day or week), a month grid and an
@@ -11,7 +12,7 @@ import { addDays, diffDays, fmtDate, fmtMin, layoutColumns, toMin, weekday } fro
 export type Block = { id: string; day: number; start: string; minutes: number; reason: string };
 export type CalItem = ({ kind: "booking" } & Booking) | ({ kind: "block" } & Block);
 
-const HOUR_PX = 60;
+const HOUR_PX = 76;
 const colorOf = (service: number) => serviceColors[service % serviceColors.length];
 
 type GridProps = {
@@ -25,58 +26,113 @@ type GridProps = {
   onDayClick?: (day: number) => void;
 };
 
-function EventBlock({ item, top, height, left, width, serviceName, onSelect }: { item: CalItem; top: number; height: number; left: string; width: string; serviceName: (i: number) => string; onSelect: (i: CalItem) => void }) {
+type Placement = { top: number; height: number; left: string; width: string; z: number };
+
+function EventBlock({ item, place, wide, serviceName, onSelect }: { item: CalItem; place: Placement; wide: boolean; serviceName: (i: number) => string; onSelect: (i: CalItem) => void }) {
   const start = toMin(item.start);
   const range = `${fmtMin(start)} – ${fmtMin(start + item.minutes)}`;
+  const compact = place.height < 52;
+  const style = { top: place.top, height: place.height, left: place.left, width: place.width, zIndex: place.z };
+  const base = "absolute overflow-hidden rounded-[8px] border border-white text-left transition hover:z-30! hover:shadow-[0_6px_18px_rgb(30_31_43/0.16)] focus-visible:z-30! focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-indigo";
+
   if (item.kind === "block") {
     return (
       <button
         type="button"
         onClick={() => onSelect(item)}
-        className="absolute cursor-pointer overflow-hidden rounded-[8px] border border-line-strong bg-[repeating-linear-gradient(135deg,#F4F4F8_0,#F4F4F8_6px,#E9EAF0_6px,#E9EAF0_12px)] px-2 py-1 text-left text-[12px] text-muted"
-        style={{ top, height, left, width }}
+        title={`${item.reason || "Blocked"}, ${range}`}
+        className={`${base} cursor-pointer bg-[repeating-linear-gradient(135deg,#F1F2F6_0,#F1F2F6_5px,#E6E7EE_5px,#E6E7EE_10px)] px-2 text-muted ${compact ? "flex items-center" : "py-1.5"}`}
+        style={style}
       >
-        <span className="block truncate font-semibold">{item.reason || "Blocked"}</span>
-        {height > 36 && <span className="block truncate">{range}</span>}
+        <span className="flex items-center gap-1 text-[12px] font-semibold">
+          <Icon name="lock" size={11} className="flex-none" />
+          <span className="truncate">{item.reason || "Blocked"}</span>
+        </span>
+        {!compact && <span className="block truncate text-[11.5px]">{range}</span>}
       </button>
     );
   }
+
   const [accent, tint, text] = colorOf(item.service);
   const pending = item.status === "pending";
   return (
     <button
       type="button"
       onClick={() => onSelect(item)}
+      title={`${item.who} · ${serviceName(item.service)} · ${range}${pending ? " · waiting to confirm" : ""}`}
       aria-label={`${item.who}, ${serviceName(item.service)}, ${range}${pending ? ", waiting to confirm" : ""}`}
-      className="group absolute flex cursor-pointer flex-col overflow-hidden rounded-[8px] py-1 pr-1.5 pl-2.5 text-left text-[12px] leading-tight shadow-[0_1px_2px_rgb(30_31_43/0.06)] transition hover:z-10 hover:shadow-[0_6px_16px_rgb(30_31_43/0.14)]"
-      style={{
-        top,
-        height,
-        left,
-        width,
-        background: pending ? "#FFFFFF" : tint,
-        color: text,
-        border: pending ? `1.5px dashed ${accent}` : `1px solid ${tint}`,
-      }}
+      className={`${base} cursor-pointer pr-2 pl-3 ${compact ? "flex items-center" : "flex flex-col py-1.5"}`}
+      style={{ ...style, background: tint, color: text, boxShadow: pending ? `inset 0 0 0 1px ${accent}` : undefined }}
     >
       <span aria-hidden="true" className="absolute inset-y-0 left-0 w-[3px]" style={{ background: accent }} />
-      <span className="truncate font-semibold">{item.who}</span>
-      {height >= 38 && <span className="truncate opacity-85">{serviceName(item.service)}</span>}
-      {height >= 54 && <span className="truncate opacity-75">{range}</span>}
+      {compact ? (
+        <span className="flex min-w-0 items-center gap-1 text-[12px] leading-none">
+          {pending && <Icon name="clock" size={11} className="flex-none" />}
+          <span className="truncate font-semibold">{item.who}</span>
+          {wide && <span className="flex-none opacity-80">· {fmtMin(start)}</span>}
+        </span>
+      ) : (
+        <>
+          <span className="flex min-w-0 items-center gap-1.5">
+            {pending && <Icon name="clock" size={12} className="flex-none" />}
+            <span className="truncate text-[12.5px] leading-tight font-semibold">{item.who}</span>
+            {wide && (
+              <span className="ml-auto flex flex-none items-center gap-2">
+                <Icon name={sourceIcon[item.channel] ?? "message"} size={13} className="opacity-70" />
+                <Badge tone={pending ? "warning" : "success"}>{pending ? "Waiting" : "Confirmed"}</Badge>
+              </span>
+            )}
+          </span>
+          <span className="truncate text-[11.5px] leading-snug opacity-80">{range}</span>
+          {place.height >= 72 && <span className="truncate text-[11.5px] leading-snug opacity-80">{serviceName(item.service)}</span>}
+          {wide && place.height >= 96 && <span className="truncate text-[11.5px] leading-snug opacity-70">{item.phone}</span>}
+        </>
+      )}
     </button>
   );
 }
 
-/** Day or week time grid with opening hours, a now line and side-by-side overlaps. */
+/** Places a day's events: a single event takes the full width; overlapping ones cascade like Google Calendar, or sit side by side when they start together. */
+function placeAll(items: CalItem[], pos: (min: number) => number) {
+  const layout = layoutColumns(items);
+  const out = new Map<string, Placement>();
+  for (const it of items) {
+    const s = toMin(it.start);
+    const { col, cols } = layout.get(it.id) ?? { col: 0, cols: 1 };
+    const top = pos(s) + 1;
+    const height = Math.max(34, (it.minutes / 60) * HOUR_PX - 2);
+    const sameStart = items.some((o) => o.id !== it.id && toMin(o.start) === s);
+    let left = 0;
+    let width = 100;
+    if (cols > 1) {
+      if (sameStart) {
+        width = 100 / cols;
+        left = col * width;
+      } else {
+        const indent = cols === 2 ? 38 : Math.min(30, 45 / (cols - 1));
+        left = col * indent;
+        width = 100 - left;
+      }
+    }
+    out.set(it.id, { top, height, left: `calc(${left}% + 2px)`, width: `calc(${width}% - 4px)`, z: 1 + col });
+  }
+  return out;
+}
+
+/** Day or week time grid on the business's opening hours, with a now line. */
 export function TimeGrid({ today, days, itemsFor, open, close, serviceName, onSelect, onDayClick }: GridProps) {
-  const startH = Math.max(0, Math.floor(open / 60) - 1);
-  const endH = Math.min(24, Math.ceil(close / 60) + 1);
+  const all = days.flatMap((d) => itemsFor(d));
+  const earliest = Math.min(open, ...all.map((i) => toMin(i.start)));
+  const latest = Math.max(close, ...all.map((i) => toMin(i.start) + i.minutes));
+  const startH = Math.max(0, Math.floor(earliest / 60));
+  const endH = Math.min(24, Math.ceil(latest / 60));
   const startMin = startH * 60;
   const total = (endH - startH) * HOUR_PX;
   const hours = Array.from({ length: endH - startH }, (_, i) => startH + i);
   const pos = (min: number) => ((min - startMin) / 60) * HOUR_PX;
   const scroller = useRef<HTMLDivElement>(null);
   const [now, setNow] = useState<Date | null>(null);
+  const wide = days.length === 1;
 
   useEffect(() => {
     setNow(new Date());
@@ -84,90 +140,79 @@ export function TimeGrid({ today, days, itemsFor, open, close, serviceName, onSe
     return () => window.clearInterval(t);
   }, []);
 
-  // Open scrolled to the current time, or to opening time.
+  // When the day doesn't fit, open scrolled to the current time.
   useEffect(() => {
     const el = scroller.current;
-    if (!el) return;
+    if (!el || el.scrollHeight <= el.clientHeight) return;
     const n = new Date();
-    const target = days.includes(0) ? n.getHours() * 60 + n.getMinutes() - 90 : open - 30;
-    el.scrollTop = Math.max(0, pos(target));
+    if (days.includes(0)) el.scrollTop = Math.max(0, pos(n.getHours() * 60 + n.getMinutes()) - el.clientHeight / 3);
   }, [days.join(",")]);
 
   const nowMin = now ? now.getHours() * 60 + now.getMinutes() : -1;
-  const cols = `56px repeat(${days.length}, minmax(0, 1fr))`;
+  const showNow = days.includes(0) && nowMin >= startMin && nowMin <= endH * 60;
+  const cols = `60px repeat(${days.length}, minmax(0, 1fr))`;
+  const colTint = (d: number) => (d === 0 ? "bg-[#F7F8FF]" : weekday(addDays(today, d)) >= 5 ? "bg-[#FCFCFD]" : "bg-white");
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-[18px] border border-line bg-white">
+    <div className="flex flex-col overflow-hidden rounded-[18px] border border-line bg-white shadow-[0_1px_2px_rgb(30_31_43/0.03)]">
       {/* Day headers */}
       <div className="grid border-b border-line" style={{ gridTemplateColumns: cols }}>
-        <span className="flex items-end justify-center pb-2 text-[11px] text-subtle">{now ? fmtDate(now, { timeZoneName: "short" }).split(" ").pop() : ""}</span>
+        <span />
         {days.map((d) => {
           const date = addDays(today, d);
           const isToday = d === 0;
+          const n = itemsFor(d).filter((i) => i.kind === "booking").length;
           return (
             <button
               key={d}
               type="button"
               onClick={() => onDayClick?.(d)}
               disabled={!onDayClick}
-              className="flex flex-col items-center gap-1 border-l border-line py-2.5 enabled:cursor-pointer enabled:hover:bg-[#FAFAFC]"
+              className={`flex flex-col items-center gap-0.5 border-l border-line py-2.5 enabled:cursor-pointer enabled:hover:bg-[#F7F7FA] ${colTint(d)} ${wide ? "items-start px-4" : ""}`}
             >
-              <span className={`text-[11.5px] font-semibold tracking-[0.08em] uppercase ${isToday ? "text-ink" : "text-subtle"}`}>{fmtDate(date, { weekday: "short" })}</span>
-              <span className={`flex h-8 w-8 items-center justify-center rounded-full text-[16px] font-semibold ${isToday ? "bg-ink text-white" : "text-ink"}`}>{date.getDate()}</span>
+              <span className={`text-[12px] font-semibold tracking-[0.08em] uppercase ${isToday ? "text-indigo" : "text-subtle"}`}>{fmtDate(date, { weekday: wide ? "long" : "short" })}</span>
+              <span className={`flex h-9 w-9 items-center justify-center rounded-full text-[20px] leading-none font-semibold ${isToday ? "bg-ink text-white" : "text-ink"}`}>{date.getDate()}</span>
+              <span className="text-[11.5px] text-subtle">{n ? `${n} booking${n === 1 ? "" : "s"}` : "No bookings"}</span>
             </button>
           );
         })}
       </div>
 
-      <div ref={scroller} className="max-h-[620px] overflow-y-auto">
-        <div className="relative grid" style={{ gridTemplateColumns: cols, height: total }}>
+      <div ref={scroller} className="max-h-[max(520px,calc(100svh-250px))] overflow-y-auto">
+        <div className="relative grid" style={{ gridTemplateColumns: cols, height: total + 8 }}>
           {/* Hour labels */}
           <div className="relative">
-            {hours.map((h) =>
-              h === startH ? null : (
-                <span key={h} className="absolute right-2 -translate-y-1/2 text-[11px] font-medium text-subtle" style={{ top: pos(h * 60) }}>
-                  {fmtMin(h * 60, false)}
-                </span>
-              ),
+            {hours.map((h, i) => (
+              <span key={h} className={`absolute right-2.5 text-[11.5px] font-medium text-subtle ${i === 0 ? "top-1" : "-translate-y-1/2"}`} style={i === 0 ? undefined : { top: pos(h * 60) }}>
+                {fmtMin(h * 60, false)}
+              </span>
+            ))}
+            {showNow && (
+              <span className="absolute right-1 z-40 -translate-y-1/2 rounded-full bg-[#D0302F] px-1.5 py-0.5 text-[10.5px] leading-none font-semibold whitespace-nowrap text-white" style={{ top: pos(nowMin) }}>
+                {fmtMin(nowMin).replace(" AM", "am").replace(" PM", "pm")}
+              </span>
             )}
           </div>
 
           {days.map((d) => {
             const items = itemsFor(d);
-            const layout = layoutColumns(items);
+            const places = placeAll(items, pos);
             return (
-              <div key={d} className="relative border-l border-line">
-                {/* Closed hours shading */}
-                <div aria-hidden="true" className="absolute inset-x-0 top-0 bg-[#F7F7FA]" style={{ height: pos(open) }} />
-                <div aria-hidden="true" className="absolute inset-x-0 bottom-0 bg-[#F7F7FA]" style={{ top: pos(close) }} />
+              <div key={d} className={`relative border-l border-line ${colTint(d)}`}>
                 {/* Hour and half-hour lines */}
                 {hours.map((h) => (
                   <div key={h} aria-hidden="true">
-                    <div className="absolute inset-x-0 border-t border-line" style={{ top: pos(h * 60) }} />
-                    <div className="absolute inset-x-0 border-t border-dashed border-line/70" style={{ top: pos(h * 60 + 30) }} />
+                    {h !== startH && <div className="absolute inset-x-0 border-t border-line" style={{ top: pos(h * 60) }} />}
+                    <div className="absolute inset-x-0 border-t border-line/45" style={{ top: pos(h * 60 + 30) }} />
                   </div>
                 ))}
-                {items.map((it) => {
-                  const s = toMin(it.start);
-                  const { col, cols: n } = layout.get(it.id) ?? { col: 0, cols: 1 };
-                  const w = 100 / n;
-                  return (
-                    <EventBlock
-                      key={it.id}
-                      item={it}
-                      top={pos(s) + 1}
-                      height={Math.max(22, (it.minutes / 60) * HOUR_PX - 3)}
-                      left={`calc(${col * w}% + 3px)`}
-                      width={`calc(${w}% - 6px)`}
-                      serviceName={serviceName}
-                      onSelect={onSelect}
-                    />
-                  );
-                })}
-                {d === 0 && nowMin >= startMin && nowMin <= endH * 60 && (
-                  <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 z-20 flex items-center" style={{ top: pos(nowMin) }}>
-                    <span className="-ml-1.5 h-3 w-3 rounded-full bg-[#E5484D]" />
-                    <span className="h-[2px] flex-1 bg-[#E5484D]" />
+                {items.map((it) => (
+                  <EventBlock key={it.id} item={it} place={places.get(it.id)!} wide={wide} serviceName={serviceName} onSelect={onSelect} />
+                ))}
+                {d === 0 && showNow && (
+                  <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 z-40 flex items-center opacity-90" style={{ top: pos(nowMin) - 1 }}>
+                    <span className="-ml-[5px] h-2.5 w-2.5 flex-none rounded-full bg-[#D0302F]" />
+                    <span className="h-[2px] flex-1 bg-[#D0302F]" />
                   </div>
                 )}
               </div>
