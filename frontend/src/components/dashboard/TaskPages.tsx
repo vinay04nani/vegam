@@ -1,12 +1,10 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { plans, type Billing, type PlanId } from "@/content/pricing";
 import { Icon } from "@/components/ui/Icon";
 import { AssistantSetup, assistantValid } from "@/components/setup/AssistantSetup";
 import { ChannelSetup } from "@/components/setup/ChannelSetup";
 import { PrimaryButton } from "@/components/setup/fields";
-import { PlanChooser } from "@/components/setup/PlanChooser";
 import { TestChat, testSuggestions } from "@/components/setup/TestChat";
 import { whatsappStarted, type OnboardingState, type SetupTask } from "@/lib/onboarding";
 import { PageTitle } from "./ui";
@@ -29,36 +27,6 @@ function Footer({ hint, children }: { hint?: string; children: ReactNode }) {
 
 function backLabel(state: OnboardingState) {
   return state.liveAt ? "Home" : "Setup";
-}
-
-export function PlanPage({ state, update, onHome }: PageProps) {
-  const [plan, setPlan] = useState<PlanId | null>(state.plan);
-  const [billing, setBilling] = useState<Billing>(state.billing);
-  const chosen = plans.find((p) => p.id === plan);
-  const changed = plan !== state.plan || billing !== state.billing;
-
-  return (
-    <div className="flex max-w-[860px] flex-col gap-8">
-      <PageTitle
-        title={state.plan ? "Your plan" : "Choose a plan"}
-        body={state.liveAt ? "Change plan any time; it applies from your next billing period." : "Every plan starts with a free 30-day pilot when you go live. No card needed."}
-        onBack={onHome}
-        backLabel={backLabel(state)}
-      />
-      <PlanChooser state={state} value={plan} billing={billing} onChange={setPlan} onBilling={setBilling} detailed />
-      <Footer hint={!plan ? "Pick a plan to continue." : undefined}>
-        <PrimaryButton
-          disabled={!plan || (!!state.plan && !changed)}
-          onClick={() => {
-            update((s) => ({ ...s, plan, billing }));
-            onHome();
-          }}
-        >
-          {state.plan ? "Save plan" : `Choose ${chosen?.name ?? "plan"}`}
-        </PrimaryButton>
-      </Footer>
-    </div>
-  );
 }
 
 export function AssistantPage({ state, update, onHome }: PageProps) {

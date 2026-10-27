@@ -46,7 +46,7 @@ export function Billing({ state, onOpen }: Props) {
     <>
       <Group title="Plan">
         <Row label={`${plan.name} plan`} description={`${formatMoney(base, currency)}/month${india ? " + GST" : ""} · renews 1 Nov 2026`}>
-          <RowButton onClick={() => onOpen("plan")}>Change plan</RowButton>
+          <RowButton onClick={() => onOpen("settings:plans")}>Change plan</RowButton>
         </Row>
         <Row label="Usage this month" description="Resets on 1 Nov." stacked>
           <div className="flex flex-col gap-3">

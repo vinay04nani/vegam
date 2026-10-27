@@ -5,6 +5,7 @@ import { Icon, type IconName } from "@/components/ui/Icon";
 import type { OnboardingState } from "@/lib/onboarding";
 import { Account } from "./settings/Account";
 import { Billing } from "./settings/Billing";
+import { Plans } from "./settings/Plans";
 import { ActivityLog } from "./settings/ActivityLog";
 import { BookingPage } from "./settings/BookingPage";
 import { ContactFields } from "./settings/ContactFields";
@@ -51,6 +52,7 @@ type SectionId =
   | "developers"
   | "account"
   | "billing"
+  | "plans"
   | "help";
 
 const groups: { title: string; items: { id: SectionId; label: string; icon: IconName; keywords: string }[] }[] = [
@@ -89,6 +91,7 @@ const groups: { title: string; items: { id: SectionId; label: string; icon: Icon
       { id: "activity", label: "Activity log", icon: "chart", keywords: "audit log history who changed" },
       { id: "privacy", label: "Privacy", icon: "shield", keywords: "ai disclosure opt-out stop consent retention recordings data requests dpdp" },
       { id: "developers", label: "API and webhooks", icon: "key", keywords: "api keys webhooks developers integration" },
+      { id: "plans", label: "Plans", icon: "sparkle", keywords: "plan upgrade downgrade choose subscribe pricing checkout stripe" },
       { id: "billing", label: "Billing and invoices", icon: "card", keywords: "billing invoices pdf payment method stripe card usage plan gst" },
       { id: "account", label: "Plan and data", icon: "sparkle", keywords: "plan billing export delete close account" },
       { id: "help", label: "Help and support", icon: "headset", keywords: "help support articles contact shortcuts what's new" },
@@ -215,6 +218,7 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
             {section === "notifications" && <NotificationPrefs />}
             {section === "privacy" && <Privacy onOpen={onOpen} />}
             {section === "developers" && <Developers />}
+            {section === "plans" && <Plans state={state} update={update} onOpen={onOpen} />}
             {section === "billing" && <Billing state={state} onOpen={onOpen} />}
             {section === "account" && <Account state={state} onOpen={onOpen} />}
             {section === "help" && <HelpPanel onOpen={onOpen} />}

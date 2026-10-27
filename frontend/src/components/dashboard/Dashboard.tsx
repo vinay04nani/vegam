@@ -10,7 +10,7 @@ import { isIncluded, useOnboarding } from "@/lib/onboarding";
 import { withBase } from "@/lib/paths";
 import { LiveHome } from "./LiveHome";
 import { SetupHome } from "./SetupHome";
-import { AssistantPage, PlanPage, TestPage, WhatsAppPage } from "./TaskPages";
+import { AssistantPage, TestPage, WhatsAppPage } from "./TaskPages";
 import { Calendar } from "./sections/Calendar";
 import { Calls } from "./sections/Calls";
 import { Channels } from "./sections/Channels";
@@ -122,6 +122,7 @@ export function Dashboard() {
     // Help and support lives in the settings dialog too.
     if (id === "help") id = "settings:help";
     if (id === "billing") id = "settings:billing";
+    if (id === "plan") id = "settings:plans";
     if (id === "settings" || id.startsWith("settings:")) {
       setSettings(id.split(":")[1] ?? "general");
       return;
@@ -187,8 +188,6 @@ export function Dashboard() {
         );
       case "preview":
         return <LiveHome state={state} update={update} plan={state.plan ?? "growth"} mode="preview" welcome={false} onDismissWelcome={() => undefined} onOpen={select} />;
-      case "plan":
-        return <PlanPage {...props} />;
       case "setup-assistant":
       case "assistant":
         return <AssistantPage {...props} />;
