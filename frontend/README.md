@@ -76,7 +76,7 @@ src/
    ├─ pricing/            # PricingPage, PlanPicker, PlanCards, ComparisonTable, Faq
    ├─ contact/            # ContactForm, GlyphField
    ├─ phone/              # Phone, Bubble, Chip (chat-app phone mockup)
-   ├─ onboarding/         # OnboardingWizard, StepRail, LivePreview, one file per step
+   ├─ onboarding/         # OnboardingWizard, StepRail, TestChat, one file per step
    ├─ dashboard/          # Dashboard (sidebar, phone tabs, Home, section placeholders)
    └─ pixel/              # pixel scenes (coast, sunrise, lighthouse, kites), PixelBackdrop, ComingSoon
 ```

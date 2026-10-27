@@ -38,13 +38,12 @@ Pricing page "Start free pilot" (?plan=growth)
 
 ## Wizard layout
 
-- **Desktop:** three columns.
+- **Desktop:** two columns.
   - Left: a step rail drawn as a kolam. Each finished step's dot joins the next with an orange loop.
-  - Middle: the current step.
-  - Right: a live phone preview of "What customers see", which updates as they type: business name, greeting, hours, the first service and its price.
+  - Right: the current step.
   - The Back and Continue buttons sit in a bar fixed to the bottom. When Continue is disabled, the bar says why.
-- **Phones:** a thin progress bar under the header and one column. The preview opens as an overlay from the bottom bar.
-- Step ⑥ puts the phone in the middle as a working chat.
+- **Phones:** a thin progress bar under the header and one column.
+- Step ⑥ shows a chat panel where the owner talks to the assistant as a customer.
 
 ## After go-live: the dashboard
 

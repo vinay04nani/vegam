@@ -5,7 +5,7 @@ import { countries } from "@/content/onboarding";
 import { Icon } from "@/components/ui/Icon";
 import type { OnboardingState } from "@/lib/onboarding";
 import { Field, SecondaryButton, StepHeader, TextInput } from "./fields";
-import { LivePreview } from "./LivePreview";
+import { TestChat } from "./TestChat";
 
 type Props = { state: OnboardingState; update: (fn: (s: OnboardingState) => OnboardingState) => void };
 
@@ -27,9 +27,7 @@ export function StepTest({ state, update }: Props) {
         title="Test your assistant"
         body="Chat as if you were a customer. Ask something it doesn’t know too: it should hand over to your team rather than guess."
       />
-      <div className="flex justify-center">
-        <LivePreview state={state} interactive suggestions={suggestions} />
-      </div>
+      <TestChat state={state} suggestions={suggestions} />
 
       <section className="flex flex-col gap-4 rounded-[22px] border border-line bg-white p-5">
         <div className="flex items-start gap-4">
