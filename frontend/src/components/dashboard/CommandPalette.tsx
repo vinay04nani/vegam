@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { appNav } from "@/content/onboarding";
 import { sampleBookings, sampleLeads, sampleThreads } from "@/content/dashboard";
+import { sampleContacts } from "@/content/contacts";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Kbd } from "./kit";
 
@@ -38,6 +39,7 @@ export function CommandPalette({ open, onClose, onOpen }: { open: boolean; onClo
     const pages: Result[] = appNav.map((n) => ({ id: `p-${n.id}`, group: "Pages", label: n.label, icon: n.icon, view: n.id }));
     const people: Result[] = [
       ...sampleThreads.map((t) => ({ id: `t-${t.id}`, group: "Conversations", label: t.who, hint: t.channel, icon: "message" as IconName, view: "inbox" })),
+      ...sampleContacts.map((c) => ({ id: `c-${c.id}`, group: "Contacts", label: c.name, hint: c.phone, icon: "users" as IconName, view: "contacts" })),
       ...sampleLeads.map((l) => ({ id: `l-${l.id}`, group: "Leads", label: l.name, hint: l.interest, icon: "lead" as IconName, view: "leads" })),
       ...sampleBookings.filter((b) => b.day >= 0 && b.day < 3).map((b) => ({ id: `b-${b.id}`, group: "Bookings", label: b.who, hint: b.day === 0 ? `Today ${b.start}` : b.day === 1 ? `Tomorrow ${b.start}` : `In 2 days ${b.start}`, icon: "calendar" as IconName, view: "calendar" })),
     ];
