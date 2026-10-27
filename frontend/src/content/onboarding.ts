@@ -1,20 +1,9 @@
-// Copy and options for the sign-up wizard (/onboarding/) and the dashboard
-// (/app/). Until the backend exists, the wizard keeps its answers in the
-// browser and the dashboard shows labelled sample data.
+// Copy and options for onboarding (/onboarding/) and the dashboard (/app/),
+// including its setup guide. Until the backend exists, answers are kept in
+// the browser and the dashboard shows labelled sample data.
 
 import type { IconName } from "@/components/ui/Icon";
 import type { PlanId } from "./pricing";
-
-export const wizardSteps = [
-  { id: "business", title: "Your business", hint: "Name, country and languages" },
-  { id: "plan", title: "Choose a plan", hint: "30-day pilot, no card needed" },
-  { id: "assistant", title: "Teach your assistant", hint: "Services, prices, hours" },
-  { id: "channels", title: "Connect channels", hint: "WhatsApp, calls, website" },
-  { id: "test", title: "Test it", hint: "Chat with your assistant" },
-  { id: "live", title: "Go live", hint: "Start your pilot" },
-] as const;
-
-export type StepId = (typeof wizardSteps)[number]["id"];
 
 export const countries = [
   { id: "IN", name: "India", currency: "INR", dial: "+91" },
@@ -28,10 +17,6 @@ export const countries = [
 ] as const;
 
 export type CountryId = (typeof countries)[number]["id"];
-
-export const languageOptions = ["English", "Hindi", "Telugu", "Tamil", "Kannada", "Malayalam", "Marathi", "Bengali", "Arabic", "Spanish", "French"];
-
-export const teamSizeOptions = ["Just me", "2–5", "6–20", "More than 20"];
 
 export const toneOptions = [
   { id: "friendly", label: "Friendly", sample: "Hi! Happy to help." },
@@ -61,7 +46,6 @@ export type Channel = {
   title: string;
   body: string;
   minPlan: PlanId;
-  essential?: boolean;
 };
 
 export const channelList: Channel[] = [
@@ -71,7 +55,6 @@ export const channelList: Channel[] = [
     title: "WhatsApp",
     body: "Your assistant replies to every WhatsApp message on your business number.",
     minPlan: "starter",
-    essential: true,
   },
   {
     id: "missed",
@@ -122,6 +105,8 @@ export type ChecklistItem = {
   minPlan: PlanId;
   priority: "Must" | "Should" | "Before day 25";
   action: string;
+  /** A dashboard page that does this task; without one the demo just marks it done. */
+  view?: string;
 };
 
 export const checklist: ChecklistItem[] = [
@@ -148,6 +133,15 @@ export const checklist: ChecklistItem[] = [
     minPlan: "starter",
     priority: "Must",
     action: "Answer questions",
+  },
+  {
+    id: "channels",
+    title: "Connect more channels",
+    body: "Missed calls, your website, AI call answering, Instagram and Messenger: every place customers reach you, in one inbox.",
+    minPlan: "starter",
+    priority: "Should",
+    action: "Connect channels",
+    view: "channels",
   },
   {
     id: "share",

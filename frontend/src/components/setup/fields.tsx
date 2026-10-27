@@ -68,16 +68,6 @@ export function Choices<T extends string>({
   );
 }
 
-export function StepHeader({ step, title, body }: { step: number; title: string; body: string }) {
-  return (
-    <div className="flex flex-col gap-3">
-      <p className="m-0 text-sm font-semibold tracking-[0.16em] text-muted uppercase">Step {step} of 6</p>
-      <h1 className="m-0 font-serif text-[clamp(32px,3.4vw,46px)] leading-[1.05] font-normal tracking-[-0.03em] text-ink">{title}</h1>
-      <p className="m-0 max-w-[560px] text-[17px] leading-relaxed text-subtle">{body}</p>
-    </div>
-  );
-}
-
 export function PrimaryButton({ children, ...props }: ComponentProps<"button">) {
   return (
     <button

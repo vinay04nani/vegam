@@ -5,7 +5,16 @@ import { Icon } from "@/components/ui/Icon";
 import { assistantIntro, businessName, replyTo, type DemoMessage } from "@/lib/demoAssistant";
 import type { OnboardingState } from "@/lib/onboarding";
 
-// The "Test it" step: a chat with the demo assistant, answering from what the
+/** Questions to try, built from the owner's own services and answers. */
+export function testSuggestions(state: OnboardingState) {
+  const first = state.assistant.services.find((s) => s.name.trim())?.name;
+  const faq = state.assistant.faqs.find((f) => f.q.trim())?.q;
+  return ["What are your timings?", first ? `How much is ${first.toLowerCase()}?` : "What are your prices?", "Can I book tomorrow?", faq, "Can I talk to a person?"].filter(
+    (x): x is string => !!x,
+  );
+}
+
+// The "Try it yourself" setup task: a chat with the demo assistant, answering from what the
 // owner entered. Nothing is sent to anyone.
 
 const lines = (text: string) =>
@@ -31,7 +40,7 @@ function Message({ m }: { m: DemoMessage }) {
   );
 }
 
-export function TestChat({ state, suggestions }: { state: OnboardingState; suggestions: string[] }) {
+export function TestChat({ state, suggestions, onSend }: { state: OnboardingState; suggestions: string[]; onSend?: () => void }) {
   const [messages, setMessages] = useState<DemoMessage[]>([]);
   const [draft, setDraft] = useState("");
   const [typing, setTyping] = useState(false);
@@ -44,6 +53,7 @@ export function TestChat({ state, suggestions }: { state: OnboardingState; sugge
   const sendText = (raw: string) => {
     const text = raw.trim();
     if (!text || typing) return;
+    onSend?.();
     const history: DemoMessage[] = [...messages, { from: "customer", text }];
     setMessages(history);
     setDraft("");

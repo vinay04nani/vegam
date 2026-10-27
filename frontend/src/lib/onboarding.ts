@@ -5,18 +5,23 @@ import type { ChannelId, CountryId, Tone } from "@/content/onboarding";
 import { countries } from "@/content/onboarding";
 import type { Billing, Currency, PlanId } from "@/content/pricing";
 
-// The sign-up wizard's answers. Until the backend exists they live in this
-// browser (localStorage) so the wizard can resume where it was left and the
-// dashboard can show the business's own name and plan.
+// The business's sign-up and setup answers. Until the backend exists they
+// live in this browser (localStorage) so onboarding can resume where it was
+// left and the dashboard can show the business's own name, plan and setup.
 // TODO(backend): save to the business record instead.
 
 export type Service = { name: string; minutes: number; price: number };
 export type Faq = { q: string; a: string };
 export type ChannelStatus = "off" | "pending" | "connected";
 
+/** Setup tasks done from the dashboard. WhatsApp is tracked by its channel status. */
+export type SetupTask = "assistant" | "test";
+
 export type OnboardingState = {
+  /** Onboarding screen: 0 about you, 1 pick a plan. */
   step: number;
-  completed: number[];
+  /** Set when onboarding is finished or skipped; the dashboard then shows the setup guide. */
+  onboardedAt: string | null;
   business: {
     name: string;
     about: string;
@@ -41,14 +46,14 @@ export type OnboardingState = {
   channels: Record<ChannelId, ChannelStatus>;
   whatsappNumber: "current" | "new";
   ownerPhone: string;
-  testSent: boolean;
+  setupDone: SetupTask[];
   liveAt: string | null;
   checklistDone: string[];
 };
 
 export const initialState: OnboardingState = {
   step: 0,
-  completed: [],
+  onboardedAt: null,
   business: { name: "", about: "", country: "IN", languages: ["English"], locations: "one", team: "2–5" },
   plan: null,
   billing: "monthly",
@@ -66,12 +71,12 @@ export const initialState: OnboardingState = {
   channels: { whatsapp: "off", missed: "off", voice: "off", social: "off", website: "off", ads: "off" },
   whatsappNumber: "current",
   ownerPhone: "",
-  testSent: false,
+  setupDone: [],
   liveAt: null,
   checklistDone: [],
 };
 
-const KEY = "vegam.onboarding.v1";
+const KEY = "vegam.onboarding.v2";
 
 function read(): OnboardingState | null {
   try {
@@ -106,7 +111,7 @@ export function clearOnboarding() {
   }
 }
 
-/** Wizard state, loaded after mount (so the static HTML matches) and saved on every change. */
+/** Saved state, loaded after mount (so the static HTML matches) and saved on every change. */
 export function useOnboarding() {
   const [state, setState] = useState<OnboardingState>(initialState);
   const [ready, setReady] = useState(false);
@@ -136,12 +141,11 @@ export function formatMoney(amount: number, currency: Currency) {
   return `${currency === "INR" ? "₹" : "$"}${amount.toLocaleString(currency === "INR" ? "en-IN" : "en-US")}`;
 }
 
-/** Recommends a plan from the business answers, like the pricing page picker. */
-export function recommendPlan(state: OnboardingState): PlanId {
-  if (state.business.locations === "more") return "pro";
-  if (state.business.team === "Just me") return "starter";
-  return "growth";
-}
+export const whatsappStarted = (s: OnboardingState) => s.channels.whatsapp !== "off";
+
+/** Everything the setup guide needs before the assistant can go live. */
+export const readyToGoLive = (s: OnboardingState) =>
+  s.plan !== null && s.setupDone.includes("assistant") && whatsappStarted(s) && s.setupDone.includes("test");
 
 /** Reads ?plan= from the URL (set by the pricing page buttons). */
 export function planFromUrl(): PlanId | null {

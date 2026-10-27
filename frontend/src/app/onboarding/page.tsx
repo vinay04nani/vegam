@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { OnboardingWizard } from "@/components/onboarding/OnboardingWizard";
+import { Onboarding } from "@/components/onboarding/Onboarding";
 
-export const metadata: Metadata = { title: "Set up your front desk · Vegam", robots: { index: false } };
+export const metadata: Metadata = { title: "Get started · Vegam", robots: { index: false } };
 
 export default function OnboardingPage() {
-  return <OnboardingWizard />;
+  return <Onboarding />;
 }

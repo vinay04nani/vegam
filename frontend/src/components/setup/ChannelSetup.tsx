@@ -5,11 +5,14 @@ import { channelList, planRank, sampleForwardingNumber, type Channel, type Chann
 import { plans, type PlanId } from "@/content/pricing";
 import { Icon } from "@/components/ui/Icon";
 import type { ChannelStatus, OnboardingState } from "@/lib/onboarding";
-import { SecondaryButton, StatusPill, StepHeader } from "./fields";
+import { SecondaryButton, StatusPill } from "./fields";
 
-type Props = { state: OnboardingState; update: (fn: (s: OnboardingState) => OnboardingState) => void };
-
-export const channelsValid = (s: OnboardingState) => s.channels.whatsapp !== "off";
+type Props = {
+  state: OnboardingState;
+  update: (fn: (s: OnboardingState) => OnboardingState) => void;
+  /** Show only these channels (the WhatsApp setup page shows just WhatsApp). */
+  only?: ChannelId[];
+};
 
 // TODO(backend): each "connect" button starts the real flow (Meta Embedded
 // Signup, Facebook Login, carrier forwarding test call). The demo only
@@ -62,7 +65,7 @@ function ChannelCard({ channel, status, locked, children }: { channel: Channel; 
             ) : (
               <StatusFor status={status} />
             )}
-            {channel.essential && !locked && status === "off" && <span className="text-[13px] font-semibold text-warning">Needed to go live</span>}
+            
           </div>
           <p className="m-0 text-[15px] text-subtle">{channel.body}</p>
         </div>
@@ -72,8 +75,10 @@ function ChannelCard({ channel, status, locked, children }: { channel: Channel; 
   );
 }
 
-export function StepChannels({ state, update }: Props) {
-  const plan = state.plan ?? "starter";
+/** Connection cards for each channel. Channels above the chosen plan show how to switch. */
+export function ChannelSetup({ state, update, only }: Props) {
+  // Before a plan is chosen everything is shown unlocked, so people can explore.
+  const plan = state.plan ?? "pro";
   const [busy, setBusy] = useState<ChannelId | null>(null);
   const setStatus = (id: ChannelId, status: ChannelStatus) => update((s) => ({ ...s, channels: { ...s.channels, [id]: status } }));
   const connect = (id: ChannelId, status: ChannelStatus = "connected") => {
@@ -157,13 +162,8 @@ export function StepChannels({ state, update }: Props) {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      <StepHeader
-        step={4}
-        title="Connect your channels"
-        body="Connect WhatsApp now. Everything else can wait: you’ll find it in your setup checklist after you go live."
-      />
-      {channelList.map((c) => {
+    <div className="flex flex-col gap-4">
+      {channelList.filter((c) => !only || only.includes(c.id)).map((c) => {
         const locked = planRank[plan] < planRank[c.minPlan] ? c.minPlan : null;
         return (
           <ChannelCard key={c.id} channel={c} status={state.channels[c.id]} locked={locked}>

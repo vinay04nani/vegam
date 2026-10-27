@@ -4,7 +4,7 @@ import { useState } from "react";
 import { sampleImport, toneOptions } from "@/content/onboarding";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { currencyFor, type OnboardingState, type Service } from "@/lib/onboarding";
-import { Choices, Field, SecondaryButton, StepHeader, TextInput, inputClass } from "./fields";
+import { Choices, Field, SecondaryButton, TextInput, inputClass } from "./fields";
 
 type Props = { state: OnboardingState; update: (fn: (s: OnboardingState) => OnboardingState) => void };
 
@@ -16,7 +16,8 @@ const sources: { id: "website" | "upload" | "manual"; icon: IconName; title: str
   { id: "manual", icon: "pencil", title: "Type it in", body: "Add your services and hours yourself" },
 ];
 
-export function StepAssistant({ state, update }: Props) {
+/** Teach the assistant: import from a link or file, then check services, hours and answers. */
+export function AssistantSetup({ state, update }: Props) {
   const a = state.assistant;
   const currency = currencyFor(state);
   const [reading, setReading] = useState(false);
@@ -44,8 +45,6 @@ export function StepAssistant({ state, update }: Props) {
 
   return (
     <div className="flex flex-col gap-9">
-      <StepHeader step={3} title="Teach your assistant" body="It only answers from what you give it. When it doesn’t know something, it asks your team instead of guessing." />
-
       <section className="flex flex-col gap-4">
         <h2 className="m-0 text-[17px] font-semibold text-ink">Where can it learn about you?</h2>
         <div role="radiogroup" aria-label="Where to learn from" className="grid gap-3 sm:grid-cols-3">
