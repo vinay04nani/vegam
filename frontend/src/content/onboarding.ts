@@ -201,7 +201,7 @@ export const checklist: ChecklistItem[] = [
   {
     id: "payments",
     title: "Turn on payment links",
-    body: "Send UPI or card links for deposits and bills, with polite reminders until paid.",
+    body: "Send Stripe payment links for deposits and bills, with polite reminders until paid.",
     minPlan: "pro",
     priority: "Should",
     action: "Set up payments",
@@ -209,7 +209,7 @@ export const checklist: ChecklistItem[] = [
   {
     id: "billing",
     title: "Add a payment method",
-    body: "Your pilot is free. Add a card or UPI mandate before day 25 to keep going after day 30.",
+    body: "Your pilot is free. Add a card (through Stripe) before day 25 to keep going after day 30.",
     minPlan: "starter",
     priority: "Before day 25",
     action: "Add payment method",

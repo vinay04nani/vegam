@@ -55,7 +55,7 @@ Every plan starts with a 30-day measured pilot. Meta's WhatsApp template fees ar
 | What's included | How it works | Use case |
 |---|---|---|
 | **AI calls new leads** | Leads who enquired are called by the AI within a minute, only within the legal contact window and permitted hours. | A website enquiry at 10 AM gets a call at 10:01 and is booked before they contact a competitor. |
-| **Payment links + payment reminders** | Send UPI or card payment links for deposits, invoices and balances. Polite reminders on day 3, 7 and 14 stop once paid. | Deposits cut no-shows; overdue bills are collected without the owner chasing. |
+| **Payment links + payment reminders** | Send Stripe payment links for deposits, invoices and balances. Polite reminders on day 3, 7 and 14 stop once paid. | Deposits cut no-shows; overdue bills are collected without the owner chasing. |
 | **Broadcasts** (opted-in customers only) | Send offers, festival greetings or announcements to chosen customer groups. | "Diwali offer: 20% off this week" reaches 400 regular customers in one go. |
 | **Win-back + rebooking reminders** | Customers who haven't returned get a gentle message; regulars get "time for your next visit" reminders. | A customer who usually visits every 6 weeks gets a nudge at week 6 with a booking link. |
 | **Multi-branch** | One inbox and calendar for several locations, with chats routed to the right branch and reports per branch. | A business with three locations manages all front desks from one place. |

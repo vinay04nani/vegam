@@ -6,8 +6,8 @@ import { downloadPdf } from "@/lib/pdf";
 import { Badge, useToast, type BadgeTone } from "../../kit";
 import { Dropdown, Group, Row, RowButton, Switch } from "./parts";
 
-// Taking deposits and payments through links in chat. Razorpay in India,
-// Stripe elsewhere. Demo: nothing is connected.
+// Taking deposits and payments through links in chat, with Stripe.
+// Demo: nothing is connected.
 
 const received = [
   { id: "pay_8KQ2", who: "M. D’Souza", what: "Standard appointment", amount: 1200, usd: 40, when: "Today, 11:42 AM", status: "Paid" },
@@ -24,9 +24,9 @@ export function Payments({ india }: { india: boolean }) {
   return (
     <>
       <Group title="Payment provider">
-        <Row label={<span className="flex items-center gap-3"><BrandLogo brand={india ? "razorpay" : "stripe"} size={28} />{india ? "Razorpay" : "Stripe"}</span>} description={india ? "UPI, cards and netbanking. Money goes straight to your bank." : "Cards and wallets. Money goes straight to your bank."}>
+        <Row label={<span className="flex items-center gap-3"><BrandLogo brand="stripe" size={28} />Stripe</span>} description="Customers pay by card or wallet through a secure Stripe link. Payouts go straight to your bank.">
           <Badge>Not connected</Badge>
-          <RowButton tone="primary" onClick={() => toast("Opens the provider’s sign-up (demo)", "info")}>Connect</RowButton>
+          <RowButton tone="primary" onClick={() => toast("Opens Stripe sign-in (demo)", "info")}>Connect</RowButton>
         </Row>
       </Group>
       <Group title="Deposits" description="Cut no-shows by taking part of the price when people book.">

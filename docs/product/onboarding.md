@@ -105,7 +105,7 @@ export const gating = { setupOnlyBeforeLive: false, limitByPlan: false };
 | Should | Import existing customers who agreed to hear from you | All |
 | Should | Connect Google Calendar or Calendly | Growth+ |
 | Should | Add other locations; turn on payment links | Pro |
-| Before day 25 | Add a payment method (Razorpay in India, Stripe elsewhere) | All |
+| Before day 25 | Add a payment method (through Stripe) | All |
 
 **Nudges:**
 - Someone who leaves before going live gets a WhatsApp or email after 1 hour and after 24 hours: "Your assistant is 2 steps from live".

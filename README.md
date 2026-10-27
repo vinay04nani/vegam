@@ -144,7 +144,7 @@ Multi-tenant SaaS: every business is an **organization**, and all data is scoped
 | Messaging | Meta WhatsApp Cloud API, Instagram and Messenger via Graph API, website widget |
 | Telephony | Regional providers behind an adapter (e.g. Exotel/Plivo in India; Twilio, Telnyx or similar elsewhere) |
 | Voice AI | Managed voice-agent platforms behind an adapter, chosen per language |
-| Payments *(later)* | Regional providers (e.g. Razorpay, Stripe) |
+| Payments *(later)* | Stripe (subscriptions, invoices and payment links) |
 | Email | Resend or AWS SES |
 | Validation / monitoring | zod, Sentry, pino |
 | Tests | Vitest, Playwright |

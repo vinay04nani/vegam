@@ -164,7 +164,7 @@ export const featureGroups: FeatureGroup[] = [
       { name: "Booking page and calendar", info: "Customers book in chat or with a link you can share anywhere.", values: all },
       { name: "Reminders with Confirm / Reschedule", info: "A reminder the day before; customers reply to change plans.", values: all },
       { name: "Calendar sync (Google, Calendly)", info: "Keep your existing booking tool; Vegam handles reminders.", values: growthUp },
-      { name: "Payment links and deposits", info: "UPI or card links, with polite reminders until paid.", values: proOnly },
+      { name: "Payment links and deposits", info: "Stripe payment links, with polite reminders until paid.", values: proOnly },
     ],
   },
   {

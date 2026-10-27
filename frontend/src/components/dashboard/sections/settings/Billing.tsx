@@ -19,7 +19,7 @@ export function Billing({ state, onOpen }: Props) {
   const plan = plans.find((p) => p.id === (state.plan ?? "growth"))!;
   const base = plan.price?.[currency].monthly ?? (india ? 4999 : 99);
   const tax = india ? Math.round(base * 0.18) : 0;
-  const [method, setMethod] = useState<string | null>(india ? "UPI AutoPay · nila@okhdfc" : "Visa •••• 4242");
+  const [method, setMethod] = useState<string | null>("Visa •••• 4242 · expires 08/29");
 
   const invoices = [
     { id: "VG-2026-0003", date: "1 Oct 2026", period: "Oct 2026", amount: base + tax, status: "Paid" as const, wa: india ? 412 : 9 },
@@ -69,9 +69,9 @@ export function Billing({ state, onOpen }: Props) {
       </Group>
 
       <Group title="Payment method">
-        <Row label={method ?? "No payment method"} description={method ? "Charged on the 1st of each month." : "Add one before your pilot ends."}>
+        <Row label={method ?? "No payment method"} description={method ? "Charged through Stripe on the 1st of each month." : "Add a card through Stripe before your pilot ends."}>
           {method && <RowButton tone="danger" onClick={() => { setMethod(null); toast("Payment method removed"); }}>Remove</RowButton>}
-          <RowButton tone={method ? "default" : "primary"} onClick={() => { setMethod(india ? "UPI AutoPay · nila@okhdfc" : "Visa •••• 4242"); toast(`Opens ${india ? "Razorpay" : "Stripe"} securely (demo)`, "info"); }}>
+          <RowButton tone={method ? "default" : "primary"} onClick={() => { setMethod("Visa •••• 4242 · expires 08/29"); toast("Opens Stripe’s secure checkout (demo)", "info"); }}>
             {method ? "Change" : "Add"}
           </RowButton>
         </Row>

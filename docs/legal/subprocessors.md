@@ -16,6 +16,6 @@ Vegam uses the following third parties to provide the Service. Each may process 
 | [Sarvam / Bolna / other voice AI provider] | Speech-to-text, text-to-speech, voice agent | Call audio, transcripts | [India / per region] | Planned (week 6+) |
 | [Resend / AWS SES] | Transactional email (reports, alerts) | User email addresses, report content | [Region] | Planned |
 | Sentry | Error monitoring | Technical logs (personal data minimised) | [Region] | Planned |
-| [Razorpay / Stripe] | Subscription billing; payment links (later) | Billing contact, payment status | [India / per region] | Planned |
+| Stripe | Subscription billing; payment links (later) | Billing contact, payment status | [India / per region] | Planned |
 
 Vegam's own personal data handling (for Users and website visitors) is described in the [Privacy Policy](privacy-policy.md).

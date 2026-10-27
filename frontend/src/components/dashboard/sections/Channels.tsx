@@ -125,7 +125,7 @@ export function Channels({ state, update }: { state: OnboardingState; update: (f
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search WhatsApp, Google Calendar, Razorpay…"
+              placeholder="Search WhatsApp, Google Calendar, Stripe…"
               className="min-h-10 w-full rounded-[10px] border border-line-strong bg-white pr-3 pl-10 text-[14.5px] text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
             />
           </label>

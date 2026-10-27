@@ -78,7 +78,7 @@ const groups: { title: string; items: { id: SectionId; label: string; icon: Icon
     title: "Customers",
     items: [
       { id: "contacts", label: "Contacts and fields", icon: "users", keywords: "tags custom fields duplicates merge" },
-      { id: "payments", label: "Payments", icon: "card", keywords: "razorpay stripe upi deposit payment links refunds" },
+      { id: "payments", label: "Payments", icon: "card", keywords: "stripe deposit payment links refunds receipts" },
     ],
   },
   {
@@ -89,7 +89,7 @@ const groups: { title: string; items: { id: SectionId; label: string; icon: Icon
       { id: "activity", label: "Activity log", icon: "chart", keywords: "audit log history who changed" },
       { id: "privacy", label: "Privacy", icon: "shield", keywords: "ai disclosure opt-out stop consent retention recordings data requests dpdp" },
       { id: "developers", label: "API and webhooks", icon: "key", keywords: "api keys webhooks developers integration" },
-      { id: "billing", label: "Billing and invoices", icon: "card", keywords: "billing invoices pdf receipts payment method usage plan gst" },
+      { id: "billing", label: "Billing and invoices", icon: "card", keywords: "billing invoices pdf payment method stripe card usage plan gst" },
       { id: "account", label: "Plan and data", icon: "sparkle", keywords: "plan billing export delete close account" },
       { id: "help", label: "Help and support", icon: "headset", keywords: "help support articles contact shortcuts what's new" },
     ],

@@ -13,7 +13,7 @@ Everything in `[square brackets]` must be filled in or confirmed before use.
 | [Data Processing Agreement](data-processing-agreement.md) | Businesses (Vegam processes their customers' data) | Signed with every customer | First pilot |
 | [Sub-processor List](subprocessors.md) | Businesses and regulators | Website / shared with customers | First pilot |
 | [Acceptable Use Policy](acceptable-use-policy.md) | Businesses and their staff | Website; part of the Terms | First pilot |
-| [Refund and Cancellation Policy](refund-and-cancellation-policy.md) | Paying customers | Website footer (payment gateways such as Razorpay require it) | Payment gateway activation |
+| [Refund and Cancellation Policy](refund-and-cancellation-policy.md) | Paying customers | Website footer (Stripe requires it) | Payment gateway activation |
 | [Cookie Policy](cookie-policy.md) | Website and dashboard visitors | Website footer; cookie banner | Website launch |
 | [Consent and Disclosure Templates](consent-and-disclosure-templates.md) | Businesses and their customers | Opt-in text, AI disclosure, call recording notice, opt-out replies | First pilot |
 | [Security and Incident Response Policy](security-and-incident-response.md) | Internal (owner, team) | Internal; summary shared with customers on request | First pilot |

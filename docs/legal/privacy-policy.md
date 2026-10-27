@@ -22,7 +22,7 @@ This Privacy Policy explains how **[Vegam legal entity]**, of **[registered addr
 | Website visitors | IP address, device and browser data, pages visited, cookies | Automatically (see [Cookie Policy](cookie-policy.md)) |
 | Demo and contact requests | Name, business name, phone, email, message | You |
 | Users | Name, email, phone, role, login and activity records | You or your employer |
-| Customers (billing) | Billing contact, business details, tax ID (e.g. GST), payment status (card or UPI details are handled by our payment provider, not stored by us) | You and our payment provider |
+| Customers (billing) | Billing contact, business details, tax ID (e.g. GST), payment status (card details are handled by Stripe, our payment provider, not stored by us) | You and our payment provider |
 | End Customers (as processor) | Name, phone number, social media ID, messages, call recordings and transcripts, bookings, answers to questions, consent and opt-out records | The End Customer and the business |
 
 We do not knowingly collect data about children under 18. Businesses must not use Vegam to process children's data unless a verifiable parental consent process is in place and agreed with us.
