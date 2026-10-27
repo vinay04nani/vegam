@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { channelList, planRank, sampleForwardingNumber, type Channel, type ChannelId } from "@/content/onboarding";
+import { channelList, sampleForwardingNumber, type Channel, type ChannelId } from "@/content/onboarding";
 import { plans, type PlanId } from "@/content/pricing";
 import { Icon } from "@/components/ui/Icon";
-import type { ChannelStatus, OnboardingState } from "@/lib/onboarding";
+import { isIncluded, type ChannelStatus, type OnboardingState } from "@/lib/onboarding";
 import { SecondaryButton, StatusPill } from "./fields";
 
 type Props = {
@@ -75,10 +75,8 @@ function ChannelCard({ channel, status, locked, children }: { channel: Channel; 
   );
 }
 
-/** Connection cards for each channel. Channels above the chosen plan show how to switch. */
+/** Connection cards for each channel. With plan limits on, channels above the plan show how to switch. */
 export function ChannelSetup({ state, update, only }: Props) {
-  // Before a plan is chosen everything is shown unlocked, so people can explore.
-  const plan = state.plan ?? "pro";
   const [busy, setBusy] = useState<ChannelId | null>(null);
   const setStatus = (id: ChannelId, status: ChannelStatus) => update((s) => ({ ...s, channels: { ...s.channels, [id]: status } }));
   const connect = (id: ChannelId, status: ChannelStatus = "connected") => {
@@ -164,7 +162,7 @@ export function ChannelSetup({ state, update, only }: Props) {
   return (
     <div className="flex flex-col gap-4">
       {channelList.filter((c) => !only || only.includes(c.id)).map((c) => {
-        const locked = planRank[plan] < planRank[c.minPlan] ? c.minPlan : null;
+        const locked = isIncluded(c.minPlan, state.plan) ? null : c.minPlan;
         return (
           <ChannelCard key={c.id} channel={c} status={state.channels[c.id]} locked={locked}>
             {locked ? (

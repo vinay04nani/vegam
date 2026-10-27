@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { checklist, planRank, type ChecklistItem } from "@/content/onboarding";
+import { checklist, type ChecklistItem } from "@/content/onboarding";
 import { sampleConversations, sampleNeedsYou, sampleToday, sampleUpcoming } from "@/content/dashboard";
 import { plans, type PlanId } from "@/content/pricing";
 import { Icon } from "@/components/ui/Icon";
 import { VegamMark } from "@/components/ui/Kolam";
-import type { OnboardingState } from "@/lib/onboarding";
+import { isIncluded, type OnboardingState } from "@/lib/onboarding";
 import { withBase } from "@/lib/paths";
 import { Card, Ring, SampleTag, pilotDay } from "./ui";
 
@@ -97,7 +97,7 @@ export function LiveHome({ state, update, plan, mode, welcome, onDismissWelcome,
   }, []);
 
   const day = mode === "live" ? pilotDay(state.liveAt) : 3;
-  const items = checklist.filter((c) => planRank[plan] >= planRank[c.minPlan]);
+  const items = checklist.filter((c) => isIncluded(c.minPlan, plan));
   const waMeta = mode === "live" && state.channels.whatsapp === "pending";
   const hour = now?.getHours() ?? 9;
   const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";

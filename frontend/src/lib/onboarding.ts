@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import type { ChannelId, CountryId, Tone } from "@/content/onboarding";
-import { countries } from "@/content/onboarding";
+import { countries, gating, planRank } from "@/content/onboarding";
 import type { Billing, Currency, PlanId } from "@/content/pricing";
 
 // The business's sign-up and setup answers. Until the backend exists they
@@ -139,6 +139,12 @@ export function currencyFor(state: OnboardingState): Currency {
 
 export function formatMoney(amount: number, currency: Currency) {
   return `${currency === "INR" ? "₹" : "$"}${amount.toLocaleString(currency === "INR" ? "en-IN" : "en-US")}`;
+}
+
+/** Whether a feature for `minPlan` is available on `plan`. Always true while plan limits are switched off. */
+export function isIncluded(minPlan: PlanId, plan: PlanId | null) {
+  if (!gating.limitByPlan) return true;
+  return plan !== null && planRank[plan] >= planRank[minPlan];
 }
 
 export const whatsappStarted = (s: OnboardingState) => s.channels.whatsapp !== "off";

@@ -95,6 +95,18 @@ export const channelList: Channel[] = [
 
 export const planRank: Record<PlanId, number> = { starter: 0, growth: 1, pro: 2 };
 
+/**
+ * Switches for the planned limits, off while the app is being built so every
+ * tab and feature is visible. `minPlan` on each item records what each plan
+ * will include once `limitByPlan` is on.
+ */
+export const gating = {
+  /** Before go-live, show only setup items in the sidebar. */
+  setupOnlyBeforeLive: false,
+  /** Hide or lock tabs, channels and tasks above the business's plan. */
+  limitByPlan: false,
+};
+
 /** A sample forwarding number shown in the demo. The real one is issued per business. */
 export const sampleForwardingNumber = "+91 80 0000 0000";
 
@@ -210,5 +222,6 @@ export const appNav: { id: string; label: string; icon: IconName; minPlan: PlanI
   { id: "campaigns", label: "Campaigns", icon: "megaphone", minPlan: "pro" },
   { id: "reports", label: "Reports", icon: "chart", minPlan: "starter" },
   { id: "assistant", label: "Assistant", icon: "sparkle", minPlan: "starter" },
+  { id: "channels", label: "Channels", icon: "globe", minPlan: "starter" },
   { id: "settings", label: "Settings", icon: "settings", minPlan: "starter" },
 ];
