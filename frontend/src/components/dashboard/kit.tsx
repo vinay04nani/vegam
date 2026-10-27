@@ -250,7 +250,7 @@ export function SourceLabel({ source }: { source: string }) {
   );
 }
 
-export type MenuItem = { label: string; onSelect?: () => void; disabled?: boolean; checked?: boolean; heading?: boolean };
+export type MenuItem = { label: string; onSelect?: () => void; disabled?: boolean; checked?: boolean; heading?: boolean; icon?: IconName; divider?: boolean; danger?: boolean };
 
 /** A small popover menu behind an icon button: closes on Esc or an outside click, arrow keys move between items. */
 export function Menu({
@@ -326,7 +326,9 @@ export function Menu({
           className={`absolute ${above ? "bottom-full mb-2" : trigger ? "top-11" : "top-8"} ${above ? "inset-x-0" : align === "right" ? "right-0" : "left-0"} z-50 flex min-w-[188px] flex-col rounded-[12px] border border-line bg-white p-1.5 shadow-[0_16px_40px_rgb(30_31_43/0.16)]`}
         >
           {items.map((it, i) =>
-            it.heading ? (
+            it.divider ? (
+              <span key={i} role="separator" className="my-1 h-px bg-line" />
+            ) : it.heading ? (
               <p key={i} className="m-0 px-2.5 pt-1.5 pb-1 text-[11.5px] font-semibold tracking-[0.08em] text-subtle uppercase">
                 {it.label}
               </p>
@@ -340,9 +342,9 @@ export function Menu({
                   it.onSelect?.();
                   setOpen(false);
                 }}
-                className="flex min-h-9 cursor-pointer items-center gap-2 rounded-[8px] px-2.5 text-left text-[14px] text-ink outline-none hover:bg-panel focus:bg-panel disabled:cursor-default disabled:text-subtle disabled:hover:bg-transparent"
+                className={`flex min-h-9 cursor-pointer items-center gap-2.5 rounded-[8px] px-2.5 text-left text-[14px] outline-none hover:bg-panel focus:bg-panel disabled:cursor-default disabled:text-subtle disabled:hover:bg-transparent ${it.danger ? "text-danger" : "text-ink"}`}
               >
-                <span className="w-4 flex-none">{it.checked && <Icon name="check" size={14} strokeWidth={2.6} className="[&_circle]:hidden" />}</span>
+                <span className="w-4 flex-none">{it.icon ? <Icon name={it.icon} size={15} className={it.danger ? "" : "text-muted"} /> : it.checked && <Icon name="check" size={14} strokeWidth={2.6} className="[&_circle]:hidden" />}</span>
                 {it.label}
               </button>
             ),

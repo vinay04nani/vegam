@@ -7,6 +7,7 @@ import { links } from "@/content/site";
 import { sampleThreads } from "@/content/dashboard";
 import { Icon } from "@/components/ui/Icon";
 import { isIncluded, useOnboarding } from "@/lib/onboarding";
+import { withBase } from "@/lib/paths";
 import { LiveHome } from "./LiveHome";
 import { SetupHome } from "./SetupHome";
 import { AssistantPage, TestPage, WhatsAppPage } from "./TaskPages";
@@ -21,7 +22,7 @@ import { Agents } from "./sections/Agents";
 import { Billing } from "./sections/Billing";
 import { Contacts } from "./sections/Contacts";
 import { CommandPalette } from "./CommandPalette";
-import { ToastProvider } from "./kit";
+import { Menu, ToastProvider } from "./kit";
 import { NotificationBell } from "./Notifications";
 import { pilotDay } from "./ui";
 
@@ -139,27 +140,48 @@ export function Dashboard() {
     select("home");
   };
 
-  // The profile button opens the settings dialog on the Profile section.
-  const accountMenu = (sidebar: boolean) =>
-    sidebar ? (
-      <button
-        type="button"
-        onClick={() => select("settings:profile")}
-        aria-label="Profile and settings"
-        className={`flex w-full cursor-pointer items-center gap-3 rounded-[12px] px-2.5 py-2 text-left transition ${settings !== null ? "bg-white shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : "hover:bg-white/60"}`}
-      >
-        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink text-[14px] font-bold text-white">{userName[0]}</span>
-        <span className="flex min-w-0 flex-1 flex-col leading-tight">
-          <span className="truncate text-[14.5px] font-semibold text-ink">{userName}</span>
-          <span className="truncate text-[12.5px] text-subtle">Owner · {name}</span>
-        </span>
-        <Icon name="settings" size={16} className="flex-none text-muted" />
-      </button>
-    ) : (
-      <button type="button" onClick={() => select("settings:profile")} aria-label="Profile and settings" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-ink text-[13.5px] font-bold text-white">
-        {userName[0]}
-      </button>
-    );
+  // The profile button opens a small account menu; its items open the
+  // settings dialog on the matching section.
+  const accountMenu = (sidebar: boolean) => (
+    <Menu
+      label="Account menu"
+      above={sidebar}
+      align={sidebar ? "left" : "right"}
+      className={sidebar ? "w-full" : ""}
+      triggerClassName={sidebar ? "flex w-full cursor-pointer items-center gap-3 rounded-[12px] px-2.5 py-2 text-left transition hover:bg-white/60 aria-expanded:bg-white aria-expanded:shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : undefined}
+      trigger={
+        sidebar ? (
+          <>
+            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink text-[14px] font-bold text-white">{userName[0]}</span>
+            <span className="flex min-w-0 flex-1 flex-col leading-tight">
+              <span className="truncate text-[14.5px] font-semibold text-ink">{userName}</span>
+              <span className="truncate text-[12.5px] text-subtle">Owner · {name}</span>
+            </span>
+            <Icon name="chevron-down" size={16} className="flex-none rotate-180 text-muted" />
+          </>
+        ) : (
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-[13.5px] font-bold text-white">{userName[0]}</span>
+        )
+      }
+      items={[
+        { label: "Your profile", icon: "users", onSelect: () => select("settings:profile") },
+        { label: "Settings", icon: "settings", onSelect: () => select("settings:general") },
+        { label: "Plans", icon: "sparkle", onSelect: () => select("settings:plans") },
+        { label: "Billing and usage", icon: "card", onSelect: () => select("settings:billing") },
+        { label: "Help and support", icon: "headset", onSelect: () => select("settings:help") },
+        { label: "", divider: true },
+        {
+          label: "Log out",
+          icon: "logout",
+          danger: true,
+          onSelect: () => {
+            // Demo: there is no session yet; go back to the log-in page.
+            window.location.href = withBase("/login/");
+          },
+        },
+      ]}
+    />
+  );
 
   const page = (() => {
     const props = { state, update, onHome: home };
