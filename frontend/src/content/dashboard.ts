@@ -110,25 +110,70 @@ export const sampleConversations = sampleThreads
 
 // ---------- Calendar ----------
 
-/** `day` is days from today (0 = today). */
-export type Booking = { id: string; day: number; start: string; minutes: number; service: number; who: string; status: "confirmed" | "pending" };
+/** `day` is days from today (0 = today); `service` indexes the business's services (or the sample ones). */
+export type Booking = {
+  id: string;
+  day: number;
+  start: string;
+  minutes: number;
+  service: number;
+  who: string;
+  phone: string;
+  channel: InboxChannel | "Phone" | "Booking link";
+  status: "confirmed" | "pending";
+  note?: string;
+};
 
-/** `service` is an index into the business's own services (or the sample ones). */
+const bk = (id: string, day: number, start: string, minutes: number, service: number, who: string, phone: string, channel: Booking["channel"], status: Booking["status"] = "confirmed", note?: string): Booking => ({
+  id,
+  day,
+  start,
+  minutes,
+  service,
+  who,
+  phone,
+  channel,
+  status,
+  note,
+});
+
 export const sampleBookings: Booking[] = [
-  { id: "b1", day: 0, start: "10:00", minutes: 30, service: 0, who: "R. Mehta", status: "confirmed" },
-  { id: "b2", day: 0, start: "11:30", minutes: 60, service: 1, who: "A. Khan", status: "confirmed" },
-  { id: "b3", day: 0, start: "15:00", minutes: 20, service: 2, who: "S. Rao", status: "pending" },
-  { id: "b4", day: 0, start: "17:30", minutes: 60, service: 1, who: "J. Thomas", status: "confirmed" },
-  { id: "b5", day: 1, start: "10:30", minutes: 60, service: 1, who: "L. Fernandes", status: "confirmed" },
-  { id: "b6", day: 1, start: "18:30", minutes: 30, service: 0, who: "P. Sharma", status: "confirmed" },
-  { id: "b7", day: 2, start: "12:00", minutes: 20, service: 2, who: "N. Gupta", status: "pending" },
-  { id: "b8", day: 3, start: "11:00", minutes: 60, service: 1, who: "V. Reddy", status: "confirmed" },
-  { id: "b9", day: 3, start: "16:00", minutes: 30, service: 0, who: "T. Bose", status: "confirmed" },
-  { id: "b10", day: 4, start: "14:30", minutes: 60, service: 1, who: "H. Ali", status: "confirmed" },
-  { id: "b11", day: 5, start: "10:00", minutes: 30, service: 0, who: "D. Pillai", status: "pending" },
+  bk("b1", -3, "11:00", 60, 1, "M. Iyer", "+91 98•• ••• 334", "WhatsApp"),
+  bk("b2", -2, "10:30", 30, 0, "K. Shah", "+91 90•• ••• 871", "Booking link"),
+  bk("b3", -2, "16:00", 60, 1, "R. Das", "+91 97•• ••• 205", "Phone"),
+  bk("b4", -1, "12:00", 20, 2, "N. Paul", "+91 88•• ••• 612", "Instagram"),
+  bk("b5", -1, "17:00", 60, 1, "T. George", "+91 99•• ••• 980", "WhatsApp"),
+  bk("b6", 0, "10:00", 30, 0, "R. Mehta", "+91 98•• ••• 112", "WhatsApp", "confirmed", "First time; asked about parking."),
+  bk("b7", 0, "11:30", 60, 1, "A. Khan", "+91 90•• ••• 447", "Messenger"),
+  bk("b8", 0, "12:00", 30, 0, "L. Fernandes", "+91 96•• ••• 058", "Website", "pending"),
+  bk("b9", 0, "15:00", 20, 2, "S. Rao", "+91 81•• ••• 763", "Phone", "pending"),
+  bk("b10", 0, "17:30", 60, 1, "J. Thomas", "+91 70•• ••• 529", "Booking link"),
+  bk("b11", 1, "10:30", 60, 1, "V. Reddy", "+91 99•• ••• 318", "Missed call"),
+  bk("b12", 1, "14:00", 30, 0, "H. Ali", "+91 93•• ••• 640", "WhatsApp"),
+  bk("b13", 1, "18:30", 30, 0, "P. Sharma", "+91 98•• ••• 761", "WhatsApp", "confirmed", "Booked after closing time by the AI."),
+  bk("b14", 2, "11:00", 20, 2, "N. Gupta", "+91 87•• ••• 104", "Instagram", "pending"),
+  bk("b15", 2, "13:30", 60, 1, "D. Pillai", "+91 95•• ••• 377", "Phone"),
+  bk("b16", 2, "16:30", 30, 0, "F. Qureshi", "+91 91•• ••• 826", "Website"),
+  bk("b17", 3, "10:00", 60, 1, "T. Bose", "+91 98•• ••• 450", "WhatsApp"),
+  bk("b18", 3, "15:00", 30, 0, "G. Nair", "+91 94•• ••• 238", "Messenger", "pending"),
+  bk("b19", 4, "12:30", 60, 1, "S. Menon", "+91 97•• ••• 615", "Website"),
+  bk("b20", 4, "17:00", 20, 2, "B. Joshi", "+91 90•• ••• 902", "WhatsApp"),
+  bk("b21", 5, "10:30", 30, 0, "C. Mathew", "+91 89•• ••• 147", "Booking link"),
+  bk("b22", 5, "11:00", 60, 1, "E. Roy", "+91 98•• ••• 863", "Phone"),
+  bk("b23", 7, "11:30", 60, 1, "I. Kapoor", "+91 99•• ••• 521", "WhatsApp"),
+  bk("b24", 8, "16:00", 30, 0, "O. Singh", "+91 92•• ••• 274", "Instagram", "pending"),
+  bk("b25", 10, "12:00", 60, 1, "U. Varghese", "+91 96•• ••• 690", "Website"),
 ];
 
 export const sampleServiceNames = ["First visit", "Standard appointment", "Follow-up"];
+
+/** One colour per service, in order: [accent bar, tint background, text]. */
+export const serviceColors: [string, string, string][] = [
+  ["#4A47E0", "#EEF0FF", "#1E1C6E"],
+  ["#EE7A2E", "#FFF1E6", "#7A3300"],
+  ["#2E8B57", "#E8F5EC", "#1C4F33"],
+  ["#8B6CFF", "#F2EEFF", "#43308C"],
+];
 
 /** Today's bookings, shown on Home. */
 export const sampleUpcoming = sampleBookings.filter((b) => b.day === 0).map((b) => ({ time: b.start, name: sampleServiceNames[b.service], who: b.who }));
@@ -136,16 +181,117 @@ export const sampleUpcoming = sampleBookings.filter((b) => b.day === 0).map((b) 
 // ---------- Leads ----------
 
 export type LeadTemp = "hot" | "warm" | "cold";
-export type Lead = { id: string; name: string; channel: InboxChannel | "Ad form"; temp: LeadTemp; interest: string; last: string; followUps: number; next: string };
+export type LeadStage = "new" | "contacted" | "qualified" | "booked" | "lost";
+export type LeadSource = InboxChannel | "Ad form";
+export type LeadActivity = { at: string; kind: "enquiry" | "ai" | "followup" | "call" | "booking" | "note"; text: string };
+export type Lead = {
+  id: string;
+  name: string;
+  phone: string;
+  source: LeadSource;
+  score: number;
+  stage: LeadStage;
+  owner: string;
+  interest: string;
+  summary: string;
+  createdAt: string;
+  /** Minutes ago, for sorting by newest. */
+  createdMins: number;
+  lastActivity: string;
+  lastMins: number;
+  followUps: number;
+  next: string;
+  activity: LeadActivity[];
+};
+
+/** Hot from 70, warm from 40, otherwise cold. */
+export const leadTemp = (score: number): LeadTemp => (score >= 70 ? "hot" : score >= 40 ? "warm" : "cold");
+
+export const leadStages: { id: LeadStage; label: string }[] = [
+  { id: "new", label: "New" },
+  { id: "contacted", label: "Contacted" },
+  { id: "qualified", label: "Qualified" },
+  { id: "booked", label: "Booked" },
+  { id: "lost", label: "Lost" },
+];
+
+const enquiry = (at: string, text: string): LeadActivity => ({ at, kind: "enquiry", text });
+const ai = (at: string, text: string): LeadActivity => ({ at, kind: "ai", text });
+const fu = (at: string, text: string): LeadActivity => ({ at, kind: "followup", text });
 
 export const sampleLeads: Lead[] = [
-  { id: "l1", name: "R. Varma", channel: "Ad form", temp: "hot", interest: "Asked for a group booking for 6 people", last: "2 h ago", followUps: 1, next: "Call today" },
-  { id: "l2", name: "+91 97•• ••• 552", channel: "WhatsApp", temp: "hot", interest: "Asked prices twice, wants Saturday", last: "Today", followUps: 0, next: "Call today" },
-  { id: "l3", name: "S. Menon", channel: "Website", temp: "warm", interest: "Asked about the standard appointment", last: "Yesterday", followUps: 2, next: "Follow-up tomorrow" },
-  { id: "l4", name: "F. Qureshi", channel: "Instagram", temp: "warm", interest: "Saved the price list, no booking yet", last: "2 days ago", followUps: 1, next: "Follow-up Friday" },
-  { id: "l5", name: "G. Nair", channel: "Messenger", temp: "warm", interest: "Wants an evening slot next week", last: "3 days ago", followUps: 2, next: "Follow-up Monday" },
-  { id: "l6", name: "+91 93•• ••• 107", channel: "Missed call", temp: "cold", interest: "Didn’t reply to the booking link", last: "1 week ago", followUps: 3, next: "Paused · check in 30 days" },
-  { id: "l7", name: "B. Joshi", channel: "WhatsApp", temp: "cold", interest: "Said “maybe next month”", last: "2 weeks ago", followUps: 3, next: "Paused · check in 30 days" },
+  {
+    id: "l1", name: "R. Varma", phone: "+91 98•• ••• 552", source: "Ad form", score: 92, stage: "qualified", owner: "R. Kumar",
+    interest: "Group booking for 6 people next month", summary: "Ready to book a group visit; wants a price for 6 and a weekend date.",
+    createdAt: "Today, 9:12 AM", createdMins: 180, lastActivity: "2 h ago", lastMins: 120, followUps: 1, next: "Call today",
+    activity: [enquiry("Today, 9:12 AM", "Filled the ad form: “Group of 6, next month”"), ai("Today, 9:13 AM", "Sent prices and asked for preferred dates"), { at: "Today, 10:40 AM", kind: "call", text: "Asked for a callback after 5 PM" }],
+  },
+  {
+    id: "l2", name: "+91 97•• ••• 108", phone: "+91 97•• ••• 108", source: "WhatsApp", score: 84, stage: "contacted", owner: "AI",
+    interest: "Asked prices twice, wants Saturday", summary: "Comparing prices; asked twice about Saturday availability.",
+    createdAt: "Yesterday, 7:40 PM", createdMins: 960, lastActivity: "Today", lastMins: 240, followUps: 0, next: "Call today",
+    activity: [enquiry("Yesterday, 7:40 PM", "“How much is the standard appointment?”"), ai("Yesterday, 7:40 PM", "Shared the price list and Saturday slots"), enquiry("Today, 8:05 AM", "“Is Saturday 11 AM still free?”")],
+  },
+  {
+    id: "l3", name: "A. Bhat", phone: "+91 93•• ••• 761", source: "Instagram", score: 76, stage: "new", owner: "AI",
+    interest: "Wants the earliest slot this week", summary: "New enquiry from Instagram; flexible on time, wants this week.",
+    createdAt: "Today, 11:20 AM", createdMins: 60, lastActivity: "1 h ago", lastMins: 60, followUps: 0, next: "Offer slots",
+    activity: [enquiry("Today, 11:20 AM", "“Do you have anything this week?”"), ai("Today, 11:20 AM", "Offered Thursday 10 AM and Friday 4 PM")],
+  },
+  {
+    id: "l4", name: "S. Menon", phone: "+91 97•• ••• 615", source: "Website", score: 63, stage: "contacted", owner: "S. Das",
+    interest: "Asked about the standard appointment", summary: "Interested but unsure about timing; asked for evening slots.",
+    createdAt: "2 days ago", createdMins: 2900, lastActivity: "Yesterday", lastMins: 1400, followUps: 2, next: "Follow-up tomorrow",
+    activity: [enquiry("2 days ago", "Website form: standard appointment"), ai("2 days ago", "Replied with prices and evening slots"), fu("Yesterday", "Follow-up 1: “Shall I hold Thursday 6 PM?”"), fu("Yesterday", "Follow-up 2 scheduled")],
+  },
+  {
+    id: "l5", name: "F. Qureshi", phone: "+91 91•• ••• 826", source: "Instagram", score: 58, stage: "contacted", owner: "AI",
+    interest: "Saved the price list, no booking yet", summary: "Looked at prices; no reply to the first follow-up.",
+    createdAt: "3 days ago", createdMins: 4300, lastActivity: "2 days ago", lastMins: 2900, followUps: 1, next: "Follow-up Friday",
+    activity: [enquiry("3 days ago", "“Can you send your prices?”"), ai("3 days ago", "Sent the price list"), fu("2 days ago", "Follow-up 1 sent")],
+  },
+  {
+    id: "l6", name: "G. Nair", phone: "+91 94•• ••• 238", source: "Messenger", score: 55, stage: "qualified", owner: "R. Kumar",
+    interest: "Wants an evening slot next week", summary: "Qualified: evenings only, next week, two people.",
+    createdAt: "3 days ago", createdMins: 4400, lastActivity: "3 days ago", lastMins: 4300, followUps: 2, next: "Follow-up Monday",
+    activity: [enquiry("3 days ago", "“Any evening slots next week for two?”"), ai("3 days ago", "Shared Tuesday and Wednesday evenings"), fu("2 days ago", "Follow-up 1 sent"), fu("Yesterday", "Follow-up 2 sent")],
+  },
+  {
+    id: "l7", name: "P. Sharma", phone: "+91 98•• ••• 761", source: "WhatsApp", score: 88, stage: "booked", owner: "AI",
+    interest: "Booked tomorrow 6:30 PM", summary: "Booked by the AI after closing time.",
+    createdAt: "Yesterday, 9:41 PM", createdMins: 900, lastActivity: "Yesterday", lastMins: 899, followUps: 0, next: "Visit tomorrow",
+    activity: [enquiry("Yesterday, 9:41 PM", "“Are you open tomorrow around 6?”"), ai("Yesterday, 9:41 PM", "Offered 6:30 PM"), { at: "Yesterday, 9:42 PM", kind: "booking", text: "Booked tomorrow at 6:30 PM" }],
+  },
+  {
+    id: "l8", name: "V. Reddy", phone: "+91 99•• ••• 318", source: "Missed call", score: 71, stage: "booked", owner: "AI",
+    interest: "Booked from the missed-call message", summary: "Missed call recovered on WhatsApp; booked for tomorrow.",
+    createdAt: "Yesterday, 7:14 PM", createdMins: 1050, lastActivity: "Yesterday", lastMins: 1040, followUps: 0, next: "Visit tomorrow",
+    activity: [{ at: "Yesterday, 7:14 PM", kind: "call", text: "Missed call" }, ai("Yesterday, 7:14 PM", "Sent the booking link on WhatsApp"), { at: "Yesterday, 7:20 PM", kind: "booking", text: "Booked tomorrow 10:30 AM" }],
+  },
+  {
+    id: "l9", name: "K. Pinto", phone: "+91 88•• ••• 430", source: "Website", score: 44, stage: "new", owner: "AI",
+    interest: "Asked if gift vouchers are available", summary: "Question the assistant couldn’t answer; passed to the team.",
+    createdAt: "Today, 8:30 AM", createdMins: 270, lastActivity: "Today", lastMins: 270, followUps: 0, next: "Answer question",
+    activity: [enquiry("Today, 8:30 AM", "“Do you sell gift vouchers?”"), ai("Today, 8:30 AM", "Passed to the team")],
+  },
+  {
+    id: "l10", name: "+91 93•• ••• 107", phone: "+91 93•• ••• 107", source: "Missed call", score: 28, stage: "contacted", owner: "AI",
+    interest: "Didn’t reply to the booking link", summary: "No reply after 3 follow-ups; paused.",
+    createdAt: "1 week ago", createdMins: 10100, lastActivity: "1 week ago", lastMins: 9800, followUps: 3, next: "Paused · check in 30 days",
+    activity: [{ at: "1 week ago", kind: "call", text: "Missed call" }, ai("1 week ago", "Sent the booking link"), fu("6 days ago", "Follow-up 1"), fu("4 days ago", "Follow-up 2"), fu("2 days ago", "Follow-up 3, then paused")],
+  },
+  {
+    id: "l11", name: "B. Joshi", phone: "+91 90•• ••• 902", source: "WhatsApp", score: 22, stage: "lost", owner: "S. Das",
+    interest: "Said “maybe next month”", summary: "Not ready now; asked to be contacted next month.",
+    createdAt: "2 weeks ago", createdMins: 20000, lastActivity: "2 weeks ago", lastMins: 19000, followUps: 3, next: "Check in next month",
+    activity: [enquiry("2 weeks ago", "“What are your prices?”"), ai("2 weeks ago", "Sent prices"), enquiry("2 weeks ago", "“Maybe next month”")],
+  },
+  {
+    id: "l12", name: "D. Kulkarni", phone: "+91 95•• ••• 044", source: "Ad form", score: 47, stage: "new", owner: "AI",
+    interest: "Wants to know about weekend hours", summary: "Ad lead asking about weekends; awaiting reply to slots.",
+    createdAt: "Today, 7:55 AM", createdMins: 305, lastActivity: "Today", lastMins: 300, followUps: 0, next: "Follow-up tomorrow",
+    activity: [enquiry("Today, 7:55 AM", "Ad form: “Open on weekends?”"), ai("Today, 7:56 AM", "Shared Saturday hours and slots")],
+  },
 ];
 
 // ---------- Reports ----------

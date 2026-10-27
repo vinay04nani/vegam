@@ -110,9 +110,9 @@ export function Dashboard() {
       case "inbox":
         return <Inbox />;
       case "calendar":
-        return <Calendar state={state} />;
+        return <Calendar state={state} onOpen={select} />;
       case "leads":
-        return <Leads />;
+        return <Leads onOpen={select} />;
       case "calls":
         return <Calls />;
       case "campaigns":

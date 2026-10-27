@@ -1,299 +1,505 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { sampleBookings, sampleServiceNames, type Booking } from "@/content/dashboard";
+import { useEffect, useMemo, useState } from "react";
+import { sampleBookings, sampleServiceNames, serviceColors, type Booking } from "@/content/dashboard";
 import { Icon } from "@/components/ui/Icon";
+import { Field, Select, TextInput } from "@/components/setup/fields";
 import type { OnboardingState } from "@/lib/onboarding";
-import { Card, PageTitle, SampleTag } from "../ui";
+import { Avatar, Badge, Button, IconButton, Modal, SegmentedControl, SourceLabel } from "../kit";
+import { PageTitle, SampleTag } from "../ui";
+import { Agenda, MonthGrid, TimeGrid, type Block, type CalItem } from "./CalendarGrid";
+import { MiniMonth } from "./MiniMonth";
+import { addDays, fmtDate, fmtMin, startOfDay, toMin, toTime, weekday } from "./calendarUtils";
 
-// Bookings by day or week on a time grid built from the business's opening
-// hours. Owners can block time and open a booking to move or cancel it.
-// Demo: blocks and cancellations live in this component only.
+// Bookings on a week, day, month or agenda view, with a mini month, today's
+// summary, service filters, and dialogs to book, block time, reschedule and
+// cancel.
+// Demo: changes are kept in this component only.
 
-type Block = { id: string; day: number; start: string; minutes: number };
-type Item = ({ kind: "booking" } & Booking) | ({ kind: "block" } & Block);
+type View = "day" | "week" | "month" | "agenda";
+type Draft = { id?: string; who: string; service: number; day: number; start: string };
 
-const PX_PER_MIN = 1.1;
-const toMin = (t: string) => {
-  const [h, m] = t.split(":").map(Number);
-  return h * 60 + (m || 0);
-};
-const fmt = (min: number) => {
-  const h = Math.floor(min / 60);
-  const m = min % 60;
-  return `${((h + 11) % 12) + 1}${m ? `:${String(m).padStart(2, "0")}` : ""} ${h < 12 ? "AM" : "PM"}`;
-};
+const defaultMinutes = [30, 60, 20, 45];
 
-export function Calendar({ state }: { state: OnboardingState }) {
-  const [view, setView] = useState<"day" | "week">("week");
-  const [day, setDay] = useState(0);
-  const [bookings, setBookings] = useState<Booking[]>(sampleBookings);
-  const [blocks, setBlocks] = useState<Block[]>([]);
-  const [selected, setSelected] = useState<string | null>(null);
-  const [blockForm, setBlockForm] = useState({ day: 0, start: "13:00", minutes: 60 });
-  const [showBlock, setShowBlock] = useState(false);
-  const [note, setNote] = useState<string | null>(null);
+export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (view: string) => void }) {
   // Dates are filled in after load so the static HTML matches.
   const [today, setToday] = useState<Date | null>(null);
-  useEffect(() => setToday(new Date()), []);
+  const [view, setView] = useState<View>("week");
+  const [anchor, setAnchor] = useState(0);
+  const [bookings, setBookings] = useState<Booking[]>(sampleBookings);
+  const [blocks, setBlocks] = useState<Block[]>([]);
+  const [hidden, setHidden] = useState<number[]>([]);
+  const [selected, setSelected] = useState<CalItem | null>(null);
+  const [confirmCancel, setConfirmCancel] = useState(false);
+  const [draft, setDraft] = useState<Draft | null>(null);
+  const [blockDraft, setBlockDraft] = useState<Omit<Block, "id"> | null>(null);
+
+  useEffect(() => {
+    setToday(startOfDay(new Date()));
+    if (window.matchMedia("(max-width: 767px)").matches) setView("agenda");
+  }, []);
 
   const open = toMin(state.assistant.open || "10:00");
   const close = Math.max(open + 60, toMin(state.assistant.close || "19:00"));
-  const hours = Array.from({ length: Math.ceil((close - open) / 60) }, (_, i) => open + i * 60);
-  const serviceName = (i: number) => state.assistant.services.filter((s) => s.name.trim())[i]?.name ?? sampleServiceNames[i] ?? "Appointment";
+  const owned = state.assistant.services.filter((s) => s.name.trim());
+  const services = (owned.length ? owned.map((s) => ({ name: s.name, minutes: s.minutes || 30 })) : sampleServiceNames.map((name, i) => ({ name, minutes: defaultMinutes[i] }))).slice(0, 4);
+  const serviceName = (i: number) => services[i]?.name ?? sampleServiceNames[i] ?? "Appointment";
 
-  const dayLabel = (d: number, short = false) => {
-    if (d === 0) return "Today";
-    if (d === 1) return "Tomorrow";
-    if (!today) return `In ${d} days`;
-    const date = new Date(today.getTime() + d * 86_400_000);
-    return date.toLocaleDateString("en-GB", short ? { weekday: "short", day: "numeric" } : { weekday: "long", day: "numeric", month: "short" });
-  };
-
-  const items = (d: number): Item[] => [
-    ...bookings.filter((b) => b.day === d).map((b) => ({ kind: "booking" as const, ...b })),
-    ...blocks.filter((b) => b.day === d).map((b) => ({ kind: "block" as const, ...b })),
-  ];
-
-  const days = view === "week" ? [0, 1, 2, 3, 4, 5, 6] : [day];
-  const chosen = bookings.find((b) => b.id === selected);
-  const count = (d: number) => bookings.filter((b) => b.day === d).length;
-
-  const addBlock = () => {
-    setBlocks((bs) => [...bs, { id: `k${bs.length}-${blockForm.day}-${blockForm.start}`, ...blockForm }]);
-    setShowBlock(false);
-    setView("day");
-    setDay(blockForm.day);
-  };
-
-  const column = (d: number) => (
-    <div key={d} className="relative border-l border-line first:border-l-0" style={{ height: (close - open) * PX_PER_MIN }}>
-      {hours.map((h) => (
-        <div key={h} aria-hidden="true" className="absolute inset-x-0 border-t border-line/70" style={{ top: (h - open) * PX_PER_MIN }} />
-      ))}
-      {items(d).map((it) => {
-        const top = (toMin(it.start) - open) * PX_PER_MIN;
-        const height = Math.max(26, it.minutes * PX_PER_MIN - 3);
-        if (it.kind === "block")
-          return (
-            <div
-              key={it.id}
-              className="absolute inset-x-1 overflow-hidden rounded-[10px] border border-dashed border-line-strong bg-[repeating-linear-gradient(135deg,#F4F4F8_0,#F4F4F8_6px,#ECEDF2_6px,#ECEDF2_12px)] px-2 py-1 text-[12px] font-medium text-muted"
-              style={{ top, height }}
-            >
-              Blocked
-            </div>
-          );
-        const active = selected === it.id;
-        return (
-          <button
-            key={it.id}
-            type="button"
-            onClick={() => {
-              setSelected(active ? null : it.id);
-              setNote(null);
-            }}
-            className={`absolute inset-x-1 flex cursor-pointer flex-col overflow-hidden rounded-[10px] px-2 py-1 text-left text-[12px] leading-tight transition ${
-              active ? "bg-ink text-white" : it.status === "pending" ? "border border-orange/40 bg-[#FFF3E6] text-ink" : "bg-periwinkle-soft text-ink hover:bg-[#E2E5FD]"
-            }`}
-            style={{ top, height }}
-          >
-            <span className="truncate font-semibold">{it.who}</span>
-            {height > 40 && <span className={`truncate ${active ? "text-white/75" : "text-subtle"}`}>{serviceName(it.service)}</span>}
-          </button>
-        );
-      })}
-    </div>
+  const itemsFor = useMemo(
+    () => (d: number): CalItem[] => [
+      ...bookings.filter((b) => b.day === d && !hidden.includes(b.service)).map((b) => ({ kind: "booking" as const, ...b })),
+      ...blocks.filter((b) => b.day === d).map((b) => ({ kind: "block" as const, ...b })),
+    ],
+    [bookings, blocks, hidden],
   );
+  const busyDays = useMemo(() => new Set(bookings.map((b) => b.day)), [bookings]);
+
+  if (!today) return <div className="min-h-[600px]" aria-busy="true" />;
+
+  const anchorDate = addDays(today, anchor);
+  const weekStart = anchor - weekday(anchorDate);
+  const weekDays = Array.from({ length: 7 }, (_, i) => weekStart + i);
+  const step = view === "day" ? 1 : view === "week" ? 7 : view === "agenda" ? 14 : 0;
+  const move = (dir: 1 | -1) => {
+    if (view === "month") {
+      const target = new Date(anchorDate.getFullYear(), anchorDate.getMonth() + dir, 1);
+      setAnchor(Math.round((target.getTime() - today.getTime()) / 86_400_000));
+    } else setAnchor((a) => a + dir * step);
+  };
+
+  const unit = view === "day" ? "day" : view === "week" ? "week" : view === "month" ? "month" : "two weeks";
+  const rangeLabel =
+    view === "day"
+      ? fmtDate(anchorDate, { weekday: "long", day: "numeric", month: "long", year: "numeric" })
+      : view === "month"
+        ? fmtDate(anchorDate, { month: "long", year: "numeric" })
+        : (() => {
+            const a = addDays(today, view === "week" ? weekStart : anchor);
+            const b = addDays(a, view === "week" ? 6 : 13);
+            return `${fmtDate(a, { day: "numeric", month: "short" })} – ${fmtDate(b, { day: "numeric", month: "short", year: "numeric" })}`;
+          })();
+
+  const todays = bookings.filter((b) => b.day === 0);
+  const nowMin = new Date().getHours() * 60 + new Date().getMinutes();
+  const nextUp = todays.filter((b) => toMin(b.start) > nowMin).sort((a, b) => toMin(a.start) - toMin(b.start))[0];
+
+  // ----- Booking dialog -----
+  const draftService = draft ? services[draft.service] : undefined;
+  const draftMinutes = draft?.id ? (bookings.find((b) => b.id === draft.id)?.minutes ?? draftService?.minutes ?? 30) : (draftService?.minutes ?? 30);
+  const clash = draft
+    ? itemsFor(draft.day)
+        .concat(bookings.filter((b) => b.day === draft.day && hidden.includes(b.service)).map((b) => ({ kind: "booking" as const, ...b })))
+        .find((it) => it.id !== draft.id && toMin(draft.start) < toMin(it.start) + it.minutes && toMin(it.start) < toMin(draft.start) + draftMinutes)
+    : undefined;
+  const slots = Array.from({ length: Math.floor((close - open) / 30) }, (_, i) => open + i * 30).filter((m) => m + 15 <= close);
+
+  const saveDraft = () => {
+    if (!draft || !draft.who.trim() || clash) return;
+    if (draft.id) {
+      setBookings((bs) => bs.map((b) => (b.id === draft.id ? { ...b, who: draft.who.trim(), service: draft.service, day: draft.day, start: draft.start } : b)));
+    } else {
+      setBookings((bs) => [
+        ...bs,
+        { id: `n${Date.now()}`, day: draft.day, start: draft.start, minutes: draftMinutes, service: draft.service, who: draft.who.trim(), phone: "Added by your team", channel: "Booking link", status: "confirmed" },
+      ]);
+    }
+    setAnchor(draft.day);
+    if (view === "month" || view === "agenda") setView(window.matchMedia("(max-width: 767px)").matches ? "agenda" : "day");
+    setDraft(null);
+    setSelected(null);
+  };
+
+  const dayOptions = Array.from({ length: 21 }, (_, i) => i - 3 + Math.max(0, anchor));
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-end justify-between gap-3">
+    <div className="flex flex-col gap-5">
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <PageTitle title="Calendar" body="Every booking from chats, calls and your booking link, on your opening hours." />
         <SampleTag />
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div role="radiogroup" aria-label="Calendar view" className="hidden rounded-full border border-line-strong bg-white p-1 lg:inline-flex">
-          {(["day", "week"] as const).map((v) => (
-            <button
-              key={v}
-              type="button"
-              role="radio"
-              aria-checked={view === v}
-              onClick={() => setView(v)}
-              className={`min-h-9 cursor-pointer rounded-full px-4 text-[14.5px] font-semibold capitalize transition ${view === v ? "bg-ink text-white" : "text-muted hover:text-ink"}`}
-            >
-              {v}
-            </button>
-          ))}
+      {/* Toolbar */}
+      <div className="flex flex-wrap items-center gap-2">
+        <Button onClick={() => setAnchor(0)}>Today</Button>
+        <IconButton icon="chevron-left" label={`Previous ${unit}`} onClick={() => move(-1)} />
+        <IconButton icon="chevron-right" label={`Next ${unit}`} onClick={() => move(1)} />
+        <h2 className="m-0 ml-1 min-w-0 flex-1 truncate text-[18px] font-semibold text-ink sm:text-[20px]" aria-live="polite">
+          {rangeLabel}
+        </h2>
+        <div className="hidden md:block">
+          <SegmentedControl
+            label="Calendar view"
+            value={view}
+            onChange={setView}
+            options={[
+              { id: "day", label: "Day" },
+              { id: "week", label: "Week" },
+              { id: "month", label: "Month" },
+              { id: "agenda", label: "Agenda" },
+            ]}
+          />
         </div>
-        <button
-          type="button"
-          onClick={() => setShowBlock((x) => !x)}
-          aria-expanded={showBlock}
-          className="inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-full border border-line-strong bg-white px-4 text-[14.5px] font-semibold text-ink hover:border-subtle"
-        >
-          <Icon name="lock" size={16} />
-          Block time
-        </button>
+        <div className="flex w-full items-center gap-2 md:w-auto">
+          <div className="md:hidden">
+            <SegmentedControl
+              label="Calendar view"
+              size="sm"
+              value={view === "agenda" ? "agenda" : "day"}
+              onChange={setView}
+              options={[
+                { id: "agenda", label: "Agenda" },
+                { id: "day", label: "Day" },
+              ]}
+            />
+          </div>
+          <Button icon="lock" onClick={() => setBlockDraft({ day: anchor, start: toTime(Math.min(close - 60, Math.max(open, 13 * 60))), minutes: 60, reason: "" })} className="ml-auto md:ml-0">
+            <span className="sr-only sm:not-sr-only">Block time</span>
+          </Button>
+          <Button variant="primary" icon="plus" onClick={() => setDraft({ who: "", service: 0, day: Math.max(0, anchor), start: toTime(slots[0] ?? open) })}>
+            New booking
+          </Button>
+        </div>
       </div>
 
-      {showBlock && (
-        <Card title="Block time" className="max-w-[640px]">
-          <div className="grid gap-3 sm:grid-cols-3">
-            <label className="flex flex-col gap-1.5 text-[14px] font-semibold text-ink">
-              Day
-              <select
-                value={blockForm.day}
-                onChange={(e) => setBlockForm((f) => ({ ...f, day: Number(e.target.value) }))}
-                className="min-h-11 rounded-[12px] border border-line-strong bg-white px-3 font-normal"
-              >
-                {[0, 1, 2, 3, 4, 5, 6].map((d) => (
-                  <option key={d} value={d}>
-                    {dayLabel(d)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="flex flex-col gap-1.5 text-[14px] font-semibold text-ink">
-              From
-              <select value={blockForm.start} onChange={(e) => setBlockForm((f) => ({ ...f, start: e.target.value }))} className="min-h-11 rounded-[12px] border border-line-strong bg-white px-3 font-normal">
-                {Array.from({ length: (close - open) / 30 }, (_, i) => open + i * 30).map((m) => (
-                  <option key={m} value={`${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`}>
-                    {fmt(m)}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="flex flex-col gap-1.5 text-[14px] font-semibold text-ink">
-              For
-              <select value={blockForm.minutes} onChange={(e) => setBlockForm((f) => ({ ...f, minutes: Number(e.target.value) }))} className="min-h-11 rounded-[12px] border border-line-strong bg-white px-3 font-normal">
-                {[30, 60, 120, 240].map((m) => (
-                  <option key={m} value={m}>
-                    {m < 60 ? `${m} min` : `${m / 60} h`}
-                  </option>
-                ))}
-              </select>
-            </label>
+      <div className="grid items-start gap-5 lg:grid-cols-[264px_minmax(0,1fr)]">
+        {/* Sidebar */}
+        <aside className="hidden flex-col gap-4 lg:flex">
+          <div className="rounded-[18px] border border-line bg-white p-4">
+            <MiniMonth
+              key={`${anchorDate.getFullYear()}-${anchorDate.getMonth()}`}
+              today={today}
+              selected={anchor}
+              busyDays={busyDays}
+              onSelect={(d) => {
+                setAnchor(d);
+                if (view === "month") setView("day");
+              }}
+            />
           </div>
-          <p className="m-0 text-[14px] text-subtle">No one can book this time. Your assistant will offer other slots.</p>
-          <button type="button" onClick={addBlock} className="min-h-10 w-fit cursor-pointer rounded-full bg-ink px-5 text-[14.5px] font-semibold text-white">
-            Block it
-          </button>
-        </Card>
-      )}
-
-      {/* Day picker (always on phones, and for the day view) */}
-      <div className={`flex gap-2 overflow-x-auto pb-1 ${view === "week" ? "lg:hidden" : ""}`} role="tablist" aria-label="Day">
-        {[0, 1, 2, 3, 4, 5, 6].map((d) => (
-          <button
-            key={d}
-            type="button"
-            role="tab"
-            aria-selected={day === d}
-            onClick={() => setDay(d)}
-            className={`flex min-h-14 min-w-[88px] flex-none cursor-pointer flex-col items-center justify-center rounded-[14px] border px-3 text-[13.5px] transition ${
-              day === d ? "border-ink bg-ink text-white" : "border-line bg-white text-ink hover:border-line-strong"
-            }`}
-          >
-            <span className="font-semibold">{dayLabel(d, true)}</span>
-            <span className={day === d ? "text-white/70" : "text-subtle"}>{count(d)} booked</span>
-          </button>
-        ))}
-      </div>
-
-      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_300px]">
-        <div className="overflow-hidden rounded-[22px] border border-line bg-white">
-          {/* Week header */}
-          <div className={`hidden border-b border-line ${view === "week" ? "lg:grid" : ""}`} style={{ gridTemplateColumns: `64px repeat(7, minmax(0,1fr))` }}>
-            <span />
-            {[0, 1, 2, 3, 4, 5, 6].map((d) => (
-              <span key={d} className="border-l border-line px-2 py-2.5 text-center text-[13px] font-semibold text-ink">
-                {dayLabel(d, true)}
-              </span>
-            ))}
-          </div>
-          <div className="max-h-[640px] overflow-y-auto">
-            {/* Phones always show one day; desktop follows the view toggle. */}
-            <div className={`grid ${view === "week" ? "lg:hidden" : ""}`} style={{ gridTemplateColumns: "64px minmax(0,1fr)" }}>
-              <Hours hours={hours} open={open} />
-              {column(day)}
+          <div className="flex flex-col gap-3 rounded-[18px] border border-line bg-white p-4">
+            <p className="m-0 text-[14.5px] font-semibold text-ink">Today at a glance</p>
+            <div className="grid grid-cols-3 gap-2 text-center">
+              {[
+                { n: todays.length, l: "Booked" },
+                { n: todays.filter((b) => b.status === "confirmed").length, l: "Confirmed" },
+                { n: todays.filter((b) => b.status === "pending").length, l: "Waiting" },
+              ].map((x) => (
+                <div key={x.l} className="rounded-[12px] bg-panel py-2">
+                  <p className="m-0 text-[20px] leading-tight font-bold text-ink">{x.n}</p>
+                  <p className="m-0 text-[11.5px] text-subtle">{x.l}</p>
+                </div>
+              ))}
             </div>
-            {view === "week" && (
-              <div className="hidden lg:grid" style={{ gridTemplateColumns: `64px repeat(7, minmax(0,1fr))` }}>
-                <Hours hours={hours} open={open} />
-                {days.map((d) => column(d))}
-              </div>
-            )}
+            <p className="m-0 text-[13.5px] text-subtle">
+              {nextUp ? (
+                <>
+                  Next: <strong className="font-semibold text-ink">{nextUp.who}</strong> at {fmtMin(toMin(nextUp.start))}
+                </>
+              ) : (
+                "No more bookings today."
+              )}
+            </p>
           </div>
-        </div>
+          <div className="flex flex-col gap-2.5 rounded-[18px] border border-line bg-white p-4">
+            <p className="m-0 text-[14.5px] font-semibold text-ink">Services</p>
+            {services.map((s, i) => {
+              const [accent] = serviceColors[i % serviceColors.length];
+              const on = !hidden.includes(i);
+              return (
+                <label key={s.name} className="flex cursor-pointer items-center gap-2.5 text-[14px] text-ink">
+                  <input type="checkbox" checked={on} onChange={() => setHidden((h) => (on ? [...h, i] : h.filter((x) => x !== i)))} className="sr-only" />
+                  <span className="flex h-[18px] w-[18px] flex-none items-center justify-center rounded-[5px] border-2 text-white" style={{ borderColor: accent, background: on ? accent : "white" }}>
+                    {on && <Icon name="check" size={12} strokeWidth={3} className="[&_circle]:hidden" />}
+                  </span>
+                  <span className="flex-1 truncate">{s.name}</span>
+                  <span className="text-[12.5px] text-subtle">{s.minutes} min</span>
+                </label>
+              );
+            })}
+            <div className="mt-1 flex flex-col gap-1.5 border-t border-line pt-3 text-[12.5px] text-subtle">
+              <span className="flex items-center gap-2">
+                <span className="h-3 w-5 rounded-[4px] border border-[#EEF0FF] bg-[#EEF0FF] shadow-[inset_3px_0_0_#4A47E0]" /> Confirmed
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-3 w-5 rounded-[4px] border-[1.5px] border-dashed border-[#4A47E0] bg-white" /> Waiting to confirm
+              </span>
+              <span className="flex items-center gap-2">
+                <span className="h-3 w-5 rounded-[4px] border border-line-strong bg-[repeating-linear-gradient(135deg,#F4F4F8_0,#F4F4F8_3px,#E9EAF0_3px,#E9EAF0_6px)]" /> Blocked
+              </span>
+            </div>
+          </div>
+        </aside>
 
-        <Card title={chosen ? chosen.who : "Booking details"}>
-          {chosen ? (
-            <div className="flex flex-col gap-3">
-              <p className="m-0 text-[15px] text-ink">{serviceName(chosen.service)}</p>
-              <p className="m-0 flex items-center gap-2 text-[14.5px] text-subtle">
-                <Icon name="clock" size={16} />
-                {dayLabel(chosen.day)}, {fmt(toMin(chosen.start))} · {chosen.minutes} min
-              </p>
-              <p className="m-0 text-[14.5px] text-subtle">
-                {chosen.status === "confirmed" ? "Confirmed by the customer. Reminder sent the day before." : "Waiting for the customer to confirm. Reminder sent."}
-              </p>
-              <div className="flex flex-wrap gap-2 pt-1">
-                <button
-                  type="button"
-                  onClick={() => setNote("In the product you pick a new time and the customer is asked to confirm it.")}
-                  className="min-h-10 cursor-pointer rounded-full border border-line-strong bg-white px-4 text-[14px] font-semibold text-ink hover:border-subtle"
-                >
-                  Reschedule
-                </button>
-                <button
-                  type="button"
+        {/* Main view */}
+        <div className="min-w-0">
+          {/* Phone week strip */}
+          {view === "day" && (
+            <div className="mb-3 flex gap-1.5 overflow-x-auto md:hidden" role="tablist" aria-label="Day">
+              {weekDays.map((d) => {
+                const date = addDays(today, d);
+                const sel = d === anchor;
+                return (
+                  <button
+                    key={d}
+                    type="button"
+                    role="tab"
+                    aria-selected={sel}
+                    onClick={() => setAnchor(d)}
+                    className={`flex min-w-[48px] flex-1 cursor-pointer flex-col items-center gap-0.5 rounded-[12px] py-2 text-[12px] ${sel ? "bg-ink text-white" : d === 0 ? "bg-white text-ink ring-1 ring-ink" : "bg-white text-ink ring-1 ring-line"}`}
+                  >
+                    <span className={sel ? "text-white/75" : "text-subtle"}>{fmtDate(date, { weekday: "narrow" })}</span>
+                    <span className="text-[15px] font-semibold">{date.getDate()}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {view === "week" && (
+            <TimeGrid today={today} days={weekDays} itemsFor={itemsFor} open={open} close={close} serviceName={serviceName} onSelect={setSelected} onDayClick={(d) => { setAnchor(d); setView("day"); }} />
+          )}
+          {view === "day" && <TimeGrid today={today} days={[anchor]} itemsFor={itemsFor} open={open} close={close} serviceName={serviceName} onSelect={setSelected} />}
+          {view === "month" && (
+            <MonthGrid today={today} anchor={anchor} itemsFor={itemsFor} serviceName={serviceName} onSelect={setSelected} onDayClick={(d) => { setAnchor(d); setView("day"); }} />
+          )}
+          {view === "agenda" && <Agenda today={today} from={anchor} days={14} itemsFor={itemsFor} serviceName={serviceName} onSelect={setSelected} />}
+        </div>
+      </div>
+
+      {/* Booking details */}
+      <Modal
+        open={!!selected}
+        onClose={() => {
+          setSelected(null);
+          setConfirmCancel(false);
+        }}
+        title={selected?.kind === "block" ? "Blocked time" : "Booking"}
+        width={460}
+        footer={
+          selected?.kind === "booking" ? (
+            confirmCancel ? (
+              <>
+                <span className="mr-auto text-[14px] font-semibold text-danger">Cancel this booking?</span>
+                <Button variant="ghost" onClick={() => setConfirmCancel(false)}>
+                  Keep it
+                </Button>
+                <Button
+                  variant="primary"
+                  className="bg-danger hover:bg-[#a30d0d]"
                   onClick={() => {
-                    setBookings((bs) => bs.filter((b) => b.id !== chosen.id));
+                    setBookings((bs) => bs.filter((b) => b.id !== selected.id));
                     setSelected(null);
+                    setConfirmCancel(false);
                   }}
-                  className="min-h-10 cursor-pointer rounded-full px-4 text-[14px] font-semibold text-danger hover:bg-[#FDECEC]"
                 >
                   Cancel booking
-                </button>
-              </div>
-              {note && (
-                <p role="status" className="m-0 rounded-[12px] bg-periwinkle-soft px-3 py-2 text-[13.5px] text-brand">
-                  {note}
-                </p>
-              )}
-              <p className="m-0 text-[12.5px] text-subtle">The customer is told on the channel they booked from.</p>
-            </div>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button variant="danger" onClick={() => setConfirmCancel(true)} className="mr-auto">
+                  Cancel
+                </Button>
+                <Button icon="message" onClick={() => onOpen("inbox")}>
+                  Message
+                </Button>
+                <Button variant="primary" icon="calendar" onClick={() => {
+                    if (selected?.kind !== "booking") return;
+                    setDraft({ id: selected.id, who: selected.who, service: selected.service, day: selected.day, start: selected.start });
+                    setSelected(null);
+                  }}>
+                  Reschedule
+                </Button>
+              </>
+            )
           ) : (
-            <p className="m-0 text-[14.5px] text-subtle">Select a booking to see details, move it or cancel it.</p>
-          )}
-          <div className="flex flex-col gap-2 border-t border-line pt-4 text-[13px] text-subtle">
-            <span className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-[4px] bg-periwinkle-soft" /> Confirmed
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-[4px] border border-orange/40 bg-[#FFF3E6]" /> Waiting to confirm
-            </span>
-            <span className="flex items-center gap-2">
-              <span className="h-3 w-3 rounded-[4px] border border-dashed border-line-strong bg-panel" /> Blocked
-            </span>
+            <Button
+              variant="danger"
+              onClick={() => {
+                setBlocks((bs) => bs.filter((b) => b.id !== selected?.id));
+                setSelected(null);
+              }}
+            >
+              Remove block
+            </Button>
+          )
+        }
+      >
+        {selected?.kind === "booking" && (
+          <div className="flex flex-col gap-5">
+            <div className="flex items-start gap-3">
+              <span className="mt-1.5 h-3 w-3 flex-none rounded-[4px]" style={{ background: serviceColors[selected.service % serviceColors.length][0] }} />
+              <div className="flex flex-col gap-0.5">
+                <p className="m-0 text-[18px] font-semibold text-ink">{serviceName(selected.service)}</p>
+                <p className="m-0 text-[14.5px] text-subtle">
+                  {fmtDate(addDays(today, selected.day), { weekday: "long", day: "numeric", month: "long" })} · {fmtMin(toMin(selected.start))} – {fmtMin(toMin(selected.start) + selected.minutes)}
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-3 rounded-[14px] border border-line p-3">
+              <Avatar name={selected.who} size={40} />
+              <div className="flex min-w-0 flex-1 flex-col">
+                <span className="text-[15px] font-semibold text-ink">{selected.who}</span>
+                <span className="text-[13.5px] text-subtle">{selected.phone}</span>
+              </div>
+              <Badge tone={selected.status === "confirmed" ? "success" : "warning"} dot>
+                {selected.status === "confirmed" ? "Confirmed" : "Waiting"}
+              </Badge>
+            </div>
+            <dl className="m-0 grid grid-cols-2 gap-x-4 gap-y-3 text-[14px]">
+              <div>
+                <dt className="text-subtle">Booked from</dt>
+                <dd className="m-0 mt-1">
+                  <SourceLabel source={selected.channel} />
+                </dd>
+              </div>
+              <div>
+                <dt className="text-subtle">Reminder</dt>
+                <dd className="m-0 mt-1 text-ink">{selected.day > 0 ? "Goes out the day before" : "Sent"}</dd>
+              </div>
+              {selected.note && (
+                <div className="col-span-2">
+                  <dt className="text-subtle">Note</dt>
+                  <dd className="m-0 mt-1 text-ink">{selected.note}</dd>
+                </div>
+              )}
+            </dl>
           </div>
-        </Card>
-      </div>
-    </div>
-  );
-}
+        )}
+        {selected?.kind === "block" && (
+          <p className="m-0 text-[15px] text-ink">
+            {selected.reason || "Blocked"} · {fmtDate(addDays(today, selected.day), { weekday: "long", day: "numeric", month: "long" })}, {fmtMin(toMin(selected.start))} – {fmtMin(toMin(selected.start) + selected.minutes)}. No one can book this time.
+          </p>
+        )}
+      </Modal>
 
-function Hours({ hours, open }: { hours: number[]; open: number }) {
-  return (
-    <div className="relative">
-      {hours.map((h) => (
-        <span key={h} className="absolute right-2 -translate-y-1/2 text-[11.5px] text-subtle first:translate-y-0" style={{ top: (h - open) * PX_PER_MIN + (h === open ? 4 : 0) }}>
-          {fmt(h)}
-        </span>
-      ))}
+      {/* New booking / reschedule */}
+      <Modal
+        open={!!draft}
+        onClose={() => setDraft(null)}
+        title={draft?.id ? "Reschedule booking" : "New booking"}
+        footer={
+          <>
+            <Button variant="ghost" onClick={() => setDraft(null)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={saveDraft} disabled={!draft?.who.trim() || !!clash}>
+              {draft?.id ? "Move booking" : "Book"}
+            </Button>
+          </>
+        }
+      >
+        {draft && (
+          <div className="flex flex-col gap-4">
+            <Field label="Customer">
+              <TextInput value={draft.who} onChange={(e) => setDraft({ ...draft, who: e.target.value })} placeholder="Name or number" autoFocus={!draft.id} />
+            </Field>
+            <Field label="Service">
+              <Select value={draft.service} onChange={(e) => setDraft({ ...draft, service: Number(e.target.value) })}>
+                {services.map((s, i) => (
+                  <option key={s.name} value={i}>
+                    {s.name} · {s.minutes} min
+                  </option>
+                ))}
+              </Select>
+            </Field>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Day">
+                <Select value={draft.day} onChange={(e) => setDraft({ ...draft, day: Number(e.target.value) })}>
+                  {dayOptions.map((d) => (
+                    <option key={d} value={d}>
+                      {d === 0 ? "Today" : d === 1 ? "Tomorrow" : fmtDate(addDays(today, d), { weekday: "short", day: "numeric", month: "short" })}
+                    </option>
+                  ))}
+                </Select>
+              </Field>
+              <Field label="Time">
+                <Select value={draft.start} onChange={(e) => setDraft({ ...draft, start: e.target.value })}>
+                  {slots.map((m) => (
+                    <option key={m} value={toTime(m)}>
+                      {fmtMin(m)}
+                    </option>
+                  ))}
+                </Select>
+              </Field>
+            </div>
+            {clash ? (
+              <p role="alert" className="m-0 flex items-center gap-2 rounded-[12px] bg-[#FDECEC] px-3.5 py-2.5 text-[14px] text-danger">
+                <Icon name="clock" size={16} />
+                That time overlaps with {clash.kind === "booking" ? clash.who : "blocked time"} ({fmtMin(toMin(clash.start))}).
+              </p>
+            ) : (
+              <p className="m-0 text-[13.5px] text-subtle">
+                {fmtMin(toMin(draft.start))} – {fmtMin(toMin(draft.start) + draftMinutes)}. The customer gets a confirmation on WhatsApp and a reminder the day before.
+              </p>
+            )}
+          </div>
+        )}
+      </Modal>
+
+      {/* Block time */}
+      <Modal
+        open={!!blockDraft}
+        onClose={() => setBlockDraft(null)}
+        title="Block time"
+        footer={
+          <>
+            <Button variant="ghost" onClick={() => setBlockDraft(null)}>
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => {
+                if (!blockDraft) return;
+                setBlocks((bs) => [...bs, { id: `k${Date.now()}`, ...blockDraft }]);
+                setAnchor(blockDraft.day);
+                if (view === "month") setView("week");
+                setBlockDraft(null);
+              }}
+            >
+              Block it
+            </Button>
+          </>
+        }
+      >
+        {blockDraft && (
+          <div className="flex flex-col gap-4">
+            <div className="grid gap-4 sm:grid-cols-3">
+              <Field label="Day">
+                <Select value={blockDraft.day} onChange={(e) => setBlockDraft({ ...blockDraft, day: Number(e.target.value) })}>
+                  {dayOptions.map((d) => (
+                    <option key={d} value={d}>
+                      {d === 0 ? "Today" : d === 1 ? "Tomorrow" : fmtDate(addDays(today, d), { weekday: "short", day: "numeric", month: "short" })}
+                    </option>
+                  ))}
+                </Select>
+              </Field>
+              <Field label="From">
+                <Select value={blockDraft.start} onChange={(e) => setBlockDraft({ ...blockDraft, start: e.target.value })}>
+                  {slots.map((m) => (
+                    <option key={m} value={toTime(m)}>
+                      {fmtMin(m)}
+                    </option>
+                  ))}
+                </Select>
+              </Field>
+              <Field label="For">
+                <Select value={blockDraft.minutes} onChange={(e) => setBlockDraft({ ...blockDraft, minutes: Number(e.target.value) })}>
+                  {[30, 60, 120, 240].map((m) => (
+                    <option key={m} value={m}>
+                      {m < 60 ? `${m} min` : `${m / 60} h`}
+                    </option>
+                  ))}
+                </Select>
+              </Field>
+            </div>
+            <Field label="Reason (optional)">
+              <TextInput value={blockDraft.reason} onChange={(e) => setBlockDraft({ ...blockDraft, reason: e.target.value })} placeholder="e.g. Staff meeting" />
+            </Field>
+            <p className="m-0 text-[13.5px] text-subtle">No one can book this time. Your assistant will offer other slots.</p>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }

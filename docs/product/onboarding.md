@@ -75,8 +75,8 @@ export const gating = { setupOnlyBeforeLive: false, limitByPlan: false };
 - Phones: bottom tabs for Home, Inbox, Calendar and Leads, plus More.
 - **What each section holds:**
   - **Inbox:** every chat, with filters, a "Take over" / "Hand back to AI" control and replies.
-  - **Calendar:** a day and week grid on the business's own opening hours, booking details, and "Block time".
-  - **Leads:** Hot, Warm and Cold columns, with follow-ups sent and the next step.
+  - **Calendar:** day, week, month and agenda views (agenda by default on phones); a mini month and "Today at a glance"; service filters; a now line; booking details with message, reschedule and cancel; new bookings with clash checks; and "Block time".
+  - **Leads:** a sortable table or a pipeline board (New, Contacted, Qualified, Booked, Lost), with scores (Hot 70+, Warm 40+), filters, bulk actions and "Add lead". Each lead opens a panel with stage, AI summary, owner, activity history and notes.
   - **Calls:** AI-answered calls, with outcome, summary and transcript.
   - **Campaigns:** broadcasts, win-back and rebooking, with results and a new-campaign form.
   - **Reports:** week 1 baseline against now, "What Vegam won you this week" and past morning reports.

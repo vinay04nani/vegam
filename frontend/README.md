@@ -79,7 +79,8 @@ src/
    ├─ onboarding/         # Onboarding (the two screens)
    ├─ setup/              # PlanChooser, AssistantSetup, ChannelSetup, TestChat, form fields
    ├─ dashboard/          # Dashboard shell, SetupHome (guide), LiveHome, TaskPages, ui
-   │  └─ sections/        # Inbox, Calendar, Leads, Calls, Campaigns, Reports, Settings
+   │  ├─ kit.tsx          # shared controls: SegmentedControl, Button, Badge, Avatar, StatCard, Drawer, Modal
+   │  └─ sections/        # Inbox, Calendar (+ CalendarGrid, MiniMonth), Leads (+ LeadDrawer), Calls, Campaigns, Reports, Settings
    └─ pixel/              # pixel scenes (coast, sunrise, lighthouse, kites), PixelBackdrop, ComingSoon
 ```
 

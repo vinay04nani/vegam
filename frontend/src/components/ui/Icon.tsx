@@ -41,7 +41,13 @@ export type IconName =
   | "pencil"
   | "plus"
   | "trash"
-  | "search";
+  | "search"
+  | "filter"
+  | "more"
+  | "sort"
+  | "note"
+  | "table"
+  | "board";
 
 const paths: Record<IconName, React.ReactNode> = {
   message: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
@@ -183,6 +189,29 @@ const paths: Record<IconName, React.ReactNode> = {
   ),
   pencil: <path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16zM13.5 6.5l4 4" />,
   plus: <path d="M12 5v14M5 12h14" />,
+  filter: <path d="M3 5h18l-7 8.5V19l-4 2v-7.5z" />,
+  more: (
+    <>
+      <circle cx="5" cy="12" r="1.4" fill="currentColor" />
+      <circle cx="12" cy="12" r="1.4" fill="currentColor" />
+      <circle cx="19" cy="12" r="1.4" fill="currentColor" />
+    </>
+  ),
+  sort: <path d="M7 4v16M3.5 7.5L7 4l3.5 3.5M17 20V4M13.5 16.5L17 20l3.5-3.5" />,
+  note: <path d="M5 3h10l4 4v14H5zM15 3v4h4M8.5 12h7M8.5 16h5" />,
+  table: (
+    <>
+      <rect x="3" y="4" width="18" height="16" rx="2.5" />
+      <path d="M3 9.5h18M3 15h18M9 9.5V20" />
+    </>
+  ),
+  board: (
+    <>
+      <rect x="3" y="4" width="5" height="16" rx="1.5" />
+      <rect x="10" y="4" width="5" height="11" rx="1.5" />
+      <rect x="17" y="4" width="4" height="7" rx="1.5" />
+    </>
+  ),
   search: (
     <>
       <circle cx="11" cy="11" r="7" />
