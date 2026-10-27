@@ -168,7 +168,7 @@ export function Dashboard() {
       case "leads":
         return <Leads onOpen={select} />;
       case "calls":
-        return <Calls />;
+        return <Calls onOpen={select} />;
       case "campaigns":
         return <Campaigns />;
       case "reports":
