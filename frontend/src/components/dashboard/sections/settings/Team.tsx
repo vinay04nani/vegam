@@ -5,8 +5,7 @@ import { sampleTeam } from "@/content/dashboard";
 import { permissions, roles, type Role } from "@/content/settings";
 import { Icon } from "@/components/ui/Icon";
 import { Avatar, Badge, Button, Menu, Modal, useToast } from "../../kit";
-import { SampleTag, SettingsSection } from "../../ui";
-import { Dropdown, Input, Label, List, Panel } from "./parts";
+import { Dropdown, Group, Input, Row, RowButton } from "./parts";
 
 // Team members, invitations and what each role can do.
 // Demo: invites are not sent.
@@ -21,108 +20,93 @@ export function Team() {
 
   return (
     <>
-      <Panel>
-        <SettingsSection title="Members" description="Everyone on your team sees the inbox and calendar and can take over any chat.">
-          <div className="flex items-center justify-between gap-3">
-            <SampleTag />
-            <Button variant="primary" icon="plus" onClick={() => setInviting(true)}>
-              Invite people
-            </Button>
-          </div>
-          <List>
-            {team.map((m, i) => (
-              <li key={`${m.contact}-${i}`} className="flex flex-wrap items-center gap-3 px-4 py-3">
-                <Avatar name={m.status === "Invited" ? m.contact : m.name} size={36} />
-                <span className="flex min-w-0 flex-1 flex-col">
-                  <span className="flex items-center gap-2 text-[14.5px] font-semibold text-ink">
-                    {m.status === "Invited" ? m.contact : m.name === "You" ? "You" : m.name}
+      <Group title="Members" description="Everyone here sees the inbox and calendar and can take over any chat." action={<RowButton tone="primary" icon="plus" onClick={() => setInviting(true)}>Invite</RowButton>}>
+        {team.map((m, i) => (
+          <Row
+            key={`${m.contact}-${i}`}
+            label={
+              <span className="flex items-center gap-3">
+                <Avatar name={m.status === "Invited" ? m.contact : m.name} size={32} />
+                <span className="flex min-w-0 flex-col">
+                  <span className="flex items-center gap-2">
+                    {m.status === "Invited" ? m.contact : m.name}
                     {m.status === "Invited" && <Badge tone="warning">Invited</Badge>}
                   </span>
-                  <span className="truncate text-[13px] text-subtle">{m.status === "Invited" ? "Invitation sent just now" : m.contact}</span>
+                  <span className="truncate text-[13px] text-subtle">{m.status === "Invited" ? "Invitation sent" : m.contact}</span>
                 </span>
-                {m.role === "Owner" ? (
-                  <span className="px-3 text-[14px] font-semibold text-ink-soft">Owner</span>
-                ) : (
-                  <label>
-                    <span className="sr-only">Role for {m.name}</span>
-                    <Dropdown
-                      value={m.role}
-                      onChange={(e) => {
-                        setTeam((t) => t.map((x, j) => (j === i ? { ...x, role: e.target.value as Role } : x)));
-                        toast(`${m.name} is now ${e.target.value}`);
-                      }}
-                      className="w-[150px]"
-                    >
-                      {roles
-                        .filter((r) => r !== "Owner")
-                        .map((r) => (
-                          <option key={r}>{r}</option>
-                        ))}
-                    </Dropdown>
-                  </label>
-                )}
-                {m.role !== "Owner" ? (
-                  <Menu
-                    label={`More for ${m.name}`}
-                    items={[
-                      ...(m.status === "Invited" ? [{ label: "Resend invitation", onSelect: () => toast("Invitation sent again") }] : []),
-                      {
-                        label: m.status === "Invited" ? "Cancel invitation" : "Remove from team",
-                        onSelect: () => {
-                          setTeam((t) => t.filter((_, j) => j !== i));
-                          toast(m.status === "Invited" ? "Invitation cancelled" : `${m.name} removed`);
-                        },
-                      },
-                    ]}
-                  />
-                ) : (
-                  <span className="w-7" />
-                )}
-              </li>
-            ))}
-          </List>
-        </SettingsSection>
+              </span>
+            }
+          >
+            {m.role === "Owner" ? (
+              <span className="w-40 px-3 text-[14px] text-subtle">Owner</span>
+            ) : (
+              <Dropdown
+                aria-label={`Role for ${m.name}`}
+                value={m.role}
+                onChange={(e) => {
+                  setTeam((t) => t.map((x, j) => (j === i ? { ...x, role: e.target.value as Role } : x)));
+                  toast(`${m.name} is now ${e.target.value}`);
+                }}
+                className="w-40"
+              >
+                <option>Manager</option>
+                <option>Front desk</option>
+              </Dropdown>
+            )}
+            {m.role !== "Owner" ? (
+              <Menu
+                label={`More for ${m.name}`}
+                items={[
+                  ...(m.status === "Invited" ? [{ label: "Resend invitation", onSelect: () => toast("Invitation sent again") }] : []),
+                  {
+                    label: m.status === "Invited" ? "Cancel invitation" : "Remove from team",
+                    onSelect: () => {
+                      setTeam((t) => t.filter((_, j) => j !== i));
+                      toast(m.status === "Invited" ? "Invitation cancelled" : `${m.name} removed`);
+                    },
+                  },
+                ]}
+              />
+            ) : (
+              <span className="w-7" />
+            )}
+          </Row>
+        ))}
+      </Group>
 
-        <SettingsSection title="Roles" description="What each role can do. Owners can do everything.">
-          <div className="relative overflow-x-auto rounded-[14px] border border-line">
-            <table className="w-full min-w-[460px] border-collapse text-[14px]">
-              <thead className="bg-[#FAFAFC] text-left">
-                <tr>
-                  <th scope="col" className="px-4 py-2.5 text-[12.5px] font-semibold tracking-[0.04em] text-muted uppercase">
-                    Permission
+      <Group title="Roles" description="What each role can do.">
+        <div className="relative overflow-x-auto">
+          <table className="w-full min-w-[460px] border-collapse text-[14px]">
+            <thead>
+              <tr className="text-left text-[12.5px] text-subtle">
+                <th scope="col" className="py-3 pr-4 font-medium">
+                  <span className="sr-only">Permission</span>
+                </th>
+                {roles.map((r) => (
+                  <th key={r} scope="col" className="w-24 px-2 py-3 text-center font-medium whitespace-nowrap">
+                    {r}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {permissions.map((p) => (
+                <tr key={p.label} className="border-t border-line">
+                  <th scope="row" className="py-3 pr-4 text-left font-normal text-ink">
+                    {p.label}
                   </th>
                   {roles.map((r) => (
-                    <th key={r} scope="col" className="px-3 py-2.5 text-center text-[12.5px] font-semibold tracking-[0.04em] whitespace-nowrap text-muted uppercase">
-                      {r}
-                    </th>
+                    <td key={r} className="px-2 py-3 text-center">
+                      {p.allowed.includes(r) ? <Icon name="check" size={15} className="inline text-ink" /> : <span className="text-faint">–</span>}
+                      <span className="sr-only">{p.allowed.includes(r) ? "Allowed" : "Not allowed"}</span>
+                    </td>
                   ))}
                 </tr>
-              </thead>
-              <tbody>
-                {permissions.map((p) => (
-                  <tr key={p.label} className="border-t border-line">
-                    <th scope="row" className="px-4 py-2.5 text-left font-normal text-ink">
-                      {p.label}
-                    </th>
-                    {roles.map((r) => (
-                      <td key={r} className="px-3 py-2.5 text-center">
-                        {p.allowed.includes(r) ? (
-                          <Icon name="check" size={16} className="inline text-success" />
-                        ) : (
-                          <span className="text-faint" aria-hidden="true">
-                            —
-                          </span>
-                        )}
-                        <span className="sr-only">{p.allowed.includes(r) ? "Allowed" : "Not allowed"}</span>
-                      </td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </SettingsSection>
-      </Panel>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Group>
 
       <Modal
         open={inviting}
@@ -149,15 +133,18 @@ export function Team() {
         }
       >
         <div className="flex flex-col gap-4">
-          <Label label="Email or WhatsApp number" hint="They get a link to join. It expires in 7 days.">
+          <label className="flex flex-col gap-1.5">
+            <span className="text-[14px] font-medium text-ink">Email or WhatsApp number</span>
             <Input value={invite.contact} onChange={(e) => setInvite((v) => ({ ...v, contact: e.target.value }))} placeholder="name@business.com or +91 98765 43210" autoFocus />
-          </Label>
-          <Label label="Role">
+            <span className="text-[12.5px] text-subtle">They get a link to join. It expires in 7 days.</span>
+          </label>
+          <label className="flex flex-col gap-1.5">
+            <span className="text-[14px] font-medium text-ink">Role</span>
             <Dropdown value={invite.role} onChange={(e) => setInvite((v) => ({ ...v, role: e.target.value as Role }))}>
               <option>Front desk</option>
               <option>Manager</option>
             </Dropdown>
-          </Label>
+          </label>
         </div>
       </Modal>
     </>

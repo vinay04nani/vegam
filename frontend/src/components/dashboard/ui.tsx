@@ -82,9 +82,9 @@ export function SettingsSection({ title, description, children, id }: { title: s
 }
 
 /** Floating bar shown while a settings form has unsaved changes. */
-export function SaveBar({ onSave, onDiscard, inDialog = false }: { onSave: () => void; onDiscard: () => void; inDialog?: boolean }) {
+export function SaveBar({ onSave, onDiscard }: { onSave: () => void; onDiscard: () => void }) {
   return (
-    <div role="region" aria-label="Unsaved changes" className={`sticky z-10 mt-4 ${inDialog ? "bottom-4" : "bottom-20 lg:bottom-6"}`}>
+    <div role="region" aria-label="Unsaved changes" className="sticky bottom-20 z-10 mt-4 lg:bottom-6">
       <div className="flex items-center justify-between gap-3 rounded-[16px] bg-ink px-4 py-3 text-white shadow-[0_12px_32px_rgb(30_31_43/0.25)]">
         <span className="text-[14px] font-medium">You have unsaved changes</span>
         <span className="flex gap-2">

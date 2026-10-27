@@ -1,10 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Icon } from "@/components/ui/Icon";
-import { Button, Toggle, useToast } from "../../kit";
-import { SaveBar, SettingsSection } from "../../ui";
-import { Dropdown, Input, Label, Panel, TextArea } from "./parts";
+import { useToast } from "../../kit";
+import { Dropdown, Group, Input, Row, RowButton, Switch, TextArea } from "./parts";
 
 // Consent, opt-outs, AI and recording disclosure, data retention and
 // requests from customers about their data (e.g. India's DPDP Act).
@@ -12,81 +10,62 @@ import { Dropdown, Input, Label, Panel, TextArea } from "./parts";
 
 export function Privacy({ onOpen }: { onOpen: (view: string) => void }) {
   const toast = useToast();
-  const [dirty, setDirty] = useState(false);
-  const touch = () => setDirty(true);
+  const [mask, setMask] = useState(true);
 
   return (
     <>
-      <Panel>
-        <div onChange={touch}>
-          <SettingsSection title="AI disclosure" description="Customers are always told they’re talking to an AI assistant. You can change the wording, not turn it off.">
-            <Toggle checked onChange={() => undefined} disabled label="Say it’s an AI in the first message and at the start of every call" description="Always on." />
-            <Label label="How the assistant introduces itself">
-              <TextArea rows={2} defaultValue="Hi! I’m the AI assistant for {business}. I can answer questions and book visits, or pass you to the team." />
-            </Label>
-          </SettingsSection>
+      <Group title="AI disclosure">
+        <Row label="Say it’s an AI assistant" description="In the first message and at the start of every call. Always on.">
+          <Switch checked disabled onChange={() => undefined} label="Say it’s an AI assistant" />
+        </Row>
+        <Row label="Introduction" description="How the assistant introduces itself." stacked>
+          <TextArea aria-label="Introduction" rows={2} defaultValue="Hi! I’m the AI assistant for {business}. I can answer questions and book visits, or pass you to the team." />
+        </Row>
+      </Group>
 
-          <SettingsSection title="Opt-outs" description="Anyone who sends one of these words stops getting reminders and campaigns straight away. They can still message you.">
-            <Label label="Stop words" hint="Separate with commas. Not case-sensitive.">
-              <Input defaultValue="STOP, UNSUBSCRIBE, रुकें" />
-            </Label>
-            <Label label="Reply when someone opts out">
-              <Input defaultValue="You won’t get reminders or offers from us any more. Reply START to undo." />
-            </Label>
-            <span>
-              <Button icon="users" onClick={() => onOpen("contacts")}>
-                See consent for each contact
-              </Button>
-            </span>
-          </SettingsSection>
+      <Group title="Opt-outs" description="Anyone who sends a stop word stops getting reminders and campaigns at once. They can still message you.">
+        <Row label="Stop words" description="Separated by commas.">
+          <Input aria-label="Stop words" defaultValue="STOP, UNSUBSCRIBE, रुकें" className="w-64" />
+        </Row>
+        <Row label="Reply after opting out" stacked>
+          <Input aria-label="Reply after opting out" defaultValue="You won’t get reminders or offers from us any more. Reply START to undo." />
+        </Row>
+        <Row label="Consent records" description="How and when each contact agreed to hear from you.">
+          <RowButton onClick={() => onOpen("contacts")}>View contacts</RowButton>
+        </Row>
+      </Group>
 
-          <SettingsSection title="Recordings and transcripts" description="How long Vegam keeps conversations. Shorter is safer; longer helps your AI learn.">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Label label="Keep chats">
-                <Dropdown defaultValue="365">
-                  <option value="90">90 days</option>
-                  <option value="365">1 year</option>
-                  <option value="1095">3 years</option>
-                </Dropdown>
-              </Label>
-              <Label label="Keep call recordings">
-                <Dropdown defaultValue="90">
-                  <option value="0">Don’t record calls</option>
-                  <option value="30">30 days</option>
-                  <option value="90">90 days</option>
-                  <option value="365">1 year</option>
-                </Dropdown>
-              </Label>
-            </div>
-            <Toggle checked onChange={touch} label="Hide card numbers and ID numbers in transcripts" description="Recommended. Masked before anything is stored." />
-          </SettingsSection>
+      <Group title="Data retention">
+        <Row label="Keep chats">
+          <Dropdown aria-label="Keep chats" defaultValue="365" className="w-44">
+            <option value="90">90 days</option>
+            <option value="365">1 year</option>
+            <option value="1095">3 years</option>
+          </Dropdown>
+        </Row>
+        <Row label="Keep call recordings">
+          <Dropdown aria-label="Keep call recordings" defaultValue="90" className="w-44">
+            <option value="0">Don’t record</option>
+            <option value="30">30 days</option>
+            <option value="90">90 days</option>
+            <option value="365">1 year</option>
+          </Dropdown>
+        </Row>
+        <Row label="Hide card and ID numbers" description="Masked in transcripts before anything is stored.">
+          <Switch checked={mask} onChange={setMask} label="Hide card and ID numbers" />
+        </Row>
+      </Group>
 
-          <SettingsSection title="Data requests" description="Customers can ask what you hold about them, or ask you to delete it. You have 30 days to reply.">
-            <Label label="Where customers send requests" hint="Shown in your privacy notice and given by the AI when asked.">
-              <Input type="email" placeholder="privacy@yourbusiness.com" />
-            </Label>
-            <p className="m-0 flex items-center gap-2 rounded-[12px] bg-[#E8F3EA] px-3.5 py-2.5 text-[13.5px] text-success">
-              <Icon name="check" size={15} />
-              No open requests.
-            </p>
-            <span className="flex flex-wrap gap-2">
-              <Button icon="download" onClick={() => toast("Consent log downloaded (demo)")}>
-                Download consent log
-              </Button>
-            </span>
-          </SettingsSection>
-        </div>
-      </Panel>
-      {dirty && (
-        <SaveBar
-          inDialog
-          onDiscard={() => setDirty(false)}
-          onSave={() => {
-            setDirty(false);
-            toast("Privacy settings saved");
-          }}
-        />
-      )}
+      <Group title="Data requests" description="Customers can ask what you hold about them or ask you to delete it. You have 30 days to reply.">
+        <Row label="Requests go to" description="Given by the AI when someone asks.">
+          <Input aria-label="Requests go to" type="email" placeholder="privacy@yourbusiness.com" className="w-64" />
+        </Row>
+        <Row label="Open requests" description="None right now.">
+          <RowButton icon="download" onClick={() => toast("Consent log downloaded (demo)")}>
+            Consent log
+          </RowButton>
+        </Row>
+      </Group>
     </>
   );
 }
