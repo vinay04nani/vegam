@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Icon, type IconName } from "@/components/ui/Icon";
 
 // Shared building blocks for dashboard screens: controls, badges, avatars,
@@ -243,5 +243,88 @@ export function SourceLabel({ source }: { source: string }) {
       <Icon name={sourceIcon[source] ?? "message"} size={15} className="text-muted" />
       {source}
     </span>
+  );
+}
+
+export type MenuItem = { label: string; onSelect?: () => void; disabled?: boolean; checked?: boolean; heading?: boolean };
+
+/** A small popover menu behind an icon button: closes on Esc or an outside click, arrow keys move between items. */
+export function Menu({ label, items, icon = "more", className = "" }: { label: string; items: MenuItem[]; icon?: IconName; className?: string }) {
+  const [open, setOpen] = useState(false);
+  const root = useRef<HTMLDivElement>(null);
+  const list = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => !root.current?.contains(e.target as Node) && setOpen(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey, true);
+    list.current?.querySelector<HTMLButtonElement>("[role=menuitem]:not([disabled])")?.focus();
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey, true);
+    };
+  }, [open]);
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key !== "ArrowDown" && e.key !== "ArrowUp") return;
+    e.preventDefault();
+    const els = [...(list.current?.querySelectorAll<HTMLButtonElement>("[role=menuitem]:not([disabled])") ?? [])];
+    const i = els.indexOf(document.activeElement as HTMLButtonElement);
+    els[(i + (e.key === "ArrowDown" ? 1 : -1) + els.length) % els.length]?.focus();
+  };
+
+  return (
+    <div ref={root} className={`relative ${className}`} onClick={(e) => e.stopPropagation()}>
+      <button
+        type="button"
+        aria-label={label}
+        title={label}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={() => setOpen((o) => !o)}
+        className="inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-[8px] text-muted transition hover:bg-panel hover:text-ink"
+      >
+        <Icon name={icon} size={16} />
+      </button>
+      {open && (
+        <div
+          ref={list}
+          role="menu"
+          aria-label={label}
+          onKeyDown={onKeyDown}
+          className="absolute top-8 right-0 z-30 flex min-w-[188px] flex-col rounded-[12px] border border-line bg-white p-1.5 shadow-[0_16px_40px_rgb(30_31_43/0.16)]"
+        >
+          {items.map((it, i) =>
+            it.heading ? (
+              <p key={i} className="m-0 px-2.5 pt-1.5 pb-1 text-[11.5px] font-semibold tracking-[0.08em] text-subtle uppercase">
+                {it.label}
+              </p>
+            ) : (
+              <button
+                key={i}
+                type="button"
+                role="menuitem"
+                disabled={it.disabled}
+                onClick={() => {
+                  it.onSelect?.();
+                  setOpen(false);
+                }}
+                className="flex min-h-9 cursor-pointer items-center gap-2 rounded-[8px] px-2.5 text-left text-[14px] text-ink outline-none hover:bg-panel focus:bg-panel disabled:cursor-default disabled:text-subtle disabled:hover:bg-transparent"
+              >
+                <span className="w-4 flex-none">{it.checked && <Icon name="check" size={14} strokeWidth={2.6} className="[&_circle]:hidden" />}</span>
+                {it.label}
+              </button>
+            ),
+          )}
+        </div>
+      )}
+    </div>
   );
 }

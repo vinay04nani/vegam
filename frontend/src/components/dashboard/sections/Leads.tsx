@@ -4,9 +4,10 @@ import { useMemo, useState, type FormEvent } from "react";
 import { leadStages, leadTemp, sampleLeads, sampleTeam, type Lead, type LeadSource, type LeadStage, type LeadTemp } from "@/content/dashboard";
 import { Icon } from "@/components/ui/Icon";
 import { Field, Select, TextInput } from "@/components/setup/fields";
-import { Avatar, Badge, Button, EmptyState, Modal, SegmentedControl, SourceLabel, StatCard, sourceIcon, type BadgeTone } from "../kit";
+import { Avatar, Badge, Button, EmptyState, Modal, SegmentedControl, SourceLabel, StatCard, type BadgeTone } from "../kit";
 import { PageTitle, SampleTag } from "../ui";
 import { LeadDrawer, tempColor, tempLabel, tempTone } from "./LeadDrawer";
+import { LeadPipeline } from "./LeadPipeline";
 
 // Everyone who enquired, as a sortable table or a pipeline board, with a
 // detail drawer for each lead.
@@ -54,7 +55,7 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
   const [selected, setSelected] = useState<string[]>([]);
   const [openId, setOpenId] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
-  const [draft, setDraft] = useState({ name: "", phone: "", source: "WhatsApp" as LeadSource, interest: "" });
+  const [draft, setDraft] = useState({ name: "", phone: "", source: "WhatsApp" as LeadSource, interest: "", stage: "new" as LeadStage });
 
   const counts = useMemo(() => {
     const c = { all: leads.length, hot: 0, warm: 0, cold: 0 };
@@ -97,7 +98,7 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
       phone: draft.phone.trim() || "Not added",
       source: draft.source,
       score: 50,
-      stage: "new",
+      stage: draft.stage,
       owner: "AI",
       interest: draft.interest.trim() || "Added by hand",
       summary: "Added by your team. Vegam will follow up on the channel they came from.",
@@ -110,7 +111,7 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
       activity: [{ at: "Just now", kind: "note", text: "Lead added by your team" }],
     };
     setLeads((ls) => [lead, ...ls]);
-    setDraft({ name: "", phone: "", source: "WhatsApp", interest: "" });
+    setDraft({ name: "", phone: "", source: "WhatsApp", interest: "", stage: "new" });
     setAdding(false);
     setOpenId(lead.id);
   };
@@ -123,7 +124,14 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
         <PageTitle title="Leads" body="Everyone who enquired, scored by how ready they are to book. Vegam follows up politely and stops when they reply or say STOP." />
         <div className="flex items-center gap-3">
           <SampleTag />
-          <Button variant="primary" icon="plus" onClick={() => setAdding(true)}>
+          <Button
+            variant="primary"
+            icon="plus"
+            onClick={() => {
+              setDraft((d) => ({ ...d, stage: "new" }));
+              setAdding(true);
+            }}
+          >
             Add lead
           </Button>
         </div>
@@ -343,56 +351,18 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
           )}
         </div>
       ) : (
-        /* Pipeline board */
-        <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-          <div className="grid min-w-[1080px] grid-cols-5 gap-3">
-            {leadStages.map((st) => {
-              const col = visible.filter((l) => l.stage === st.id);
-              return (
-                <section key={st.id} aria-label={`${st.label} leads`} className="flex min-h-[320px] flex-col gap-2.5 rounded-[18px] bg-[#F4F4F8] p-2.5">
-                  <div className="flex items-center justify-between px-1.5 pt-1">
-                    <Badge tone={stageTone[st.id]}>{st.label}</Badge>
-                    <span className="text-[13px] font-semibold text-muted">{col.length}</span>
-                  </div>
-                  {col.map((l) => (
-                    <article key={l.id} className="flex flex-col gap-2.5 rounded-[14px] border border-line bg-white p-3 shadow-[0_1px_2px_rgb(30_31_43/0.04)]">
-                      <button type="button" onClick={() => setOpenId(l.id)} className="flex cursor-pointer items-center gap-2.5 text-left">
-                        <Avatar name={l.name} size={28} />
-                        <span className="min-w-0 flex-1 truncate text-[14px] font-semibold text-ink">{l.name}</span>
-                      </button>
-                      <p className="m-0 line-clamp-2 text-[13px] text-subtle">{l.interest}</p>
-                      <div className="flex items-center justify-between gap-2">
-                        <Badge tone={tempTone[leadTemp(l.score)]}>
-                          {l.score} · {tempLabel[leadTemp(l.score)]}
-                        </Badge>
-                        <Icon name={sourceIcon[l.source]} size={15} className="text-muted" />
-                      </div>
-                      <label className="relative">
-                        <span className="sr-only">Move {l.name} to</span>
-                        <select
-                          value=""
-                          onChange={(e) => e.target.value && update({ ...l, stage: e.target.value as LeadStage, activity: [...l.activity, { at: "Just now", kind: "note", text: `Moved to ${stageLabel[e.target.value as LeadStage]}` }] })}
-                          className="min-h-8 w-full cursor-pointer appearance-none rounded-[8px] border border-line bg-[#FAFAFC] pr-7 pl-2.5 text-[12.5px] font-medium text-ink-soft"
-                        >
-                          <option value="">Move to…</option>
-                          {leadStages
-                            .filter((s) => s.id !== l.stage)
-                            .map((s) => (
-                              <option key={s.id} value={s.id}>
-                                {s.label}
-                              </option>
-                            ))}
-                        </select>
-                        <Icon name="chevron-down" size={13} className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2 text-subtle" />
-                      </label>
-                    </article>
-                  ))}
-                  {col.length === 0 && <p className="m-0 rounded-[12px] border border-dashed border-line-strong p-4 text-center text-[13px] text-subtle">No leads</p>}
-                </section>
-              );
-            })}
-          </div>
-        </div>
+        <LeadPipeline
+          leads={visible}
+          onOpen={setOpenId}
+          onMove={(id, stage) => {
+            const l = leads.find((x) => x.id === id);
+            if (l && l.stage !== stage) update({ ...l, stage, lastActivity: "Just now", lastMins: 0, activity: [...l.activity, { at: "Just now", kind: "note", text: `Moved to ${stageLabel[stage]}` }] });
+          }}
+          onAdd={(stage) => {
+            setDraft((d) => ({ ...d, stage }));
+            setAdding(true);
+          }}
+        />
       )}
 
       <LeadDrawer key={open?.id ?? "none"} lead={open} onClose={() => setOpenId(null)} onChange={update} onOpen={onOpen} />
@@ -400,7 +370,7 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
       <Modal
         open={adding}
         onClose={() => setAdding(false)}
-        title="Add a lead"
+        title={draft.stage === "new" ? "Add a lead" : `Add a lead to ${stageLabel[draft.stage]}`}
         footer={
           <>
             <Button variant="ghost" onClick={() => setAdding(false)}>
