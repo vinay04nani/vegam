@@ -180,7 +180,7 @@ export function LiveHome({ state, update, plan, mode, welcome, onDismissWelcome,
         </p>
       </section>
 
-      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+      <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
         <div className="flex flex-col gap-5">
           <GrowCard items={items} done={state.checklistDone} onDone={markDone} onOpen={onOpen} />
           <Card title="Needs you" extra={<SampleTag />}>

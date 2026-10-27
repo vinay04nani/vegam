@@ -25,7 +25,7 @@ import { Contacts } from "./sections/Contacts";
 import { Help } from "./sections/Help";
 import { Profile } from "./sections/Profile";
 import { CommandPalette } from "./CommandPalette";
-import { Kbd, Menu, ToastProvider } from "./kit";
+import { Menu, ToastProvider } from "./kit";
 import { NotificationBell } from "./Notifications";
 import { pilotDay } from "./ui";
 
@@ -224,23 +224,11 @@ export function Dashboard() {
         </button>
       </aside>
 
-      {/* Top bar: search, notifications and the user menu (logo on phones) */}
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-line bg-page/90 px-4 backdrop-blur sm:px-8 lg:ml-[248px] lg:h-16">
+      {/* Top bar: notifications and the user menu (logo on phones). Search stays on ⌘K / Ctrl+K. */}
+      <header className="sticky top-0 z-30 flex h-14 items-center justify-end gap-2 border-b border-line bg-page/90 px-4 backdrop-blur sm:px-8 lg:ml-[248px] lg:h-16">
         <a href={links.home} className="mr-auto text-[22px] leading-none font-extrabold tracking-[-0.045em] text-ink lg:hidden">
           vegam
         </a>
-        <button
-          type="button"
-          onClick={() => setPalette(true)}
-          className="hidden min-h-10 w-full max-w-[420px] cursor-pointer items-center gap-2.5 rounded-[12px] border border-line-strong bg-white px-3.5 text-left text-[14.5px] text-subtle transition hover:border-subtle lg:mr-auto lg:flex"
-        >
-          <Icon name="search" size={17} />
-          <span className="flex-1">Search people, chats, bookings…</span>
-          <Kbd>⌘K</Kbd>
-        </button>
-        <button type="button" aria-label="Search" onClick={() => setPalette(true)} className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-ink hover:bg-white lg:hidden">
-          <Icon name="search" size={20} />
-        </button>
         <NotificationBell onOpen={select} />
         <Menu
           label="Account menu"

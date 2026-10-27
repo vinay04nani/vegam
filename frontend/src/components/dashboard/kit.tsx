@@ -426,7 +426,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={push}>
       {children}
-      <div aria-live="polite" className="pointer-events-none fixed inset-x-0 bottom-20 z-[60] flex flex-col items-center gap-2 px-4 lg:bottom-6">
+      <div aria-live="polite" className="pointer-events-none fixed inset-x-0 top-16 z-[60] flex flex-col items-center gap-2 px-4 lg:top-auto lg:right-6 lg:bottom-6 lg:left-auto lg:items-end lg:px-0">
         {items.map((t) => (
           <div key={t.id} role="status" className="pointer-events-auto flex items-center gap-2.5 rounded-[12px] bg-ink px-4 py-2.5 text-[14px] font-medium text-white shadow-[0_12px_32px_rgb(30_31_43/0.3)]">
             <Icon name={t.tone === "success" ? "check" : "sparkle"} size={16} className={t.tone === "success" ? "text-[#7BD88F]" : "text-accent"} />

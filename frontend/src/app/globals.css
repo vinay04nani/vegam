@@ -38,7 +38,11 @@
   --animate-orn-c: orn-c 3.2s ease-in-out infinite;
   --animate-float: float 6s ease-in-out infinite;
   --animate-glow: glow 3.2s ease-in-out infinite;
+  --animate-slide-in: slide-in 0.2s ease-out;
 
+  @keyframes slide-in {
+    from { transform: translateX(16px); opacity: 0; }
+  }
   @keyframes marquee {
     to { transform: translateX(-50%); }
   }
