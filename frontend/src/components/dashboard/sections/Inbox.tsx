@@ -294,7 +294,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
           : { tone: "bg-[#E8F3EA] text-success", icon: "users" as IconName, text: `${open.assignee && open.assignee !== "You" ? `${open.assignee} is` : "You’re"} handling this chat. The AI is paused.`, action: "Hand back to AI", onAction: handBack };
 
   return (
-    <div className="flex h-[calc(100svh-56px-64px)] flex-col overflow-hidden bg-white lg:h-[calc(100svh-64px-48px)] lg:rounded-[20px] lg:border lg:border-line lg:shadow-[0_1px_3px_rgb(30_31_43/0.04)]">
+    <div className="flex h-[calc(100svh-56px-64px)] flex-col overflow-hidden bg-white lg:h-[calc(100svh-48px)] lg:rounded-[20px] lg:border lg:border-line lg:shadow-[0_1px_3px_rgb(30_31_43/0.04)]">
       <div className={`grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] lg:grid-cols-[320px_minmax(0,1fr)] 2xl:grid-cols-[210px_320px_minmax(0,1fr)] ${panel ? "xl:grid-cols-[320px_minmax(0,1fr)_300px] 2xl:grid-cols-[210px_320px_minmax(0,1fr)_300px]" : ""}`}>
         {/* Folders (wide screens) */}
         <nav aria-label="Inbox folders" className="hidden min-h-0 flex-col gap-0.5 overflow-y-auto border-r border-line bg-[#F7F7FA] p-3 2xl:flex">

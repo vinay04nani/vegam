@@ -260,6 +260,8 @@ export function Menu({
   className = "",
   trigger,
   align = "right",
+  above = false,
+  triggerClassName,
 }: {
   label: string;
   items: MenuItem[];
@@ -268,6 +270,9 @@ export function Menu({
   /** Custom trigger content (e.g. an avatar) instead of the icon. */
   trigger?: ReactNode;
   align?: "left" | "right";
+  /** Open upwards, e.g. from the bottom of the sidebar. */
+  above?: boolean;
+  triggerClassName?: string;
 }) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
@@ -308,7 +313,7 @@ export function Menu({
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className={trigger ? "inline-flex cursor-pointer items-center rounded-full transition hover:opacity-90" : "inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-[8px] text-muted transition hover:bg-panel hover:text-ink"}
+        className={triggerClassName ?? (trigger ? "inline-flex cursor-pointer items-center rounded-full transition hover:opacity-90" : "inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-[8px] text-muted transition hover:bg-panel hover:text-ink")}
       >
         {trigger ?? <Icon name={icon} size={16} />}
       </button>
@@ -318,7 +323,7 @@ export function Menu({
           role="menu"
           aria-label={label}
           onKeyDown={onKeyDown}
-          className={`absolute ${trigger ? "top-11" : "top-8"} ${align === "right" ? "right-0" : "left-0"} z-50 flex min-w-[188px] flex-col rounded-[12px] border border-line bg-white p-1.5 shadow-[0_16px_40px_rgb(30_31_43/0.16)]`}
+          className={`absolute ${above ? "bottom-full mb-2" : trigger ? "top-11" : "top-8"} ${above ? "inset-x-0" : align === "right" ? "right-0" : "left-0"} z-50 flex min-w-[188px] flex-col rounded-[12px] border border-line bg-white p-1.5 shadow-[0_16px_40px_rgb(30_31_43/0.16)]`}
         >
           {items.map((it, i) =>
             it.heading ? (

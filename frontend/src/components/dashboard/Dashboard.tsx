@@ -137,6 +137,43 @@ export function Dashboard() {
     select("home");
   };
 
+  const accountMenu = (sidebar: boolean) => (
+    <Menu
+      label="Account menu"
+      above={sidebar}
+      align={sidebar ? "left" : "right"}
+      className={sidebar ? "w-full" : ""}
+      triggerClassName={sidebar ? "flex w-full cursor-pointer items-center gap-3 rounded-[12px] px-2.5 py-2 text-left transition hover:bg-white/60" : undefined}
+      trigger={
+        sidebar ? (
+          <>
+            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink text-[14px] font-bold text-white">{userName[0]}</span>
+            <span className="flex min-w-0 flex-1 flex-col leading-tight">
+              <span className="truncate text-[14.5px] font-semibold text-ink">{userName}</span>
+              <span className="truncate text-[12.5px] text-subtle">Owner · {name}</span>
+            </span>
+            <Icon name="chevron-down" size={16} className="rotate-180 text-muted" />
+          </>
+        ) : (
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-[13.5px] font-bold text-white">{userName[0]}</span>
+        )
+      }
+      items={[
+        { label: "Your profile", onSelect: () => select("profile") },
+        { label: "Billing and usage", onSelect: () => select("billing") },
+        { label: "Settings", onSelect: () => select("settings") },
+        { label: "Help and support", onSelect: () => select("help") },
+        {
+          label: "Log out",
+          onSelect: () => {
+            // Demo: there is no session yet; go back to the log-in page.
+            window.location.href = withBase("/login/");
+          },
+        },
+      ]}
+    />
+  );
+
   const page = (() => {
     const props = { state, update, onHome: home };
     switch (view) {
@@ -228,43 +265,21 @@ export function Dashboard() {
           <Icon name="headset" size={19} />
           Help and support
         </button>
+        <NotificationBell onOpen={select} variant="sidebar" />
+        <div className="mt-3 border-t border-line pt-3">{accountMenu(true)}</div>
       </aside>
 
-      {/* Top bar: notifications and the user menu (logo on phones). Search stays on ⌘K / Ctrl+K. */}
-      <header className="sticky top-0 z-30 flex h-14 items-center justify-end gap-2 border-b border-line bg-page/90 px-4 backdrop-blur sm:px-8 lg:ml-[248px] lg:h-16">
-        <a href={links.home} className="mr-auto text-[22px] leading-none font-extrabold tracking-[-0.045em] text-ink lg:hidden">
+      {/* Phone top bar: logo, notifications and the account menu. On desktop these live in the sidebar. */}
+      <header className="sticky top-0 z-30 flex h-14 items-center justify-end gap-2 border-b border-line bg-page/90 px-4 backdrop-blur sm:px-8 lg:hidden">
+        <a href={links.home} className="mr-auto text-[22px] leading-none font-extrabold tracking-[-0.045em] text-ink">
           vegam
         </a>
         <NotificationBell onOpen={select} />
-        <Menu
-          label="Account menu"
-          trigger={
-            <span className="flex items-center gap-2.5 rounded-full py-1 pr-1 pl-1 lg:pr-3">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-[13.5px] font-bold text-white">{userName[0]}</span>
-              <span className="hidden flex-col text-left leading-tight lg:flex">
-                <span className="text-[13.5px] font-semibold text-ink">{userName}</span>
-                <span className="text-[11.5px] text-subtle">Owner · {name}</span>
-              </span>
-            </span>
-          }
-          items={[
-            { label: "Your profile", onSelect: () => select("profile") },
-            { label: "Billing and usage", onSelect: () => select("billing") },
-            { label: "Settings", onSelect: () => select("settings") },
-            { label: "Help and support", onSelect: () => select("help") },
-            {
-              label: "Log out",
-              onSelect: () => {
-                // Demo: there is no session yet; go back to the log-in page.
-                window.location.href = withBase("/login/");
-              },
-            },
-          ]}
-        />
+        {accountMenu(false)}
       </header>
 
       {/* The inbox is a full-height workspace; other pages sit in a centred column. */}
-      <main className={`transition-opacity lg:ml-[248px] ${view === "inbox" ? "pb-16 lg:p-6" : "px-4 pt-6 pb-28 sm:px-8 lg:pt-8 lg:pb-16"} ${ready ? "opacity-100" : "opacity-0"}`}>
+      <main className={`transition-opacity lg:ml-[248px] ${view === "inbox" ? "pb-16 lg:p-6" : "px-4 pt-6 pb-28 sm:px-8 lg:pt-10 lg:pb-16"} ${ready ? "opacity-100" : "opacity-0"}`}>
         <div className={view === "inbox" ? "" : "mx-auto max-w-[1180px]"}>{page}</div>
       </main>
 
