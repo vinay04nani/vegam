@@ -107,7 +107,7 @@ export const integrations: Integration[] = [
   {
     id: "missed",
     name: "Missed-call recovery",
-    brand: { letter: "☎", color: "#EE7A2E", title: "Missed-call recovery" },
+    brand: { letter: "☎", color: "#C75A1C", title: "Missed-call recovery" },
     category: "Calls & SMS",
     value: "Callers you miss get a WhatsApp within seconds.",
     minPlan: "starter",
