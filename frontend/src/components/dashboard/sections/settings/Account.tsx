@@ -35,7 +35,7 @@ export function Account({ state, onOpen }: Props) {
           <RowButton onClick={() => onOpen("plan")}>{plan ? "Change plan" : "Choose a plan"}</RowButton>
         </Row>
         <Row label="Billing and invoices" description="Payment method, usage and GST invoices.">
-          <RowButton onClick={() => onOpen("billing")}>Open billing</RowButton>
+          <RowButton onClick={() => onOpen("settings:billing")}>Open billing</RowButton>
         </Row>
       </Group>
 

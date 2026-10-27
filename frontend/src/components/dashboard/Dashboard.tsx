@@ -121,6 +121,7 @@ export function Dashboard() {
     setMore(false);
     // Help and support lives in the settings dialog too.
     if (id === "help") id = "settings:help";
+    if (id === "billing") id = "settings:billing";
     if (id === "settings" || id.startsWith("settings:")) {
       setSettings(id.split(":")[1] ?? "general");
       return;

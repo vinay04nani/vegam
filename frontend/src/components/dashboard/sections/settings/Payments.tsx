@@ -2,11 +2,20 @@
 
 import { useState } from "react";
 import { BrandLogo } from "@/components/ui/BrandLogo";
-import { Badge, useToast } from "../../kit";
+import { downloadPdf } from "@/lib/pdf";
+import { Badge, useToast, type BadgeTone } from "../../kit";
 import { Dropdown, Group, Row, RowButton, Switch } from "./parts";
 
 // Taking deposits and payments through links in chat. Razorpay in India,
 // Stripe elsewhere. Demo: nothing is connected.
+
+const received = [
+  { id: "pay_8KQ2", who: "M. D’Souza", what: "Standard appointment", amount: 1200, usd: 40, when: "Today, 11:42 AM", status: "Paid" },
+  { id: "pay_8KP9", who: "V. Reddy", what: "Deposit · First visit", amount: 100, usd: 3, when: "Yesterday, 6:10 PM", status: "Paid" },
+  { id: "pay_8KN4", who: "G. Nair", what: "Follow-up", amount: 300, usd: 10, when: "2 days ago", status: "Pending" },
+  { id: "pay_8KM1", who: "S. Menon", what: "Standard appointment", amount: 1200, usd: 40, when: "5 days ago", status: "Refunded" },
+];
+const tone: Record<string, BadgeTone> = { Paid: "success", Pending: "warning", Refunded: "neutral" };
 
 export function Payments({ india }: { india: boolean }) {
   const toast = useToast();
@@ -39,6 +48,34 @@ export function Payments({ india }: { india: boolean }) {
             <option value="refund">Refund it</option>
           </Dropdown>
         </Row>
+      </Group>
+      <Group title="Payments received" description="Sample data. Money from deposits and payment links, straight to your bank.">
+        {received.map((p) => {
+          const amount = india ? `₹${p.amount.toLocaleString("en-IN")}` : `$${p.usd}`;
+          return (
+            <Row key={p.id} label={p.who} description={`${p.what} · ${p.when}`}>
+              <span className="w-20 text-right text-[14px] text-ink tabular-nums">{amount}</span>
+              <Badge tone={tone[p.status]}>{p.status}</Badge>
+              <RowButton
+                icon="download"
+                ariaLabel={`Download receipt for ${p.who}`}
+                onClick={() =>
+                  downloadPdf(`receipt-${p.id}.pdf`, [
+                    { text: "Payment receipt (sample)", size: 16, bold: true },
+                    { text: `Receipt ${p.id}    ${p.when}`, gap: 30 },
+                    { text: `Received from: ${p.who}` },
+                    { text: `For: ${p.what}` },
+                    { text: `Amount: ${amount}`, bold: true, size: 13, gap: 28 },
+                    { text: `Status: ${p.status}` },
+                    { text: "This is sample data from the Vegam demo.", size: 9, gap: 60 },
+                  ])
+                }
+              >
+                Receipt
+              </RowButton>
+            </Row>
+          );
+        })}
       </Group>
       <Group title="Payment links">
         <Row label="Remind people who haven’t paid" description="A polite WhatsApp after 1 day and 3 days.">
