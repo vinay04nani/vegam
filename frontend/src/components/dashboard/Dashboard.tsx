@@ -265,8 +265,10 @@ export function Dashboard() {
           <Icon name="headset" size={19} />
           Help and support
         </button>
-        <NotificationBell onOpen={select} variant="sidebar" />
-        <div className="mt-3 border-t border-line pt-3">{accountMenu(true)}</div>
+        <div className="mt-3 flex items-center gap-1 border-t border-line pt-3">
+          <div className="min-w-0 flex-1">{accountMenu(true)}</div>
+          <NotificationBell onOpen={select} variant="sidebar" />
+        </div>
       </aside>
 
       {/* Phone top bar: logo, notifications and the account menu. On desktop these live in the sidebar. */}
