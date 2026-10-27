@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { appNav, type NavItem } from "@/content/onboarding";
 import { plans, type PlanId } from "@/content/pricing";
 import { links } from "@/content/site";
+import { sampleThreads } from "@/content/dashboard";
 import { Icon } from "@/components/ui/Icon";
 import { isIncluded, useOnboarding } from "@/lib/onboarding";
 import { withBase } from "@/lib/paths";
@@ -40,6 +41,9 @@ const parentOf: Record<string, string> = { assistant: "agents", plan: "settings"
 
 const userName = "Vinay";
 
+/** Unread counts beside nav items. Demo: from the sample inbox, so they don't change as chats are read. */
+const navCounts: Record<string, number> = { inbox: sampleThreads.filter((t) => t.unread).length };
+
 function NavButton({
   id,
   label,
@@ -48,13 +52,15 @@ function NavButton({
   view,
   plan,
   onSelect,
-}: NavItem & { compact?: boolean; view: string; plan: PlanId; onSelect: (id: string) => void }) {
+  count,
+}: NavItem & { compact?: boolean; view: string; plan: PlanId; onSelect: (id: string) => void; count?: number }) {
   const active = view === id;
   const locked = !isIncluded(appNav.find((n) => n.id === id)?.minPlan ?? "starter", plan);
   return (
     <button
       type="button"
       aria-current={active ? "page" : undefined}
+      aria-label={count ? `${label}, ${count} unread` : undefined}
       onClick={() => onSelect(id)}
       className={
         compact
@@ -62,8 +68,20 @@ function NavButton({
           : `flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-[12px] px-3 text-[15px] font-medium transition ${active ? "bg-white text-ink shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : "text-ink-soft hover:bg-white/60"}`
       }
     >
-      <Icon name={icon} size={compact ? 22 : 19} />
+      <span className="relative">
+        <Icon name={icon} size={compact ? 22 : 19} />
+        {!!count && compact && (
+          <span aria-hidden="true" className="absolute -top-1 -right-2 min-w-4 rounded-full bg-orange px-1 text-center text-[10.5px] leading-4 font-bold text-white">
+            {count}
+          </span>
+        )}
+      </span>
       {label}
+      {!!count && !compact && (
+        <span aria-hidden="true" className="ml-auto rounded-full bg-ink px-1.5 text-[11.5px] leading-5 font-bold text-white">
+          {count}
+        </span>
+      )}
       {locked && !compact && <Icon name="lock" size={14} className="ml-auto text-faint" />}
     </button>
   );
@@ -144,7 +162,7 @@ export function Dashboard() {
       case "help":
         return <Help onOpen={select} />;
       case "inbox":
-        return <Inbox />;
+        return <Inbox onOpen={select} />;
       case "calendar":
         return <Calendar state={state} onOpen={select} />;
       case "leads":
@@ -190,7 +208,7 @@ export function Dashboard() {
               {nav
                 .filter((n) => n.group === g)
                 .map((n) => (
-                  <NavButton key={n.id} {...n} view={navView} plan={plan} onSelect={select} />
+                  <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
                 ))}
             </div>
           ))}
@@ -258,7 +276,7 @@ export function Dashboard() {
       {/* Phone bottom tabs */}
       <nav aria-label="Dashboard" className="fixed inset-x-0 bottom-0 z-20 flex border-t border-line bg-white/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
         {nav.slice(0, 4).map((n) => (
-          <NavButton key={n.id} {...n} compact view={navView} plan={plan} onSelect={select} />
+          <NavButton key={n.id} {...n} count={navCounts[n.id]} compact view={navView} plan={plan} onSelect={select} />
         ))}
         <button
           type="button"
@@ -278,7 +296,7 @@ export function Dashboard() {
             onClick={(e) => e.stopPropagation()}
           >
             {nav.slice(4).map((n) => (
-              <NavButton key={n.id} {...n} view={navView} plan={plan} onSelect={select} />
+              <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
             ))}
             <NavButton id="help" label="Help and support" icon="headset" minPlan="starter" group="setup" view={navView} plan={plan} onSelect={select} />
           </nav>

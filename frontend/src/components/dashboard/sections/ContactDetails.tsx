@@ -42,7 +42,7 @@ export function ChannelMark({ channel, size = 22 }: { channel: ContactChannel; s
   );
 }
 
-export function ContactDetails({ contact, onChange, onOpen }: { contact: Contact; onChange: (c: Contact) => void; onOpen: (view: string) => void }) {
+export function ContactDetails({ contact, onChange, onOpen, actions = true }: { contact: Contact; onChange: (c: Contact) => void; onOpen: (view: string) => void; actions?: boolean }) {
   const toast = useToast();
   const [note, setNote] = useState("");
   const [adding, setAdding] = useState(false);
@@ -71,14 +71,16 @@ export function ContactDetails({ contact, onChange, onOpen }: { contact: Contact
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
-        <Button variant="primary" icon="message" onClick={() => onOpen("inbox")}>
-          Message
-        </Button>
-        <Button icon="calendar" onClick={() => onOpen("calendar")}>
-          Book a visit
-        </Button>
-      </div>
+      {actions && (
+        <div className="grid grid-cols-2 gap-2">
+          <Button variant="primary" icon="message" onClick={() => onOpen("inbox")}>
+            Message
+          </Button>
+          <Button icon="calendar" onClick={() => onOpen("calendar")}>
+            Book a visit
+          </Button>
+        </div>
+      )}
 
       <dl className="m-0 grid grid-cols-3 gap-2 rounded-[14px] bg-panel p-3">
         <div>

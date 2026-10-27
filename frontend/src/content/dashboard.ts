@@ -18,7 +18,16 @@ export const sampleNeedsYou = [
 // ---------- Inbox ----------
 
 export type InboxChannel = "WhatsApp" | "Instagram" | "Messenger" | "Website" | "Missed call";
-export type ThreadMessage = { from: "customer" | "ai" | "team"; text: string; time: string };
+export type ThreadMessage = {
+  from: "customer" | "ai" | "team";
+  text: string;
+  time: string;
+  /** Text by default. A note is only seen by the team; voice notes carry their transcript as `text`. */
+  kind?: "image" | "voice" | "note";
+  duration?: string;
+  /** For images attached in the demo: a local preview URL. */
+  src?: string;
+};
 /** Who is handling the chat: the AI, a person on the team, or nobody yet (handed over). */
 export type ThreadOwner = "ai" | "team" | "needs";
 export type Thread = { id: string; who: string; channel: InboxChannel; time: string; owner: ThreadOwner; unread?: boolean; messages: ThreadMessage[] };
@@ -45,7 +54,7 @@ export const sampleThreads: Thread[] = [
     owner: "needs",
     unread: true,
     messages: [
-      { from: "customer", text: "I visited last week and want to ask about a refund.", time: "8:14 PM" },
+      { from: "customer", text: "I visited last week and want to ask about a refund. The appointment was cut short.", time: "8:14 PM", kind: "voice", duration: "0:14" },
       { from: "ai", text: "I’m sorry to hear that. I’ve passed this to the team so a person can help you. Someone will reply here shortly.", time: "8:14 PM" },
       { from: "customer", text: "Okay, thank you.", time: "8:15 PM" },
     ],
@@ -69,6 +78,7 @@ export const sampleThreads: Thread[] = [
     owner: "ai",
     unread: true,
     messages: [
+      { from: "customer", text: "Is this the place in the photo?", time: "6:00 PM", kind: "image" },
       { from: "customer", text: "What are your timings on Sunday?", time: "6:01 PM" },
       { from: "ai", text: "We’re closed on Sundays. We’re open Monday to Saturday, 10 AM to 7 PM. Would you like to book a visit?", time: "6:02 PM" },
     ],
@@ -81,6 +91,7 @@ export const sampleThreads: Thread[] = [
     owner: "team",
     messages: [
       { from: "customer", text: "Can I bring someone along to my appointment?", time: "4:40 PM" },
+      { from: "team", text: "Second person is a first visit; book them 30 min.", time: "4:45 PM", kind: "note" },
       { from: "team", text: "Of course! See you both on Thursday.", time: "4:46 PM" },
       { from: "customer", text: "Thanks, see you then!", time: "4:48 PM" },
     ],
@@ -98,6 +109,15 @@ export const sampleThreads: Thread[] = [
       { from: "ai", text: "Moved to next Tuesday, 11:30 AM. You’ll get a reminder the day before.", time: "1:20 PM" },
     ],
   },
+];
+
+/** Saved replies the team inserts by typing "/" in the inbox. */
+export const sampleQuickReplies = [
+  { id: "hours", title: "Opening hours", text: "We’re open Monday to Saturday, 10 AM to 7 PM." },
+  { id: "book", title: "Booking link", text: "You can pick a time that suits you here: vegam.example/book" },
+  { id: "location", title: "Directions", text: "We’re next to the main entrance, with free parking. Here’s the map: vegam.example/map" },
+  { id: "refund", title: "Refund received", text: "Thanks for letting us know. I’ve passed this to the manager and we’ll reply within one working day." },
+  { id: "thanks", title: "Thank you", text: "Thank you! See you soon." },
 ];
 
 const ownerLabel: Record<ThreadOwner, string> = { ai: "AI", team: "Team", needs: "Needs you" };
