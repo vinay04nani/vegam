@@ -166,8 +166,11 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
   const [query, setQuery] = useState("");
   const [draft, setDraft] = useState("");
   const [mode, setMode] = useState<"reply" | "note">("reply");
-  const [panel, setPanel] = useState(true);
+  // Customer details stay hidden until the name or photo in the chat header is clicked.
+  const [panel, setPanel] = useState(false);
   const [details, setDetails] = useState(false);
+  /** Wide screens get a side panel beside the chat; smaller ones a slide-over. */
+  const showDetails = () => (window.matchMedia("(min-width: 1280px)").matches ? setPanel((p) => !p) : setDetails(true));
   const [picker, setPicker] = useState(0);
   const [showReplies, setShowReplies] = useState(false);
   const fileInput = useRef<HTMLInputElement>(null);
@@ -424,17 +427,28 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                 <button type="button" onClick={() => setMobileThread(false)} aria-label="Back to conversations" className="-ml-1 flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-full text-ink hover:bg-panel lg:hidden">
                   <Icon name="chevron-left" size={22} />
                 </button>
-                <span className="relative hidden flex-none sm:block">
-                  <Avatar name={open.who} size={36} />
-                </span>
-                <span className="flex min-w-0 flex-1 flex-col leading-tight">
-                  <span className="truncate text-[15.5px] font-semibold text-ink">{contact?.name ?? open.who}</span>
-                  <span className="flex items-center gap-1.5 truncate text-[12.5px] text-subtle">
-                    <ChannelMark channel={channelKey[open.channel]} size={14} />
-                    {open.channel}
-                    {contact && contact.phone !== open.who && contact.phone !== "Not shared" && ` · ${contact.phone}`}
+                <button
+                  type="button"
+                  onClick={showDetails}
+                  aria-expanded={panel || details}
+                  title="View customer details"
+                  className="-my-1 -ml-1 flex min-w-0 flex-1 cursor-pointer items-center gap-3 rounded-[12px] py-1 pr-2 pl-1 text-left transition hover:bg-panel"
+                >
+                  <span className="relative hidden flex-none sm:block">
+                    <Avatar name={contact?.name ?? open.who} size={36} />
                   </span>
-                </span>
+                  <span className="flex min-w-0 flex-1 flex-col leading-tight">
+                    <span className="flex min-w-0 items-center gap-1">
+                      <span className="truncate text-[15.5px] font-semibold text-ink">{contact?.name ?? open.who}</span>
+                      <Icon name="chevron-right" size={15} className={`flex-none text-faint transition ${panel ? "rotate-180" : ""}`} />
+                    </span>
+                    <span className="flex items-center gap-1.5 truncate text-[12.5px] text-subtle">
+                      <ChannelMark channel={channelKey[open.channel]} size={14} />
+                      {open.channel}
+                      {contact && contact.phone !== open.who && contact.phone !== "Not shared" && ` · ${contact.phone}`}
+                    </span>
+                  </span>
+                </button>
                 <Menu
                   label={open.assignee ? `Assigned to ${open.assignee}` : "Assign"}
                   trigger={
@@ -485,20 +499,10 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                   items={[
                     { label: "Mark as unread", onSelect: () => change(open.id, (t) => ({ ...t, unread: true })) },
                     { label: "Snooze until tomorrow", onSelect: () => snooze("Tomorrow morning") },
-                    { label: "Customer details", onSelect: () => setDetails(true) },
+                    { label: "Customer details", onSelect: showDetails },
                     { label: "Open in Contacts", onSelect: () => onOpen("contacts") },
                   ]}
                 />
-                <button
-                  type="button"
-                  onClick={() => setPanel((p) => !p)}
-                  aria-pressed={panel}
-                  aria-label="Customer details"
-                  title="Customer details"
-                  className={`hidden h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-[9px] transition xl:inline-flex ${panel ? "bg-panel text-ink" : "text-muted hover:bg-panel"}`}
-                >
-                  <Icon name="users" size={17} />
-                </button>
               </header>
 
               <div aria-live="polite" className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-4 py-5 sm:px-6">
@@ -625,6 +629,12 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
         {/* Customer details */}
         {panel && open && contact && (
           <aside aria-label="Customer details" className="hidden min-h-0 overflow-y-auto border-l border-line p-5 xl:block">
+            <div className="-mt-1 mb-3 flex items-center justify-between">
+              <p className="m-0 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">Customer</p>
+              <button type="button" onClick={() => setPanel(false)} aria-label="Close customer details" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-ink">
+                <Icon name="close" size={16} />
+              </button>
+            </div>
             <ContactDetails key={contact.id} contact={contact} actions={false} onOpen={onOpen} onChange={(c) => setContacts((cs) => (cs.some((x) => x.id === c.id) ? cs.map((x) => (x.id === c.id ? c : x)) : [c, ...cs]))} />
           </aside>
         )}
