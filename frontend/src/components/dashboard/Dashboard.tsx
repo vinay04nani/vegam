@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { appNav } from "@/content/onboarding";
+import { useEffect, useState } from "react";
+import { appNav, type NavItem } from "@/content/onboarding";
 import { plans, type PlanId } from "@/content/pricing";
 import { links } from "@/content/site";
 import { Icon } from "@/components/ui/Icon";
@@ -9,14 +9,23 @@ import { isIncluded, useOnboarding } from "@/lib/onboarding";
 import { withBase } from "@/lib/paths";
 import { LiveHome } from "./LiveHome";
 import { SetupHome } from "./SetupHome";
-import { AssistantPage, ChannelsPage, PlanPage, TestPage, WhatsAppPage } from "./TaskPages";
+import { AssistantPage, PlanPage, TestPage, WhatsAppPage } from "./TaskPages";
 import { Calendar } from "./sections/Calendar";
 import { Calls } from "./sections/Calls";
+import { Channels } from "./sections/Channels";
 import { Campaigns } from "./sections/Campaigns";
 import { Inbox } from "./sections/Inbox";
 import { Leads } from "./sections/Leads";
 import { Reports } from "./sections/Reports";
 import { Settings } from "./sections/Settings";
+import { Agents } from "./sections/Agents";
+import { Billing } from "./sections/Billing";
+import { Contacts } from "./sections/Contacts";
+import { Help } from "./sections/Help";
+import { Profile } from "./sections/Profile";
+import { CommandPalette } from "./CommandPalette";
+import { Kbd, Menu, ToastProvider } from "./kit";
+import { NotificationBell } from "./Notifications";
 import { pilotDay } from "./ui";
 
 // The dashboard. Until the assistant is live, Home is a short setup guide;
@@ -26,6 +35,10 @@ import { pilotDay } from "./ui";
 
 /** Pages that belong to Home in the navigation. */
 const homeViews = ["home", "preview", "setup-assistant", "setup-whatsapp", "setup-test"];
+/** Pages reached from the user menu or other pages, highlighted under their parent in the navigation. */
+const parentOf: Record<string, string> = { assistant: "agents", plan: "settings", billing: "settings", profile: "settings" };
+
+const userName = "Vinay";
 
 function NavButton({
   id,
@@ -35,9 +48,9 @@ function NavButton({
   view,
   plan,
   onSelect,
-}: (typeof appNav)[number] & { compact?: boolean; view: string; plan: PlanId; onSelect: (id: string) => void }) {
+}: NavItem & { compact?: boolean; view: string; plan: PlanId; onSelect: (id: string) => void }) {
   const active = view === id;
-  const locked = !isIncluded(appNav.find((n) => n.id === id)!.minPlan, plan);
+  const locked = !isIncluded(appNav.find((n) => n.id === id)?.minPlan ?? "starter", plan);
   return (
     <button
       type="button"
@@ -61,6 +74,19 @@ export function Dashboard() {
   const [view, setView] = useState("home");
   const [more, setMore] = useState(false);
   const [welcome, setWelcome] = useState(false);
+  const [palette, setPalette] = useState(false);
+
+  // ⌘K / Ctrl+K opens search from anywhere.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setPalette((p) => !p);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
   const onboarded = !!state.onboardedAt;
   const live = !!state.liveAt;
   const mode = !onboarded ? "demo" : "live";
@@ -77,7 +103,7 @@ export function Dashboard() {
     window.scrollTo({ top: 0 });
   };
   const home = () => select("home");
-  const navView = homeViews.includes(view) ? "home" : view;
+  const navView = homeViews.includes(view) ? "home" : (parentOf[view] ?? view);
 
   const goLive = () => {
     update((s) => ({ ...s, liveAt: new Date().toISOString() }));
@@ -106,7 +132,17 @@ export function Dashboard() {
       case "setup-test":
         return <TestPage {...props} />;
       case "channels":
-        return <ChannelsPage {...props} />;
+        return <Channels state={state} update={update} />;
+      case "agents":
+        return <Agents state={state} update={update} onOpen={select} />;
+      case "contacts":
+        return <Contacts onOpen={select} />;
+      case "profile":
+        return <Profile />;
+      case "billing":
+        return <Billing state={state} onOpen={select} />;
+      case "help":
+        return <Help onOpen={select} />;
       case "inbox":
         return <Inbox />;
       case "calendar":
@@ -127,6 +163,7 @@ export function Dashboard() {
   })();
 
   return (
+    <ToastProvider>
     <div className="min-h-svh bg-page">
       {/* Desktop sidebar */}
       <aside className="fixed inset-y-0 left-0 z-20 hidden w-[248px] flex-col border-r border-line bg-[#F4F4F8] p-4 lg:flex">
@@ -146,29 +183,75 @@ export function Dashboard() {
             <Icon name="chevron-right" size={16} />
           </button>
         )}
-        <nav aria-label="Dashboard" className="flex flex-col gap-1">
-          {nav.map((n) => (
-            <NavButton key={n.id} {...n} view={navView} plan={plan} onSelect={select} />
+        <nav aria-label="Dashboard" className="-mx-1 flex flex-1 flex-col gap-0.5 overflow-y-auto px-1">
+          {(["work", "setup"] as const).map((g) => (
+            <div key={g} className="flex flex-col gap-0.5">
+              {g === "setup" && <p className="m-0 mt-4 mb-1 px-3 text-[11.5px] font-semibold tracking-[0.1em] text-subtle uppercase">Set up</p>}
+              {nav
+                .filter((n) => n.group === g)
+                .map((n) => (
+                  <NavButton key={n.id} {...n} view={navView} plan={plan} onSelect={select} />
+                ))}
+            </div>
           ))}
         </nav>
-        <a href={withBase("/contact/?topic=support")} className="mt-auto flex items-center gap-2 rounded-[12px] px-3 py-2.5 text-[14.5px] font-medium text-ink-soft hover:bg-white/60">
-          <Icon name="headset" size={18} />
+        <button
+          type="button"
+          onClick={() => select("help")}
+          aria-current={view === "help" ? "page" : undefined}
+          className={`mt-3 flex min-h-11 cursor-pointer items-center gap-3 rounded-[12px] px-3 text-[15px] font-medium transition ${view === "help" ? "bg-white text-ink shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : "text-ink-soft hover:bg-white/60"}`}
+        >
+          <Icon name="headset" size={19} />
           Help and support
-        </a>
+        </button>
       </aside>
 
-      {/* Phone top bar */}
-      <header className="sticky top-0 z-20 flex h-14 items-center justify-between border-b border-line bg-page/90 px-4 backdrop-blur lg:hidden">
-        <a href={links.home} className="text-[22px] leading-none font-extrabold tracking-[-0.045em] text-ink">
+      {/* Top bar: search, notifications and the user menu (logo on phones) */}
+      <header className="sticky top-0 z-30 flex h-14 items-center gap-2 border-b border-line bg-page/90 px-4 backdrop-blur sm:px-8 lg:ml-[248px] lg:h-16">
+        <a href={links.home} className="mr-auto text-[22px] leading-none font-extrabold tracking-[-0.045em] text-ink lg:hidden">
           vegam
         </a>
-        <span className="flex min-w-0 flex-col items-end leading-tight">
-          <span className="truncate text-[14.5px] font-semibold text-ink">{name}</span>
-          <span className="text-[12px] text-subtle">{status}</span>
-        </span>
+        <button
+          type="button"
+          onClick={() => setPalette(true)}
+          className="hidden min-h-10 w-full max-w-[420px] cursor-pointer items-center gap-2.5 rounded-[12px] border border-line-strong bg-white px-3.5 text-left text-[14.5px] text-subtle transition hover:border-subtle lg:mr-auto lg:flex"
+        >
+          <Icon name="search" size={17} />
+          <span className="flex-1">Search people, chats, bookings…</span>
+          <Kbd>⌘K</Kbd>
+        </button>
+        <button type="button" aria-label="Search" onClick={() => setPalette(true)} className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full text-ink hover:bg-white lg:hidden">
+          <Icon name="search" size={20} />
+        </button>
+        <NotificationBell onOpen={select} />
+        <Menu
+          label="Account menu"
+          trigger={
+            <span className="flex items-center gap-2.5 rounded-full py-1 pr-1 pl-1 lg:pr-3">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-[13.5px] font-bold text-white">{userName[0]}</span>
+              <span className="hidden flex-col text-left leading-tight lg:flex">
+                <span className="text-[13.5px] font-semibold text-ink">{userName}</span>
+                <span className="text-[11.5px] text-subtle">Owner · {name}</span>
+              </span>
+            </span>
+          }
+          items={[
+            { label: "Your profile", onSelect: () => select("profile") },
+            { label: "Billing and usage", onSelect: () => select("billing") },
+            { label: "Settings", onSelect: () => select("settings") },
+            { label: "Help and support", onSelect: () => select("help") },
+            {
+              label: "Log out",
+              onSelect: () => {
+                // Demo: there is no session yet; go back to the log-in page.
+                window.location.href = withBase("/login/");
+              },
+            },
+          ]}
+        />
       </header>
 
-      <main className={`px-4 pt-6 pb-28 transition-opacity sm:px-8 lg:ml-[248px] lg:pt-10 lg:pb-16 ${ready ? "opacity-100" : "opacity-0"}`}>
+      <main className={`px-4 pt-6 pb-28 transition-opacity sm:px-8 lg:ml-[248px] lg:pt-8 lg:pb-16 ${ready ? "opacity-100" : "opacity-0"}`}>
         <div className="mx-auto max-w-[1180px]">{page}</div>
       </main>
 
@@ -197,9 +280,12 @@ export function Dashboard() {
             {nav.slice(4).map((n) => (
               <NavButton key={n.id} {...n} view={navView} plan={plan} onSelect={select} />
             ))}
+            <NavButton id="help" label="Help and support" icon="headset" minPlan="starter" group="setup" view={navView} plan={plan} onSelect={select} />
           </nav>
         </div>
       )}
+      <CommandPalette open={palette} onClose={() => setPalette(false)} onOpen={select} />
     </div>
+    </ToastProvider>
   );
 }

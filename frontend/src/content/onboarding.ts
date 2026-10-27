@@ -213,15 +213,18 @@ export const checklist: ChecklistItem[] = [
   },
 ];
 
-export const appNav: { id: string; label: string; icon: IconName; minPlan: PlanId }[] = [
-  { id: "home", label: "Home", icon: "home", minPlan: "starter" },
-  { id: "inbox", label: "Inbox", icon: "inbox", minPlan: "starter" },
-  { id: "calendar", label: "Calendar", icon: "calendar", minPlan: "starter" },
-  { id: "leads", label: "Leads", icon: "users", minPlan: "starter" },
-  { id: "calls", label: "Calls", icon: "phone", minPlan: "growth" },
-  { id: "campaigns", label: "Campaigns", icon: "megaphone", minPlan: "pro" },
-  { id: "reports", label: "Reports", icon: "chart", minPlan: "starter" },
-  { id: "assistant", label: "Assistant", icon: "sparkle", minPlan: "starter" },
-  { id: "channels", label: "Channels", icon: "globe", minPlan: "starter" },
-  { id: "settings", label: "Settings", icon: "settings", minPlan: "starter" },
+export type NavItem = { id: string; label: string; icon: IconName; minPlan: PlanId; group: "work" | "setup" };
+
+export const appNav: NavItem[] = [
+  { id: "home", label: "Home", icon: "home", minPlan: "starter", group: "work" },
+  { id: "inbox", label: "Inbox", icon: "inbox", minPlan: "starter", group: "work" },
+  { id: "contacts", label: "Contacts", icon: "users", minPlan: "starter", group: "work" },
+  { id: "calendar", label: "Calendar", icon: "calendar", minPlan: "starter", group: "work" },
+  { id: "leads", label: "Leads", icon: "lead", minPlan: "starter", group: "work" },
+  { id: "calls", label: "Calls", icon: "phone", minPlan: "growth", group: "work" },
+  { id: "campaigns", label: "Campaigns", icon: "megaphone", minPlan: "pro", group: "work" },
+  { id: "reports", label: "Reports", icon: "chart", minPlan: "starter", group: "work" },
+  { id: "agents", label: "AI agents", icon: "sparkle", minPlan: "starter", group: "setup" },
+  { id: "channels", label: "Channels", icon: "globe", minPlan: "starter", group: "setup" },
+  { id: "settings", label: "Settings", icon: "settings", minPlan: "starter", group: "setup" },
 ];

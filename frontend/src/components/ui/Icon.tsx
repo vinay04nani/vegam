@@ -47,7 +47,18 @@ export type IconName =
   | "sort"
   | "note"
   | "table"
-  | "board";
+  | "board"
+  | "bell"
+  | "logout"
+  | "card"
+  | "key"
+  | "shield"
+  | "mic"
+  | "image"
+  | "tag"
+  | "download"
+  | "external-link"
+  | "refresh";
 
 const paths: Record<IconName, React.ReactNode> = {
   message: <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />,
@@ -212,6 +223,33 @@ const paths: Record<IconName, React.ReactNode> = {
       <rect x="17" y="4" width="4" height="7" rx="1.5" />
     </>
   ),
+  bell: <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.94 1.94 0 0 0 3.4 0" />,
+  logout: <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />,
+  card: (
+    <>
+      <rect x="2" y="5" width="20" height="14" rx="2.5" />
+      <path d="M2 10h20M6 15h4" />
+    </>
+  ),
+  key: <path d="M15.5 7.5a4.5 4.5 0 1 1-4.3 5.8L3 21.5V18h3v-3h3l2.2-2.2A4.5 4.5 0 0 1 15.5 7.5zM16.5 9.5h.01" />,
+  shield: <path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6zM9 12l2 2 4-4" />,
+  mic: (
+    <>
+      <rect x="9" y="2.5" width="6" height="12" rx="3" />
+      <path d="M5 11a7 7 0 0 0 14 0M12 18v3.5" />
+    </>
+  ),
+  image: (
+    <>
+      <rect x="3" y="3" width="18" height="18" rx="2.5" />
+      <circle cx="8.5" cy="8.5" r="1.8" />
+      <path d="M21 15l-5-5L5 21" />
+    </>
+  ),
+  tag: <path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9zM7.5 7.5h.01" />,
+  download: <path d="M12 3v12M7 10l5 5 5-5M4 19h16" />,
+  "external-link": <path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" />,
+  refresh: <path d="M20 11a8 8 0 0 0-14.9-3M4 4v4h4M4 13a8 8 0 0 0 14.9 3M20 20v-4h-4" />,
   search: (
     <>
       <circle cx="11" cy="11" r="7" />

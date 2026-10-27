@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import { Icon, type IconName } from "@/components/ui/Icon";
 
 // Shared building blocks for dashboard screens: controls, badges, avatars,
@@ -63,8 +63,11 @@ export function Button({
   form,
   disabled,
   className = "",
+  ariaLabel,
 }: {
   children: ReactNode;
+  /** A fuller name for screen readers when the visible text is short (e.g. "Connect" → "Connect Instagram"). */
+  ariaLabel?: string;
   onClick?: () => void;
   variant?: "primary" | "secondary" | "ghost" | "danger";
   icon?: IconName;
@@ -84,6 +87,7 @@ export function Button({
     <button
       type={type}
       form={form}
+      aria-label={ariaLabel}
       onClick={onClick}
       disabled={disabled}
       className={`inline-flex min-h-9 flex-none cursor-pointer items-center justify-center gap-1.5 rounded-[10px] px-3.5 text-[14px] font-semibold whitespace-nowrap transition disabled:cursor-not-allowed disabled:opacity-50 ${styles} ${className}`}
@@ -249,7 +253,22 @@ export function SourceLabel({ source }: { source: string }) {
 export type MenuItem = { label: string; onSelect?: () => void; disabled?: boolean; checked?: boolean; heading?: boolean };
 
 /** A small popover menu behind an icon button: closes on Esc or an outside click, arrow keys move between items. */
-export function Menu({ label, items, icon = "more", className = "" }: { label: string; items: MenuItem[]; icon?: IconName; className?: string }) {
+export function Menu({
+  label,
+  items,
+  icon = "more",
+  className = "",
+  trigger,
+  align = "right",
+}: {
+  label: string;
+  items: MenuItem[];
+  icon?: IconName;
+  className?: string;
+  /** Custom trigger content (e.g. an avatar) instead of the icon. */
+  trigger?: ReactNode;
+  align?: "left" | "right";
+}) {
   const [open, setOpen] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const list = useRef<HTMLDivElement>(null);
@@ -289,9 +308,9 @@ export function Menu({ label, items, icon = "more", className = "" }: { label: s
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-[8px] text-muted transition hover:bg-panel hover:text-ink"
+        className={trigger ? "inline-flex cursor-pointer items-center rounded-full transition hover:opacity-90" : "inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-[8px] text-muted transition hover:bg-panel hover:text-ink"}
       >
-        <Icon name={icon} size={16} />
+        {trigger ?? <Icon name={icon} size={16} />}
       </button>
       {open && (
         <div
@@ -299,7 +318,7 @@ export function Menu({ label, items, icon = "more", className = "" }: { label: s
           role="menu"
           aria-label={label}
           onKeyDown={onKeyDown}
-          className="absolute top-8 right-0 z-30 flex min-w-[188px] flex-col rounded-[12px] border border-line bg-white p-1.5 shadow-[0_16px_40px_rgb(30_31_43/0.16)]"
+          className={`absolute ${trigger ? "top-11" : "top-8"} ${align === "right" ? "right-0" : "left-0"} z-50 flex min-w-[188px] flex-col rounded-[12px] border border-line bg-white p-1.5 shadow-[0_16px_40px_rgb(30_31_43/0.16)]`}
         >
           {items.map((it, i) =>
             it.heading ? (
@@ -328,3 +347,95 @@ export function Menu({ label, items, icon = "more", className = "" }: { label: s
     </div>
   );
 }
+
+/** Underlined tabs for sub-pages (Settings, AI agents). Scrolls sideways on narrow screens. */
+export function Tabs<T extends string>({ label, value, tabs, onChange }: { label: string; value: T; tabs: { id: T; label: string; count?: number }[]; onChange: (v: T) => void }) {
+  return (
+    <div role="tablist" aria-label={label} className="-mx-4 flex gap-1 overflow-x-auto border-b border-line px-4 [scrollbar-width:none] sm:mx-0 sm:px-0">
+      {tabs.map((t) => {
+        const on = t.id === value;
+        return (
+          <button
+            key={t.id}
+            type="button"
+            role="tab"
+            aria-selected={on}
+            onClick={() => onChange(t.id)}
+            className={`relative -mb-px flex min-h-11 flex-none cursor-pointer items-center gap-1.5 border-b-2 px-3 text-[14.5px] font-semibold whitespace-nowrap transition ${
+              on ? "border-ink text-ink" : "border-transparent text-subtle hover:text-ink"
+            }`}
+          >
+            {t.label}
+            {t.count !== undefined && <span className="rounded-full bg-panel px-1.5 text-[12px] text-muted">{t.count}</span>}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/** An on/off switch with its label. */
+export function Toggle({ checked, onChange, label, description, disabled }: { checked: boolean; onChange: (v: boolean) => void; label: string; description?: string; disabled?: boolean }) {
+  return (
+    <label className={`flex items-start justify-between gap-4 ${disabled ? "opacity-60" : "cursor-pointer"}`}>
+      <span className="flex min-w-0 flex-col">
+        <span className="text-[14.5px] font-medium text-ink">{label}</span>
+        {description && <span className="text-[13px] text-subtle">{description}</span>}
+      </span>
+      <span className="relative mt-0.5 flex-none">
+        <input type="checkbox" role="switch" checked={checked} disabled={disabled} onChange={(e) => onChange(e.target.checked)} className="peer sr-only" />
+        <span className="block h-6 w-10 rounded-full bg-line-strong transition peer-checked:bg-ink peer-focus-visible:ring-2 peer-focus-visible:ring-indigo peer-focus-visible:ring-offset-2" />
+        <span className="absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-[0_1px_3px_rgb(30_31_43/0.25)] transition peer-checked:translate-x-4" />
+      </span>
+    </label>
+  );
+}
+
+/** A usage bar that turns amber at 80% and red at 100%. */
+export function Progress({ value, max, label }: { value: number; max: number; label: string }) {
+  const pct = Math.min(100, Math.round((value / Math.max(1, max)) * 100));
+  const tone = pct >= 100 ? "bg-danger" : pct >= 80 ? "bg-[#D98A00]" : "bg-ink";
+  return (
+    <span role="progressbar" aria-label={label} aria-valuenow={value} aria-valuemin={0} aria-valuemax={max} className="block h-2 w-full overflow-hidden rounded-full bg-panel">
+      <span className={`block h-full rounded-full transition-[width] duration-500 ${tone}`} style={{ width: `${pct}%` }} />
+    </span>
+  );
+}
+
+export function Skeleton({ className = "" }: { className?: string }) {
+  return <span aria-hidden="true" className={`block animate-pulse rounded-[10px] bg-panel ${className}`} />;
+}
+
+export function Kbd({ children }: { children: ReactNode }) {
+  return <kbd className="rounded-[6px] border border-line-strong bg-white px-1.5 py-0.5 font-sans text-[11.5px] font-semibold text-muted shadow-[0_1px_0_#E4E6F0]">{children}</kbd>;
+}
+
+// ---------- Toasts ----------
+
+type ToastItem = { id: number; text: string; tone: "success" | "info" };
+const ToastContext = createContext<(text: string, tone?: ToastItem["tone"]) => void>(() => undefined);
+
+/** Short confirmations ("Saved", "Invite sent") shown at the bottom of the screen. */
+export function ToastProvider({ children }: { children: ReactNode }) {
+  const [items, setItems] = useState<ToastItem[]>([]);
+  const push = useCallback((text: string, tone: ToastItem["tone"] = "success") => {
+    const id = Date.now() + Math.random();
+    setItems((xs) => [...xs.slice(-2), { id, text, tone }]);
+    window.setTimeout(() => setItems((xs) => xs.filter((x) => x.id !== id)), 3200);
+  }, []);
+  return (
+    <ToastContext.Provider value={push}>
+      {children}
+      <div aria-live="polite" className="pointer-events-none fixed inset-x-0 bottom-20 z-[60] flex flex-col items-center gap-2 px-4 lg:bottom-6">
+        {items.map((t) => (
+          <div key={t.id} role="status" className="pointer-events-auto flex items-center gap-2.5 rounded-[12px] bg-ink px-4 py-2.5 text-[14px] font-medium text-white shadow-[0_12px_32px_rgb(30_31_43/0.3)]">
+            <Icon name={t.tone === "success" ? "check" : "sparkle"} size={16} className={t.tone === "success" ? "text-[#7BD88F]" : "text-accent"} />
+            {t.text}
+          </div>
+        ))}
+      </div>
+    </ToastContext.Provider>
+  );
+}
+
+export const useToast = () => useContext(ToastContext);
