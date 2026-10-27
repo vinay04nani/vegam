@@ -22,8 +22,8 @@ export type ThreadMessage = {
   from: "customer" | "ai" | "team";
   text: string;
   time: string;
-  /** Text by default. A note is only seen by the team; voice notes carry their transcript as `text`. */
-  kind?: "image" | "voice" | "note";
+  /** Text by default. A note is only seen by the team; voice notes carry their transcript as `text`; an event is a line like "Assigned to R. Kumar". */
+  kind?: "image" | "voice" | "note" | "event";
   duration?: string;
   /** For images attached in the demo: a local preview URL. */
   src?: string;

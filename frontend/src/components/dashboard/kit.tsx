@@ -106,7 +106,7 @@ export function Avatar({ name, size = 32 }: { name: string; size?: number }) {
   const tone = avatarTones[[...name].reduce((n, c) => n + c.charCodeAt(0), 0) % avatarTones.length];
   return (
     <span aria-hidden="true" className={`inline-flex flex-none items-center justify-center rounded-full font-bold ${tone}`} style={{ width: size, height: size, fontSize: size * 0.38 }}>
-      {initials}
+      {letters ? initials : <Icon name="users" size={Math.round(size * 0.48)} />}
     </span>
   );
 }

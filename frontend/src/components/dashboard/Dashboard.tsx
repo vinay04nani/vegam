@@ -257,8 +257,9 @@ export function Dashboard() {
         />
       </header>
 
-      <main className={`px-4 pt-6 pb-28 transition-opacity sm:px-8 lg:ml-[248px] lg:pt-8 lg:pb-16 ${ready ? "opacity-100" : "opacity-0"}`}>
-        <div className="mx-auto max-w-[1180px]">{page}</div>
+      {/* The inbox is a full-height workspace; other pages sit in a centred column. */}
+      <main className={`transition-opacity lg:ml-[248px] ${view === "inbox" ? "pb-16 lg:p-6" : "px-4 pt-6 pb-28 sm:px-8 lg:pt-8 lg:pb-16"} ${ready ? "opacity-100" : "opacity-0"}`}>
+        <div className={view === "inbox" ? "" : "mx-auto max-w-[1180px]"}>{page}</div>
       </main>
 
       {/* Phone bottom tabs */}
