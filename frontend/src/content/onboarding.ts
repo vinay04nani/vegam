@@ -25,6 +25,9 @@ export const toneOptions = [
 
 export type Tone = (typeof toneOptions)[number]["id"];
 
+/** Languages the assistant can reply in. */
+export const languageNames = ["English", "Hindi", "Telugu", "Tamil", "Kannada", "Malayalam", "Marathi", "Bengali", "Arabic", "Spanish", "French"];
+
 /** What "Read my website" fills in during the demo. Neutral on purpose: Vegam never assumes an industry. */
 export const sampleImport = {
   services: [

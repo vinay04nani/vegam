@@ -15,7 +15,9 @@ export function businessName(state: OnboardingState) {
 }
 
 export function assistantIntro(state: OnboardingState) {
-  const who = state.assistant.name.trim() ? `${state.assistant.name.trim()}, ${businessName(state)}’s AI assistant` : `${businessName(state)}’s AI assistant`;
+  const biz = state.business.name.trim();
+  const role = biz ? `${biz}’s AI assistant` : "the AI assistant";
+  const who = state.assistant.name.trim() ? `${state.assistant.name.trim()}, ${role}` : role;
   return state.assistant.tone === "formal" ? `Good evening. I’m ${who}. How may I help you?` : `Hi! I’m ${who}. How can I help?`;
 }
 
