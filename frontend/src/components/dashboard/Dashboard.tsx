@@ -7,7 +7,6 @@ import { links } from "@/content/site";
 import { sampleThreads } from "@/content/dashboard";
 import { Icon } from "@/components/ui/Icon";
 import { isIncluded, useOnboarding } from "@/lib/onboarding";
-import { withBase } from "@/lib/paths";
 import { LiveHome } from "./LiveHome";
 import { SetupHome } from "./SetupHome";
 import { AssistantPage, TestPage, WhatsAppPage } from "./TaskPages";
@@ -21,9 +20,8 @@ import { Settings } from "./sections/Settings";
 import { Agents } from "./sections/Agents";
 import { Billing } from "./sections/Billing";
 import { Contacts } from "./sections/Contacts";
-import { Profile } from "./sections/Profile";
 import { CommandPalette } from "./CommandPalette";
-import { Menu, ToastProvider } from "./kit";
+import { ToastProvider } from "./kit";
 import { NotificationBell } from "./Notifications";
 import { pilotDay } from "./ui";
 
@@ -123,6 +121,7 @@ export function Dashboard() {
     if (id === "billing") id = "settings:billing";
     if (id === "plan") id = "settings:plans";
     if (id === "channels") id = "settings:channels";
+    if (id === "profile") id = "settings:profile";
     if (id === "settings" || id.startsWith("settings:")) {
       setSettings(id.split(":")[1] ?? "general");
       return;
@@ -140,42 +139,27 @@ export function Dashboard() {
     select("home");
   };
 
-  const accountMenu = (sidebar: boolean) => (
-    <Menu
-      label="Account menu"
-      above={sidebar}
-      align={sidebar ? "left" : "right"}
-      className={sidebar ? "w-full" : ""}
-      triggerClassName={sidebar ? "flex w-full cursor-pointer items-center gap-3 rounded-[12px] px-2.5 py-2 text-left transition hover:bg-white/60" : undefined}
-      trigger={
-        sidebar ? (
-          <>
-            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink text-[14px] font-bold text-white">{userName[0]}</span>
-            <span className="flex min-w-0 flex-1 flex-col leading-tight">
-              <span className="truncate text-[14.5px] font-semibold text-ink">{userName}</span>
-              <span className="truncate text-[12.5px] text-subtle">Owner · {name}</span>
-            </span>
-            <Icon name="chevron-down" size={16} className="rotate-180 text-muted" />
-          </>
-        ) : (
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-[13.5px] font-bold text-white">{userName[0]}</span>
-        )
-      }
-      items={[
-        { label: "Your profile", onSelect: () => select("profile") },
-        { label: "Billing and usage", onSelect: () => select("billing") },
-        { label: "Settings", onSelect: () => select("settings") },
-        { label: "Help and support", onSelect: () => select("help") },
-        {
-          label: "Log out",
-          onSelect: () => {
-            // Demo: there is no session yet; go back to the log-in page.
-            window.location.href = withBase("/login/");
-          },
-        },
-      ]}
-    />
-  );
+  // The profile button opens the settings dialog on the Profile section.
+  const accountMenu = (sidebar: boolean) =>
+    sidebar ? (
+      <button
+        type="button"
+        onClick={() => select("settings:profile")}
+        aria-label="Profile and settings"
+        className={`flex w-full cursor-pointer items-center gap-3 rounded-[12px] px-2.5 py-2 text-left transition ${settings !== null ? "bg-white shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : "hover:bg-white/60"}`}
+      >
+        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink text-[14px] font-bold text-white">{userName[0]}</span>
+        <span className="flex min-w-0 flex-1 flex-col leading-tight">
+          <span className="truncate text-[14.5px] font-semibold text-ink">{userName}</span>
+          <span className="truncate text-[12.5px] text-subtle">Owner · {name}</span>
+        </span>
+        <Icon name="settings" size={16} className="flex-none text-muted" />
+      </button>
+    ) : (
+      <button type="button" onClick={() => select("settings:profile")} aria-label="Profile and settings" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-ink text-[13.5px] font-bold text-white">
+        {userName[0]}
+      </button>
+    );
 
   const page = (() => {
     const props = { state, update, onHome: home };
@@ -199,8 +183,6 @@ export function Dashboard() {
         return <Agents state={state} update={update} onOpen={select} />;
       case "contacts":
         return <Contacts onOpen={select} />;
-      case "profile":
-        return <Profile />;
       case "billing":
         return <Billing state={state} onOpen={select} />;
       case "inbox":

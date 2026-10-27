@@ -6,6 +6,7 @@ import type { OnboardingState } from "@/lib/onboarding";
 import { Account } from "./settings/Account";
 import { Billing } from "./settings/Billing";
 import { Plans } from "./settings/Plans";
+import { Profile } from "./settings/Profile";
 import { ActivityLog } from "./settings/ActivityLog";
 import { BookingPage } from "./settings/BookingPage";
 import { ContactFields } from "./settings/ContactFields";
@@ -34,6 +35,7 @@ import { Templates } from "./settings/Templates";
 type Props = { state: OnboardingState; update: (fn: (s: OnboardingState) => OnboardingState) => void; onOpen: (view: string) => void };
 
 type SectionId =
+  | "profile"
   | "general"
   | "services"
   | "hours"
@@ -58,6 +60,10 @@ type SectionId =
   | "help";
 
 const groups: { title: string; items: { id: SectionId; label: string; icon: IconName; keywords: string }[] }[] = [
+  {
+    title: "You",
+    items: [{ id: "profile", label: "Profile", icon: "users", keywords: "profile name photo email phone password google sign in log out" }],
+  },
   {
     title: "Business",
     items: [
@@ -204,6 +210,7 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
               <Icon name="chevron-down" size={16} className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-subtle" />
             </label>
             <h2 className="m-0 mb-7 text-[20px] font-semibold tracking-[-0.01em] text-ink">{current.label}</h2>
+            {section === "profile" && <Profile name="Vinay" business={state.business.name || "Nila & Co"} />}
             {section === "general" && <General state={state} update={update} />}
             {section === "services" && <Services state={state} update={update} />}
             {section === "hours" && <Hours />}
