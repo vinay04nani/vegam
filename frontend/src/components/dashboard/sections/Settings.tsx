@@ -4,6 +4,15 @@ import { useEffect, useRef, useState } from "react";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import type { OnboardingState } from "@/lib/onboarding";
 import { Account } from "./settings/Account";
+import { ActivityLog } from "./settings/ActivityLog";
+import { BookingPage } from "./settings/BookingPage";
+import { ContactFields } from "./settings/ContactFields";
+import { InboxRules } from "./settings/InboxRules";
+import { Language } from "./settings/Language";
+import { Payments } from "./settings/Payments";
+import { Security } from "./settings/Security";
+import { Services } from "./settings/Services";
+import { WhatsAppProfile } from "./settings/WhatsAppProfile";
 import { Automations } from "./settings/Automations";
 import { Developers } from "./settings/Developers";
 import { General } from "./settings/General";
@@ -21,31 +30,64 @@ import { Templates } from "./settings/Templates";
 
 type Props = { state: OnboardingState; update: (fn: (s: OnboardingState) => OnboardingState) => void; onOpen: (view: string) => void };
 
-type SectionId = "general" | "hours" | "team" | "templates" | "automations" | "notifications" | "privacy" | "developers" | "account" | "help";
+type SectionId =
+  | "general"
+  | "services"
+  | "hours"
+  | "booking"
+  | "team"
+  | "whatsapp"
+  | "inbox"
+  | "templates"
+  | "automations"
+  | "notifications"
+  | "contacts"
+  | "payments"
+  | "language"
+  | "security"
+  | "activity"
+  | "privacy"
+  | "developers"
+  | "account"
+  | "help";
 
 const groups: { title: string; items: { id: SectionId; label: string; icon: IconName; keywords: string }[] }[] = [
   {
     title: "Business",
     items: [
       { id: "general", label: "General", icon: "home", keywords: "profile name logo country time zone whatsapp email gst tax address" },
+      { id: "services", label: "Services and prices", icon: "tag", keywords: "services prices duration menu catalogue" },
       { id: "hours", label: "Hours and bookings", icon: "clock", keywords: "opening hours closures holidays booking rules locations" },
+      { id: "booking", label: "Booking page", icon: "calendar", keywords: "booking link qr colour cancellation policy questions" },
       { id: "team", label: "Team", icon: "users", keywords: "members invite roles permissions" },
     ],
   },
   {
     title: "Messaging",
     items: [
-      { id: "templates", label: "Templates", icon: "message", keywords: "whatsapp templates meta approval fees" },
+      { id: "whatsapp", label: "WhatsApp profile", icon: "message", keywords: "whatsapp business profile display name about quality rating limit meta" },
+      { id: "inbox", label: "Inbox", icon: "inbox", keywords: "assignment round robin away message close chats rating signature" },
+      { id: "templates", label: "Templates", icon: "note", keywords: "whatsapp templates meta approval fees" },
       { id: "automations", label: "Automations", icon: "refresh", keywords: "reminders confirmation no-show review rebook missed call quiet hours" },
       { id: "notifications", label: "Notifications", icon: "bell", keywords: "alerts email whatsapp morning report weekly summary" },
     ],
   },
   {
+    title: "Customers",
+    items: [
+      { id: "contacts", label: "Contacts and fields", icon: "users", keywords: "tags custom fields duplicates merge" },
+      { id: "payments", label: "Payments", icon: "card", keywords: "razorpay stripe upi deposit payment links refunds" },
+    ],
+  },
+  {
     title: "Account",
     items: [
+      { id: "language", label: "Language and format", icon: "globe", keywords: "languages hindi telugu date time format week" },
+      { id: "security", label: "Security", icon: "lock", keywords: "two-step 2fa password sessions devices sign out mask" },
+      { id: "activity", label: "Activity log", icon: "chart", keywords: "audit log history who changed" },
       { id: "privacy", label: "Privacy", icon: "shield", keywords: "ai disclosure opt-out stop consent retention recordings data requests dpdp" },
       { id: "developers", label: "API and webhooks", icon: "key", keywords: "api keys webhooks developers integration" },
-      { id: "account", label: "Plan and data", icon: "card", keywords: "plan billing export delete close account" },
+      { id: "account", label: "Plan and data", icon: "sparkle", keywords: "plan billing export delete close account" },
       { id: "help", label: "Help and support", icon: "headset", keywords: "help support articles contact shortcuts what's new" },
     ],
   },
@@ -154,7 +196,16 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
             </label>
             <h2 className="m-0 mb-7 text-[20px] font-semibold tracking-[-0.01em] text-ink">{current.label}</h2>
             {section === "general" && <General state={state} update={update} />}
+            {section === "services" && <Services state={state} update={update} />}
             {section === "hours" && <Hours />}
+            {section === "booking" && <BookingPage name={state.business.name} />}
+            {section === "whatsapp" && <WhatsAppProfile name={state.business.name} onOpen={onOpen} />}
+            {section === "inbox" && <InboxRules />}
+            {section === "contacts" && <ContactFields />}
+            {section === "payments" && <Payments india={state.business.country === "IN"} />}
+            {section === "language" && <Language state={state} update={update} />}
+            {section === "security" && <Security />}
+            {section === "activity" && <ActivityLog />}
             {section === "team" && <Team />}
             {section === "templates" && <Templates />}
             {section === "automations" && <Automations />}
