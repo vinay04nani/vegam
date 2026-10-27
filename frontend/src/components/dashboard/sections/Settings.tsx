@@ -166,12 +166,9 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
         tabIndex={-1}
         className="relative flex h-full w-full max-w-[1120px] animate-[fade-in_0.15s_ease-out] flex-col overflow-hidden bg-page shadow-[0_30px_80px_rgb(30_31_43/0.3)] outline-none motion-reduce:animate-none sm:h-[min(860px,calc(100svh-48px))] sm:rounded-[22px]"
       >
-        <header className="flex flex-none items-center justify-between gap-3 border-b border-line bg-white px-5 py-3.5">
-          <h1 className="m-0 text-[18px] font-semibold text-ink">Settings</h1>
-          <button type="button" onClick={onClose} aria-label="Close settings" className="flex h-9 w-9 cursor-pointer items-center justify-center rounded-[10px] text-muted hover:bg-panel hover:text-ink">
-            <Icon name="close" size={18} />
-          </button>
-        </header>
+        <button type="button" onClick={onClose} aria-label="Close settings" className="absolute top-3 right-3 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-[10px] text-muted hover:bg-panel hover:text-ink sm:top-4 sm:right-4">
+          <Icon name="close" size={18} />
+        </button>
 
         <div className="flex min-h-0 flex-1">
           {/* Section menu (desktop) */}
@@ -218,7 +215,7 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
 
           <div ref={content} className="min-w-0 flex-1 overflow-y-auto">
             <div className="flex flex-col gap-5 p-4 sm:p-7">
-              <label className="relative lg:hidden">
+              <label className="relative mr-11 lg:hidden">
                 <span className="sr-only">Settings section</span>
                 <select
                   value={section}
