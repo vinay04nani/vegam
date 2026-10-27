@@ -82,18 +82,20 @@ export function SettingsSection({ title, description, children, id }: { title: s
 }
 
 /** Floating bar shown while a settings form has unsaved changes. */
-export function SaveBar({ onSave, onDiscard }: { onSave: () => void; onDiscard: () => void }) {
+export function SaveBar({ onSave, onDiscard, inDialog = false }: { onSave: () => void; onDiscard: () => void; inDialog?: boolean }) {
   return (
-    <div role="region" aria-label="Unsaved changes" className="sticky bottom-20 z-10 mt-4 flex items-center justify-between gap-3 rounded-[16px] bg-ink px-4 py-3 text-white shadow-[0_12px_32px_rgb(30_31_43/0.25)] lg:bottom-6">
-      <span className="text-[14px] font-medium">You have unsaved changes</span>
-      <span className="flex gap-2">
-        <button type="button" onClick={onDiscard} className="min-h-9 cursor-pointer rounded-[9px] px-3 text-[14px] font-semibold text-white/80 hover:text-white">
-          Discard
-        </button>
-        <button type="button" onClick={onSave} className="min-h-9 cursor-pointer rounded-[9px] bg-white px-4 text-[14px] font-semibold text-ink">
-          Save changes
-        </button>
-      </span>
+    <div role="region" aria-label="Unsaved changes" className={`sticky z-10 mt-4 ${inDialog ? "bottom-4" : "bottom-20 lg:bottom-6"}`}>
+      <div className="flex items-center justify-between gap-3 rounded-[16px] bg-ink px-4 py-3 text-white shadow-[0_12px_32px_rgb(30_31_43/0.25)]">
+        <span className="text-[14px] font-medium">You have unsaved changes</span>
+        <span className="flex gap-2">
+          <button type="button" onClick={onDiscard} className="min-h-9 cursor-pointer rounded-[9px] px-3 text-[14px] font-semibold text-white/80 hover:text-white">
+            Discard
+          </button>
+          <button type="button" onClick={onSave} className="min-h-9 cursor-pointer rounded-[9px] bg-white px-4 text-[14px] font-semibold text-ink">
+            Save changes
+          </button>
+        </span>
+      </div>
     </div>
   );
 }

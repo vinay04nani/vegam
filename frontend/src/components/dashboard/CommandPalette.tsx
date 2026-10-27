@@ -17,7 +17,7 @@ const actions: Result[] = [
   { id: "a-lead", group: "Actions", label: "Add a lead", icon: "plus", view: "leads" },
   { id: "a-campaign", group: "Actions", label: "New campaign", icon: "megaphone", view: "campaigns" },
   { id: "a-channel", group: "Actions", label: "Connect a channel", icon: "globe", view: "channels" },
-  { id: "a-invite", group: "Actions", label: "Invite your team", icon: "users", view: "settings" },
+  { id: "a-invite", group: "Actions", label: "Invite your team", icon: "users", view: "settings:team" },
   { id: "a-billing", group: "Actions", label: "Billing and usage", icon: "chart", view: "billing" },
   { id: "a-profile", group: "Actions", label: "Your profile", icon: "users", view: "profile" },
   { id: "a-help", group: "Actions", label: "Help centre", icon: "headset", view: "help" },

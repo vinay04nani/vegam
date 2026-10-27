@@ -20,7 +20,7 @@ export const sampleNotifications: AppNotification[] = [
   { id: "n2", group: "Needs you", icon: "phone", title: "Callback requested", body: "+91 90•• ••• 044 wants a call after 5 PM about a group booking.", time: "1 h ago", unread: true, view: "calls" },
   { id: "n3", group: "Bookings", icon: "calendar", title: "New booking", body: "P. Sharma booked tomorrow at 6:30 PM (after closing time).", time: "Yesterday", unread: true, view: "calendar" },
   { id: "n4", group: "Bookings", icon: "calendar", title: "Booking moved", body: "A. Khan moved to next Tuesday, 11:30 AM.", time: "Yesterday", unread: false, view: "calendar" },
-  { id: "n5", group: "System", icon: "message", title: "WhatsApp template approved", body: "“Appointment reminder” is ready to use.", time: "2 days ago", unread: false, view: "settings" },
+  { id: "n5", group: "System", icon: "message", title: "WhatsApp template approved", body: "“Appointment reminder” is ready to use.", time: "2 days ago", unread: false, view: "settings:templates" },
   { id: "n6", group: "System", icon: "chart", title: "Usage at 80%", body: "You’ve used 80% of this month’s AI conversations.", time: "3 days ago", unread: false, view: "billing" },
 ];
 
@@ -46,7 +46,7 @@ export const helpArticles: HelpArticle[] = [
   { id: "h4", topic: "Inbox", title: "Take over a chat from the AI", minutes: 1, view: "inbox", body: "Press Take over, or simply reply. The AI pauses for that chat until you press Hand back to AI. Other chats carry on as normal." },
   { id: "h5", topic: "Inbox", title: "Saved replies and internal notes", minutes: 2, view: "inbox", body: "Type / in the reply box to insert a saved reply. Switch to Internal note to leave a message only your team can see; it’s never sent to the customer." },
   { id: "h6", topic: "Inbox", title: "Assign, snooze and resolve chats", minutes: 2, view: "inbox", body: "Assign a chat to a teammate from the chat header. Snooze hides it until later; Resolve closes it until the customer writes again." },
-  { id: "h7", topic: "Calendar", title: "Set your hours and closures", minutes: 2, view: "settings", body: "The AI only offers times when you’re open. Set weekly hours, holidays and booking rules in Settings, Locations and hours." },
+  { id: "h7", topic: "Calendar", title: "Set your hours and closures", minutes: 2, view: "settings:hours", body: "The AI only offers times when you’re open. Set weekly hours, holidays and booking rules in Settings, Locations and hours." },
   { id: "h8", topic: "Calendar", title: "Bookings waiting to confirm", minutes: 1, view: "calendar", body: "Bookings outside your usual rules are marked Waiting. Open one to confirm or suggest another time; the customer is told straight away." },
   { id: "h9", topic: "Calls", title: "Set up call forwarding", minutes: 3, view: "calls", body: "Forward calls you can’t answer to your AI number with a short code, then place a test call.", steps: ["Open Calls, then Numbers & routing.", "Copy the code for busy, no answer or phone off.", "Dial it on the phone with your business SIM.", "Press Place a test call and answer it."] },
   { id: "h10", topic: "Calls", title: "How AI call answering works", minutes: 2, view: "calls", body: "The AI answers after a few rings, says it’s an AI assistant, answers questions, books visits and transfers to your team when asked. Every call gets a summary." },
@@ -55,9 +55,9 @@ export const helpArticles: HelpArticle[] = [
   { id: "h13", topic: "Channels", title: "Connect Instagram and Messenger", minutes: 3, view: "channels", body: "Your Instagram must be a professional account linked to a Facebook Page. Connect both from Channels; replies arrive in the same inbox." },
   { id: "h14", topic: "Billing", title: "WhatsApp fees explained", minutes: 2, view: "billing", body: "Replies within 24 hours of a customer’s message are free. Templates sent outside that window (reminders, campaigns) are charged by Meta per message and passed on at cost." },
   { id: "h15", topic: "Billing", title: "Change or cancel your plan", minutes: 1, view: "billing", body: "Switch plans any time from Billing. Upgrades apply straight away; downgrades from your next billing period. You can pause instead of cancelling." },
-  { id: "h16", topic: "Billing", title: "Get GST invoices", minutes: 1, view: "settings", body: "Add your GSTIN in Settings, General. Every invoice after that shows GST so you can claim input credit." },
-  { id: "h17", topic: "Privacy", title: "Opt-outs and consent", minutes: 2, view: "settings", body: "Anyone who replies STOP stops getting reminders and campaigns at once. Each contact shows how and when they agreed to hear from you." },
-  { id: "h18", topic: "Privacy", title: "When a customer asks about their data", minutes: 2, view: "settings", body: "Customers can ask what you hold about them or ask you to delete it. Set where requests go in Settings, Privacy and consent; you have 30 days to reply." },
+  { id: "h16", topic: "Billing", title: "Get GST invoices", minutes: 1, view: "settings:general", body: "Add your GSTIN in Settings, General. Every invoice after that shows GST so you can claim input credit." },
+  { id: "h17", topic: "Privacy", title: "Opt-outs and consent", minutes: 2, view: "settings:privacy", body: "Anyone who replies STOP stops getting reminders and campaigns at once. Each contact shows how and when they agreed to hear from you." },
+  { id: "h18", topic: "Privacy", title: "When a customer asks about their data", minutes: 2, view: "settings:privacy", body: "Customers can ask what you hold about them or ask you to delete it. Set where requests go in Settings, Privacy and consent; you have 30 days to reply." },
 ];
 
 /** Recent product updates, newest first. */

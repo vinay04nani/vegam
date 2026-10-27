@@ -128,6 +128,7 @@ export function General({ state, update }: Props) {
       </Panel>
       {dirty && (
         <SaveBar
+          inDialog
           onDiscard={() => {
             setDraft({ name: state.business.name, about: state.business.about, country: state.business.country, ownerPhone: state.ownerPhone });
             setDirty(false);

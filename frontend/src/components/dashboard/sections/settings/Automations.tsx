@@ -88,6 +88,7 @@ export function Automations() {
       </Panel>
       {dirty && (
         <SaveBar
+          inDialog
           onDiscard={() => {
             setRules(initial);
             setDirty(false);

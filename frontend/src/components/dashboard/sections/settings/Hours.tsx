@@ -167,6 +167,7 @@ export function Hours() {
 
       {dirty && (
         <SaveBar
+          inDialog
           onDiscard={() => {
             setHours(sampleHours);
             setDirty(false);

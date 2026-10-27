@@ -250,7 +250,7 @@ export function Help({ onOpen }: { onOpen: (view: string) => void }) {
                   onOpen(v);
                 }}
               >
-                Go to {open.view === "home" ? "Home" : open.view === "agents" ? "AI agents" : open.view.charAt(0).toUpperCase() + open.view.slice(1)}
+                {open.view.startsWith("settings") ? "Open settings" : `Go to ${open.view === "home" ? "Home" : open.view === "agents" ? "AI agents" : open.view.charAt(0).toUpperCase() + open.view.slice(1)}`}
                 <Icon name="chevron-right" size={15} />
               </Button>
             </div>

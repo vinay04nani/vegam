@@ -79,6 +79,7 @@ export function Privacy({ onOpen }: { onOpen: (view: string) => void }) {
       </Panel>
       {dirty && (
         <SaveBar
+          inDialog
           onDiscard={() => setDirty(false)}
           onSave={() => {
             setDirty(false);

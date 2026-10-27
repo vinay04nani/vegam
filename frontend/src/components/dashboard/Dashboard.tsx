@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { appNav, type NavItem } from "@/content/onboarding";
 import { plans, type PlanId } from "@/content/pricing";
 import { links } from "@/content/site";
@@ -37,7 +37,7 @@ import { pilotDay } from "./ui";
 /** Pages that belong to Home in the navigation. */
 const homeViews = ["home", "preview", "setup-assistant", "setup-whatsapp", "setup-test"];
 /** Pages reached from the user menu or other pages, highlighted under their parent in the navigation. */
-const parentOf: Record<string, string> = { assistant: "agents", plan: "settings", billing: "settings", profile: "settings" };
+const parentOf: Record<string, string> = { assistant: "agents" };
 
 const userName = "Vinay";
 
@@ -115,13 +115,21 @@ export function Dashboard() {
   const planName = plans.find((p) => p.id === state.plan)?.name;
   const status = !onboarded ? "Demo account" : live ? `${planName} · pilot day ${pilotDay(state.liveAt)}` : planName ? `${planName} · not live yet` : "No plan yet · not live";
 
+  // "settings" or "settings:<section>" opens the settings dialog over the current page.
+  const [settings, setSettings] = useState<string | null>(null);
+  const closeSettings = useCallback(() => setSettings(null), []);
   const select = (id: string) => {
-    setView(id);
     setMore(false);
+    if (id === "settings" || id.startsWith("settings:")) {
+      setSettings(id.split(":")[1] ?? "general");
+      return;
+    }
+    setSettings(null);
+    setView(id);
     window.scrollTo({ top: 0 });
   };
   const home = () => select("home");
-  const navView = homeViews.includes(view) ? "home" : (parentOf[view] ?? view);
+  const navView = settings !== null ? "settings" : homeViews.includes(view) ? "home" : (parentOf[view] ?? view);
 
   const goLive = () => {
     update((s) => ({ ...s, liveAt: new Date().toISOString() }));
@@ -173,8 +181,6 @@ export function Dashboard() {
         return <Campaigns />;
       case "reports":
         return <Reports />;
-      case "settings":
-        return <Settings state={state} update={update} onOpen={select} />;
       default:
         return <LiveHome state={state} update={update} plan={plan} mode={mode} welcome={false} onDismissWelcome={() => undefined} onOpen={select} />;
     }
@@ -291,6 +297,7 @@ export function Dashboard() {
           </nav>
         </div>
       )}
+      {settings !== null && <Settings key={settings} state={state} update={update} onOpen={select} onClose={closeSettings} initial={settings} />}
       <CommandPalette open={palette} onClose={() => setPalette(false)} onOpen={select} />
     </div>
     </ToastProvider>

@@ -87,6 +87,7 @@ export function NotificationPrefs() {
       </Panel>
       {dirty && (
         <SaveBar
+          inDialog
           onDiscard={() => {
             setPrefs(defaults);
             setDirty(false);

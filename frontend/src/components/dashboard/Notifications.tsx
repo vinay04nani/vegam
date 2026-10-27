@@ -223,7 +223,7 @@ export function NotificationBell({
               <button
                 type="button"
                 onClick={() => {
-                  onOpen("settings");
+                  onOpen("settings:notifications");
                   setOpen(false);
                 }}
                 className="inline-flex cursor-pointer items-center gap-1.5 text-[13.5px] font-semibold text-ink-soft hover:text-ink"
