@@ -228,6 +228,5 @@ export const appNav: NavItem[] = [
   { id: "campaigns", label: "Campaigns", icon: "megaphone", minPlan: "pro", group: "work" },
   { id: "reports", label: "Reports", icon: "chart", minPlan: "starter", group: "work" },
   { id: "agents", label: "AI agents", icon: "sparkle", minPlan: "starter", group: "setup" },
-  { id: "channels", label: "Channels", icon: "globe", minPlan: "starter", group: "setup" },
   { id: "settings", label: "Settings", icon: "settings", minPlan: "starter", group: "setup" },
 ];

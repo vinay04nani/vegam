@@ -1,4 +1,4 @@
-// The integrations directory on the Channels page: what each service does,
+// Channels and apps in the settings dialog: what each service does,
 // what the business needs, the steps, and any approvals it waits on.
 // TODO(backend): each "Connect" starts the real OAuth or signup flow.
 

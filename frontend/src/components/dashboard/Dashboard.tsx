@@ -13,7 +13,6 @@ import { SetupHome } from "./SetupHome";
 import { AssistantPage, TestPage, WhatsAppPage } from "./TaskPages";
 import { Calendar } from "./sections/Calendar";
 import { Calls } from "./sections/Calls";
-import { Channels } from "./sections/Channels";
 import { Campaigns } from "./sections/Campaigns";
 import { Inbox } from "./sections/Inbox";
 import { Leads } from "./sections/Leads";
@@ -123,6 +122,7 @@ export function Dashboard() {
     if (id === "help") id = "settings:help";
     if (id === "billing") id = "settings:billing";
     if (id === "plan") id = "settings:plans";
+    if (id === "channels") id = "settings:channels";
     if (id === "settings" || id.startsWith("settings:")) {
       setSettings(id.split(":")[1] ?? "general");
       return;
@@ -195,8 +195,6 @@ export function Dashboard() {
         return <WhatsAppPage {...props} />;
       case "setup-test":
         return <TestPage {...props} />;
-      case "channels":
-        return <Channels state={state} update={update} />;
       case "agents":
         return <Agents state={state} update={update} onOpen={select} />;
       case "contacts":

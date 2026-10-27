@@ -9,6 +9,7 @@ import { Plans } from "./settings/Plans";
 import { ActivityLog } from "./settings/ActivityLog";
 import { BookingPage } from "./settings/BookingPage";
 import { ContactFields } from "./settings/ContactFields";
+import { Connectors } from "./settings/Connectors";
 import { InboxRules } from "./settings/InboxRules";
 import { Language } from "./settings/Language";
 import { Payments } from "./settings/Payments";
@@ -38,6 +39,7 @@ type SectionId =
   | "hours"
   | "booking"
   | "team"
+  | "channels"
   | "whatsapp"
   | "inbox"
   | "templates"
@@ -69,6 +71,7 @@ const groups: { title: string; items: { id: SectionId; label: string; icon: Icon
   {
     title: "Messaging",
     items: [
+      { id: "channels", label: "Channels and apps", icon: "globe", keywords: "channels apps integrations connectors connect whatsapp instagram messenger calendar google stripe calls website" },
       { id: "whatsapp", label: "WhatsApp profile", icon: "message", keywords: "whatsapp business profile display name about quality rating limit meta" },
       { id: "inbox", label: "Inbox", icon: "inbox", keywords: "assignment round robin away message close chats rating signature" },
       { id: "templates", label: "Templates", icon: "note", keywords: "whatsapp templates meta approval fees" },
@@ -205,6 +208,7 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
             {section === "services" && <Services state={state} update={update} />}
             {section === "hours" && <Hours />}
             {section === "booking" && <BookingPage name={state.business.name} />}
+            {section === "channels" && <Connectors state={state} update={update} />}
             {section === "whatsapp" && <WhatsAppProfile name={state.business.name} onOpen={onOpen} />}
             {section === "inbox" && <InboxRules />}
             {section === "contacts" && <ContactFields />}
