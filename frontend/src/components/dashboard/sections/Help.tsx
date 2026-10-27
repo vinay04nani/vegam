@@ -26,7 +26,8 @@ const status = [
   { name: "Dashboard", ok: true },
 ];
 
-export function Help({ onOpen }: { onOpen: (view: string) => void }) {
+/** `embedded`: shown inside the settings dialog, without the page title and in one column. */
+export function Help({ onOpen, embedded = false }: { onOpen: (view: string) => void; embedded?: boolean }) {
   const toast = useToast();
   const [query, setQuery] = useState("");
   const [topic, setTopic] = useState<HelpTopic | null>(null);
@@ -41,7 +42,7 @@ export function Help({ onOpen }: { onOpen: (view: string) => void }) {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageTitle title="Help and support" body="Guides for every part of Vegam, and real people when you need them." />
+      {!embedded && <PageTitle title="Help and support" body="Guides for every part of Vegam, and real people when you need them." />}
 
       {/* Search */}
       <section aria-label="Search help" className="flex flex-col gap-4 rounded-[22px] bg-ink p-6 text-white sm:p-8">
@@ -66,7 +67,7 @@ export function Help({ onOpen }: { onOpen: (view: string) => void }) {
         </div>
       </section>
 
-      <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-6 xl:grid-cols-[minmax(0,1fr)_320px]">
+      <div className={`grid grid-cols-[minmax(0,1fr)] items-start gap-6 ${embedded ? "" : "xl:grid-cols-[minmax(0,1fr)_320px]"}`}>
         <div className="flex min-w-0 flex-col gap-6">
           {/* Topics */}
           <section aria-label="Browse by topic" className="flex flex-col gap-3">
@@ -145,7 +146,7 @@ export function Help({ onOpen }: { onOpen: (view: string) => void }) {
           </section>
         </div>
 
-        <aside className="flex flex-col gap-5">
+        <aside className={`flex flex-col gap-5 ${embedded ? "md:grid md:grid-cols-2" : ""}`}>
           {/* Contact */}
           <section aria-label="Contact support" className="flex flex-col gap-3 rounded-[18px] border border-line bg-white p-5">
             <h2 className="m-0 text-[16px] font-semibold text-ink">Talk to a person</h2>

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import type { OnboardingState } from "@/lib/onboarding";
+import { Help } from "./Help";
 import { Account } from "./settings/Account";
 import { Automations } from "./settings/Automations";
 import { Developers } from "./settings/Developers";
@@ -23,7 +24,7 @@ type Props = {
   onOpen: (view: string) => void;
 };
 
-type SectionId = "general" | "hours" | "team" | "templates" | "automations" | "notifications" | "privacy" | "developers" | "account";
+type SectionId = "general" | "hours" | "team" | "templates" | "automations" | "notifications" | "privacy" | "developers" | "account" | "help";
 
 const groups: {
   title: string;
@@ -97,6 +98,10 @@ const groups: {
         body: "Your plan, exporting data and closing your account.",
       },
     ],
+  },
+  {
+    title: "Support",
+    items: [{ id: "help", label: "Help and support", icon: "headset", body: "Guides for every part of Vegam, and real people when you need them." }],
   },
 ];
 
@@ -247,6 +252,7 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
               {section === "privacy" && <Privacy onOpen={onOpen} />}
               {section === "developers" && <Developers />}
               {section === "account" && <Account state={state} onOpen={onOpen} />}
+              {section === "help" && <Help onOpen={onOpen} embedded />}
             </div>
           </div>
         </div>

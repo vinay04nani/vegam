@@ -22,7 +22,6 @@ import { Settings } from "./sections/Settings";
 import { Agents } from "./sections/Agents";
 import { Billing } from "./sections/Billing";
 import { Contacts } from "./sections/Contacts";
-import { Help } from "./sections/Help";
 import { Profile } from "./sections/Profile";
 import { CommandPalette } from "./CommandPalette";
 import { Menu, ToastProvider } from "./kit";
@@ -120,6 +119,8 @@ export function Dashboard() {
   const closeSettings = useCallback(() => setSettings(null), []);
   const select = (id: string) => {
     setMore(false);
+    // Help and support lives in the settings dialog too.
+    if (id === "help") id = "settings:help";
     if (id === "settings" || id.startsWith("settings:")) {
       setSettings(id.split(":")[1] ?? "general");
       return;
@@ -204,8 +205,6 @@ export function Dashboard() {
         return <Profile />;
       case "billing":
         return <Billing state={state} onOpen={select} />;
-      case "help":
-        return <Help onOpen={select} />;
       case "inbox":
         return <Inbox onOpen={select} />;
       case "calendar":
@@ -256,15 +255,6 @@ export function Dashboard() {
             </div>
           ))}
         </nav>
-        <button
-          type="button"
-          onClick={() => select("help")}
-          aria-current={view === "help" ? "page" : undefined}
-          className={`mt-3 flex min-h-11 cursor-pointer items-center gap-3 rounded-[12px] px-3 text-[15px] font-medium transition ${view === "help" ? "bg-white text-ink shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : "text-ink-soft hover:bg-white/60"}`}
-        >
-          <Icon name="headset" size={19} />
-          Help and support
-        </button>
         <div className="mt-3 flex items-center gap-1 border-t border-line pt-3">
           <div className="min-w-0 flex-1">{accountMenu(true)}</div>
           <NotificationBell onOpen={select} variant="sidebar" />
@@ -310,7 +300,6 @@ export function Dashboard() {
             {nav.slice(4).map((n) => (
               <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
             ))}
-            <NavButton id="help" label="Help and support" icon="headset" minPlan="starter" group="setup" view={navView} plan={plan} onSelect={select} />
           </nav>
         </div>
       )}
