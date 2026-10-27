@@ -26,12 +26,14 @@ type GridProps = {
   onDayClick?: (day: number) => void;
 };
 
-type Placement = { top: number; height: number; left: string; width: string; z: number };
+type Placement = { top: number; height: number; left: string; width: string; z: number; /** Shares the width with a clashing booking. */ narrow: boolean };
 
 function EventBlock({ item, place, wide, serviceName, onSelect }: { item: CalItem; place: Placement; wide: boolean; serviceName: (i: number) => string; onSelect: (i: CalItem) => void }) {
   const start = toMin(item.start);
   const range = `${fmtMin(start)} – ${fmtMin(start + item.minutes)}`;
   const compact = place.height < 52;
+  // Sharing a narrow week column: tighter padding and just the start time.
+  const tight = place.narrow && !wide;
   const style = { top: place.top, height: place.height, left: place.left, width: place.width, zIndex: place.z };
   const base = "absolute overflow-hidden rounded-[8px] border border-white text-left transition hover:z-30! hover:shadow-[0_6px_18px_rgb(30_31_43/0.16)] focus-visible:z-30! focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-indigo";
 
@@ -61,21 +63,21 @@ function EventBlock({ item, place, wide, serviceName, onSelect }: { item: CalIte
       onClick={() => onSelect(item)}
       title={`${item.who} · ${serviceName(item.service)} · ${range}${pending ? " · waiting to confirm" : ""}`}
       aria-label={`${item.who}, ${serviceName(item.service)}, ${range}${pending ? ", waiting to confirm" : ""}`}
-      className={`${base} cursor-pointer pr-2 pl-3 ${compact ? "flex items-center" : "flex flex-col py-1.5"}`}
+      className={`${base} cursor-pointer ${tight ? "pr-1 pl-2" : "pr-2 pl-3"} ${compact ? "flex items-center" : "flex flex-col py-1.5"}`}
       style={{ ...style, background: tint, color: text, boxShadow: pending ? `inset 0 0 0 1px ${accent}` : undefined }}
     >
       <span aria-hidden="true" className="absolute inset-y-0 left-0 w-[3px]" style={{ background: accent }} />
       {compact ? (
         <span className="flex min-w-0 items-center gap-1 text-[12px] leading-none">
           {pending && <Icon name="clock" size={11} className="flex-none" />}
-          <span className="truncate font-semibold">{item.who}</span>
+          <span className={`truncate font-semibold ${tight ? "text-[11.5px]" : ""}`}>{item.who}</span>
           {wide && <span className="flex-none opacity-80">· {fmtMin(start)}</span>}
         </span>
       ) : (
         <>
           <span className="flex min-w-0 items-center gap-1.5">
             {pending && <Icon name="clock" size={12} className="flex-none" />}
-            <span className="truncate text-[12.5px] leading-tight font-semibold">{item.who}</span>
+            <span className={`truncate leading-tight font-semibold ${tight ? "text-[11.5px]" : "text-[12.5px]"}`}>{item.who}</span>
             {wide && (
               <span className="ml-auto flex flex-none items-center gap-2">
                 <Icon name={sourceIcon[item.channel] ?? "message"} size={13} className="opacity-70" />
@@ -83,8 +85,8 @@ function EventBlock({ item, place, wide, serviceName, onSelect }: { item: CalIte
               </span>
             )}
           </span>
-          <span className="truncate text-[11.5px] leading-snug opacity-80">{range}</span>
-          {place.height >= 72 && <span className="truncate text-[11.5px] leading-snug opacity-80">{serviceName(item.service)}</span>}
+          <span className="truncate text-[11.5px] leading-snug opacity-80">{tight ? fmtMin(start) : range}</span>
+          {place.height >= 72 && !tight && <span className="truncate text-[11.5px] leading-snug opacity-80">{serviceName(item.service)}</span>}
           {wide && place.height >= 96 && <span className="truncate text-[11.5px] leading-snug opacity-70">{item.phone}</span>}
         </>
       )}
@@ -92,29 +94,38 @@ function EventBlock({ item, place, wide, serviceName, onSelect }: { item: CalIte
   );
 }
 
-/** Places a day's events: a single event takes the full width; overlapping ones cascade like Google Calendar, or sit side by side when they start together. */
+/**
+ * Places a day's events so they never overlap: bookings that clash share the
+ * width in side-by-side lanes (like Google Calendar), and a booking stretches
+ * into lanes to its right that are free for its whole time.
+ */
 function placeAll(items: CalItem[], pos: (min: number) => number) {
   const layout = layoutColumns(items);
+  const range = (it: CalItem) => [toMin(it.start), toMin(it.start) + it.minutes] as const;
   const out = new Map<string, Placement>();
   for (const it of items) {
-    const s = toMin(it.start);
+    const [s, e] = range(it);
     const { col, cols } = layout.get(it.id) ?? { col: 0, cols: 1 };
-    const top = pos(s) + 1;
-    const height = Math.max(34, (it.minutes / 60) * HOUR_PX - 2);
-    const sameStart = items.some((o) => o.id !== it.id && toMin(o.start) === s);
-    let left = 0;
-    let width = 100;
-    if (cols > 1) {
-      if (sameStart) {
-        width = 100 / cols;
-        left = col * width;
-      } else {
-        const indent = cols === 2 ? 38 : Math.min(30, 45 / (cols - 1));
-        left = col * indent;
-        width = 100 - left;
-      }
-    }
-    out.set(it.id, { top, height, left: `calc(${left}% + 2px)`, width: `calc(${width}% - 4px)`, z: 1 + col });
+    let span = 1;
+    while (
+      col + span < cols &&
+      !items.some((o) => {
+        const l = layout.get(o.id);
+        if (!l || l.col !== col + span) return false;
+        const [os, oe] = range(o);
+        return os < e && oe > s;
+      })
+    )
+      span++;
+    const lane = 100 / cols;
+    out.set(it.id, {
+      top: pos(s) + 1,
+      height: Math.max(30, (it.minutes / 60) * HOUR_PX - 2),
+      left: `calc(${col * lane}% + 2px)`,
+      width: `calc(${span * lane}% - 4px)`,
+      z: 1,
+      narrow: cols > 1 && span < cols,
+    });
   }
   return out;
 }
@@ -183,7 +194,7 @@ export function TimeGrid({ today, days, itemsFor, open, close, serviceName, onSe
           {/* Hour labels */}
           <div className="relative">
             {hours.map((h, i) => (
-              <span key={h} className={`absolute right-2.5 text-[11.5px] font-medium text-subtle ${i === 0 ? "top-1" : "-translate-y-1/2"}`} style={i === 0 ? undefined : { top: pos(h * 60) }}>
+              <span key={h} hidden={showNow && Math.abs(nowMin - h * 60) < 14} className={`absolute right-2.5 text-[11.5px] font-medium text-subtle ${i === 0 ? "top-1" : "-translate-y-1/2"}`} style={i === 0 ? undefined : { top: pos(h * 60) }}>
                 {fmtMin(h * 60, false)}
               </span>
             ))}
