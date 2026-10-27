@@ -395,6 +395,60 @@ export const sampleCalls: Call[] = [
       { from: "ai", text: "Let me put you through to the team now." },
     ],
   },
+  {
+    id: "c5",
+    time: "Yesterday, 11:30 AM",
+    caller: "+91 94•• ••• 238",
+    duration: "1:54",
+    outcome: "Booked",
+    summary: "Moved their follow-up from Friday to Saturday at 11 AM. Confirmation sent on WhatsApp.",
+    transcript: [
+      { from: "ai", text: "Thanks for calling. I’m the AI assistant. How can I help?" },
+      { from: "caller", text: "I need to move my Friday appointment." },
+      { from: "ai", text: "Saturday at 11 AM or Monday at 4 PM are free. Which suits you?" },
+      { from: "caller", text: "Saturday at 11." },
+      { from: "ai", text: "Done. You’re booked for Saturday at 11 AM. I’ve sent the details on WhatsApp." },
+    ],
+  },
+  {
+    id: "c6",
+    time: "2 days ago, 7:55 PM",
+    caller: "+91 95•• ••• 044",
+    duration: "1:10",
+    outcome: "Callback",
+    summary: "Called after hours about prices for a first visit. Left their name for a callback in the morning.",
+    transcript: [
+      { from: "ai", text: "Thanks for calling. We’re closed right now, but I can help. I’m the AI assistant." },
+      { from: "caller", text: "How much is a first visit?" },
+      { from: "ai", text: "A first visit is ₹500 and takes 30 minutes. Would you like a call back in the morning to book?" },
+      { from: "caller", text: "Yes, please call me tomorrow." },
+    ],
+  },
+  {
+    id: "c7",
+    time: "2 days ago, 1:20 PM",
+    caller: "+91 90•• ••• 902",
+    duration: "2:16",
+    outcome: "Booked",
+    summary: "Booked two first visits for a family on Monday at 5 PM and 5:30 PM.",
+    transcript: [
+      { from: "caller", text: "Can I book for me and my son on Monday evening?" },
+      { from: "ai", text: "Monday at 5 PM and 5:30 PM are free, one after the other. Shall I book both?" },
+      { from: "caller", text: "Perfect, yes." },
+    ],
+  },
+  {
+    id: "c8",
+    time: "3 days ago, 4:02 PM",
+    caller: "+91 81•• ••• 317",
+    duration: "0:38",
+    outcome: "Info",
+    summary: "Asked if there is parking. Told them about the free parking next to the entrance.",
+    transcript: [
+      { from: "caller", text: "Is there parking near you?" },
+      { from: "ai", text: "Yes, free parking is available next to the entrance." },
+    ],
+  },
 ];
 
 // ---------- Campaigns ----------
