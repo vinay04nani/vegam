@@ -71,10 +71,10 @@ function Player({ id, duration }: { id: string; duration: number }) {
             const r = e.currentTarget.getBoundingClientRect();
             setAt(Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * duration);
           }}
-          className="flex h-9 min-w-0 flex-1 cursor-pointer items-center gap-[2px]"
+          className="flex h-9 min-w-0 flex-1 cursor-pointer items-center gap-px overflow-hidden sm:gap-[2px]"
         >
           {bars.map((h, i) => (
-            <span key={i} aria-hidden="true" className={`min-w-[2px] flex-1 rounded-full ${i / bars.length < progress ? "bg-ink" : "bg-line-strong"}`} style={{ height: h }} />
+            <span key={i} aria-hidden="true" className={`min-w-0 flex-1 rounded-full ${i / bars.length < progress ? "bg-ink" : "bg-line-strong"}`} style={{ height: h }} />
           ))}
         </button>
         <span className="flex-none text-[13px] font-semibold text-ink-soft tabular-nums">
