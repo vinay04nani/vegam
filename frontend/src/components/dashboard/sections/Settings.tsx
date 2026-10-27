@@ -1,171 +1,144 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { countries } from "@/content/onboarding";
-import { sampleTeam } from "@/content/dashboard";
-import { plans } from "@/content/pricing";
-import { Icon } from "@/components/ui/Icon";
-import { Field, Select, TextInput } from "@/components/setup/fields";
-import { clearOnboarding, currencyFor, formatMoney, type OnboardingState } from "@/lib/onboarding";
-import { withBase } from "@/lib/paths";
-import { Card, PageTitle, SampleTag } from "../ui";
+import { useState } from "react";
+import { Icon, type IconName } from "@/components/ui/Icon";
+import type { OnboardingState } from "@/lib/onboarding";
+import { PageTitle } from "../ui";
+import { Account } from "./settings/Account";
+import { Automations } from "./settings/Automations";
+import { Developers } from "./settings/Developers";
+import { General } from "./settings/General";
+import { Hours } from "./settings/Hours";
+import { NotificationPrefs } from "./settings/NotificationPrefs";
+import { Privacy } from "./settings/Privacy";
+import { Team } from "./settings/Team";
+import { Templates } from "./settings/Templates";
 
-// Business details, team, plan and billing, and data. Business details save
-// to the same state as onboarding. Demo: invites and exports are not sent.
+// Settings in the style of Linear and Stripe: a menu of sections on the left
+// (a dropdown on phones) and one section at a time on the right. Each
+// section lives in ./settings/.
 
 type Props = { state: OnboardingState; update: (fn: (s: OnboardingState) => OnboardingState) => void; onOpen: (view: string) => void };
 
-export function Settings({ state, update, onOpen }: Props) {
-  const [team, setTeam] = useState(sampleTeam);
-  const [invite, setInvite] = useState("");
-  const [note, setNote] = useState<{ at: "billing" | "data"; text: string } | null>(null);
-  const b = state.business;
-  const dial = countries.find((c) => c.id === b.country)?.dial ?? "+";
-  const plan = plans.find((p) => p.id === state.plan);
-  const currency = currencyFor(state);
-  const price = plan?.price?.[currency][state.billing];
+type SectionId = "general" | "hours" | "team" | "templates" | "automations" | "notifications" | "privacy" | "developers" | "account";
 
-  const sendInvite = (e: FormEvent) => {
-    e.preventDefault();
-    if (invite.trim().length < 5) return;
-    setTeam((t) => [...t, { name: "Invited", role: "Front desk", contact: invite.trim() }]);
-    setInvite("");
+const groups: { title: string; items: { id: SectionId; label: string; icon: IconName; body: string }[] }[] = [
+  {
+    title: "Business",
+    items: [
+      { id: "general", label: "General", icon: "home", body: "Your business profile, region, contact details and tax information." },
+      { id: "hours", label: "Locations and hours", icon: "clock", body: "Where and when you’re open, closures and booking rules." },
+      { id: "team", label: "Team and roles", icon: "users", body: "Who can use Vegam and what they can do." },
+    ],
+  },
+  {
+    title: "Messaging",
+    items: [
+      { id: "templates", label: "Message templates", icon: "message", body: "WhatsApp templates for reminders, follow-ups and campaigns." },
+      { id: "automations", label: "Automations", icon: "refresh", body: "Messages Vegam sends on its own around each booking." },
+      { id: "notifications", label: "Notifications", icon: "bell", body: "Which alerts reach you, and where." },
+    ],
+  },
+  {
+    title: "Account",
+    items: [
+      { id: "privacy", label: "Privacy and consent", icon: "shield", body: "AI disclosure, opt-outs, data retention and data requests." },
+      { id: "developers", label: "API and webhooks", icon: "key", body: "Connect Vegam to your own software." },
+      { id: "account", label: "Plan and data", icon: "card", body: "Your plan, exporting data and closing your account." },
+    ],
+  },
+];
+
+const all = groups.flatMap((g) => g.items);
+
+const shortcuts: { label: string; icon: IconName; view: string }[] = [
+  { label: "AI agents", icon: "sparkle", view: "agents" },
+  { label: "Channels", icon: "globe", view: "channels" },
+  { label: "Billing", icon: "card", view: "billing" },
+  { label: "Your profile", icon: "users", view: "profile" },
+];
+
+export function Settings({ state, update, onOpen }: Props) {
+  const [section, setSection] = useState<SectionId>("general");
+  const current = all.find((s) => s.id === section)!;
+
+  const pick = (id: SectionId) => {
+    setSection(id);
+    window.scrollTo({ top: 0 });
   };
 
   return (
-    <div className="flex max-w-[860px] flex-col gap-6">
-      <PageTitle title="Settings" body="Business details, team, plan and billing, and your data." />
+    <div className="flex flex-col gap-6">
+      <PageTitle title="Settings" body="Everything about how your business runs on Vegam." />
 
-      <Card title="Business">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Field label="Business name">
-            <TextInput value={b.name} onChange={(e) => update((s) => ({ ...s, business: { ...s.business, name: e.target.value } }))} />
-          </Field>
-          <Field label="Country" hint="Sets your currency and time zone.">
-            <Select value={b.country} onChange={(e) => update((s) => ({ ...s, business: { ...s.business, country: e.target.value as typeof b.country } }))}>
-              {countries.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
+      <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-6 lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-8">
+        {/* Section menu: a list on desktop, a dropdown on phones */}
+        <nav aria-label="Settings sections" className="sticky top-24 hidden flex-col gap-5 lg:flex">
+          {groups.map((g) => (
+            <div key={g.title} className="flex flex-col gap-0.5">
+              <p className="m-0 px-3 pb-1.5 text-[12px] font-semibold tracking-[0.06em] text-subtle uppercase">{g.title}</p>
+              {g.items.map((it) => (
+                <button
+                  key={it.id}
+                  type="button"
+                  aria-current={section === it.id ? "page" : undefined}
+                  onClick={() => pick(it.id)}
+                  className={`flex min-h-10 cursor-pointer items-center gap-2.5 rounded-[10px] px-3 text-left text-[14.5px] transition ${section === it.id ? "bg-white font-semibold text-ink shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : "text-ink-soft hover:bg-white/60"}`}
+                >
+                  <Icon name={it.icon} size={17} className={section === it.id ? "text-ink" : "text-muted"} />
+                  {it.label}
+                </button>
               ))}
-            </Select>
-          </Field>
-        </div>
-        <Field label="Your WhatsApp number" hint="Your 8 AM morning report goes here.">
-          <span className="flex gap-2">
-            <span className="flex min-h-13 items-center rounded-[14px] border border-line-strong bg-panel px-4 text-base text-ink">{dial}</span>
-            <TextInput type="tel" value={state.ownerPhone} onChange={(e) => update((s) => ({ ...s, ownerPhone: e.target.value }))} placeholder="98765 43210" />
-          </span>
-        </Field>
-        <p className="m-0 flex items-center gap-1.5 text-[13.5px] text-subtle">
-          <Icon name="check" size={15} className="text-success" />
-          Changes save as you type.
-        </p>
-      </Card>
-
-      <Card title="Team" extra={<SampleTag />}>
-        <ul className="m-0 flex list-none flex-col p-0">
-          {team.map((m, i) => (
-            <li key={`${m.contact}-${i}`} className="flex items-center gap-3 border-t border-line py-3 first:border-t-0">
-              <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-periwinkle-soft text-[14px] font-bold text-brand">{m.name[0]}</span>
-              <span className="flex min-w-0 flex-1 flex-col">
-                <span className="text-[15px] font-semibold text-ink">{m.name}</span>
-                <span className="truncate text-[13.5px] text-subtle">{m.contact}</span>
-              </span>
-              <span className="rounded-full bg-panel px-2.5 py-1 text-[12.5px] font-semibold text-muted">{m.role}</span>
-            </li>
+            </div>
           ))}
-        </ul>
-        <form onSubmit={sendInvite} className="flex flex-col gap-2 sm:flex-row">
-          <label className="flex-1">
-            <span className="sr-only">Email or phone to invite</span>
-            <TextInput value={invite} onChange={(e) => setInvite(e.target.value)} placeholder="Email or phone number" />
-          </label>
-          <button type="submit" disabled={invite.trim().length < 5} className="min-h-13 cursor-pointer rounded-full bg-ink px-5 text-[15px] font-semibold text-white disabled:cursor-not-allowed disabled:bg-[#E4E6F0] disabled:text-muted">
-            Invite
-          </button>
-        </form>
-        <p className="m-0 text-[13.5px] text-subtle">Team members see the inbox and calendar, and can take over any chat.</p>
-      </Card>
-
-      <Card title="Plan and billing">
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-[16px] bg-panel p-4">
-          <div className="flex flex-col gap-0.5">
-            <span className="text-[16px] font-semibold text-ink">{plan ? `${plan.name} plan` : "No plan yet"}</span>
-            <span className="text-[14px] text-subtle">
-              {plan
-                ? `${state.liveAt ? "Free pilot" : "Pilot starts when you go live"}${price !== undefined ? `, then ${plan.from ? "from " : ""}${formatMoney(price, currency)}/month` : ""}`
-                : "Choose a plan to start your free 30-day pilot."}
-            </span>
+          <div className="flex flex-col gap-0.5 border-t border-line pt-4">
+            <p className="m-0 px-3 pb-1.5 text-[12px] font-semibold tracking-[0.06em] text-subtle uppercase">Elsewhere</p>
+            {shortcuts.map((s) => (
+              <button key={s.view} type="button" onClick={() => onOpen(s.view)} className="flex min-h-9 cursor-pointer items-center gap-2.5 rounded-[10px] px-3 text-left text-[14px] text-ink-soft hover:bg-white/60">
+                <Icon name={s.icon} size={16} className="text-muted" />
+                <span className="flex-1">{s.label}</span>
+                <Icon name="chevron-right" size={14} className="text-faint" />
+              </button>
+            ))}
           </div>
-          <button type="button" onClick={() => onOpen("plan")} className="min-h-10 cursor-pointer rounded-full border border-line-strong bg-white px-4 text-[14px] font-semibold text-ink hover:border-subtle">
-            {plan ? "Change plan" : "Choose a plan"}
-          </button>
-        </div>
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="flex flex-col">
-            <span className="text-[15px] font-semibold text-ink">Payment method</span>
-            <span className="text-[14px] text-subtle">Not added. Add one by day 25 of your pilot to keep going.</span>
-          </span>
-          <button
-            type="button"
-            onClick={() => setNote({ at: "billing", text: "Payments are not connected in this demo. In the product this opens Razorpay in India or Stripe elsewhere." })}
-            className="min-h-10 cursor-pointer rounded-full bg-ink px-4 text-[14px] font-semibold text-white"
-          >
-            Add payment method
-          </button>
-        </div>
-        <p className="m-0 text-[14px] text-subtle">Invoices: none yet. Your pilot is free.</p>
-        {note?.at === "billing" && (
-          <p role="status" className="m-0 rounded-[14px] bg-periwinkle-soft px-4 py-3 text-[14px] text-brand">
-            {note.text}
-          </p>
-        )}
-      </Card>
+        </nav>
 
-      <Card title="Your front desk">
-        <div className="flex flex-col gap-1">
-          {[
-            { icon: "sparkle" as const, label: "Assistant: services, hours and answers", view: "assistant" },
-            { icon: "globe" as const, label: "Channels", view: "channels" },
-          ].map((x) => (
-            <button key={x.view} type="button" onClick={() => onOpen(x.view)} className="-mx-2 flex cursor-pointer items-center gap-3 rounded-[14px] p-2.5 text-left hover:bg-panel">
-              <Icon name={x.icon} size={20} className="text-indigo" />
-              <span className="flex-1 text-[15.5px] font-medium text-ink">{x.label}</span>
-              <Icon name="chevron-right" size={18} className="text-subtle" />
-            </button>
-          ))}
-        </div>
-      </Card>
-
-      <Card title="Your data">
-        <p className="m-0 text-[14.5px] text-subtle">Your contacts and conversations belong to you. Export them any time, or delete your account and data.</p>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={() => setNote({ at: "data", text: "Exports are not connected in this demo. In the product you get a download link by email." })}
-            className="min-h-10 cursor-pointer rounded-full border border-line-strong bg-white px-4 text-[14px] font-semibold text-ink hover:border-subtle"
+        <label className="relative lg:hidden">
+          <span className="sr-only">Settings section</span>
+          <select
+            value={section}
+            onChange={(e) => pick(e.target.value as SectionId)}
+            className="min-h-12 w-full cursor-pointer appearance-none rounded-[14px] border border-line-strong bg-white pr-10 pl-4 text-[15.5px] font-semibold text-ink"
           >
-            Export contacts and chats
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              clearOnboarding();
-              window.location.href = withBase("/onboarding/");
-            }}
-            className="min-h-10 cursor-pointer rounded-full px-4 text-[14px] font-semibold text-danger hover:bg-[#FDECEC]"
-          >
-            Start over (clears this demo)
-          </button>
-        </div>
-        {note?.at === "data" && (
-          <p role="status" className="m-0 rounded-[14px] bg-periwinkle-soft px-4 py-3 text-[14px] text-brand">
-            {note.text}
-          </p>
-        )}
-      </Card>
+            {groups.map((g) => (
+              <optgroup key={g.title} label={g.title}>
+                {g.items.map((it) => (
+                  <option key={it.id} value={it.id}>
+                    {it.label}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+          <Icon name="chevron-down" size={17} className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-subtle" />
+        </label>
 
+        <div className="flex min-w-0 flex-col gap-5">
+          <div className="flex flex-col gap-1">
+            <h2 className="m-0 text-[22px] font-semibold tracking-[-0.01em] text-ink">{current.label}</h2>
+            <p className="m-0 text-[15px] text-subtle">{current.body}</p>
+          </div>
+          {section === "general" && <General state={state} update={update} />}
+          {section === "hours" && <Hours />}
+          {section === "team" && <Team />}
+          {section === "templates" && <Templates />}
+          {section === "automations" && <Automations />}
+          {section === "notifications" && <NotificationPrefs />}
+          {section === "privacy" && <Privacy onOpen={onOpen} />}
+          {section === "developers" && <Developers />}
+          {section === "account" && <Account state={state} onOpen={onOpen} />}
+        </div>
+      </div>
     </div>
   );
 }

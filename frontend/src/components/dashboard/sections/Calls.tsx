@@ -7,7 +7,7 @@ import { sampleForwardingNumber } from "@/content/onboarding";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Select, inputClass } from "@/components/setup/fields";
 import { Avatar, Badge, Button, Drawer, EmptyState, SegmentedControl, Tabs, Toggle, useToast, type BadgeTone } from "../kit";
-import { PageTitle, SampleTag, SettingsSection } from "../ui";
+import { PageTitle, SampleTag, SaveBar, SettingsSection } from "../ui";
 
 // Calls the AI answered, as a call log in the style of Aircall and Dialpad:
 // a summary strip, a filterable table, and a details drawer with the
@@ -483,24 +483,13 @@ function Routing() {
       </div>
 
       {dirty && (
-        <div className="sticky bottom-20 z-10 mt-4 flex items-center justify-between gap-3 rounded-[16px] bg-ink px-4 py-3 text-white shadow-[0_12px_32px_rgb(30_31_43/0.25)] lg:bottom-6">
-          <span className="text-[14px] font-medium">You have unsaved changes</span>
-          <span className="flex gap-2">
-            <button type="button" onClick={() => setDirty(false)} className="min-h-9 cursor-pointer rounded-[9px] px-3 text-[14px] font-semibold text-white/80 hover:text-white">
-              Discard
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setDirty(false);
-                toast("Call settings saved");
-              }}
-              className="min-h-9 cursor-pointer rounded-[9px] bg-white px-4 text-[14px] font-semibold text-ink"
-            >
-              Save changes
-            </button>
-          </span>
-        </div>
+        <SaveBar
+          onDiscard={() => setDirty(false)}
+          onSave={() => {
+            setDirty(false);
+            toast("Call settings saved");
+          }}
+        />
       )}
     </div>
   );

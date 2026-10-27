@@ -71,12 +71,29 @@ export function PageTitle({ title, body, onBack, backLabel = "Back" }: { title: 
 /** A settings group: title and explanation on the left, controls on the right (stacked on phones). */
 export function SettingsSection({ title, description, children, id }: { title: string; description?: string; children: ReactNode; id?: string }) {
   return (
-    <section id={id} aria-label={title} className="grid gap-4 border-t border-line py-7 first:border-t-0 first:pt-0 md:grid-cols-[minmax(0,260px)_minmax(0,1fr)] md:gap-10">
+    <section id={id} aria-label={title} className="grid grid-cols-[minmax(0,1fr)] gap-4 border-t border-line py-7 first:border-t-0 first:pt-0 md:grid-cols-[minmax(0,260px)_minmax(0,1fr)] md:gap-10">
       <div className="flex flex-col gap-1">
         <h2 className="m-0 text-[16px] font-semibold text-ink">{title}</h2>
         {description && <p className="m-0 text-[14px] leading-relaxed text-subtle">{description}</p>}
       </div>
       <div className="flex min-w-0 flex-col gap-4">{children}</div>
     </section>
+  );
+}
+
+/** Floating bar shown while a settings form has unsaved changes. */
+export function SaveBar({ onSave, onDiscard }: { onSave: () => void; onDiscard: () => void }) {
+  return (
+    <div role="region" aria-label="Unsaved changes" className="sticky bottom-20 z-10 mt-4 flex items-center justify-between gap-3 rounded-[16px] bg-ink px-4 py-3 text-white shadow-[0_12px_32px_rgb(30_31_43/0.25)] lg:bottom-6">
+      <span className="text-[14px] font-medium">You have unsaved changes</span>
+      <span className="flex gap-2">
+        <button type="button" onClick={onDiscard} className="min-h-9 cursor-pointer rounded-[9px] px-3 text-[14px] font-semibold text-white/80 hover:text-white">
+          Discard
+        </button>
+        <button type="button" onClick={onSave} className="min-h-9 cursor-pointer rounded-[9px] bg-white px-4 text-[14px] font-semibold text-ink">
+          Save changes
+        </button>
+      </span>
+    </div>
   );
 }
