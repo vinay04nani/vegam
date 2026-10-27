@@ -48,13 +48,41 @@ Sign up ──► ① About you ──► ② Pick a plan ──► Dashboard: s
 
 **Invited team members** skip onboarding and the guide, and land in the Inbox.
 
+## During development: everything visible
+
+While the app is being built, every tab and feature is visible and usable for every account, whatever the plan or setup progress. The planned limits are switched off in `frontend/src/content/onboarding.ts`:
+
+```ts
+export const gating = { setupOnlyBeforeLive: false, limitByPlan: false };
+```
+
+`minPlan` on each tab, channel and task keeps the record of what each plan will include:
+
+| Tab | Starter | Growth | Pro |
+|---|---|---|---|
+| Home, Inbox, Calendar, Leads, Reports, Assistant, Channels, Settings | ✓ | ✓ | ✓ |
+| Calls (AI phone answering) | — | ✓ | ✓ |
+| Campaigns (broadcasts, win-back, rebooking) | — | — | ✓ |
+
+**When the switches are turned on:**
+- **`setupOnlyBeforeLive`:** before go-live, the sidebar shows only the setup items.
+- **`limitByPlan`:** tabs, channels and tasks above the plan are hidden or locked.
+
 ## After go-live: the dashboard
 
-**Navigation:** Home, Inbox, Calendar, Leads, Calls (Growth+), Campaigns (Pro), Reports, Assistant, Settings.
-- Desktop: a left sidebar, with sections from higher plans shown with a lock.
+**Navigation:** Home, Inbox, Calendar, Leads, Calls, Campaigns, Reports, Assistant, Channels, Settings.
+- Desktop: a left sidebar.
 - Phones: bottom tabs for Home, Inbox, Calendar and Leads, plus More.
-- **Assistant** opens the same page as the setup task, for edits.
-- **Settings** links to plan and billing, channels and the assistant.
+- **What each section holds:**
+  - **Inbox:** every chat, with filters, a "Take over" / "Hand back to AI" control and replies.
+  - **Calendar:** a day and week grid on the business's own opening hours, booking details, and "Block time".
+  - **Leads:** Hot, Warm and Cold columns, with follow-ups sent and the next step.
+  - **Calls:** AI-answered calls, with outcome, summary and transcript.
+  - **Campaigns:** broadcasts, win-back and rebooking, with results and a new-campaign form.
+  - **Reports:** week 1 baseline against now, "What Vegam won you this week" and past morning reports.
+  - **Assistant:** the same page as the setup task, for edits.
+  - **Channels:** every channel's connection card.
+  - **Settings:** business details, team and invites, plan and billing, and data export.
 
 **Home**, top to bottom:
 1. "You're live" welcome (once).
@@ -101,7 +129,7 @@ Everything below runs in the browser with no backend:
 - "Connect" buttons change status but don't connect anything.
 - "Read it" fills in sample services.
 - The test chat uses simple rules that answer only from the owner's details and hand over otherwise.
-- Home's numbers are labelled sample data. Other sections describe what they will hold.
+- Home and every section show labelled sample data. Actions in the sections (replies, take-overs, blocks, campaigns, invites) change the screen only and aren't saved.
 - Settings has "Start over" to clear the demo.
 
 **Still to do in the product:**
@@ -112,6 +140,6 @@ Everything below runs in the browser with no backend:
 - The real assistant.
 - Billing.
 - Nudges.
-- The other dashboard sections.
+- Real data for the dashboard sections.
 
 The code marks each of these with `TODO(backend)`, `TODO(auth)` or `TODO(contact)`.

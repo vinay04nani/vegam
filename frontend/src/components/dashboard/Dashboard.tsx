@@ -1,45 +1,31 @@
 "use client";
 
 import { useState } from "react";
-import { appNav, planRank } from "@/content/onboarding";
-import { viewInfo } from "@/content/dashboard";
+import { appNav } from "@/content/onboarding";
 import { plans, type PlanId } from "@/content/pricing";
 import { links } from "@/content/site";
 import { Icon } from "@/components/ui/Icon";
-import { clearOnboarding, useOnboarding } from "@/lib/onboarding";
+import { isIncluded, useOnboarding } from "@/lib/onboarding";
 import { withBase } from "@/lib/paths";
 import { LiveHome } from "./LiveHome";
 import { SetupHome } from "./SetupHome";
 import { AssistantPage, ChannelsPage, PlanPage, TestPage, WhatsAppPage } from "./TaskPages";
-import { PageTitle, pilotDay } from "./ui";
+import { Calendar } from "./sections/Calendar";
+import { Calls } from "./sections/Calls";
+import { Campaigns } from "./sections/Campaigns";
+import { Inbox } from "./sections/Inbox";
+import { Leads } from "./sections/Leads";
+import { Reports } from "./sections/Reports";
+import { Settings } from "./sections/Settings";
+import { pilotDay } from "./ui";
 
-// The dashboard. Until the assistant is live, Home is a short setup guide and
-// everything else can be explored. After go-live, Home shows the pilot, the
-// optional "Grow with Vegam" tasks and today. Sections the demo doesn't build
-// yet describe what they will hold.
+// The dashboard. Until the assistant is live, Home is a short setup guide;
+// every other section can be explored at any time with sample data. After
+// go-live, Home shows the pilot, the optional "Grow with Vegam" tasks and
+// today. Plan limits are switched off for now (see `gating`).
 
 /** Pages that belong to Home in the navigation. */
 const homeViews = ["home", "preview", "setup-assistant", "setup-whatsapp", "setup-test"];
-
-function Placeholder({ id, plan }: { id: string; plan: PlanId }) {
-  const info = viewInfo[id];
-  const needs = appNav.find((n) => n.id === id)?.minPlan ?? "starter";
-  const locked = planRank[plan] < planRank[needs];
-  return (
-    <div className="flex flex-col gap-5">
-      <h1 className="m-0 font-serif text-[clamp(30px,3vw,42px)] leading-tight font-normal tracking-[-0.02em] text-ink">{info.title}</h1>
-      <div className="flex flex-col items-start gap-4 rounded-[22px] border border-dashed border-line-strong bg-white p-[clamp(20px,4vw,40px)]">
-        <span className="flex h-12 w-12 items-center justify-center rounded-[14px] bg-periwinkle-soft text-indigo">
-          <Icon name={locked ? "lock" : (appNav.find((n) => n.id === id)?.icon ?? "home")} size={24} />
-        </span>
-        <p className="m-0 max-w-[560px] text-[17px] leading-relaxed text-ink-soft">{info.body}</p>
-        <p className="m-0 text-[14.5px] text-subtle">
-          {locked ? `Included in the ${plans.find((p) => p.id === needs)?.name} plan.` : "This section arrives with the product build. The demo covers Home."}
-        </p>
-      </div>
-    </div>
-  );
-}
 
 function NavButton({
   id,
@@ -51,7 +37,7 @@ function NavButton({
   onSelect,
 }: (typeof appNav)[number] & { compact?: boolean; view: string; plan: PlanId; onSelect: (id: string) => void }) {
   const active = view === id;
-  const locked = planRank[plan] < planRank[appNav.find((n) => n.id === id)!.minPlan];
+  const locked = !isIncluded(appNav.find((n) => n.id === id)!.minPlan, plan);
   return (
     <button
       type="button"
@@ -70,37 +56,6 @@ function NavButton({
   );
 }
 
-function SettingsPage({ onOpen }: { onOpen: (view: string) => void }) {
-  return (
-    <div className="flex max-w-[760px] flex-col gap-6">
-      <PageTitle title="Settings" body={viewInfo.settings.body} />
-      <div className="flex flex-col gap-2 rounded-[22px] border border-line bg-white p-3">
-        {[
-          { icon: "chart" as const, label: "Plan and billing", view: "plan" },
-          { icon: "globe" as const, label: "Channels", view: "channels" },
-          { icon: "sparkle" as const, label: "Assistant: services, hours and answers", view: "assistant" },
-        ].map((x) => (
-          <button key={x.view} type="button" onClick={() => onOpen(x.view)} className="flex cursor-pointer items-center gap-3 rounded-[14px] p-3 text-left hover:bg-panel">
-            <Icon name={x.icon} size={20} className="text-indigo" />
-            <span className="flex-1 text-[15.5px] font-medium text-ink">{x.label}</span>
-            <Icon name="chevron-right" size={18} className="text-subtle" />
-          </button>
-        ))}
-      </div>
-      <button
-        type="button"
-        onClick={() => {
-          clearOnboarding();
-          window.location.href = withBase("/onboarding/");
-        }}
-        className="w-fit cursor-pointer text-[14.5px] font-medium text-subtle underline-offset-4 hover:text-danger hover:underline"
-      >
-        Start over (clears this demo’s saved answers)
-      </button>
-    </div>
-  );
-}
-
 export function Dashboard() {
   const { state, update, ready } = useOnboarding();
   const [view, setView] = useState("home");
@@ -109,8 +64,8 @@ export function Dashboard() {
   const onboarded = !!state.onboardedAt;
   const live = !!state.liveAt;
   const mode = !onboarded ? "demo" : "live";
-  // Before a plan is chosen nothing is locked, so people can explore everything.
-  const plan: PlanId = state.plan ?? (onboarded ? "pro" : "growth");
+  const plan: PlanId = state.plan ?? "growth";
+  // When gating.setupOnlyBeforeLive is switched on, this becomes the setup-only list before go-live.
   const nav = appNav;
   const name = state.business.name || "Nila & Co";
   const planName = plans.find((p) => p.id === state.plan)?.name;
@@ -152,10 +107,22 @@ export function Dashboard() {
         return <TestPage {...props} />;
       case "channels":
         return <ChannelsPage {...props} />;
+      case "inbox":
+        return <Inbox />;
+      case "calendar":
+        return <Calendar state={state} />;
+      case "leads":
+        return <Leads />;
+      case "calls":
+        return <Calls />;
+      case "campaigns":
+        return <Campaigns />;
+      case "reports":
+        return <Reports />;
       case "settings":
-        return <SettingsPage onOpen={select} />;
+        return <Settings state={state} update={update} onOpen={select} />;
       default:
-        return <Placeholder id={view} plan={plan} />;
+        return <LiveHome state={state} update={update} plan={plan} mode={mode} welcome={false} onDismissWelcome={() => undefined} onOpen={select} />;
     }
   })();
 
@@ -222,11 +189,15 @@ export function Dashboard() {
       </nav>
       {more && (
         <div className="fixed inset-0 z-10 bg-ink/30 lg:hidden" onClick={() => setMore(false)}>
-          <div className="absolute inset-x-3 bottom-20 flex flex-col gap-1 rounded-[20px] bg-[#F4F4F8] p-3 shadow-[0_20px_50px_rgb(30_31_43/0.25)]" onClick={(e) => e.stopPropagation()}>
+          <nav
+            aria-label="More sections"
+            className="absolute inset-x-3 bottom-20 flex flex-col gap-1 rounded-[20px] bg-[#F4F4F8] p-3 shadow-[0_20px_50px_rgb(30_31_43/0.25)]"
+            onClick={(e) => e.stopPropagation()}
+          >
             {nav.slice(4).map((n) => (
               <NavButton key={n.id} {...n} view={navView} plan={plan} onSelect={select} />
             ))}
-          </div>
+          </nav>
         </div>
       )}
     </div>

@@ -62,7 +62,7 @@ src/
 │  ├─ site.ts             # landing copy, links, demo data and placeholders
 │  ├─ pricing.ts          # plans and prices, picker, feature table, FAQ
 │  ├─ onboarding.ts       # countries, channels, "Grow with Vegam" tasks, dashboard nav
-│  └─ dashboard.ts        # dashboard sample data
+│  └─ dashboard.ts        # sample data for Home and every dashboard section
 ├─ lib/
 │  ├─ onboarding.ts       # saved onboarding and setup state (browser for now), helpers
 │  └─ demoAssistant.ts    # rule-based stand-in for the AI in the test chat
@@ -79,6 +79,7 @@ src/
    ├─ onboarding/         # Onboarding (the two screens)
    ├─ setup/              # PlanChooser, AssistantSetup, ChannelSetup, TestChat, form fields
    ├─ dashboard/          # Dashboard shell, SetupHome (guide), LiveHome, TaskPages, ui
+   │  └─ sections/        # Inbox, Calendar, Leads, Calls, Campaigns, Reports, Settings
    └─ pixel/              # pixel scenes (coast, sunrise, lighthouse, kites), PixelBackdrop, ComingSoon
 ```
 
@@ -97,7 +98,7 @@ Change text, links and demo conversations in `src/content/site.ts`, and plans an
 ## Not wired yet
 
 - **Log in / sign up** validate input and show the "check your email / phone" screen, but no email or code is sent. Connect Supabase Auth in `src/components/auth/AuthForm.tsx` (marked `TODO(auth)`). Google, Microsoft and Apple buttons show a "coming soon" note.
-- **Onboarding and dashboard** are a clickable demo. Answers are kept in the browser (`localStorage`; Settings → "Start over" clears them), channel buttons only change their status, "Read it" fills in sample services, the test chat uses `src/lib/demoAssistant.ts`, and the dashboard shows labelled sample data. Each spot is marked `TODO(backend)`. The flow is described in `docs/product/onboarding.md`.
+- **Onboarding and dashboard** are a clickable demo. Answers are kept in the browser (`localStorage`; Settings → "Start over" clears them), channel buttons only change their status, "Read it" fills in sample services, the test chat uses `src/lib/demoAssistant.ts`, and the dashboard and its sections show labelled sample data (actions there change the screen only). Plan limits are switched off while the app is built (`gating` in `src/content/onboarding.ts`). Each spot is marked `TODO(backend)`. The flow is described in `docs/product/onboarding.md`.
 - **Contact form** shows the thank-you screen but sends nothing until `forms.contactEndpoint` is set (marked `TODO(contact)`).
 
 ## Design rules
