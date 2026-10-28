@@ -1,313 +1,368 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
-import { sampleBaseline, sampleMorningReports, sampleWeekWon } from "@/content/dashboard";
-import { busyGrid, channelShare, dailySeries, handledSplit, handoverReasons, hours, topQuestions, weekdays, type Range } from "@/content/reports";
+import { useEffect, useMemo, useState } from "react";
+import { sampleMorningReports, sampleWeekWon } from "@/content/dashboard";
+import { channelGroups, serviceMix, type ChannelFilter, type Range } from "@/content/reports";
 import { Icon } from "@/components/ui/Icon";
-import { Badge, Button, SegmentedControl, Skeleton, Tabs, useToast } from "../kit";
+import { downloadPdf } from "@/lib/pdf";
+import { Button, Menu, Modal, SegmentedControl, Skeleton, Tabs, useToast } from "../kit";
 import { PageTitle, SampleTag } from "../ui";
-import { BarList, Heatmap, LineChart, Legend, Sparkline, SplitBar, series } from "./reports/charts";
+import { Dropdown, Switch } from "./settings/parts";
+import { AiPerformance } from "./reports/AiPerformance";
+import { Bookings } from "./reports/Bookings";
+import { Conversations } from "./reports/Conversations";
+import { Overview } from "./reports/Overview";
+import { Team } from "./reports/Team";
+import { buildModel, change } from "./reports/model";
+import { Panel, pct, rupees, seconds } from "./reports/parts";
 
-// Reports: how the front desk is doing, as a dashboard. Overview (headline
-// numbers, trend, channels, funnel, busiest times, who handled chats), AI
-// performance (resolution, handovers, top questions, before/after) and the
-// morning reports. All numbers are sample data until the backend exists.
+// Reports: how the front desk is doing, as a dashboard. One filter row (date
+// range, channel, compare with the previous period) scopes every tab:
+// Overview, Conversations, Bookings, AI performance and Team. Morning reports
+// lists what's sent to WhatsApp and any scheduled reports. Export as CSV or
+// a PDF summary. All numbers are sample data until the backend exists.
 
-type Tab = "overview" | "ai" | "reports";
+type Tab = "overview" | "conversations" | "bookings" | "ai" | "team" | "reports";
 
-const fmtDay = (d: Date, range: Range) => d.toLocaleDateString("en-GB", range === 7 ? { weekday: "short" } : { day: "numeric", month: "short" });
-const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
-const pct = (n: number) => `${Math.round(n * 100)}%`;
+const tabs: { id: Tab; label: string }[] = [
+  { id: "overview", label: "Overview" },
+  { id: "conversations", label: "Conversations" },
+  { id: "bookings", label: "Bookings" },
+  { id: "ai", label: "AI performance" },
+  { id: "team", label: "Team" },
+  { id: "reports", label: "Morning reports" },
+];
 
-function Panel({ title, description, action, children, className = "" }: { title: string; description?: string; action?: ReactNode; children: ReactNode; className?: string }) {
-  return (
-    <section aria-label={title} className={`flex min-w-0 flex-col gap-4 rounded-[18px] border border-line bg-white p-5 ${className}`}>
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <h2 className="m-0 text-[15.5px] font-semibold text-ink">{title}</h2>
-          {description && <p className="m-0 mt-0.5 text-[13px] text-subtle">{description}</p>}
-        </div>
-        {action}
-      </div>
-      {children}
-    </section>
-  );
-}
+const ranges: { id: `${Range}`; label: string; long: string }[] = [
+  { id: "7", label: "7D", long: "Last 7 days" },
+  { id: "30", label: "30D", long: "Last 30 days" },
+  { id: "90", label: "90D", long: "Last 90 days" },
+  { id: "365", label: "12M", long: "Last 12 months" },
+];
 
-function Delta({ value, better = "up" }: { value: number; better?: "up" | "down" }) {
-  const good = better === "up" ? value >= 0 : value <= 0;
-  return (
-    <span className={`inline-flex items-center gap-0.5 text-[12.5px] font-semibold ${good ? "text-success" : "text-danger"}`}>
-      <Icon name="chevron-down" size={13} className={value >= 0 ? "rotate-180" : ""} />
-      {Math.abs(Math.round(value * 100))}%<span className="sr-only">{good ? " better" : " worse"} than the previous period</span>
-    </span>
-  );
-}
+type Schedule = { id: string; report: string; every: "Daily" | "Weekly" | "Monthly"; time: string; via: string; fixed?: boolean };
 
-function Stat({ label, value, delta, better, trend, hint }: { label: string; value: string; delta: number; better?: "up" | "down"; trend: number[]; hint: string }) {
-  return (
-    <div className="flex flex-col gap-2 rounded-[18px] border border-line bg-white p-4">
-      <span className="text-[13px] font-medium text-subtle">{label}</span>
-      <span className="flex items-end justify-between gap-2">
-        <span className="text-[28px] leading-none font-semibold tracking-[-0.02em] text-ink tabular-nums">{value}</span>
-        <Sparkline values={trend.length > 12 ? Array.from({ length: Math.ceil(trend.length / 7) }, (_, i) => trend.slice(i * 7, i * 7 + 7).reduce((a, b) => a + b, 0) / trend.slice(i * 7, i * 7 + 7).length) : trend} />
-      </span>
-      <span className="flex items-center gap-1.5 text-[12.5px] text-subtle">
-        <Delta value={delta} better={better} />
-        {hint}
-      </span>
-    </div>
-  );
-}
-
-export function Reports() {
+export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
   const toast = useToast();
   const [tab, setTab] = useState<Tab>("overview");
   const [range, setRange] = useState<Range>(30);
+  const [channel, setChannel] = useState<ChannelFilter>("all");
+  const [compare, setCompare] = useState(true);
   const [today, setToday] = useState<Date | null>(null);
   const [openReport, setOpenReport] = useState<string | null>(sampleMorningReports[0].day);
+  const [scheduling, setScheduling] = useState(false);
+  const [draft, setDraft] = useState({ report: "Overview", every: "Weekly" as Schedule["every"], time: "08:00", whatsapp: true, email: true });
+  const [schedules, setSchedules] = useState<Schedule[]>([
+    { id: "morning", report: "Morning report", every: "Daily", time: "8:00 AM", via: "WhatsApp", fixed: true },
+    { id: "won", report: "What Vegam won you", every: "Weekly", time: "Mondays, 8:00 AM", via: "WhatsApp", fixed: true },
+  ]);
 
-  // Dates depend on the viewer's clock, so build the series after mount.
+  // Dates depend on the viewer's clock, so build the numbers after mount.
   useEffect(() => setToday(new Date()), []);
+  const m = useMemo(() => (today ? buildModel(range, channel, today) : null), [today, range, channel]);
 
-  const data = useMemo(() => {
-    if (!today) return null;
-    const all = dailySeries(range * 2, today);
-    const cur = all.slice(range);
-    const prev = all.slice(0, range);
-    const enq = sum(cur.map((d) => d.enquiries));
-    const book = sum(cur.map((d) => d.bookings));
-    const enqPrev = sum(prev.map((d) => d.enquiries));
-    const bookPrev = sum(prev.map((d) => d.bookings));
-    const bucket = range === 90 ? 7 : 1;
-    const groups = Array.from({ length: Math.ceil(cur.length / bucket) }, (_, i) => cur.slice(i * bucket, i * bucket + bucket));
-    return {
-      cur,
-      enq,
-      book,
-      dEnq: enq / Math.max(1, enqPrev) - 1,
-      dBook: book / Math.max(1, bookPrev) - 1,
-      labels: groups.map((g) => (bucket === 7 ? `w/c ${fmtDay(g[0].date, 30)}` : fmtDay(g[0].date, range))),
-      enqSeries: groups.map((g) => sum(g.map((d) => d.enquiries))),
-      bookSeries: groups.map((g) => sum(g.map((d) => d.bookings))),
-      afterHours: Math.round(enq * 0.31),
-    };
-  }, [today, range]);
+  const rangeLong = ranges.find((r) => r.id === String(range))!.long;
+  const channelLabel = channel === "all" ? "All channels" : channelGroups.find((c) => c.id === channel)!.label;
 
-  const price = 1200;
   const exportCsv = () => {
-    if (!data) return;
-    const rows = [["Date", "Enquiries", "Bookings"], ...data.cur.map((d) => [d.date.toISOString().slice(0, 10), d.enquiries, d.bookings])];
+    if (!m) return;
+    const rows = [["Date", "Enquiries", "Bookings", "Booking value (INR)", "Average first reply (sec)"], ...m.days.map((d) => [d.date.toLocaleDateString("en-CA"), d.enquiries, d.bookings, d.value, d.reply])];
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([rows.map((r) => r.join(",")).join("\n")], { type: "text/csv" }));
-    a.download = `vegam-report-${range}d.csv`;
+    a.download = `vegam-report-${range === 365 ? "12m" : `${range}d`}${channel === "all" ? "" : `-${channel}`}.csv`;
     a.click();
     URL.revokeObjectURL(a.href);
-    toast("Report exported");
+    toast("CSV downloaded");
+  };
+
+  const exportPdf = () => {
+    if (!m) return;
+    const { cur, prev } = m;
+    const d = (now: number, before: number) => {
+      const c = change(now, before);
+      return `${c >= 0 ? "+" : "-"}${Math.abs(Math.round(c * 100))}%`;
+    };
+    downloadPdf(`vegam-report-${range === 365 ? "12m" : `${range}d`}.pdf`, [
+      { text: "Vegam report", size: 20, bold: true, gap: 0 },
+      { text: `${m.period} · ${channelLabel}`, size: 11, gap: 22 },
+      { text: `Compared with ${m.prevPeriod}. Sample data.`, size: 9 },
+      { text: "Headline numbers", size: 13, bold: true, gap: 34 },
+      { text: `Enquiries: ${cur.enquiries}  (${d(cur.enquiries, prev.enquiries)})` },
+      { text: `Bookings: ${cur.bookings}  (${d(cur.bookings, prev.bookings)})` },
+      { text: `Booking value: ${rupees(cur.value)}  (${d(cur.value, prev.value)})` },
+      { text: `Conversion rate: ${pct(cur.conversion, 1)}` },
+      { text: `Average first reply: ${seconds(cur.reply)}` },
+      { text: "Channels", size: 13, bold: true, gap: 30 },
+      ...channelGroups.map((c, j) => ({ text: `${c.label}: ${cur.enqCh[j]} enquiries, ${cur.bookCh[j]} bookings (${pct(cur.bookCh[j] / Math.max(1, cur.enqCh[j]))})` })),
+      { text: "Services", size: 13, bold: true, gap: 30 },
+      ...serviceMix.map((s) => ({ text: `${s.name}: ${Math.round(s.share * cur.bookings)} bookings` })),
+      { text: "Conversations", size: 13, bold: true, gap: 30 },
+      { text: "Resolved by the AI: 78%  ·  Handed to your team: 22%  ·  Customer rating: 4.6 / 5" },
+    ]);
+    toast("PDF downloaded");
+  };
+
+  const saveSchedule = () => {
+    const via = [draft.whatsapp && "WhatsApp", draft.email && "Email"].filter(Boolean).join(" and ");
+    const [h, min] = draft.time.split(":").map(Number);
+    const time = `${draft.every === "Weekly" ? "Mondays, " : draft.every === "Monthly" ? "1st of the month, " : ""}${((h + 11) % 12) + 1}:${String(min).padStart(2, "0")} ${h < 12 ? "AM" : "PM"}`;
+    setSchedules((s) => [...s, { id: String(Date.now()), report: draft.report, every: draft.every, time, via }]);
+    setScheduling(false);
+    toast(`${draft.every} ${draft.report.toLowerCase()} report scheduled`);
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <PageTitle title="Reports" body="How your front desk is doing: enquiries, bookings, the AI’s work and the busiest times." />
-        <SampleTag />
-      </div>
-
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <Tabs
-          label="Report"
-          value={tab}
-          onChange={setTab}
-          tabs={[
-            { id: "overview", label: "Overview" },
-            { id: "ai", label: "AI performance" },
-            { id: "reports", label: "Morning reports" },
-          ]}
-        />
-        {tab !== "reports" && (
-          <div className="flex items-center gap-2">
-            <SegmentedControl
-              label="Date range"
-              size="sm"
-              value={String(range) as "7" | "30" | "90"}
-              onChange={(v) => setRange(Number(v) as Range)}
-              options={[
-                { id: "7", label: "7 days" },
-                { id: "30", label: "30 days" },
-                { id: "90", label: "90 days" },
-              ]}
-            />
-            <Button icon="download" onClick={exportCsv}>
-              Export
-            </Button>
-          </div>
-        )}
-      </div>
-
-      {!data ? (
-        <div className="grid gap-4 md:grid-cols-4">
-          {Array.from({ length: 4 }, (_, i) => (
-            <Skeleton key={i} className="h-[118px]" />
-          ))}
-          <Skeleton className="h-[320px] md:col-span-4" />
+        <div className="flex flex-col gap-2">
+          <PageTitle title="Reports" body="How your front desk is doing: enquiries, bookings, the AI’s work and your team." />
         </div>
-      ) : tab === "overview" ? (
-        <>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <Stat label="Enquiries" value={String(data.enq)} delta={data.dEnq} trend={data.enqSeries} hint="vs previous period" />
-            <Stat label="Bookings" value={String(data.book)} delta={data.dBook} trend={data.bookSeries} hint={`${pct(data.book / data.enq)} of enquiries`} />
-            <Stat label="Value of bookings" value={`₹${(data.book * price).toLocaleString("en-IN")}`} delta={data.dBook} trend={data.bookSeries} hint="at your listed prices" />
-            <Stat label="Average first reply" value="6 sec" delta={-0.12} better="down" trend={[9, 8, 8, 7, 7, 6, 6]} hint="day and night" />
-          </div>
+        <div className="flex items-center gap-2">
+          <SampleTag />
+          <Button icon="clock" onClick={() => setScheduling(true)}>
+            Schedule
+          </Button>
+          <Menu
+            label="Export report"
+            align="right"
+            triggerClassName="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-[10px] bg-ink px-3.5 text-[14px] font-semibold text-white shadow-[0_1px_2px_rgb(30_31_43/0.2)] transition hover:bg-[#2c2d3d]"
+            trigger={
+              <>
+                <Icon name="download" size={16} />
+                Export
+                <Icon name="chevron-down" size={14} />
+              </>
+            }
+            items={[
+              { label: "Download CSV", icon: "table", onSelect: exportCsv },
+              { label: "Download PDF summary", icon: "note", onSelect: exportPdf },
+              { label: "", divider: true },
+              { label: "Schedule a report…", icon: "clock", onSelect: () => setScheduling(true) },
+            ]}
+          />
+        </div>
+      </div>
 
-          <Panel title="Enquiries and bookings" description={range === 90 ? "Weekly totals" : "Daily totals"} action={<Legend items={[{ label: "Enquiries", color: series.blue }, { label: "Bookings", color: series.orange }]} />}>
-            <LineChart
-              labels={data.labels}
-              data={[
-                { id: "enq", label: "Enquiries", color: series.blue, values: data.enqSeries },
-                { id: "book", label: "Bookings", color: series.orange, values: data.bookSeries },
-              ]}
-            />
-          </Panel>
+      <Tabs label="Report" value={tab} onChange={setTab} tabs={tabs} />
 
-          <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-            <Panel title="Where enquiries come from" description="Share of all enquiries">
-              <BarList rows={channelShare.map((c) => ({ label: c.channel, value: Math.round(c.share * data.enq) }))} note={(r) => `${r.label}: ${r.value} enquiries (${pct(r.value / data.enq)})`} />
-            </Panel>
-            <Panel title="From enquiry to visit" description="How many people reach each step">
-              <BarList
-                rows={[
-                  { label: "Enquired", value: data.enq },
-                  { label: "Replied within 1 min", value: Math.round(data.enq * 0.99) },
-                  { label: "Booked", value: data.book },
-                  { label: "Came in", value: Math.round(data.book * 0.91) },
-                ]}
-                note={(r) => `${r.label}: ${pct(r.value / data.enq)} of enquiries`}
-              />
-              <p className="m-0 text-[13px] text-subtle">
-                <span className="font-semibold text-ink">{data.afterHours}</span> enquiries arrived after closing time; the AI answered all of them.
-              </p>
-            </Panel>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
-            <Panel title="Busiest times" description="Enquiries by day and hour. Staff the desk when it’s darkest.">
-              <Heatmap rows={weekdays} cols={hours.map((h) => (h === 12 ? "12p" : h > 12 ? `${h - 12}p` : `${h}a`))} values={busyGrid(range / 30)} />
-            </Panel>
-            <Panel title="Who handled chats" description="Of all conversations in this period">
-              <SplitBar parts={handledSplit.map((p, i) => ({ label: p.label, share: p.share, color: [series.blue, series.orange, series.aqua][i] }))} />
-              <div className="grid grid-cols-2 gap-3 border-t border-line pt-4">
-                <div>
-                  <p className="m-0 text-[13px] text-subtle">Hours saved</p>
-                  <p className="m-0 text-[22px] font-semibold text-ink tabular-nums">{Math.round(data.enq * 0.78 * 0.07)} h</p>
-                </div>
-                <div>
-                  <p className="m-0 text-[13px] text-subtle">Missed calls recovered</p>
-                  <p className="m-0 text-[22px] font-semibold text-ink tabular-nums">{Math.round(data.enq * 0.18 * 0.62)}</p>
-                </div>
-              </div>
-            </Panel>
-          </div>
-        </>
-      ) : tab === "ai" ? (
-        <>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            <Stat label="Resolved by the AI" value="78%" delta={0.06} trend={[70, 72, 71, 74, 76, 77, 78]} hint="no person needed" />
-            <Stat label="Handed to your team" value={String(Math.round(data.enq * 0.22))} delta={-0.08} better="down" trend={[30, 28, 27, 27, 25, 24, 22]} hint="conversations" />
-            <Stat label="Booked by the AI" value={String(Math.round(data.book * 0.84))} delta={data.dBook} trend={data.bookSeries} hint="without staff help" />
-            <Stat label="Questions it didn’t know" value="4" delta={-0.33} better="down" trend={[9, 8, 7, 6, 6, 5, 4]} hint="answer them in AI agents" />
-          </div>
-          <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-            <Panel title="Why chats were handed over" description="Share of handovers">
-              <BarList rows={handoverReasons.map((r) => ({ label: r.reason, value: Math.round(r.share * 100) }))} format={(v) => `${v}%`} note={(r) => `${r.label}: ${r.value}% of handovers`} />
-            </Panel>
-            <Panel title="Most asked questions">
-              <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
-                {topQuestions.map((q) => (
-                  <li key={q.q} className="flex items-center gap-3 py-2.5 text-[14px]">
-                    <span className="min-w-0 flex-1 truncate text-ink">{q.q}</span>
-                    {q.answered ? <Badge tone="success">Answered</Badge> : <Badge tone="warning">Needs an answer</Badge>}
-                    <span className="w-10 text-right font-semibold text-ink tabular-nums">{q.count}</span>
-                  </li>
-                ))}
-              </ul>
-            </Panel>
-          </div>
-          <Panel title="Before and after Vegam" description="Week 1 of your pilot measured how things were. “Now” is the last 7 days.">
-            <div className="grid gap-x-8 gap-y-5 md:grid-cols-2">
-              {sampleBaseline.map((m) => {
-                const max = Math.max(m.beforeValue, m.afterValue, 0.01);
-                return (
-                  <div key={m.label} className="flex flex-col gap-2">
-                    <span className="flex items-center justify-between gap-2 text-[14px] font-medium text-ink">
-                      {m.label}
-                      <span className="text-[12px] font-normal text-subtle">{m.better === "lower" ? "Lower is better" : "Higher is better"}</span>
-                    </span>
-                    {(
-                      [
-                        ["Week 1", m.beforeValue, m.before, "#C9CBD6"],
-                        ["Now", m.afterValue, m.after, series.blue],
-                      ] as const
-                    ).map(([label, v, text, color]) => (
-                      <div key={label} className="grid grid-cols-[52px_minmax(0,1fr)_80px] items-center gap-2 text-[13px]">
-                        <span className="text-subtle">{label}</span>
-                        <span className="h-3">
-                          <span className="block h-full rounded-r-[4px]" style={{ width: `${Math.max(1.5, (v / max) * 100)}%`, background: color }} />
-                        </span>
-                        <span className={`text-right tabular-nums ${label === "Now" ? "font-semibold text-ink" : "text-subtle"}`}>{text}</span>
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
-            </div>
-          </Panel>
-        </>
-      ) : (
-        <div className="grid grid-cols-1 items-start gap-4 xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-          <Panel title="Morning reports" description="Sent to your WhatsApp at 8 AM every day.">
-            <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
-              {sampleMorningReports.map((r) => {
-                const isOpen = openReport === r.day;
-                return (
-                  <li key={r.day}>
-                    <button type="button" aria-expanded={isOpen} onClick={() => setOpenReport(isOpen ? null : r.day)} className="flex w-full cursor-pointer items-center gap-3 py-3 text-left">
-                      <Icon name="sun" size={17} className="flex-none text-muted" />
-                      <span className="flex-1 text-[14.5px] font-medium text-ink">{r.day}, 8:00 AM</span>
-                      <span className="text-[13px] text-subtle">
-                        {r.enquiries} enquiries · {r.bookings} bookings
-                      </span>
-                      <Icon name="chevron-down" size={16} className={`flex-none text-subtle transition ${isOpen ? "rotate-180" : ""}`} />
-                    </button>
-                    {isOpen && (
-                      <div className="mb-3 ml-7 rounded-[12px] bg-panel p-3.5 text-[14px] leading-relaxed text-ink">
-                        <strong className="font-semibold">Good morning. Here’s yesterday:</strong>
-                        <span className="block">
-                          {r.enquiries} enquiries, all replied · {r.bookings} new bookings · {r.missed} missed call{r.missed === 1 ? "" : "s"}
-                          {r.missed ? ", all followed up" : ""}
-                        </span>
-                        <span className="mt-1 block">
-                          <strong className="font-semibold">Needs you:</strong> {r.needs}
-                        </span>
-                      </div>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </Panel>
-          <Panel title="What Vegam won you this week" description="Sent every Monday morning.">
-            <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
-              {sampleWeekWon.map((w) => (
-                <li key={w.label} className="flex items-baseline gap-3 py-3">
-                  <span className="w-9 flex-none text-right text-[24px] leading-none font-semibold text-ink tabular-nums">{w.value}</span>
-                  <span className="text-[14px] text-ink-soft">{w.label}</span>
-                </li>
-              ))}
-            </ul>
-          </Panel>
+      {tab !== "reports" && (
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2.5">
+          <SegmentedControl label="Date range" size="sm" value={String(range) as `${Range}`} onChange={(v) => setRange(Number(v) as Range)} options={ranges.map((r) => ({ id: r.id, label: <span title={r.long}>{r.label}</span> }))} />
+          <Menu
+            label="Filter by channel"
+            align="left"
+            triggerClassName={`inline-flex min-h-[42px] cursor-pointer items-center gap-2 rounded-[12px] border px-3 text-[13.5px] font-semibold transition ${channel === "all" ? "border-line-strong bg-white text-ink hover:bg-panel" : "border-ink bg-ink text-white"}`}
+            trigger={
+              <>
+                <Icon name="filter" size={15} />
+                {channelLabel}
+                <Icon name="chevron-down" size={14} />
+              </>
+            }
+            items={[{ label: "All channels", checked: channel === "all", onSelect: () => setChannel("all") }, { label: "", divider: true }, ...channelGroups.map((c) => ({ label: c.label, checked: channel === c.id, onSelect: () => setChannel(c.id) }))]}
+          />
+          <button
+            type="button"
+            role="switch"
+            aria-checked={compare}
+            aria-label="Compare with the previous period"
+            onClick={() => setCompare(!compare)}
+            className="inline-flex min-h-[42px] cursor-pointer items-center gap-2.5 rounded-[12px] border border-line-strong bg-white px-3 text-[13.5px] font-semibold text-ink transition hover:bg-panel"
+          >
+            <span aria-hidden="true" className={`relative block h-[18px] w-[30px] rounded-full transition ${compare ? "bg-ink" : "bg-line-strong"}`}>
+              <span className={`absolute top-[2px] left-[2px] h-[14px] w-[14px] rounded-full bg-white shadow-[0_1px_2px_rgb(30_31_43/0.25)] transition ${compare ? "translate-x-3" : ""}`} />
+            </span>
+            Compare
+          </button>
+          {m && (
+            <p className="m-0 text-[13px] text-subtle lg:ml-auto">
+              <span className="font-medium text-ink-soft">{m.period}</span>
+              {compare && <span className="hidden sm:inline"> · vs {m.prevPeriod}</span>}
+            </p>
+          )}
         </div>
       )}
+
+      {!m ? (
+        <div className="grid grid-cols-2 gap-3 xl:grid-cols-5">
+          {Array.from({ length: 5 }, (_, i) => (
+            <Skeleton key={i} className="h-[112px]" />
+          ))}
+          <Skeleton className="col-span-2 h-[340px] xl:col-span-5" />
+        </div>
+      ) : (
+        <div key={`${tab}`} className="flex animate-[fade-in_0.2s_ease-out] flex-col gap-4 motion-reduce:animate-none">
+          {tab === "overview" && <Overview m={m} compare={compare} onOpen={onOpen} />}
+          {tab === "conversations" && <Conversations m={m} compare={compare} />}
+          {tab === "bookings" && <Bookings m={m} compare={compare} />}
+          {tab === "ai" && <AiPerformance m={m} compare={compare} onOpen={onOpen} />}
+          {tab === "team" && <Team m={m} />}
+          {tab === "reports" && (
+            <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-4 xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+              <Panel title="Morning reports" description="Sent to your WhatsApp at 8 AM every day.">
+                <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
+                  {sampleMorningReports.map((r) => {
+                    const isOpen = openReport === r.day;
+                    return (
+                      <li key={r.day}>
+                        <button type="button" aria-expanded={isOpen} onClick={() => setOpenReport(isOpen ? null : r.day)} className="flex w-full cursor-pointer items-center gap-3 py-3 text-left">
+                          <Icon name="sun" size={17} className="flex-none text-muted" />
+                          <span className="flex-1 text-[14.5px] font-medium text-ink">{r.day}, 8:00 AM</span>
+                          <span className="hidden text-[13px] text-subtle sm:inline">
+                            {r.enquiries} enquiries · {r.bookings} bookings
+                          </span>
+                          <Icon name="chevron-down" size={16} className={`flex-none text-subtle transition ${isOpen ? "rotate-180" : ""}`} />
+                        </button>
+                        {isOpen && (
+                          <div className="mb-3 ml-7 rounded-[12px] bg-panel p-3.5 text-[14px] leading-relaxed text-ink">
+                            <strong className="font-semibold">Good morning. Here’s yesterday:</strong>
+                            <span className="block">
+                              {r.enquiries} enquiries, all replied · {r.bookings} new bookings · {r.missed} missed call{r.missed === 1 ? "" : "s"}
+                              {r.missed ? ", all followed up" : ""}
+                            </span>
+                            <span className="mt-1 block">
+                              <strong className="font-semibold">Needs you:</strong> {r.needs}
+                            </span>
+                          </div>
+                        )}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </Panel>
+              <div className="flex flex-col gap-4">
+                <Panel title="What Vegam won you this week" description="Sent every Monday morning.">
+                  <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
+                    {sampleWeekWon.map((w) => (
+                      <li key={w.label} className="flex items-baseline gap-3 py-3">
+                        <span className="w-9 flex-none text-right text-[24px] leading-none font-semibold text-ink">{w.value}</span>
+                        <span className="text-[14px] text-ink-soft">{w.label}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </Panel>
+                <Panel
+                  title="Scheduled reports"
+                  description="Delivered automatically"
+                  action={
+                    <Button icon="plus" onClick={() => setScheduling(true)}>
+                      New
+                    </Button>
+                  }
+                >
+                  <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
+                    {schedules.map((s) => (
+                      <li key={s.id} className="flex items-center gap-3 py-3">
+                        <span className="flex h-8 w-8 flex-none items-center justify-center rounded-[9px] bg-panel text-muted">
+                          <Icon name={s.via.includes("Email") ? "mail" : "message"} size={16} />
+                        </span>
+                        <span className="flex min-w-0 flex-1 flex-col">
+                          <span className="truncate text-[14px] font-medium text-ink">{s.report}</span>
+                          <span className="truncate text-[12.5px] text-subtle">
+                            {s.every} · {s.time} · {s.via}
+                          </span>
+                        </span>
+                        {s.fixed ? (
+                          <span className="text-[12px] text-subtle">Built in</span>
+                        ) : (
+                          <Menu
+                            label={`Options for ${s.report}`}
+                            items={[
+                              {
+                                label: "Stop sending",
+                                icon: "trash",
+                                danger: true,
+                                onSelect: () => {
+                                  setSchedules((all) => all.filter((x) => x.id !== s.id));
+                                  toast("Scheduled report removed");
+                                },
+                              },
+                            ]}
+                          />
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </Panel>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      <Modal
+        open={scheduling}
+        onClose={() => setScheduling(false)}
+        title="Schedule a report"
+        footer={
+          <>
+            <Button variant="ghost" onClick={() => setScheduling(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" disabled={!draft.whatsapp && !draft.email} onClick={saveSchedule}>
+              Schedule
+            </Button>
+          </>
+        }
+      >
+        <div className="flex flex-col gap-5">
+          <p className="m-0 text-[14px] text-subtle">A summary of the report, with a PDF attached, sent on a schedule. It uses the channel filter you choose at the time.</p>
+          <label className="flex flex-col gap-1.5">
+            <span className="text-[14px] font-medium text-ink">Report</span>
+            <Dropdown value={draft.report} onChange={(e) => setDraft({ ...draft, report: e.target.value })}>
+              {tabs
+                .filter((t) => t.id !== "reports")
+                .map((t) => (
+                  <option key={t.id}>{t.label}</option>
+                ))}
+            </Dropdown>
+          </label>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-[14px] font-medium text-ink">How often</span>
+            <SegmentedControl
+              label="How often"
+              size="sm"
+              value={draft.every}
+              onChange={(v) => setDraft({ ...draft, every: v })}
+              options={[
+                { id: "Daily", label: "Daily" },
+                { id: "Weekly", label: "Weekly (Mondays)" },
+                { id: "Monthly", label: "Monthly" },
+              ]}
+            />
+          </div>
+          <label className="flex flex-col gap-1.5">
+            <span className="text-[14px] font-medium text-ink">Time</span>
+            <Dropdown value={draft.time} onChange={(e) => setDraft({ ...draft, time: e.target.value })} className="w-40">
+              {["07:00", "08:00", "09:00", "18:00", "21:00"].map((t) => {
+                const h = Number(t.slice(0, 2));
+                return (
+                  <option key={t} value={t}>
+                    {((h + 11) % 12) + 1}:00 {h < 12 ? "AM" : "PM"}
+                  </option>
+                );
+              })}
+            </Dropdown>
+          </label>
+          <div className="flex flex-col gap-2.5">
+            <span className="text-[14px] font-medium text-ink">Send to</span>
+            <div className="flex items-center justify-between gap-3 text-[14px] text-ink">
+              <span className="flex items-center gap-2.5">
+                <Icon name="message" size={16} className="text-muted" />
+                Your WhatsApp
+              </span>
+              <Switch checked={draft.whatsapp} onChange={(v) => setDraft({ ...draft, whatsapp: v })} label="Send on WhatsApp" />
+            </div>
+            <div className="flex items-center justify-between gap-3 text-[14px] text-ink">
+              <span className="flex items-center gap-2.5">
+                <Icon name="mail" size={16} className="text-muted" />
+                owner@example.com
+              </span>
+              <Switch checked={draft.email} onChange={(v) => setDraft({ ...draft, email: v })} label="Send by email" />
+            </div>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

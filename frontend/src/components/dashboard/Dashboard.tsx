@@ -218,7 +218,7 @@ export function Dashboard() {
       case "campaigns":
         return <Campaigns />;
       case "reports":
-        return <Reports />;
+        return <Reports onOpen={select} />;
       default:
         return <LiveHome state={state} update={update} plan={plan} mode={mode} welcome={false} onDismissWelcome={() => undefined} onOpen={select} />;
     }
