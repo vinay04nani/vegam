@@ -78,7 +78,7 @@ export function Payments({ india }: { india: boolean }) {
         })}
       </Group>
       <Group title="Payment links">
-        <Row label="Remind people who haven’t paid" description="A polite WhatsApp after 1 day and 3 days.">
+        <Row label="Remind people who haven’t paid" description="A polite WhatsApp on day 3, 7 and 14. Stops as soon as they pay.">
           <Switch checked={remind} onChange={setRemind} label="Payment reminders" />
         </Row>
       </Group>

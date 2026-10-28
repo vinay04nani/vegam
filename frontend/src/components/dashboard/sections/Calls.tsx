@@ -15,10 +15,10 @@ import { PageTitle, SampleTag, SaveBar, SettingsSection } from "../ui";
 // numbers and the rules for when the AI picks up and who it transfers to.
 // Demo: playback is simulated and settings are kept in this component only.
 
-const outcomes: CallOutcome[] = ["Booked", "Callback", "Transferred", "Info"];
-const outcomeTone: Record<CallOutcome, BadgeTone> = { Booked: "success", Callback: "warning", Transferred: "brand", Info: "neutral" };
-const outcomeLabel: Record<CallOutcome, string> = { Booked: "Booked", Callback: "Call back", Transferred: "Transferred", Info: "Answered" };
-const outcomeIcon: Record<CallOutcome, IconName> = { Booked: "calendar", Callback: "phone", Transferred: "users", Info: "message" };
+const outcomes: CallOutcome[] = ["Booked", "Callback", "Transferred", "Info", "NoAnswer"];
+const outcomeTone: Record<CallOutcome, BadgeTone> = { Booked: "success", Callback: "warning", Transferred: "brand", Info: "neutral", NoAnswer: "neutral" };
+const outcomeLabel: Record<CallOutcome, string> = { Booked: "Booked", Callback: "Call back", Transferred: "Transferred", Info: "Answered", NoAnswer: "No answer" };
+const outcomeIcon: Record<CallOutcome, IconName> = { Booked: "calendar", Callback: "phone", Transferred: "users", Info: "message", NoAnswer: "missed" };
 
 const seconds = (d: string) => {
   const [m, s] = d.split(":").map(Number);
@@ -133,6 +133,15 @@ function CallDetails({ call, onOpen }: { call: Call; onOpen: (view: string) => v
         </Button>
       </div>
 
+      {call.lead && (
+        <p className="m-0 flex items-start gap-2.5 rounded-[14px] border border-line bg-[#FAFAFC] p-3.5 text-[14px] text-ink">
+          <Icon name="lead" size={16} className="mt-0.5 flex-none text-muted" />
+          <span>
+            <span className="font-semibold">The AI called this lead.</span> They enquired first, by {call.lead}
+          </span>
+        </p>
+      )}
+
       {call.outcome === "Callback" && (
         <p className="m-0 flex items-start gap-2.5 rounded-[14px] border border-[#FBDDBF] bg-[#FFF8F0] p-3.5 text-[14px] text-ink">
           <Icon name="clock" size={16} className="mt-0.5 flex-none text-warning" />
@@ -142,11 +151,13 @@ function CallDetails({ call, onOpen }: { call: Call; onOpen: (view: string) => v
         </p>
       )}
 
-      <section className="flex flex-col gap-2">
-        <h3 className="m-0 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">Recording</h3>
-        <Player key={call.id} id={call.id} duration={seconds(call.duration)} />
-        <p className="m-0 text-[12.5px] text-subtle">Recorded only because the caller stayed on after the recording notice.</p>
-      </section>
+      {call.outcome !== "NoAnswer" && (
+        <section className="flex flex-col gap-2">
+          <h3 className="m-0 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">Recording</h3>
+          <Player key={call.id} id={call.id} duration={seconds(call.duration)} />
+          <p className="m-0 text-[12.5px] text-subtle">Recorded only because the caller stayed on after the recording notice.</p>
+        </section>
+      )}
 
       <section className="flex flex-col gap-2">
         <h3 className="m-0 flex items-center gap-1.5 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">
@@ -156,23 +167,25 @@ function CallDetails({ call, onOpen }: { call: Call; onOpen: (view: string) => v
         <p className="m-0 rounded-[14px] bg-periwinkle-soft/60 p-3.5 text-[14.5px] leading-snug text-ink">{call.summary}</p>
       </section>
 
-      <section className="flex flex-col gap-2.5">
-        <div className="flex items-center justify-between">
-          <h3 className="m-0 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">Transcript</h3>
-          <button type="button" onClick={() => toast("Transcript downloaded (demo)")} className="inline-flex cursor-pointer items-center gap-1 text-[13px] font-semibold text-ink-soft hover:text-ink">
-            <Icon name="download" size={14} />
-            Download
-          </button>
-        </div>
-        <div className="flex flex-col gap-2.5">
-          {call.transcript.map((line, i) => (
-            <div key={i} className={`flex max-w-[88%] flex-col gap-0.5 ${line.from === "ai" ? "self-end items-end" : "self-start"}`}>
-              <span className="px-1 text-[11.5px] font-semibold text-subtle">{line.from === "ai" ? "AI assistant" : "Caller"}</span>
-              <span className={`rounded-[14px] px-3.5 py-2 text-[14px] leading-snug ${line.from === "ai" ? "rounded-tr-[4px] bg-periwinkle-soft text-ink" : "rounded-tl-[4px] border border-line bg-white text-ink"}`}>{line.text}</span>
-            </div>
-          ))}
-        </div>
-      </section>
+      {call.transcript.length > 0 && (
+        <section className="flex flex-col gap-2.5">
+          <div className="flex items-center justify-between">
+            <h3 className="m-0 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">Transcript</h3>
+            <button type="button" onClick={() => toast("Transcript downloaded (demo)")} className="inline-flex cursor-pointer items-center gap-1 text-[13px] font-semibold text-ink-soft hover:text-ink">
+              <Icon name="download" size={14} />
+              Download
+            </button>
+          </div>
+          <div className="flex flex-col gap-2.5">
+            {call.transcript.map((line, i) => (
+              <div key={i} className={`flex max-w-[88%] flex-col gap-0.5 ${line.from === "ai" ? "self-end items-end" : "self-start"}`}>
+                <span className="px-1 text-[11.5px] font-semibold text-subtle">{line.from === "ai" ? "AI assistant" : call.direction === "out" ? "Lead" : "Caller"}</span>
+                <span className={`rounded-[14px] px-3.5 py-2 text-[14px] leading-snug ${line.from === "ai" ? "rounded-tr-[4px] bg-periwinkle-soft text-ink" : "rounded-tl-[4px] border border-line bg-white text-ink"}`}>{line.text}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
@@ -180,19 +193,20 @@ function CallDetails({ call, onOpen }: { call: Call; onOpen: (view: string) => v
 function CallLog({ onOpen }: { onOpen: (view: string) => void }) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [outcome, setOutcome] = useState<"all" | CallOutcome>("all");
+  const [direction, setDirection] = useState<"all" | "in" | "out">("all");
   const [query, setQuery] = useState("");
   const call = sampleCalls.find((c) => c.id === openId) ?? null;
 
   const list = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return sampleCalls.filter((c) => (outcome === "all" || c.outcome === outcome) && (!q || `${c.caller} ${nameFor(c) ?? ""} ${c.summary}`.toLowerCase().includes(q)));
-  }, [outcome, query]);
+    return sampleCalls.filter((c) => (outcome === "all" || c.outcome === outcome) && (direction === "all" || (c.direction ?? "in") === direction) && (!q || `${c.caller} ${nameFor(c) ?? ""} ${c.summary}`.toLowerCase().includes(q)));
+  }, [outcome, query, direction]);
 
   const booked = sampleCalls.filter((c) => c.outcome === "Booked").length;
   const callbacks = sampleCalls.filter((c) => c.outcome === "Callback").length;
   const avg = Math.round(sampleCalls.reduce((n, c) => n + seconds(c.duration), 0) / sampleCalls.length);
   const stats = [
-    { label: "Calls answered", value: String(sampleCalls.length), note: "Last 7 days" },
+    { label: "Calls handled", value: String(sampleCalls.length), note: `${sampleCalls.filter((c) => c.direction !== "out").length} answered · ${sampleCalls.filter((c) => c.direction === "out").length} to new leads` },
     { label: "Booked on the call", value: `${Math.round((booked / sampleCalls.length) * 100)}%`, note: `${booked} bookings` },
     { label: "Waiting for a call back", value: String(callbacks), note: callbacks ? "Call them today" : "All done", warn: callbacks > 0 },
     { label: "Average call", value: clock(avg), note: "Minutes" },
@@ -222,13 +236,24 @@ function CallLog({ onOpen }: { onOpen: (view: string) => void }) {
               className="min-h-10 w-full rounded-[10px] border border-line-strong bg-white pr-3 pl-9 text-[14.5px] text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
             />
           </label>
-          <div className="-mx-3 overflow-x-auto px-3">
+          <div className="-mx-3 flex gap-2 overflow-x-auto px-3">
+            <SegmentedControl
+              label="Filter by direction"
+              size="sm"
+              value={direction}
+              onChange={setDirection}
+              options={[
+                { id: "all", label: "All" },
+                { id: "in", label: "Incoming" },
+                { id: "out", label: "To leads" },
+              ]}
+            />
             <SegmentedControl
               label="Filter by outcome"
               size="sm"
               value={outcome}
               onChange={setOutcome}
-              options={[{ id: "all", label: `All ${sampleCalls.length}` }, ...outcomes.map((o) => ({ id: o, label: `${outcomeLabel[o]} ${sampleCalls.filter((c) => c.outcome === o).length}` }))]}
+              options={[{ id: "all", label: `Any ${sampleCalls.length}` }, ...outcomes.map((o) => ({ id: o, label: `${outcomeLabel[o]} ${sampleCalls.filter((c) => c.outcome === o).length}` }))]}
             />
           </div>
         </div>
@@ -267,12 +292,12 @@ function CallLog({ onOpen }: { onOpen: (view: string) => void }) {
                     <tr key={c.id} onClick={() => setOpenId(c.id)} className="cursor-pointer border-t border-line transition hover:bg-[#FAFAFC]">
                       <td className="py-3 pl-4">
                         <button type="button" onClick={() => setOpenId(c.id)} className="flex cursor-pointer items-center gap-3 text-left">
-                          <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-periwinkle-soft text-brand">
-                            <Icon name="phone" size={16} />
+                          <span className={`flex h-9 w-9 flex-none items-center justify-center rounded-full ${c.direction === "out" ? "bg-[#EEF7EF] text-success" : "bg-periwinkle-soft text-brand"}`}>
+                            <Icon name={c.direction === "out" ? "arrow" : "phone"} size={16} className={c.direction === "out" ? "-rotate-45" : ""} />
                           </span>
                           <span className="flex flex-col">
                             <span className="text-[14.5px] font-semibold whitespace-nowrap text-ink">{name ?? c.caller}</span>
-                            <span className="text-[12.5px] whitespace-nowrap text-subtle">{name ? c.caller : "Incoming call"}</span>
+                            <span className="text-[12.5px] whitespace-nowrap text-subtle">{c.direction === "out" ? "AI called a new lead" : name ? c.caller : "Incoming call"}</span>
                           </span>
                         </button>
                       </td>
@@ -501,7 +526,7 @@ export function Calls({ onOpen }: { onOpen: (view: string) => void }) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <PageTitle title="Calls" body="Every call your AI receptionist answered: what happened, the recording and what to do next." />
+        <PageTitle title="Calls" body="Every call the AI answered or made to a new lead: what happened, the recording and what to do next." />
         <div className="flex items-center gap-3">
           <SampleTag />
           <Button icon="phone" onClick={() => toast("Test call placed. Answer it to hear your AI (demo)", "info")}>

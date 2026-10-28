@@ -19,7 +19,20 @@ export const sampleClosures = [
   { id: "x2", date: "Fri 25 Dec 2026", reason: "Christmas", allDay: true },
 ];
 
-export const sampleLocations = [{ id: "l1", name: "Main location", address: "12 MG Road, Bengaluru 560001", primary: true }];
+export type Location = { id: string; name: string; address: string; phone: string; manager: string; primary?: boolean; /** Share of the business's enquiries. */ share: number; rating: number };
+
+/** Sample locations (Pro: multi-branch). The first is the primary one. */
+export const sampleLocations: Location[] = [
+  { id: "l1", name: "MG Road", address: "12 MG Road, Bengaluru 560001", phone: "+91 80 4••• ••01", manager: "You", primary: true, share: 0.5, rating: 4.7 },
+  { id: "l2", name: "Koramangala", address: "44 80 Feet Road, Koramangala, Bengaluru 560034", phone: "+91 80 4••• ••02", manager: "R. Kumar", share: 0.3, rating: 4.8 },
+  { id: "l3", name: "Whitefield", address: "7 ITPL Main Road, Whitefield, Bengaluru 560066", phone: "+91 80 4••• ••03", manager: "S. Das", share: 0.2, rating: 4.5 },
+];
+
+/** Which location a sample record belongs to, decided from its id so it never changes. */
+export function locationOf(id: string) {
+  const n = [...id].reduce((a, c) => a + c.charCodeAt(0), 0) % 10;
+  return n < 5 ? "l1" : n < 8 ? "l2" : "l3";
+}
 
 export type Role = "Owner" | "Manager" | "Front desk";
 export const roles: Role[] = ["Owner", "Manager", "Front desk"];

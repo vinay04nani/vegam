@@ -5,6 +5,7 @@ import { busyGrid, channelGroups, hours, topQuestions, weekdayNames } from "@/co
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ColumnChart, Funnel, Legend, LineChart, quiet, slots } from "./charts";
 import { change, type Model } from "./model";
+import { useBranch } from "../../branch";
 import { DataTable, Delta, KpiRow, Panel, ShareBar, pct, rupees, rupeesShort, seconds, type Kpi } from "./parts";
 
 // Overview: five headline numbers that double as the picker for the main
@@ -25,6 +26,7 @@ const valueOf = (m: Metric, b: { enquiries: number; bookings: number; value: num
 
 export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; onOpen: (view: string) => void }) {
   const [metric, setMetric] = useState<Metric>("bookings");
+  const { branch, locations, setBranch } = useBranch();
   const { cur, prev } = m;
   const spark = (k: Metric) => m.buckets.map((b) => valueOf(k, b));
 
@@ -252,6 +254,38 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
           ]}
         />
       </Panel>
+      {branch === "all" && locations.length > 1 && (
+        <Panel title="Locations" description="How each location is doing in this period. Pick one in the sidebar to see only its numbers.">
+          <DataTable
+            label="Performance by location"
+            initialSort={{ id: "enquiries", desc: true }}
+            rows={locations.map((l, i) => {
+              const conv = cur.conversion * (1 + [0.04, -0.03, 0.06, -0.05][i % 4]);
+              const enquiries = Math.round(cur.enquiries * l.share);
+              const bookings = Math.round(enquiries * conv);
+              return { ...l, enquiries, bookings, conv, value: bookings * (cur.value / Math.max(1, cur.bookings)) };
+            })}
+            columns={[
+              {
+                id: "name",
+                label: "Location",
+                value: (l) => l.name,
+                render: (l) => (
+                  <button type="button" onClick={() => setBranch(l.id)} className="cursor-pointer text-left font-medium text-ink hover:underline">
+                    {l.name}
+                  </button>
+                ),
+              },
+              { id: "enquiries", label: "Enquiries", align: "right", value: (l) => l.enquiries, render: (l) => l.enquiries.toLocaleString("en-IN") },
+              { id: "share", label: "Share", align: "right", value: (l) => l.share, render: (l) => <ShareBar share={l.share} /> },
+              { id: "bookings", label: "Bookings", align: "right", value: (l) => l.bookings, render: (l) => l.bookings.toLocaleString("en-IN") },
+              { id: "conv", label: "Conversion", align: "right", value: (l) => l.conv, render: (l) => pct(l.conv, 1) },
+              { id: "value", label: "Booking value", align: "right", value: (l) => l.value, render: (l) => rupees(l.value) },
+              { id: "rating", label: "Google rating", align: "right", value: (l) => l.rating, render: (l) => (l.rating ? `${l.rating.toFixed(1)} ★` : "—") },
+            ]}
+          />
+        </Panel>
+      )}
     </>
   );
 }

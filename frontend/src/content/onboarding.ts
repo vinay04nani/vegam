@@ -216,16 +216,21 @@ export const checklist: ChecklistItem[] = [
   },
 ];
 
-export type NavItem = { id: string; label: string; icon: IconName; minPlan: PlanId; group: "work" | "setup" };
+export type NavGroup = "main" | "customers" | "grow" | "insights" | "setup";
+export type NavItem = { id: string; label: string; icon: IconName; minPlan: PlanId; group: NavGroup };
+
+export const navGroups: { id: NavGroup; label?: string }[] = [{ id: "main" }, { id: "customers", label: "Customers" }, { id: "grow", label: "Grow" }, { id: "insights", label: "Insights" }, { id: "setup", label: "Set up" }];
 
 export const appNav: NavItem[] = [
-  { id: "home", label: "Home", icon: "home", minPlan: "starter", group: "work" },
-  { id: "inbox", label: "Inbox", icon: "inbox", minPlan: "starter", group: "work" },
-  { id: "contacts", label: "Contacts", icon: "users", minPlan: "starter", group: "work" },
-  { id: "calendar", label: "Calendar", icon: "calendar", minPlan: "starter", group: "work" },
-  { id: "leads", label: "Leads", icon: "lead", minPlan: "starter", group: "work" },
-  { id: "calls", label: "Calls", icon: "phone", minPlan: "growth", group: "work" },
-  { id: "campaigns", label: "Campaigns", icon: "megaphone", minPlan: "pro", group: "work" },
-  { id: "reports", label: "Reports", icon: "chart", minPlan: "starter", group: "work" },
+  { id: "home", label: "Home", icon: "home", minPlan: "starter", group: "main" },
+  { id: "inbox", label: "Inbox", icon: "inbox", minPlan: "starter", group: "main" },
+  { id: "calendar", label: "Calendar", icon: "calendar", minPlan: "starter", group: "main" },
+  { id: "contacts", label: "Contacts", icon: "users", minPlan: "starter", group: "customers" },
+  { id: "leads", label: "Leads", icon: "lead", minPlan: "starter", group: "customers" },
+  { id: "calls", label: "Calls", icon: "phone", minPlan: "growth", group: "customers" },
+  { id: "campaigns", label: "Campaigns", icon: "megaphone", minPlan: "pro", group: "grow" },
+  { id: "reviews", label: "Reviews", icon: "star", minPlan: "growth", group: "grow" },
+  { id: "payments", label: "Payments", icon: "wallet", minPlan: "pro", group: "grow" },
+  { id: "reports", label: "Reports", icon: "chart", minPlan: "starter", group: "insights" },
   { id: "agents", label: "AI agents", icon: "sparkle", minPlan: "starter", group: "setup" },
 ];

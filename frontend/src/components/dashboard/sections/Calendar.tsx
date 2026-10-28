@@ -1,5 +1,8 @@
 "use client";
 
+import { PaymentLinkModal, type PaymentDraft } from "./payments/PaymentLinkModal";
+import { locationOf } from "@/content/settings";
+import { useBranch } from "../branch";
 import { useEffect, useMemo, useState } from "react";
 import { sampleBookings, sampleServiceNames, serviceColors, type Booking } from "@/content/dashboard";
 import { Icon } from "@/components/ui/Icon";
@@ -27,6 +30,8 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
   const [view, setView] = useState<View>("week");
   const [anchor, setAnchor] = useState(0);
   const [bookings, setBookings] = useState<Booking[]>(sampleBookings);
+  const [paying, setPaying] = useState<PaymentDraft | null>(null);
+  const { branch } = useBranch();
   const [blocks, setBlocks] = useState<Block[]>([]);
   const [hidden, setHidden] = useState<number[]>([]);
   const [selected, setSelected] = useState<CalItem | null>(null);
@@ -47,10 +52,10 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
 
   const itemsFor = useMemo(
     () => (d: number): CalItem[] => [
-      ...bookings.filter((b) => b.day === d && !hidden.includes(b.service)).map((b) => ({ kind: "booking" as const, ...b })),
+      ...bookings.filter((b) => b.day === d && !hidden.includes(b.service) && (branch === "all" || locationOf(b.id) === branch)).map((b) => ({ kind: "booking" as const, ...b })),
       ...blocks.filter((b) => b.day === d).map((b) => ({ kind: "block" as const, ...b })),
     ],
-    [bookings, blocks, hidden],
+    [bookings, blocks, hidden, branch],
   );
   const busyDays = useMemo(() => new Set(bookings.map((b) => b.day)), [bookings]);
 
@@ -392,6 +397,22 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                 </div>
               )}
             </dl>
+            <button
+              type="button"
+              onClick={() => {
+                if (selected?.kind !== "booking") return;
+                setPaying({ who: selected.who, phone: selected.phone, item: serviceName(selected.service), amount: owned[selected.service]?.price ? Math.round(owned[selected.service].price * 0.25) : 300, purpose: "Deposit" });
+                setSelected(null);
+              }}
+              className="flex cursor-pointer items-center gap-3 rounded-[12px] border border-dashed border-line-strong px-3 py-2.5 text-left transition hover:border-ink hover:bg-panel"
+            >
+              <Icon name="wallet" size={17} className="flex-none text-muted" />
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span className="text-[14px] font-semibold text-ink">Request a deposit</span>
+                <span className="text-[12.5px] text-subtle">Send a Stripe payment link on WhatsApp</span>
+              </span>
+              <Icon name="chevron-right" size={16} className="text-muted" />
+            </button>
           </div>
         )}
         {selected?.kind === "block" && (
@@ -528,6 +549,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
           </div>
         )}
       </Modal>
+      <PaymentLinkModal open={!!paying} onClose={() => setPaying(null)} initial={paying ?? undefined} business={state.business.name || undefined} />
     </div>
   );
 }

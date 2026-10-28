@@ -7,6 +7,7 @@ import { Icon } from "@/components/ui/Icon";
 import { downloadPdf } from "@/lib/pdf";
 import { Button, Menu, Modal, SegmentedControl, Skeleton, Tabs, useToast } from "../kit";
 import { PageTitle, SampleTag } from "../ui";
+import { useBranch } from "../branch";
 import { Dropdown, Switch } from "./settings/parts";
 import { AiPerformance } from "./reports/AiPerformance";
 import { Bookings } from "./reports/Bookings";
@@ -59,7 +60,9 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
 
   // Dates depend on the viewer's clock, so build the numbers after mount.
   useEffect(() => setToday(new Date()), []);
-  const m = useMemo(() => (today ? buildModel(range, channel, today) : null), [today, range, channel]);
+  const { current } = useBranch();
+  const factor = current ? current.share || 0.1 : 1;
+  const m = useMemo(() => (today ? buildModel(range, channel, today, factor) : null), [today, range, channel, factor]);
 
   const rangeLong = ranges.find((r) => r.id === String(range))!.long;
   const channelLabel = channel === "all" ? "All channels" : channelGroups.find((c) => c.id === channel)!.label;
@@ -84,7 +87,7 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
     };
     downloadPdf(`vegam-report-${range === 365 ? "12m" : `${range}d`}.pdf`, [
       { text: "Vegam report", size: 20, bold: true, gap: 0 },
-      { text: `${m.period} · ${channelLabel}`, size: 11, gap: 22 },
+      { text: `${m.period} · ${current ? `${current.name} · ` : ""}${channelLabel}`, size: 11, gap: 22 },
       { text: `Compared with ${m.prevPeriod}. Sample data.`, size: 9 },
       { text: "Headline numbers", size: 13, bold: true, gap: 34 },
       { text: `Enquiries: ${cur.enquiries}  (${d(cur.enquiries, prev.enquiries)})` },
@@ -176,6 +179,7 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
           </button>
           {m && (
             <p className="m-0 text-[13px] text-subtle lg:ml-auto">
+              {current && <span className="font-medium text-ink-soft">{current.name} · </span>}
               <span className="font-medium text-ink-soft">{m.period}</span>
               {compare && <span className="hidden sm:inline"> · vs {m.prevPeriod}</span>}
             </p>

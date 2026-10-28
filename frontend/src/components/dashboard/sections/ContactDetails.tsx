@@ -1,5 +1,6 @@
 "use client";
 
+import { PaymentLinkModal } from "./payments/PaymentLinkModal";
 import { useState } from "react";
 import { channelLabel, optInLabel, sampleTags, type Contact, type ContactChannel, type ContactEvent, type OptIn } from "@/content/contacts";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -45,6 +46,7 @@ export function ChannelMark({ channel, size = 22 }: { channel: ContactChannel; s
 export function ContactDetails({ contact, onChange, onOpen, actions = true }: { contact: Contact; onChange: (c: Contact) => void; onOpen: (view: string) => void; actions?: boolean }) {
   const toast = useToast();
   const [note, setNote] = useState("");
+  const [paying, setPaying] = useState(false);
   const [adding, setAdding] = useState(false);
   const c = contact;
   const log = (e: ContactEvent) => [e, ...c.timeline];
@@ -79,6 +81,10 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
           <Button icon="calendar" onClick={() => onOpen("calendar")}>
             Book a visit
           </Button>
+          <Button icon="wallet" onClick={() => setPaying(true)} className="col-span-2">
+            Request payment
+          </Button>
+          <PaymentLinkModal open={paying} onClose={() => setPaying(false)} initial={{ who: c.name, phone: c.phone }} />
         </div>
       )}
 

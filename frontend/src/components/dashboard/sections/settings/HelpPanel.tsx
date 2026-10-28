@@ -20,7 +20,7 @@ const shortcuts = [
 
 const destination = (view: string) => (view.startsWith("settings") ? "Open setting" : `Go to ${view === "agents" ? "AI agents" : view.charAt(0).toUpperCase() + view.slice(1)}`);
 
-export function HelpPanel({ onOpen }: { onOpen: (view: string) => void }) {
+export function HelpPanel({ onOpen, isPro = false }: { onOpen: (view: string) => void; isPro?: boolean }) {
   const toast = useToast();
   const [query, setQuery] = useState("");
   const [topic, setTopic] = useState<HelpTopic | null>(null);
@@ -98,6 +98,28 @@ export function HelpPanel({ onOpen }: { onOpen: (view: string) => void }) {
               </div>
             );
           })}
+        </Group>
+      </div>
+
+      <div className="mt-9">
+        <Group title="Priority support" description={isPro ? "Included in your Pro plan." : "Included in Pro."}>
+          {isPro ? (
+            <>
+              <Row label="Your success manager" description="Meera S. · knows your setup, helps with new locations and campaigns">
+                <RowButton icon="message" onClick={() => toast("Opening a chat with your success manager (demo)", "info")}>Message</RowButton>
+              </Row>
+              <Row label="Priority line" description="Answered within 15 minutes, 8 AM to 10 PM, every day">
+                <RowButton icon="phone" onClick={() => toast("Calling the priority line (demo)", "info")}>Call</RowButton>
+              </Row>
+              <Row label="Urgent issue" description="AI not replying or calls not answered: a reply within 1 hour, day or night">
+                <RowButton tone="primary" onClick={() => toast("Urgent ticket opened. We’ll call you within the hour (demo)")}>Report</RowButton>
+              </Row>
+            </>
+          ) : (
+            <Row label="Faster help from a named person" description="A success manager, a priority line answered within 15 minutes and 1-hour replies to urgent issues.">
+              <RowButton onClick={() => onOpen("settings:plans")}>See Pro</RowButton>
+            </Row>
+          )}
         </Group>
       </div>
 

@@ -11,7 +11,7 @@ export function pilotDay(liveAt: string | null) {
 }
 
 export function SampleTag() {
-  return <span className="rounded-full bg-panel px-2 py-0.5 text-[11.5px] font-semibold tracking-[0.06em] text-muted uppercase">Sample data</span>;
+  return <span className="rounded-full bg-panel px-2 py-0.5 text-[11.5px] font-semibold tracking-[0.06em] whitespace-nowrap text-muted uppercase">Sample data</span>;
 }
 
 export function Card({ title, extra, children, className = "" }: { title: string; extra?: ReactNode; children: ReactNode; className?: string }) {
@@ -96,6 +96,24 @@ export function SaveBar({ onSave, onDiscard }: { onSave: () => void; onDiscard: 
           </button>
         </span>
       </div>
+    </div>
+  );
+}
+
+/** A quiet note on pages above the business's plan. Plan limits are off while the app is built, so the page still works with sample data. */
+export function PlanNotice({ feature, planName, currentName, onPlans }: { feature: string; planName: string; currentName: string; onPlans: () => void }) {
+  return (
+    <div className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-[14px] border border-[#E4DDF7] bg-[#F6F3FE] px-4 py-3">
+      <span className="flex h-8 w-8 flex-none items-center justify-center rounded-[9px] bg-white text-indigo">
+        <Icon name="sparkle" size={16} />
+      </span>
+      <p className="m-0 min-w-0 flex-1 text-[14px] text-ink-soft">
+        <strong className="font-semibold text-ink">{feature} is part of {planName}.</strong> You’re on {currentName}, so this page shows sample data to explore.
+      </p>
+      <button type="button" onClick={onPlans} className="inline-flex min-h-9 flex-none cursor-pointer items-center gap-1 rounded-[10px] bg-ink px-3.5 text-[14px] font-semibold text-white hover:bg-[#2c2d3d]">
+        Upgrade to {planName}
+        <Icon name="chevron-right" size={15} />
+      </button>
     </div>
   );
 }

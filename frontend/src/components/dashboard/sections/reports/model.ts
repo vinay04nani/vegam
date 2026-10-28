@@ -65,12 +65,13 @@ function bucketise(days: Day[], range: Range): Bucket[] {
   });
 }
 
-export function buildModel(range: Range, channel: ChannelFilter, today: Date): Model {
+/** `factor` scales the sample to one location's share of the business (1 for all locations). */
+export function buildModel(range: Range, channel: ChannelFilter, today: Date, factor = 1): Model {
   const idx = channelGroups.findIndex((c) => c.id === channel);
-  const raw = dailySeries(range * 2, today);
+  const raw = dailySeries(range * 2, today).map((d) => (factor === 1 ? d : { ...d, enquiries: Math.max(1, Math.round(d.enquiries * factor)), bookings: Math.max(0, Math.round(d.bookings * factor)), value: Math.round(d.value * factor) }));
   const days: Day[] = raw.map((d, k) => {
     const enqCh = splitByChannel(d.enquiries, k);
-    const rate = d.bookings / d.enquiries / avgConversion;
+    const rate = d.bookings / Math.max(1, d.enquiries) / avgConversion;
     const bookCh = enqCh.map((e, j) => Math.round(e * channelGroups[j].conversion * rate));
     const enquiries = idx < 0 ? sum(enqCh) : enqCh[idx];
     const bookings = idx < 0 ? sum(bookCh) : bookCh[idx];

@@ -1,6 +1,10 @@
 import type { SVGProps } from "react";
 
 export type IconName =
+  | "star"
+  | "wallet"
+  | "link"
+  | "store"
   | "message"
   | "phone"
   | "missed"
@@ -256,6 +260,15 @@ const paths: Record<IconName, React.ReactNode> = {
       <path d="M20 20l-3.5-3.5" />
     </>
   ),
+  star: <path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z" />,
+  wallet: (
+    <>
+      <path d="M19 7V5.5A1.5 1.5 0 0 0 17.5 4h-12A2.5 2.5 0 0 0 3 6.5v11A2.5 2.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5V15" />
+      <path d="M3 6.5A2.5 2.5 0 0 0 5.5 9H20a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1h-3.5a2.5 2.5 0 0 1 0-5" />
+    </>
+  ),
+  link: <path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1" />,
+  store: <path d="M4 10v10h16V10M3 4h18l-1 6H4zM9 20v-5h6v5M4 10a2.7 2.7 0 0 0 5 0 2.7 2.7 0 0 0 6 0 2.7 2.7 0 0 0 5 0" />,
   trash: <path d="M4 7h16M10 11v6M14 11v6M5.5 7l1 12a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2l1-12M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7" />,
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { appNav, type NavItem } from "@/content/onboarding";
+import { appNav, navGroups, planRank, type NavItem } from "@/content/onboarding";
 import { plans, type PlanId } from "@/content/pricing";
 import { links } from "@/content/site";
 import { sampleThreads } from "@/content/dashboard";
@@ -23,8 +23,11 @@ import { Billing } from "./sections/Billing";
 import { Contacts } from "./sections/Contacts";
 import { CommandPalette } from "./CommandPalette";
 import { Menu, ToastProvider } from "./kit";
+import { BranchProvider, useBranch } from "./branch";
+import { Payments } from "./sections/Payments";
+import { Reviews } from "./sections/Reviews";
 import { NotificationBell } from "./Notifications";
-import { pilotDay } from "./ui";
+import { PlanNotice, pilotDay } from "./ui";
 
 // The dashboard. Until the assistant is live, Home is a short setup guide;
 // every other section can be explored at any time with sample data. After
@@ -41,18 +44,12 @@ const userName = "Vinay";
 /** Unread counts beside nav items. Demo: from the sample inbox, so they don't change as chats are read. */
 const navCounts: Record<string, number> = { inbox: sampleThreads.filter((t) => t.unread).length };
 
-function NavButton({
-  id,
-  label,
-  icon,
-  compact = false,
-  view,
-  plan,
-  onSelect,
-  count,
-}: NavItem & { compact?: boolean; view: string; plan: PlanId; onSelect: (id: string) => void; count?: number }) {
+function NavButton({ id, label, icon, compact = false, view, plan, onSelect, count }: NavItem & { compact?: boolean; view: string; plan: PlanId; onSelect: (id: string) => void; count?: number }) {
   const active = view === id;
-  const locked = !isIncluded(appNav.find((n) => n.id === id)?.minPlan ?? "starter", plan);
+  const minPlan = appNav.find((n) => n.id === id)?.minPlan ?? "starter";
+  const locked = !isIncluded(minPlan, plan);
+  // While plan limits are off, pages above the plan stay open but carry the plan they belong to.
+  const above = !locked && planRank[plan] < planRank[minPlan];
   return (
     <button
       type="button"
@@ -62,11 +59,11 @@ function NavButton({
       className={
         compact
           ? `flex min-h-14 flex-1 cursor-pointer flex-col items-center justify-center gap-1 text-[11.5px] font-semibold ${active ? "text-ink" : "text-subtle"}`
-          : `flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-[12px] px-3 text-[15px] font-medium transition ${active ? "bg-white text-ink shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : "text-ink-soft hover:bg-white/60"}`
+          : `flex min-h-10 w-full cursor-pointer items-center gap-3 rounded-[11px] px-3 text-[14.5px] font-medium transition ${active ? "bg-white text-ink shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : "text-ink-soft hover:bg-white/60"}`
       }
     >
       <span className="relative">
-        <Icon name={icon} size={compact ? 22 : 19} />
+        <Icon name={icon} size={compact ? 22 : 18} />
         {!!count && compact && (
           <span aria-hidden="true" className="absolute -top-1 -right-2 min-w-4 rounded-full bg-orange px-1 text-center text-[10.5px] leading-4 font-bold text-white">
             {count}
@@ -80,11 +77,51 @@ function NavButton({
         </span>
       )}
       {locked && !compact && <Icon name="lock" size={14} className="ml-auto text-faint" />}
+      {above && !compact && !count && (
+        <span aria-hidden="true" title="Part of a bigger plan" className="ml-auto rounded-full border border-line-strong px-1.5 text-[11px] leading-[18px] font-semibold text-subtle">
+          {plans.find((p) => p.id === minPlan)?.name}
+        </span>
+      )}
     </button>
   );
 }
 
+/** The location switcher (Pro: multi-branch). Scopes Inbox, Calendar and Reports. */
+function LocationSwitcher({ onManage, full = false, onPick }: { onManage: () => void; full?: boolean; onPick?: () => void }) {
+  const { branch, setBranch, locations, label } = useBranch();
+  return (
+    <Menu
+      label={`Location: ${label}`}
+      align="left"
+      className={full ? "w-full" : ""}
+      triggerClassName="flex w-full cursor-pointer items-center gap-2 rounded-[9px] px-2 py-1.5 text-left text-[13.5px] font-medium text-ink-soft transition hover:bg-panel aria-expanded:bg-panel"
+      trigger={
+        <>
+          <Icon name="store" size={15} className="flex-none text-muted" />
+          <span className="min-w-0 flex-1 truncate">{label}</span>
+          <Icon name="chevron-down" size={14} className="flex-none text-muted" />
+        </>
+      }
+      items={[
+        { label: "Show", heading: true },
+        { label: "All locations", checked: branch === "all", onSelect: () => (setBranch("all"), onPick?.()) },
+        ...locations.map((l) => ({ label: l.name, checked: branch === l.id, onSelect: () => (setBranch(l.id), onPick?.()) })),
+        { label: "", divider: true },
+        { label: "Manage locations", icon: "settings" as const, onSelect: onManage },
+      ]}
+    />
+  );
+}
+
 export function Dashboard() {
+  return (
+    <BranchProvider>
+      <DashboardShell />
+    </BranchProvider>
+  );
+}
+
+function DashboardShell() {
   const { state, update, ready } = useOnboarding();
   const [view, setView] = useState("home");
   const [more, setMore] = useState(false);
@@ -183,6 +220,9 @@ export function Dashboard() {
     />
   );
 
+  const navItem = appNav.find((n) => n.id === view);
+  const notice = view !== "inbox" && navItem && planRank[plan] < planRank[navItem.minPlan] ? navItem : null;
+
   const page = (() => {
     const props = { state, update, onHome: home };
     switch (view) {
@@ -217,6 +257,10 @@ export function Dashboard() {
         return <Calls onOpen={select} />;
       case "campaigns":
         return <Campaigns />;
+      case "reviews":
+        return <Reviews onOpen={select} />;
+      case "payments":
+        return <Payments onOpen={select} />;
       case "reports":
         return <Reports onOpen={select} />;
       default:
@@ -226,88 +270,95 @@ export function Dashboard() {
 
   return (
     <ToastProvider>
-    <div className="min-h-svh bg-page">
-      {/* Desktop sidebar */}
-      <aside className="fixed inset-y-0 left-0 z-20 hidden w-[248px] flex-col border-r border-line bg-[#F4F4F8] p-4 lg:flex">
-        <a href={links.home} className="px-3 pt-2 pb-5 text-[26px] leading-none font-extrabold tracking-[-0.045em] text-ink">
-          vegam
-        </a>
-        <div className="mb-4 flex items-center gap-3 rounded-[14px] bg-white p-3 shadow-[0_1px_3px_rgb(30_31_43/0.06)]">
-          <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-indigo text-[15px] font-bold text-white">{name[0]?.toUpperCase()}</span>
-          <span className="flex min-w-0 flex-col leading-tight">
-            <span className="truncate text-[15px] font-semibold text-ink">{name}</span>
-            <span className="text-[12.5px] text-subtle">{status}</span>
-          </span>
-        </div>
-        {onboarded && !state.plan && (
-          <button type="button" onClick={() => select("plan")} className="mb-4 flex min-h-10 cursor-pointer items-center justify-center gap-1.5 rounded-[12px] bg-ink text-[14.5px] font-semibold text-white">
-            Choose a plan
-            <Icon name="chevron-right" size={16} />
-          </button>
-        )}
-        <nav aria-label="Dashboard" className="-mx-1 flex flex-1 flex-col gap-0.5 overflow-y-auto px-1">
-          {(["work", "setup"] as const).map((g) => (
-            <div key={g} className="flex flex-col gap-0.5">
-              {g === "setup" && <p className="m-0 mt-4 mb-1 px-3 text-[11.5px] font-semibold tracking-[0.1em] text-subtle uppercase">Set up</p>}
-              {nav
-                .filter((n) => n.group === g)
-                .map((n) => (
-                  <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
-                ))}
+      <div className="min-h-svh bg-page">
+        {/* Desktop sidebar */}
+        <aside className="fixed inset-y-0 left-0 z-20 hidden w-[248px] flex-col border-r border-line bg-[#F4F4F8] p-4 lg:flex">
+          <a href={links.home} className="px-3 pt-2 pb-5 text-[26px] leading-none font-extrabold tracking-[-0.045em] text-ink">
+            vegam
+          </a>
+          <div className="mb-4 rounded-[14px] bg-white p-1.5 shadow-[0_1px_3px_rgb(30_31_43/0.06)]">
+            <div className="flex items-center gap-3 p-1.5">
+              <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-indigo text-[15px] font-bold text-white">{name[0]?.toUpperCase()}</span>
+              <span className="flex min-w-0 flex-col leading-tight">
+                <span className="truncate text-[15px] font-semibold text-ink">{name}</span>
+                <span className="truncate text-[12.5px] text-subtle">{status}</span>
+              </span>
             </div>
-          ))}
-        </nav>
-        <div className="mt-3 flex items-center gap-1 border-t border-line pt-3">
-          <div className="min-w-0 flex-1">{accountMenu(true)}</div>
-          <NotificationBell onOpen={select} variant="sidebar" />
-        </div>
-      </aside>
-
-      {/* Phone top bar: logo, notifications and the account menu. On desktop these live in the sidebar. */}
-      <header className="sticky top-0 z-30 flex h-14 items-center justify-end gap-2 border-b border-line bg-page/90 px-4 backdrop-blur sm:px-8 lg:hidden">
-        <a href={links.home} className="mr-auto text-[22px] leading-none font-extrabold tracking-[-0.045em] text-ink">
-          vegam
-        </a>
-        <NotificationBell onOpen={select} />
-        {accountMenu(false)}
-      </header>
-
-      {/* The inbox is a full-height workspace; other pages sit in a centred column. */}
-      <main className={`transition-opacity lg:ml-[248px] ${view === "inbox" ? "pb-16 lg:p-6" : "px-4 pt-6 pb-28 sm:px-8 lg:pt-10 lg:pb-16"} ${ready ? "opacity-100" : "opacity-0"}`}>
-        <div className={view === "inbox" ? "" : "mx-auto max-w-[1180px]"}>{page}</div>
-      </main>
-
-      {/* Phone bottom tabs */}
-      <nav aria-label="Dashboard" className="fixed inset-x-0 bottom-0 z-20 flex border-t border-line bg-white/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
-        {nav.slice(0, 4).map((n) => (
-          <NavButton key={n.id} {...n} count={navCounts[n.id]} compact view={navView} plan={plan} onSelect={select} />
-        ))}
-        <button
-          type="button"
-          aria-expanded={more}
-          onClick={() => setMore(!more)}
-          className={`flex min-h-14 flex-1 cursor-pointer flex-col items-center justify-center gap-1 text-[11.5px] font-semibold ${nav.slice(4).some((n) => n.id === navView) ? "text-ink" : "text-subtle"}`}
-        >
-          <Icon name="menu" size={22} />
-          More
-        </button>
-      </nav>
-      {more && (
-        <div className="fixed inset-0 z-10 bg-ink/30 lg:hidden" onClick={() => setMore(false)}>
-          <nav
-            aria-label="More sections"
-            className="absolute inset-x-3 bottom-20 flex flex-col gap-1 rounded-[20px] bg-[#F4F4F8] p-3 shadow-[0_20px_50px_rgb(30_31_43/0.25)]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {nav.slice(4).map((n) => (
-              <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
+            <div className="mt-1 border-t border-line pt-1">
+              <LocationSwitcher onManage={() => select("settings:locations")} full />
+            </div>
+          </div>
+          {onboarded && !state.plan && (
+            <button type="button" onClick={() => select("plan")} className="mb-4 flex min-h-10 cursor-pointer items-center justify-center gap-1.5 rounded-[12px] bg-ink text-[14.5px] font-semibold text-white">
+              Choose a plan
+              <Icon name="chevron-right" size={16} />
+            </button>
+          )}
+          <nav aria-label="Dashboard" className="-mx-1 flex flex-1 flex-col overflow-y-auto px-1 [scrollbar-width:thin]">
+            {navGroups.map((g) => (
+              <div key={g.id} className="flex flex-col gap-0.5">
+                {g.label && <p className="m-0 mt-4 mb-1 px-3 text-[11.5px] font-semibold tracking-[0.1em] text-subtle uppercase">{g.label}</p>}
+                {nav
+                  .filter((n) => n.group === g.id)
+                  .map((n) => (
+                    <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
+                  ))}
+              </div>
             ))}
           </nav>
-        </div>
-      )}
-      {settings !== null && <Settings key={settings} state={state} update={update} onOpen={select} onClose={closeSettings} initial={settings} />}
-      <CommandPalette open={palette} onClose={() => setPalette(false)} onOpen={select} />
-    </div>
+          <div className="mt-3 flex items-center gap-1 border-t border-line pt-3">
+            <div className="min-w-0 flex-1">{accountMenu(true)}</div>
+            <NotificationBell onOpen={select} variant="sidebar" />
+          </div>
+        </aside>
+
+        {/* Phone top bar: logo, notifications and the account menu. On desktop these live in the sidebar. */}
+        <header className="sticky top-0 z-30 flex h-14 items-center justify-end gap-2 border-b border-line bg-page/90 px-4 backdrop-blur sm:px-8 lg:hidden">
+          <a href={links.home} className="mr-auto text-[22px] leading-none font-extrabold tracking-[-0.045em] text-ink">
+            vegam
+          </a>
+          <NotificationBell onOpen={select} />
+          {accountMenu(false)}
+        </header>
+
+        {/* The inbox is a full-height workspace; other pages sit in a centred column. */}
+        <main className={`transition-opacity lg:ml-[248px] ${view === "inbox" ? "pb-16 lg:p-6" : "px-4 pt-6 pb-28 sm:px-8 lg:pt-10 lg:pb-16"} ${ready ? "opacity-100" : "opacity-0"}`}>
+          <div className={view === "inbox" ? "" : "mx-auto max-w-[1180px]"}>
+            {notice && <PlanNotice feature={notice.label} planName={plans.find((p) => p.id === notice.minPlan)!.name} currentName={plans.find((p) => p.id === plan)!.name} onPlans={() => select("settings:plans")} />}
+            {page}
+          </div>
+        </main>
+
+        {/* Phone bottom tabs */}
+        <nav aria-label="Dashboard" className="fixed inset-x-0 bottom-0 z-20 flex border-t border-line bg-white/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
+          {nav.slice(0, 4).map((n) => (
+            <NavButton key={n.id} {...n} count={navCounts[n.id]} compact view={navView} plan={plan} onSelect={select} />
+          ))}
+          <button
+            type="button"
+            aria-expanded={more}
+            onClick={() => setMore(!more)}
+            className={`flex min-h-14 flex-1 cursor-pointer flex-col items-center justify-center gap-1 text-[11.5px] font-semibold ${nav.slice(4).some((n) => n.id === navView) ? "text-ink" : "text-subtle"}`}
+          >
+            <Icon name="menu" size={22} />
+            More
+          </button>
+        </nav>
+        {more && (
+          <div className="fixed inset-0 z-10 bg-ink/30 lg:hidden" onClick={() => setMore(false)}>
+            <nav aria-label="More sections" className="absolute inset-x-3 bottom-20 flex flex-col gap-1 rounded-[20px] bg-[#F4F4F8] p-3 shadow-[0_20px_50px_rgb(30_31_43/0.25)]" onClick={(e) => e.stopPropagation()}>
+              <div className="mb-1 rounded-[12px] bg-white p-1">
+                <LocationSwitcher onManage={() => select("settings:locations")} onPick={() => setMore(false)} full />
+              </div>
+              {nav.slice(4).map((n) => (
+                <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
+              ))}
+            </nav>
+          </div>
+        )}
+        {settings !== null && <Settings key={settings} state={state} update={update} onOpen={select} onClose={closeSettings} initial={settings} />}
+        <CommandPalette open={palette} onClose={() => setPalette(false)} onOpen={select} />
+      </div>
     </ToastProvider>
   );
 }

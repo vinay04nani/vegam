@@ -122,3 +122,30 @@ export const sampleAgentActivity = [
   { time: "8:00 AM", agent: "Report writer", action: "Sent the morning report to the owner", outcome: "Sent" },
   { time: "7:58 AM", agent: "Owner’s assistant", action: "Blocked Friday 2–6 PM on request", outcome: "Done" },
 ];
+
+// ---------- Setup review: the 50 test replies checked with the owner ----------
+
+const reviewBase = [
+  { q: "What are your timings?", a: "We’re open Monday to Friday 10 AM to 7 PM, and Saturday 10 AM to 5 PM. We’re closed on Sundays." },
+  { q: "How much is a first visit?", a: "A first visit is ₹500 and takes about 30 minutes. Would you like me to find you a time?" },
+  { q: "Can I book for tomorrow evening?", a: "Tomorrow we have 5:30 PM and 6:30 PM free. Which one suits you?" },
+  { q: "Is there parking?", a: "Yes, free parking is available next to the entrance." },
+  { q: "Do you take UPI?", a: "Yes. We accept cash, cards and UPI." },
+  { q: "Can I reschedule my appointment?", a: "Of course. Which day works better for you? I’ll show you the free times." },
+  { q: "Do you open on public holidays?", a: "I’m not sure about public holidays. I’ll check with the team and get back to you shortly." },
+  { q: "How long does a standard appointment take?", a: "A standard appointment takes about an hour." },
+  { q: "Can I bring my friend along?", a: "Yes, you’re welcome to bring someone. If they’d like an appointment too, I can book you back to back." },
+  { q: "I want a refund for last week", a: "I’m sorry to hear that. I’ve passed this to the team and someone will message you today." },
+];
+const phrasings = ["{q}", "Hi, {q}", "Hello! {q}", "Quick question: {q}", "Namaste. {q}"];
+
+export type ReviewItem = { id: string; q: string; a: string; status: "todo" | "ok" | "fixed" };
+
+/** 50 test replies from setup. The first 32 are already reviewed in the demo. */
+export const setupReview: ReviewItem[] = phrasings.flatMap((p, pi) =>
+  reviewBase.map((b, bi) => {
+    const n = pi * reviewBase.length + bi;
+    const q = p.replace("{q}", pi ? b.q.charAt(0).toLowerCase() + b.q.slice(1) : b.q);
+    return { id: `sr${n}`, q, a: b.a, status: n < 32 ? (n % 11 === 6 ? "fixed" : "ok") : "todo" };
+  }),
+);

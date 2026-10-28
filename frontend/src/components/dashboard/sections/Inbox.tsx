@@ -1,5 +1,8 @@
 "use client";
 
+import { PaymentLinkModal } from "./payments/PaymentLinkModal";
+import { locationOf } from "@/content/settings";
+import { useBranch } from "../branch";
 import { useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { sampleQuickReplies, sampleTeam, sampleThreads, type InboxChannel, type Thread, type ThreadMessage, type ThreadOwner } from "@/content/dashboard";
 import { sampleContacts, type Contact, type ContactChannel } from "@/content/contacts";
@@ -161,6 +164,8 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
   const [threads, setThreads] = useState<InboxThread[]>(() => sampleThreads.map((t) => ({ ...t, status: "open", assignee: t.owner === "team" ? "You" : null })));
   const [contacts, setContacts] = useState<Contact[]>(sampleContacts);
   const [folder, setFolder] = useState<Folder>("open");
+  const [paying, setPaying] = useState(false);
+  const { branch } = useBranch();
   const [openId, setOpenId] = useState<string | null>(null);
   const [mobileThread, setMobileThread] = useState(false);
   const [query, setQuery] = useState("");
@@ -176,7 +181,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
   const fileInput = useRef<HTMLInputElement>(null);
   const input = useRef<HTMLTextAreaElement>(null);
 
-  const visible = threads.filter((t) => matches(t, folder) && (!query.trim() || `${t.who} ${t.messages.map((m) => m.text).join(" ")}`.toLowerCase().includes(query.toLowerCase())));
+  const visible = threads.filter((t) => (branch === "all" || locationOf(t.id) === branch) && matches(t, folder) && (!query.trim() || `${t.who} ${t.messages.map((m) => m.text).join(" ")}`.toLowerCase().includes(query.toLowerCase())));
   const open = threads.find((t) => t.id === openId) ?? visible[0] ?? null;
   const contact = open ? contactFor(open, contacts) : null;
   const count = (f: Folder) => threads.filter((t) => matches(t, f)).length;
@@ -500,6 +505,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                     { label: "Mark as unread", onSelect: () => change(open.id, (t) => ({ ...t, unread: true })) },
                     { label: "Snooze until tomorrow", onSelect: () => snooze("Tomorrow morning") },
                     { label: "Customer details", onSelect: showDetails },
+                    { label: "Request payment", onSelect: () => setPaying(true) },
                     { label: "Open in Contacts", onSelect: () => onOpen("contacts") },
                   ]}
                 />
@@ -594,6 +600,15 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                     >
                       <Icon name="note" size={17} />
                     </button>
+                    <button
+                      type="button"
+                      onClick={() => setPaying(true)}
+                      aria-label="Request payment"
+                      title="Request payment"
+                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-ink"
+                    >
+                      <Icon name="wallet" size={17} />
+                    </button>
                     <input
                       ref={fileInput}
                       type="file"
@@ -643,6 +658,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
       <Drawer open={details && !!contact} onClose={() => setDetails(false)} title="Customer details">
         {contact && <ContactDetails key={contact.id} contact={contact} actions={false} onOpen={onOpen} onChange={(c) => setContacts((cs) => (cs.some((x) => x.id === c.id) ? cs.map((x) => (x.id === c.id ? c : x)) : [c, ...cs]))} />}
       </Drawer>
+      {open && <PaymentLinkModal open={paying} onClose={() => setPaying(false)} initial={{ who: contact?.name ?? open.who, phone: contact?.phone, item: "Standard appointment" }} />}
     </div>
   );
 }

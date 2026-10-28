@@ -1,11 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { plans } from "@/content/pricing";
+import { overage, planLimits, plans } from "@/content/pricing";
 import { currencyFor, formatMoney, type OnboardingState } from "@/lib/onboarding";
 import { downloadPdf } from "@/lib/pdf";
 import { Badge, Progress, useToast } from "../../kit";
-import { Group, Row, RowButton } from "./parts";
+import { Group, Row, RowButton, Switch } from "./parts";
+import { Icon } from "@/components/ui/Icon";
 
 // Your Vegam plan, usage, payment method and invoice history. Invoices are
 // sample data; "Download PDF" makes a real (sample) PDF in the browser.
@@ -20,6 +21,14 @@ export function Billing({ state, onOpen }: Props) {
   const base = plan.price?.[currency].monthly ?? (india ? 4999 : 99);
   const tax = india ? Math.round(base * 0.18) : 0;
   const [method, setMethod] = useState<string | null>("Visa •••• 4242 · expires 08/29");
+  const [alerts, setAlerts] = useState(true);
+  const limits = planLimits[plan.id];
+  const rates = overage[currency];
+  const usage = [
+    { label: "AI conversations", used: Math.round(limits.conversations * 0.84), max: limits.conversations, rate: `${formatMoney(rates.conversation, currency)} each after that` },
+    ...(limits.minutes ? [{ label: "AI call minutes", used: Math.round(limits.minutes * 0.71), max: limits.minutes, rate: `${formatMoney(rates.minute, currency)} a minute after that` }] : []),
+  ];
+  const near = usage.find((u) => u.used / u.max >= 0.8);
 
   const invoices = [
     { id: "VG-2026-0003", date: "1 Oct 2026", period: "Oct 2026", amount: base + tax, status: "Paid" as const, wa: india ? 412 : 9 },
@@ -49,22 +58,43 @@ export function Billing({ state, onOpen }: Props) {
           <RowButton onClick={() => onOpen("settings:plans")}>Change plan</RowButton>
         </Row>
         <Row label="Usage this month" description="Resets on 1 Nov." stacked>
-          <div className="flex flex-col gap-3">
-            {[
-              { label: "AI conversations", used: 1640, max: 2000 },
-              { label: "AI call minutes", used: 212, max: 500 },
-            ].map((u) => (
+          <div className="flex flex-col gap-4">
+            {near && (
+              <p className="m-0 flex items-start gap-2.5 rounded-[12px] bg-[#FFF6E5] px-3.5 py-3 text-[13.5px] text-[#7A4A00]">
+                <Icon name="bell" size={16} className="mt-0.5 flex-none" />
+                <span>
+                  You’ve used {Math.round((near.used / near.max) * 100)}% of your {near.label}. Nothing stops if you go over: extra ones cost {near.rate.replace(" after that", "")}.{" "}
+                  {plan.id !== "pro" && (
+                    <button type="button" onClick={() => onOpen("settings:plans")} className="cursor-pointer font-semibold underline underline-offset-2">
+                      See bigger plans
+                    </button>
+                  )}
+                </span>
+              </p>
+            )}
+            {usage.map((u) => (
               <div key={u.label} className="flex flex-col gap-1">
-                <span className="flex justify-between text-[13px]">
+                <span className="flex justify-between gap-3 text-[13px]">
                   <span className="text-ink-soft">{u.label}</span>
                   <span className="text-subtle tabular-nums">
-                    {u.used.toLocaleString()} / {u.max.toLocaleString()}
+                    {u.used.toLocaleString()} of {u.max.toLocaleString()}
                   </span>
                 </span>
                 <Progress value={u.used} max={u.max} label={u.label} />
+                <span className="text-[12px] text-subtle">{u.rate}</span>
               </div>
             ))}
+            <div className="flex items-start justify-between gap-3 border-t border-line pt-3">
+              <span className="flex flex-col">
+                <span className="text-[13.5px] text-ink-soft">WhatsApp fees so far</span>
+                <span className="text-[12px] text-subtle">318 reminders and confirmations, 94 campaign messages. Meta’s fees, passed on at cost on your next invoice.</span>
+              </span>
+              <span className="text-[14px] font-semibold text-ink tabular-nums">{formatMoney(india ? 412 : 9, currency)}</span>
+            </div>
           </div>
+        </Row>
+        <Row label="Usage alerts" description="A WhatsApp and email when you reach 80% and 100% of an allowance.">
+          <Switch checked={alerts} onChange={setAlerts} label="Usage alerts" />
         </Row>
       </Group>
 

@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { sampleTeam } from "@/content/dashboard";
 import { permissions, roles, type Role } from "@/content/settings";
+import { planLimits, plans, type PlanId } from "@/content/pricing";
 import { Icon } from "@/components/ui/Icon";
-import { Avatar, Badge, Button, Menu, Modal, useToast } from "../../kit";
+import { Avatar, Badge, Button, Menu, Modal, Progress, useToast } from "../../kit";
 import { Dropdown, Group, Input, Row, RowButton } from "./parts";
 
 // Team members, invitations and what each role can do.
@@ -12,15 +13,30 @@ import { Dropdown, Group, Input, Row, RowButton } from "./parts";
 
 type Member = { name: string; role: Role; contact: string; status: "Active" | "Invited" };
 
-export function Team() {
+export function Team({ plan = "growth", onOpen }: { plan?: PlanId; onOpen: (view: string) => void }) {
   const toast = useToast();
   const [team, setTeam] = useState<Member[]>(sampleTeam.map((m) => ({ ...m, role: m.role as Role, status: "Active" })));
   const [inviting, setInviting] = useState(false);
   const [invite, setInvite] = useState({ contact: "", role: "Front desk" as Role });
 
+  const seats = planLimits[plan].seats;
+  const full = team.length >= seats;
+  const planName = plans.find((p) => p.id === plan)?.name;
+
   return (
     <>
-      <Group title="Members" description="Everyone here sees the inbox and calendar and can take over any chat." action={<RowButton tone="primary" icon="plus" onClick={() => setInviting(true)}>Invite</RowButton>}>
+      <Group title="Seats">
+        <Row label={seats === Infinity ? `${team.length} people · unlimited seats` : `${team.length} of ${seats} seats used`} description={seats === Infinity ? `${planName} includes unlimited seats.` : full ? `${planName} includes ${seats} seats. Remove someone or move to a bigger plan to invite more.` : `${planName} includes ${seats} seats.`}>
+          {seats !== Infinity && (
+            <span className="flex w-40 flex-col gap-1">
+              <Progress value={team.length} max={seats} label="Seats used" />
+            </span>
+          )}
+          {full && plan !== "pro" && <RowButton onClick={() => onOpen("settings:plans")}>Upgrade</RowButton>}
+        </Row>
+      </Group>
+
+      <Group title="Members" description="Everyone here sees the inbox and calendar and can take over any chat." action={<RowButton tone="primary" icon="plus" onClick={() => (full ? toast(`All ${seats} seats are in use. Upgrade or remove someone first.`, "info") : setInviting(true))}>Invite</RowButton>}>
         {team.map((m, i) => (
           <Row
             key={`${m.contact}-${i}`}

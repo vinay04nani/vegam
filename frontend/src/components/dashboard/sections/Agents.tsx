@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { agents, sampleAgentActivity, sampleUnanswered, sampleVoices, type Agent, type AgentId } from "@/content/agents";
+import { agents, sampleAgentActivity, sampleUnanswered, sampleVoices, setupReview, type Agent, type AgentId } from "@/content/agents";
 import { languageNames, toneOptions } from "@/content/onboarding";
-import { plans } from "@/content/pricing";
+import { planLimits, plans, type PlanId } from "@/content/pricing";
 import { Icon } from "@/components/ui/Icon";
 import { AssistantSetup } from "@/components/setup/AssistantSetup";
 import { Field, Select, TextInput, inputClass } from "@/components/setup/fields";
@@ -17,7 +17,72 @@ import { Card, PageTitle, SampleTag } from "../ui";
 // Demo: settings and toggles live in this page only.
 
 type Props = { state: OnboardingState; update: (fn: (s: OnboardingState) => OnboardingState) => void; onOpen: (view: string) => void };
-type Tab = "agents" | "knowledge" | "unanswered" | "playground" | "activity";
+type Tab = "agents" | "knowledge" | "unanswered" | "review" | "playground" | "activity";
+
+/** The follow-up sequence: when each nudge goes out and what it says. Starter has 1 step; Growth and Pro have 3. */
+function FollowUpSteps({ plan }: { plan: PlanId }) {
+  const max = planLimits[plan].followUps;
+  const [steps, setSteps] = useState(
+    [
+      { after: "24", text: "Hi {name}, just checking in. Would you like me to hold one of those times for you?" },
+      { after: "72", text: "Hi {name}, we still have a few slots this week. Reply with a day and I’ll book it." },
+      { after: "168", text: "Hi {name}, no pressure at all. If you’d like to visit later, just message us here anytime." },
+    ].slice(0, max),
+  );
+  const delays = [
+    { v: "4", l: "4 hours" },
+    { v: "24", l: "1 day" },
+    { v: "72", l: "3 days" },
+    { v: "168", l: "7 days" },
+  ];
+  return (
+    <div className="flex flex-col gap-3">
+      <span className="flex items-baseline justify-between gap-3">
+        <span className="text-[15px] font-semibold text-ink">Follow-up steps</span>
+        <span className="text-[13px] text-subtle">
+          {steps.length} of {max} on {plans.find((p) => p.id === plan)?.name}
+        </span>
+      </span>
+      <ol className="m-0 flex list-none flex-col gap-3 p-0">
+        {steps.map((st, i) => (
+          <li key={i} className="flex flex-col gap-2.5 rounded-[14px] border border-line p-3.5">
+            <span className="flex flex-wrap items-center gap-2 text-[14px] text-ink">
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-ink text-[12px] font-bold text-white">{i + 1}</span>
+              Send
+              <select
+                aria-label={`Step ${i + 1}: when to send`}
+                value={st.after}
+                onChange={(e) => setSteps((all) => all.map((x, j) => (j === i ? { ...x, after: e.target.value } : x)))}
+                className="h-8 cursor-pointer rounded-[8px] border border-line-strong bg-white px-2 text-[13.5px] font-semibold"
+              >
+                {delays.map((d) => (
+                  <option key={d.v} value={d.v}>
+                    {d.l}
+                  </option>
+                ))}
+              </select>
+              {i === 0 ? "after they go quiet" : "after the last one"}
+              {steps.length > 1 && (
+                <button type="button" onClick={() => setSteps((all) => all.filter((_, j) => j !== i))} aria-label={`Remove step ${i + 1}`} className="ml-auto cursor-pointer rounded-[8px] p-1 text-muted hover:bg-panel hover:text-danger">
+                  <Icon name="trash" size={15} />
+                </button>
+              )}
+            </span>
+            <textarea aria-label={`Step ${i + 1} message`} rows={2} value={st.text} onChange={(e) => setSteps((all) => all.map((x, j) => (j === i ? { ...x, text: e.target.value } : x)))} className={`${inputClass} py-2.5 text-[14px]`} />
+          </li>
+        ))}
+      </ol>
+      {steps.length < max ? (
+        <Button icon="plus" onClick={() => setSteps((all) => [...all, { after: "168", text: "Hi {name}, just a gentle reminder that we’d love to see you." }])}>
+          Add a step
+        </Button>
+      ) : (
+        max < 3 && <p className="m-0 text-[13px] text-subtle">Growth and Pro include up to 3 follow-ups.</p>
+      )}
+      <p className="m-0 text-[12.5px] text-subtle">{"{name}"} becomes the customer’s first name. After 24 hours, these go out as approved WhatsApp templates.</p>
+    </div>
+  );
+}
 
 function AgentSettings({ agent, state }: { agent: Agent; state: OnboardingState }) {
   const [tone, setTone] = useState(state.assistant.tone);
@@ -78,7 +143,12 @@ function AgentSettings({ agent, state }: { agent: Agent; state: OnboardingState 
                   <span className="text-[14.5px] font-medium text-ink">{v.name}</span>
                   <span className="text-[13px] text-subtle">{v.note}</span>
                 </span>
-                <button type="button" onClick={() => toast(`Demo: ${v.name}’s voice sample isn’t available yet`, "info")} className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-panel text-ink hover:bg-line" aria-label={`Play ${v.name} sample`}>
+                <button
+                  type="button"
+                  onClick={() => toast(`Demo: ${v.name}’s voice sample isn’t available yet`, "info")}
+                  className="inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-panel text-ink hover:bg-line"
+                  aria-label={`Play ${v.name} sample`}
+                >
                   <Icon name="play" size={13} />
                 </button>
               </label>
@@ -136,22 +206,7 @@ function AgentSettings({ agent, state }: { agent: Agent; state: OnboardingState 
     case "followup":
       return (
         <div className="flex flex-col gap-5">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Follow-ups">
-              <Select defaultValue="3">
-                <option value="1">1 follow-up</option>
-                <option value="2">2 follow-ups</option>
-                <option value="3">3 follow-ups</option>
-              </Select>
-            </Field>
-            <Field label="First one after">
-              <Select defaultValue="24">
-                <option value="4">4 hours</option>
-                <option value="24">1 day</option>
-                <option value="72">3 days</option>
-              </Select>
-            </Field>
-          </div>
+          <FollowUpSteps plan={state.plan ?? "growth"} />
           <Toggle checked onChange={() => undefined} disabled label="Stop when they reply, book or say STOP" description="Always on." />
           <Toggle checked onChange={() => undefined} label="Pause cold leads for 30 days, then check in once" />
         </div>
@@ -205,6 +260,10 @@ export function Agents({ state, update, onOpen }: Props) {
   const [unanswered, setUnanswered] = useState(sampleUnanswered);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const config = agents.find((a) => a.id === configId) ?? null;
+  const [review, setReview] = useState(setupReview);
+  const [reviewShow, setReviewShow] = useState<"todo" | "done">("todo");
+  const [fixing, setFixing] = useState<{ id: string; text: string } | null>(null);
+  const reviewed = review.filter((r) => r.status !== "todo").length;
 
   const saveAnswer = (id: string) => {
     const q = unanswered.find((u) => u.id === id);
@@ -230,6 +289,7 @@ export function Agents({ state, update, onOpen }: Props) {
           { id: "agents", label: "Agents" },
           { id: "knowledge", label: "Knowledge" },
           { id: "unanswered", label: "Unanswered", count: unanswered.length },
+          { id: "review", label: "Setup review", count: review.filter((r) => r.status === "todo").length || undefined },
           { id: "playground", label: "Playground" },
           { id: "activity", label: "Activity" },
         ]}
@@ -340,6 +400,102 @@ export function Agents({ state, update, onOpen }: Props) {
             ))}
           </ul>
         </Card>
+      )}
+
+      {tab === "review" && (
+        <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+          <section aria-label="Test replies" className="min-w-0 rounded-[18px] border border-line bg-white">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-3">
+              <SegmentedControl
+                label="Show"
+                size="sm"
+                value={reviewShow}
+                onChange={setReviewShow}
+                options={[
+                  { id: "todo", label: `To check ${review.length - reviewed}` },
+                  { id: "done", label: `Checked ${reviewed}` },
+                ]}
+              />
+              {reviewShow === "todo" && review.length > reviewed && (
+                <Button
+                  variant="ghost"
+                  icon="check"
+                  onClick={() => {
+                    setReview((all) => all.map((r) => (r.status === "todo" ? { ...r, status: "ok" } : r)));
+                    toast("All replies marked as right");
+                  }}
+                >
+                  Mark all as right
+                </Button>
+              )}
+            </div>
+            <ul className="m-0 list-none p-0">
+              {review
+                .filter((r) => (reviewShow === "todo" ? r.status === "todo" : r.status !== "todo"))
+                .map((r) => (
+                  <li key={r.id} className="flex flex-col gap-2 border-b border-line px-5 py-4 last:border-b-0">
+                    <span className="flex items-start justify-between gap-3">
+                      <span className="text-[14px] font-semibold text-ink">“{r.q}”</span>
+                      {r.status === "ok" && <Badge tone="success">Right</Badge>}
+                      {r.status === "fixed" && <Badge tone="brand">Fixed</Badge>}
+                    </span>
+                    {fixing?.id === r.id ? (
+                      <div className="flex flex-col gap-2">
+                        <textarea aria-label="Better answer" rows={2} value={fixing.text} onChange={(e) => setFixing({ id: r.id, text: e.target.value })} className={`${inputClass} py-2.5 text-[14px]`} autoFocus />
+                        <span className="flex gap-2">
+                          <Button
+                            variant="primary"
+                            disabled={!fixing.text.trim()}
+                            onClick={() => {
+                              setReview((all) => all.map((x) => (x.id === r.id ? { ...x, a: fixing.text.trim(), status: "fixed" } : x)));
+                              update((s) => ({ ...s, assistant: { ...s.assistant, faqs: [...s.assistant.faqs, { q: r.q, a: fixing.text.trim() }] } }));
+                              setFixing(null);
+                              toast("Saved. The AI will answer this way from now on");
+                            }}
+                          >
+                            Save answer
+                          </Button>
+                          <Button variant="ghost" onClick={() => setFixing(null)}>
+                            Cancel
+                          </Button>
+                        </span>
+                      </div>
+                    ) : (
+                      <p className="m-0 rounded-[12px] bg-periwinkle-soft/60 px-3.5 py-2.5 text-[14px] leading-snug text-ink">{r.a}</p>
+                    )}
+                    {r.status === "todo" && fixing?.id !== r.id && (
+                      <span className="flex gap-2">
+                        <Button icon="check" onClick={() => setReview((all) => all.map((x) => (x.id === r.id ? { ...x, status: "ok" } : x)))}>
+                          Right
+                        </Button>
+                        <Button variant="ghost" icon="pencil" onClick={() => setFixing({ id: r.id, text: r.a })}>
+                          Fix the answer
+                        </Button>
+                      </span>
+                    )}
+                  </li>
+                ))}
+              {reviewShow === "todo" && reviewed === review.length && <li className="px-5 py-8 text-center text-[14px] text-subtle">All 50 replies checked. Your assistant is ready to go live.</li>}
+            </ul>
+          </section>
+          <Card title="Setup review">
+            <p className="m-0 text-[14px] text-subtle">Before go-live we test 50 real questions with your assistant and check every reply with you. Fix any answer once and it’s right from then on.</p>
+            <div className="flex flex-col gap-1.5">
+              <span className="flex justify-between text-[13.5px]">
+                <span className="font-medium text-ink">
+                  {reviewed} of {review.length} checked
+                </span>
+                <span className="text-subtle">{review.filter((r) => r.status === "fixed").length} fixed</span>
+              </span>
+              <span className="block h-2 overflow-hidden rounded-full bg-panel">
+                <span className="block h-full rounded-full bg-ink transition-[width]" style={{ width: `${(reviewed / review.length) * 100}%` }} />
+              </span>
+            </div>
+            <Button icon="headset" onClick={() => onOpen("settings:help")}>
+              Review it with us on a call
+            </Button>
+          </Card>
+        </div>
       )}
 
       {tab === "playground" && (

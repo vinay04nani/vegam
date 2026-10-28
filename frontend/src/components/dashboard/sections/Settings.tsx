@@ -22,6 +22,7 @@ import { Developers } from "./settings/Developers";
 import { General } from "./settings/General";
 import { HelpPanel } from "./settings/HelpPanel";
 import { Hours } from "./settings/Hours";
+import { Locations } from "./settings/Locations";
 import { NotificationPrefs } from "./settings/NotificationPrefs";
 import { Privacy } from "./settings/Privacy";
 import { Team } from "./settings/Team";
@@ -39,6 +40,7 @@ type SectionId =
   | "general"
   | "services"
   | "hours"
+  | "locations"
   | "booking"
   | "team"
   | "channels"
@@ -68,8 +70,9 @@ const groups: { title: string; items: { id: SectionId; label: string; icon: Icon
     title: "Business",
     items: [
       { id: "general", label: "General", icon: "home", keywords: "profile name logo country time zone whatsapp email gst tax address" },
+      { id: "locations", label: "Locations", icon: "store", keywords: "locations branches multi-branch outlets stores routing address manager" },
       { id: "services", label: "Services and prices", icon: "tag", keywords: "services prices duration menu catalogue" },
-      { id: "hours", label: "Hours and bookings", icon: "clock", keywords: "opening hours closures holidays booking rules locations" },
+      { id: "hours", label: "Hours and bookings", icon: "clock", keywords: "opening hours closures holidays booking rules" },
       { id: "booking", label: "Booking page", icon: "calendar", keywords: "booking link qr colour cancellation policy questions" },
       { id: "team", label: "Team", icon: "users", keywords: "members invite roles permissions" },
     ],
@@ -103,7 +106,7 @@ const groups: { title: string; items: { id: SectionId; label: string; icon: Icon
       { id: "plans", label: "Plans", icon: "sparkle", keywords: "plan upgrade downgrade choose subscribe pricing checkout stripe" },
       { id: "billing", label: "Billing and invoices", icon: "card", keywords: "billing invoices pdf payment method stripe card usage plan gst" },
       { id: "account", label: "Plan and data", icon: "sparkle", keywords: "plan billing export delete close account" },
-      { id: "help", label: "Help and support", icon: "headset", keywords: "help support articles contact shortcuts what's new" },
+      { id: "help", label: "Help and support", icon: "headset", keywords: "help support priority success manager articles contact shortcuts what's new" },
     ],
   },
 ];
@@ -214,6 +217,7 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
             {section === "general" && <General state={state} update={update} />}
             {section === "services" && <Services state={state} update={update} />}
             {section === "hours" && <Hours />}
+            {section === "locations" && <Locations isPro={state.plan === "pro"} />}
             {section === "booking" && <BookingPage name={state.business.name} />}
             {section === "channels" && <Connectors state={state} update={update} />}
             {section === "whatsapp" && <WhatsAppProfile name={state.business.name} onOpen={onOpen} />}
@@ -223,7 +227,7 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
             {section === "language" && <Language state={state} update={update} />}
             {section === "security" && <Security />}
             {section === "activity" && <ActivityLog />}
-            {section === "team" && <Team />}
+            {section === "team" && <Team plan={state.plan ?? "growth"} onOpen={onOpen} />}
             {section === "templates" && <Templates />}
             {section === "automations" && <Automations />}
             {section === "notifications" && <NotificationPrefs />}
@@ -232,7 +236,7 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
             {section === "plans" && <Plans state={state} update={update} onOpen={onOpen} />}
             {section === "billing" && <Billing state={state} onOpen={onOpen} />}
             {section === "account" && <Account state={state} onOpen={onOpen} />}
-            {section === "help" && <HelpPanel onOpen={onOpen} />}
+            {section === "help" && <HelpPanel onOpen={onOpen} isPro={state.plan === "pro"} />}
           </div>
         </div>
       </div>

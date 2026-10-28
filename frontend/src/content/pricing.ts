@@ -87,6 +87,16 @@ export const plans: Plan[] = [
   },
 ];
 
+/** Allowances per plan, for usage bars and seat counts. Pro conversations are custom; this is the default allowance. */
+export const planLimits: Record<PlanId, { conversations: number; minutes: number; seats: number; followUps: number }> = {
+  starter: { conversations: 1000, minutes: 0, seats: 2, followUps: 1 },
+  growth: { conversations: 3000, minutes: 300, seats: 5, followUps: 3 },
+  pro: { conversations: 6000, minutes: 1000, seats: Infinity, followUps: 3 },
+};
+
+/** Charged when a month goes over its allowance; nothing stops working. */
+export const overage = { INR: { conversation: 1.5, minute: 6 }, USD: { conversation: 0.02, minute: 0.08 } };
+
 export const currencySymbol: Record<Currency, string> = { INR: "₹", USD: "$" };
 
 // ---------- Plan picker ----------

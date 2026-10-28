@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { sampleClosures, sampleHours, sampleLocations, weekDays, type DayHours } from "@/content/settings";
+import { sampleClosures, sampleHours, weekDays, type DayHours } from "@/content/settings";
 import { Icon } from "@/components/ui/Icon";
 import { Button, Modal, useToast } from "../../kit";
 import { Dropdown, Group, Input, Row, RowButton, Switch } from "./parts";
 
-// Locations, weekly opening hours, closures and booking rules. The AI only
+// Weekly opening hours, closures and booking rules. The AI only
 // offers times inside these hours. Demo: kept in this component.
 
 export function Hours() {
@@ -100,15 +100,6 @@ export function Hours() {
         </Row>
       </Group>
 
-      <Group title="Locations" action={<RowButton icon="plus" onClick={() => toast("Extra locations are part of the Pro plan (demo)", "info")}>Add</RowButton>}>
-        {sampleLocations.map((l) => (
-          <Row key={l.id} label={l.name} description={l.address}>
-            <RowButton onClick={() => toast("Editing locations comes with your account (demo)", "info")} ariaLabel={`Edit ${l.name}`}>
-              Edit
-            </RowButton>
-          </Row>
-        ))}
-      </Group>
 
       <Modal
         open={adding}

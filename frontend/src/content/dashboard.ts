@@ -339,8 +339,9 @@ export const sampleMorningReports = [
 
 // ---------- Calls ----------
 
-export type CallOutcome = "Booked" | "Callback" | "Transferred" | "Info";
-export type Call = { id: string; time: string; caller: string; duration: string; outcome: CallOutcome; summary: string; transcript: { from: "ai" | "caller"; text: string }[] };
+export type CallOutcome = "Booked" | "Callback" | "Transferred" | "Info" | "NoAnswer";
+/** `direction` "out" is the AI calling a new lead who enquired (Pro). */
+export type Call = { id: string; time: string; caller: string; duration: string; outcome: CallOutcome; summary: string; transcript: { from: "ai" | "caller"; text: string }[]; direction?: "in" | "out"; lead?: string };
 
 export const sampleCalls: Call[] = [
   {
@@ -447,6 +448,49 @@ export const sampleCalls: Call[] = [
     transcript: [
       { from: "caller", text: "Is there parking near you?" },
       { from: "ai", text: "Yes, free parking is available next to the entrance." },
+    ],
+  },
+  {
+    id: "c9",
+    time: "Today, 9:13 AM",
+    caller: "+91 98•• ••• 552",
+    duration: "1:52",
+    outcome: "Booked",
+    direction: "out",
+    lead: "Ad form: “Group of 6, next month”",
+    summary: "Called within a minute of the ad form. Booked a group visit for 6 on the 14th; asked for a deposit link.",
+    transcript: [
+      { from: "ai", text: "Hi, this is the AI assistant from Nila & Co. You asked about a group visit a minute ago. Is now a good time?" },
+      { from: "caller", text: "Yes! We’re six people, sometime next month." },
+      { from: "ai", text: "The 14th at 11 AM is free for six. Shall I book it and send a deposit link on WhatsApp?" },
+      { from: "caller", text: "Perfect, please do." },
+    ],
+  },
+  {
+    id: "c10",
+    time: "Yesterday, 5:40 PM",
+    caller: "+91 93•• ••• 218",
+    duration: "0:00",
+    outcome: "NoAnswer",
+    direction: "out",
+    lead: "Website form: “Prices for a first visit?”",
+    summary: "No answer. Sent the prices and booking link on WhatsApp instead; one more try tomorrow at 11 AM.",
+    transcript: [],
+  },
+  {
+    id: "c11",
+    time: "2 days ago, 12:05 PM",
+    caller: "+91 87•• ••• 640",
+    duration: "1:10",
+    outcome: "Info",
+    direction: "out",
+    lead: "Instagram: “Do you open Sundays?”",
+    summary: "Answered the Sunday hours question. Not ready to book; will message when they are.",
+    transcript: [
+      { from: "ai", text: "Hi, this is the AI assistant from Nila & Co, following up on your Instagram message about Sundays." },
+      { from: "caller", text: "Oh yes. Are you open?" },
+      { from: "ai", text: "We’re open Sundays from 10 to 2. Would you like me to hold a slot?" },
+      { from: "caller", text: "Not yet, I’ll message you." },
     ],
   },
 ];
