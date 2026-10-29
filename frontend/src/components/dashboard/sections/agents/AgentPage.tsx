@@ -15,7 +15,7 @@ import { Performance } from "./Performance";
 import { Setup } from "./Setup";
 import { Test } from "./Test";
 import { agentStore, changedKeys, useAgents } from "./store";
-import { AgentTile, StatusBadge, statusOf } from "./ui";
+import { AgentTile, StatusDot, statusOf } from "./ui";
 
 // One agent's page: Overview, Setup, Knowledge, Test, Activity and
 // Performance. Setup edits stay unsaved until published from the bar at the
@@ -43,7 +43,7 @@ export function AgentPage({ id, tab, state, update, onOpen, plan }: { id: AgentI
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-3 rounded-[16px] border border-line bg-white px-4 py-3">
         <AgentTile agent={agent} size={40} off={!s.on} />
-        <StatusBadge status={statusOf(agent, s, store.paused, plan)} />
+        <StatusDot status={statusOf(agent, s, store.paused, plan)} />
         {agent.minPlan !== "starter" && <Badge tone="brand">{planName}</Badge>}
         <span className="hidden min-w-0 flex-wrap items-center gap-1.5 md:flex">
           <span className="text-[13px] text-subtle">Works on</span>

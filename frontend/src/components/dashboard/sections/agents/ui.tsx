@@ -11,15 +11,12 @@ import { changedKeys, type AgentState } from "./store";
 // Small pieces shared by the AI agents pages: the agent's icon tile, its
 // status, and a titled panel.
 
-const tile: Record<Agent["group"], string> = {
-  desk: "bg-[#EEF0FF] text-brand",
-  grow: "bg-[#E9F5EC] text-success",
-  you: "bg-[#FFF3E2] text-[#9A4A00]",
-};
+/** Quiet, monochrome icon tiles, in the style of Claude's and OpenAI's lists. */
+const tile = "border border-line bg-[#F6F6F8] text-ink";
 
 export function AgentTile({ agent, size = 44, off = false }: { agent: Agent; size?: number; off?: boolean }) {
   return (
-    <span className={`flex flex-none items-center justify-center rounded-[12px] ${off ? "bg-panel text-muted" : tile[agent.group]}`} style={{ width: size, height: size }}>
+    <span className={`flex flex-none items-center justify-center rounded-[12px] ${tile} ${off ? "text-muted opacity-70" : ""}`} style={{ width: size, height: size }}>
       <Icon name={agent.icon} size={Math.round(size * 0.45)} />
     </span>
   );
@@ -36,6 +33,18 @@ export function statusOf(agent: Agent, s: AgentState, paused: boolean, plan: Pla
   if (agent.alerts.length) return { label: "Needs attention", tone: "warning" };
   if (agent.steps.some((x) => !x.done)) return { label: "Live · setup to finish", tone: "success" };
   return { label: "Live", tone: "success" };
+}
+
+const dot: Record<string, string> = { success: "bg-[#2E9D4F]", warning: "bg-[#E08A00]", brand: "bg-indigo", neutral: "bg-[#B9BBC7]", danger: "bg-danger" };
+
+/** A coloured dot and a word: quieter than a badge. */
+export function StatusDot({ status }: { status: Status }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 text-[13px] text-ink-soft">
+      <span aria-hidden="true" className={`h-2 w-2 flex-none rounded-full ${dot[status.tone] ?? dot.neutral}`} />
+      {status.label}
+    </span>
+  );
 }
 
 export function StatusBadge({ status }: { status: Status }) {

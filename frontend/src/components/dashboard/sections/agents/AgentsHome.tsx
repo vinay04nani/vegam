@@ -1,89 +1,111 @@
 "use client";
 
-import { agentGroups, agents, sampleUnanswered } from "@/content/agents";
+import { useState } from "react";
+import { agentGroups, agents, sampleUnanswered, type Agent } from "@/content/agents";
 import { planRank } from "@/content/onboarding";
-import { plans, type PlanId } from "@/content/pricing";
+import type { PlanId } from "@/content/pricing";
 import type { OnboardingState } from "@/lib/onboarding";
 import { Icon } from "@/components/ui/Icon";
 import { Tabs, useToast } from "../../kit";
-import { PageTitle, SampleTag } from "../../ui";
-import { Sparkline } from "../reports/charts";
 import { Switch } from "../settings/parts";
 import { Activity } from "./Activity";
 import { KnowledgeHub } from "./Knowledge";
 import { BusinessRules } from "./Setup";
 import { agentStore, useAgents } from "./store";
-import { AgentTile, StatusBadge, statusOf } from "./ui";
+import { AgentTile, StatusDot, statusOf } from "./ui";
 
-// The AI agents home: an emergency "Pause all AI", today's totals, every agent
-// grouped by what it's for (status, its main number, anything that needs
-// you), and the things all agents share: knowledge, business rules and a
-// combined activity log.
+// The AI agents home, in the quiet style of Claude's Projects and OpenAI's
+// agent lists: a plain header with one line of numbers, a large search, a
+// few filters and simple monochrome cards grouped by what each agent is for.
+// Knowledge, business rules and the combined activity log sit in tabs.
 
 type Update = (fn: (s: OnboardingState) => OnboardingState) => void;
 type HomeTab = "agents" | "knowledge" | "rules" | "activity";
+type Filter = "all" | "on" | "off" | "attention";
+
+/** The one number each card shows, in words. */
+const metric = (a: Agent) => (a.headline.label.startsWith("Next") ? `${a.headline.label} ${a.headline.value}` : `${a.headline.value} ${a.headline.label.charAt(0).toLowerCase()}${a.headline.label.slice(1)}`);
 
 export function AgentsHome({ tab, state, update, onOpen, plan }: { tab: string; state: OnboardingState; update: Update; onOpen: (view: string) => void; plan: PlanId }) {
   const toast = useToast();
   const store = useAgents();
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState<Filter>("all");
   const current: HomeTab = (["agents", "knowledge", "rules", "activity"] as const).includes(tab as HomeTab) ? (tab as HomeTab) : "agents";
-  const live = agents.filter((a) => store.agents[a.id].on && planRank[plan] >= planRank[a.minPlan]).length;
-  const alerts = agents.filter((a) => store.agents[a.id].on).reduce((n, a) => n + a.alerts.length, 0);
+
+  // An agent above the plan isn't working yet, whatever its switch says.
+  const isOn = (a: Agent) => store.agents[a.id].on && planRank[plan] >= planRank[a.minPlan];
+  const needs = (a: Agent) => isOn(a) && a.alerts.length > 0;
+  const onCount = agents.filter(isOn).length;
+  const attention = agents.filter(needs).length;
+  const q = query.trim().toLowerCase();
+  const match = (a: Agent) => (filter === "all" || (filter === "on" ? isOn(a) : filter === "off" ? !isOn(a) : needs(a))) && (!q || `${a.name} ${a.short} ${a.description} ${a.works.join(" ")}`.toLowerCase().includes(q));
+  const shown = agents.filter(match);
+
+  const filters: { id: Filter; label: string; count: number }[] = [
+    { id: "all", label: "All", count: agents.length },
+    { id: "on", label: "On", count: onCount },
+    { id: "off", label: "Off", count: agents.length - onCount },
+    { id: "attention", label: "Needs attention", count: attention },
+  ];
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <PageTitle title="AI agents" body="Your AI team. Set up what each one does, test it before customers see it, and check everything it did." />
-        <div className="flex flex-wrap items-center gap-2">
-          <SampleTag />
-          <span className={`flex min-h-10 items-center gap-3 rounded-[12px] border px-3.5 text-[14px] font-semibold ${store.paused ? "border-[#F2C38B] bg-[#FFF4E5] text-[#8A4B00]" : "border-line-strong bg-white text-ink"}`}>
-            <Icon name={store.paused ? "lock" : "sparkle"} size={16} />
-            {store.paused ? "All AI paused" : "Pause all AI"}
-            <Switch
-              checked={store.paused}
-              onChange={(v) => {
-                agentStore.setPaused(v);
-                toast(v ? "All AI paused. Your team gets every chat and call" : "AI is back on");
-              }}
-              label="Pause all AI"
-            />
-          </span>
+    <div className="flex flex-col gap-7">
+      <header className="flex flex-wrap items-start justify-between gap-4">
+        <div className="flex min-w-0 flex-col gap-2">
+          <h1 className="m-0 font-serif text-[clamp(30px,3vw,40px)] leading-tight font-normal tracking-[-0.02em] text-ink">AI agents</h1>
+          <p className="m-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-[14.5px] text-subtle">
+            <span>
+              <span className="font-medium text-ink">{onCount}</span> of {agents.length} on
+            </span>
+            <span aria-hidden="true">·</span>
+            <span>
+              <span className="font-medium text-ink">{store.paused ? 0 : 64}</span> handled today
+            </span>
+            <span aria-hidden="true">·</span>
+            <span>
+              <span className="font-medium text-ink">84%</span> resolved without staff
+            </span>
+            {attention > 0 && (
+              <>
+                <span aria-hidden="true">·</span>
+                <button type="button" onClick={() => setFilter("attention")} className="cursor-pointer font-medium text-[#8A4B00] underline decoration-[#E8C48C] underline-offset-2 hover:decoration-[#8A4B00]">
+                  {attention} need{attention === 1 ? "s" : ""} attention
+                </button>
+              </>
+            )}
+            <span aria-hidden="true">·</span>
+            <span className="text-[12.5px] tracking-[0.04em] uppercase">Sample data</span>
+          </p>
         </div>
-      </div>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={store.paused}
+          onClick={() => {
+            agentStore.setPaused(!store.paused);
+            toast(store.paused ? "AI is back on" : "All AI paused. Your team gets every chat and call");
+          }}
+          className={`inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-[12px] px-4 text-[14px] font-semibold transition ${store.paused ? "bg-ink text-white hover:bg-[#2c2d3d]" : "border border-line-strong bg-white text-ink hover:bg-panel"}`}
+        >
+          <Icon name={store.paused ? "play" : "lock"} size={15} />
+          {store.paused ? "Resume all AI" : "Pause all AI"}
+        </button>
+      </header>
 
       {store.paused && (
-        <p role="status" className="m-0 flex flex-wrap items-center gap-3 rounded-[14px] border border-[#F2C38B] bg-[#FFF8EE] px-4 py-3 text-[14px] text-ink">
-          <Icon name="bell" size={17} className="text-[#9A5B00]" />
-          <span className="min-w-0 flex-1">
-            <strong className="font-semibold">Every agent is paused.</strong> Customers get your away message and your team sees every chat and call.
-          </span>
-          <button type="button" onClick={() => agentStore.setPaused(false)} className="min-h-9 cursor-pointer rounded-[10px] bg-ink px-3.5 text-[14px] font-semibold text-white">
-            Resume
-          </button>
+        <p role="status" className="m-0 -mt-2 flex items-center gap-2.5 rounded-[12px] bg-[#FFF6E8] px-4 py-3 text-[14px] text-ink">
+          <span className="h-2 w-2 flex-none rounded-full bg-[#E08A00]" />
+          Every agent is paused. Customers get your away message and your team sees every chat and call.
         </p>
       )}
-
-      <div className="grid grid-cols-2 overflow-hidden rounded-[18px] border border-line bg-white lg:grid-cols-4">
-        {[
-          { label: "Handled today", value: store.paused ? "0" : "64", note: "52 chats · 12 calls" },
-          { label: "Resolved without staff", value: "84%", note: "Last 7 days" },
-          { label: "Booked by the AI today", value: store.paused ? "0" : "9", note: "₹10,800 at your prices" },
-          { label: "Needs you", value: String(alerts), note: alerts ? "Across your agents" : "All clear", warn: alerts > 0 },
-        ].map((x, i) => (
-          <div key={x.label} className={`flex flex-col gap-1 p-4 sm:p-5 ${i % 2 ? "border-l border-line" : ""} ${i >= 2 ? "border-t border-line lg:border-t-0" : ""} ${i === 2 ? "lg:border-l" : ""}`}>
-            <span className="text-[13px] font-medium text-subtle">{x.label}</span>
-            <span className="text-[26px] leading-tight font-semibold tracking-[-0.02em] text-ink">{x.value}</span>
-            <span className={`text-[12.5px] ${x.warn ? "font-semibold text-warning" : "text-subtle"}`}>{x.note}</span>
-          </div>
-        ))}
-      </div>
 
       <Tabs
         label="AI agents"
         value={current}
         onChange={(t) => onOpen(t === "agents" ? "agents" : `agents/${t}`)}
         tabs={[
-          { id: "agents", label: "Agents", count: live },
+          { id: "agents", label: "Agents" },
           { id: "knowledge", label: "Knowledge", count: sampleUnanswered.length || undefined },
           { id: "rules", label: "Business rules" },
           { id: "activity", label: "Activity" },
@@ -92,37 +114,71 @@ export function AgentsHome({ tab, state, update, onOpen, plan }: { tab: string; 
 
       {current === "agents" && (
         <div className="flex flex-col gap-8">
-          {agentGroups.map((g) => (
-            <section key={g.id} aria-labelledby={`group-${g.id}`} className="flex flex-col gap-3">
-              <div>
-                <h2 id={`group-${g.id}`} className="m-0 text-[17px] font-semibold text-ink">
+          <div className="flex flex-col gap-3">
+            <label className="relative block">
+              <span className="sr-only">Search agents</span>
+              <Icon name="search" size={18} className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-subtle" />
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search agents"
+                className="h-12 w-full rounded-[14px] border border-line-strong bg-white pr-4 pl-11 text-[15px] text-ink shadow-[0_1px_2px_rgb(30_31_43/0.04)] outline-none placeholder:text-subtle focus:border-ink/40 focus:ring-4 focus:ring-ink/5"
+              />
+            </label>
+            <div role="group" aria-label="Show" className="flex flex-wrap gap-1.5">
+              {filters.map((f) => (
+                <button
+                  key={f.id}
+                  type="button"
+                  aria-pressed={filter === f.id}
+                  onClick={() => setFilter(f.id)}
+                  className={`inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-full px-3 text-[13.5px] font-medium transition ${filter === f.id ? "bg-ink text-white" : "text-ink-soft hover:bg-white hover:text-ink"}`}
+                >
+                  {f.label}
+                  <span className={filter === f.id ? "text-white/60" : "text-subtle"}>{f.count}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {shown.length === 0 && (
+            <div className="flex flex-col items-center gap-2 py-16 text-center">
+              <p className="m-0 text-[15px] font-medium text-ink">No agents match</p>
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("");
+                  setFilter("all");
+                }}
+                className="cursor-pointer text-[14px] text-subtle underline underline-offset-2 hover:text-ink"
+              >
+                Clear search and filters
+              </button>
+            </div>
+          )}
+
+          {agentGroups.map((g) => {
+            const list = shown.filter((a) => a.group === g.id);
+            if (!list.length) return null;
+            return (
+              <section key={g.id} aria-labelledby={`group-${g.id}`} className="flex flex-col gap-3">
+                <h2 id={`group-${g.id}`} className="m-0 flex items-baseline gap-2 text-[14px] font-medium text-subtle">
                   {g.title}
+                  <span className="text-[13px] text-faint">{list.length}</span>
                 </h2>
-                <p className="m-0 text-[14px] text-subtle">{g.body}</p>
-              </div>
-              <div className="grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-2 xl:grid-cols-3">
-                {agents
-                  .filter((a) => a.group === g.id)
-                  .map((a) => {
+                <div className="grid grid-cols-[minmax(0,1fr)] gap-3 md:grid-cols-2 xl:grid-cols-3">
+                  {list.map((a) => {
                     const s = store.agents[a.id];
                     const status = statusOf(a, s, store.paused, plan);
-                    const dim = !s.on || store.paused;
+                    const short = { ...status, label: status.label.replace(" · setup to finish", "") };
+                    const above = planRank[plan] < planRank[a.minPlan];
                     return (
-                      <article key={a.id} className="relative flex flex-col gap-4 rounded-[18px] border border-line bg-white p-5 transition hover:border-line-strong hover:shadow-[0_8px_24px_rgb(30_31_43/0.07)]">
-                        <div className="flex items-start gap-3">
-                          <AgentTile agent={a} size={44} off={!s.on} />
-                          <div className="flex min-w-0 flex-1 flex-col items-start gap-1.5">
-                            <h3 className="m-0 text-[16px] leading-tight font-semibold text-ink">
-                              <button
-                                type="button"
-                                onClick={() => onOpen(`agent:${a.id}`)}
-                                className="cursor-pointer text-left after:absolute after:inset-0 after:rounded-[18px] after:content-[''] focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-indigo"
-                              >
-                                {a.name}
-                              </button>
-                            </h3>
-                            <StatusBadge status={status} />
-                          </div>
+                      <article
+                        key={a.id}
+                        className="group relative flex min-h-[176px] flex-col gap-3 rounded-[16px] border border-line bg-white p-5 transition hover:border-line-strong hover:bg-[#FCFCFD] hover:shadow-[0_4px_16px_rgb(30_31_43/0.05)]"
+                      >
+                        <div className="flex items-start justify-between gap-3">
+                          <AgentTile agent={a} size={36} off={!s.on} />
                           <span className="relative z-10">
                             <Switch
                               checked={s.on}
@@ -134,35 +190,36 @@ export function AgentsHome({ tab, state, update, onOpen, plan }: { tab: string; 
                             />
                           </span>
                         </div>
-                        <p className="m-0 text-[14px] leading-snug text-ink-soft">{a.short}</p>
-                        <div className="mt-auto flex items-end justify-between gap-3 rounded-[12px] bg-panel px-3.5 py-3">
-                          <span className="flex flex-col">
-                            <span className="text-[12.5px] text-subtle">{a.headline.label}</span>
-                            <span className={`text-[20px] leading-tight font-semibold tracking-[-0.01em] ${dim ? "text-muted" : "text-ink"}`}>{dim ? "—" : a.headline.value}</span>
-                          </span>
-                          {!dim && <Sparkline values={a.stats[0].trend} width={72} height={24} />}
+                        <div className="flex flex-col gap-1">
+                          <h3 className="m-0 text-[15.5px] leading-snug font-semibold text-ink">
+                            <button
+                              type="button"
+                              onClick={() => onOpen(`agent:${a.id}`)}
+                              className="cursor-pointer text-left after:absolute after:inset-0 after:rounded-[16px] after:content-[''] focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-indigo"
+                            >
+                              {a.name}
+                            </button>
+                          </h3>
+                          <p className="m-0 line-clamp-2 text-[14px] leading-snug text-subtle">{a.short}</p>
                         </div>
-                        <div className="flex min-h-5 items-center justify-between gap-2 text-[13px]">
-                          {s.on && a.alerts[0] ? (
-                            <span className="flex min-w-0 items-center gap-1.5 font-medium text-[#8A4B00]">
-                              <span className="h-1.5 w-1.5 flex-none rounded-full bg-[#E08A00]" />
-                              <span className="truncate">{a.alerts[0].text}</span>
-                            </span>
-                          ) : (
-                            <span className="truncate text-subtle">{a.works.join(" · ")}</span>
+                        <div className="mt-auto flex flex-wrap items-center gap-x-2 gap-y-1 pt-1 text-[13px] text-subtle">
+                          <StatusDot status={short} />
+                          {s.on && !above && !store.paused && (
+                            <>
+                              <span aria-hidden="true">·</span>
+                              <span className="truncate">{metric(a)}</span>
+                            </>
                           )}
-                          <span className="flex flex-none items-center gap-0.5 font-semibold text-ink-soft">
-                            Open
-                            <Icon name="chevron-right" size={15} />
-                          </span>
                         </div>
+                        {needs(a) && !store.paused && <p className="m-0 -mt-1 truncate text-[13px] text-[#8A4B00]">{a.alerts[0].text}</p>}
+                        <Icon name="chevron-right" size={16} className="absolute right-4 bottom-5 text-faint opacity-0 transition group-hover:opacity-100" />
                       </article>
                     );
                   })}
-              </div>
-            </section>
-          ))}
-          <p className="m-0 text-[13px] text-subtle">Agents above your plan ({plans.find((p) => p.id === plan)?.name}) can be explored with sample data and switched on after upgrading.</p>
+                </div>
+              </section>
+            );
+          })}
         </div>
       )}
       {current === "knowledge" && <KnowledgeHub state={state} update={update} />}
