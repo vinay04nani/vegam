@@ -3,10 +3,10 @@
 import { agentActivity, type Agent } from "@/content/agents";
 import { agentSetup } from "@/content/agentSetup";
 import { Icon } from "@/components/ui/Icon";
-import { Badge, Button, useToast } from "../../kit";
+import { Button, useToast } from "../../kit";
 import { KpiRow } from "../reports/parts";
 import { agentStore, type AgentState } from "./store";
-import { Panel, outcomeTone } from "./ui";
+import { OutcomeDot, Panel } from "./ui";
 
 // An agent's Overview: what's left to set up, this week's numbers, what it
 // did lately, what needs you, its key settings and recent changes.
@@ -88,7 +88,7 @@ export function Overview({ agent, s, go, onOpen }: { agent: Agent; s: AgentState
                         {x.who} · {x.channel} · {x.when}
                       </span>
                     </span>
-                    <Badge tone={outcomeTone[x.outcome] ?? "neutral"}>{x.outcome}</Badge>
+                    <OutcomeDot outcome={x.outcome} />
                   </button>
                 </li>
               ))}
@@ -97,18 +97,15 @@ export function Overview({ agent, s, go, onOpen }: { agent: Agent; s: AgentState
         </Panel>
       </div>
 
-      <div className="flex min-w-0 flex-col gap-4">
-        <Panel title="Needs you">
+      <div className="flex min-w-0 flex-col divide-y divide-line rounded-[16px] border border-line bg-white [&>section]:p-5">
+        <Panel plain title="Needs you">
           {agent.alerts.length === 0 ? (
-            <p className="m-0 flex items-center gap-2 text-[14px] text-success">
-              <Icon name="check" size={16} />
-              Nothing right now.
-            </p>
+            <p className="m-0 text-[14px] text-subtle">Nothing right now.</p>
           ) : (
             <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
               {agent.alerts.map((al) => (
-                <li key={al.text} className="flex items-start gap-3 rounded-[12px] bg-[#FFF6E5] px-3.5 py-3">
-                  <Icon name="bell" size={16} className="mt-0.5 flex-none text-[#9A5B00]" />
+                <li key={al.text} className="flex items-start gap-2.5">
+                  <span aria-hidden="true" className="mt-[7px] h-2 w-2 flex-none rounded-full bg-[#E08A00]" />
                   <span className="flex min-w-0 flex-1 flex-col gap-1 text-[14px] text-ink">
                     {al.text}
                     {al.action && (
@@ -124,6 +121,7 @@ export function Overview({ agent, s, go, onOpen }: { agent: Agent; s: AgentState
         </Panel>
 
         <Panel
+          plain
           title="How it’s set up"
           action={
             <button type="button" onClick={() => go("setup")} className="cursor-pointer text-[13.5px] font-semibold text-ink-soft hover:text-ink">
@@ -141,7 +139,7 @@ export function Overview({ agent, s, go, onOpen }: { agent: Agent; s: AgentState
           </dl>
         </Panel>
 
-        <Panel title="Recent changes">
+        <Panel plain title="Recent changes">
           <ul className="m-0 flex list-none flex-col gap-3 p-0">
             {changes.map((c, i) => (
               <li key={c.id} className="flex flex-col gap-0.5">

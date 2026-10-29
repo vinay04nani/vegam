@@ -6,10 +6,10 @@ import type { Config, Step } from "@/content/agentSetup";
 import { TestChat, testSuggestions } from "@/components/setup/TestChat";
 import type { OnboardingState } from "@/lib/onboarding";
 import { Icon } from "@/components/ui/Icon";
-import { Badge, Button, SegmentedControl, useToast } from "../../kit";
+import { Button, SegmentedControl, useToast } from "../../kit";
 import { TextArea } from "../settings/parts";
 import { changedKeys, type AgentState } from "./store";
-import { Panel } from "./ui";
+import { Panel, StatusDot } from "./ui";
 
 // Test: try the agent before customers do. A playground (chat), a test call
 // (voice), or a preview of the messages it will send; a test set that runs
@@ -285,8 +285,8 @@ function SetupReview({ update, onOpen }: { update: Update; onOpen: (view: string
             <li key={r.id} className="flex flex-col gap-2 border-b border-line px-5 py-4 last:border-b-0">
               <span className="flex items-start justify-between gap-3">
                 <span className="text-[14px] font-semibold text-ink">“{r.q}”</span>
-                {r.status === "ok" && <Badge tone="success">Right</Badge>}
-                {r.status === "fixed" && <Badge tone="brand">Fixed</Badge>}
+                {r.status === "ok" && <StatusDot status={{ label: "Right", tone: "success" }} />}
+                {r.status === "fixed" && <StatusDot status={{ label: "Fixed", tone: "brand" }} />}
               </span>
               {fixing?.id === r.id ? (
                 <div className="flex flex-col gap-2">

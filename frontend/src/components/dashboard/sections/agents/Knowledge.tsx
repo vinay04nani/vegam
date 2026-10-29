@@ -5,7 +5,7 @@ import { sampleUnanswered, type Agent, type AgentId } from "@/content/agents";
 import { AssistantSetup } from "@/components/setup/AssistantSetup";
 import type { OnboardingState } from "@/lib/onboarding";
 import { Icon } from "@/components/ui/Icon";
-import { Badge, Button, useToast } from "../../kit";
+import { Button, useToast } from "../../kit";
 import { Switch, TextArea } from "../settings/parts";
 import { Panel } from "./ui";
 
@@ -40,17 +40,14 @@ function Unanswered({ agentId, update }: { agentId?: AgentId; update: Update }) 
     <Panel
       title="Questions it couldn’t answer"
       description="It handed these to your team instead of guessing. Answer once and it knows next time."
-      action={<Badge tone={items.length ? "warning" : "success"}>{items.length ? `${items.length} to answer` : "All caught up"}</Badge>}
+      action={<span className="text-[13px] text-subtle">{items.length ? `${items.length} to answer` : "All caught up"}</span>}
     >
       {items.length === 0 ? (
-        <p className="m-0 flex items-center gap-2 text-[14px] text-success">
-          <Icon name="check" size={16} />
-          Nothing waiting.
-        </p>
+        <p className="m-0 text-[14px] text-subtle">Nothing waiting.</p>
       ) : (
-        <ul className="m-0 flex list-none flex-col gap-3 p-0">
+        <ul className="m-0 flex list-none flex-col gap-4 p-0">
           {items.map((u) => (
-            <li key={u.id} className="flex flex-col gap-2.5 rounded-[14px] border border-line p-4">
+            <li key={u.id} className="flex flex-col gap-2.5 border-t border-line pt-4 first:border-t-0 first:pt-0">
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <p className="m-0 text-[15px] font-semibold text-ink">“{u.question}”</p>
                 <span className="text-[12.5px] text-subtle">
@@ -58,14 +55,14 @@ function Unanswered({ agentId, update }: { agentId?: AgentId; update: Update }) 
                 </span>
               </div>
               {u.suggestion && (
-                <span className="flex items-center gap-1.5 text-[12.5px] font-medium text-indigo">
+                <span className="flex items-center gap-1.5 text-[12.5px] text-subtle">
                   <Icon name="sparkle" size={13} />
                   Suggested from how your team replied
                 </span>
               )}
               <TextArea aria-label={`Answer to: ${u.question}`} rows={2} value={answers[u.id] ?? ""} onChange={(e) => setAnswers((x) => ({ ...x, [u.id]: e.target.value }))} placeholder="Write the answer it should give…" />
               <div className="flex gap-2">
-                <Button variant="primary" onClick={() => save(u.id)} disabled={!answers[u.id]?.trim()}>
+                <Button icon="check" onClick={() => save(u.id)} disabled={!answers[u.id]?.trim()}>
                   {u.suggestion && answers[u.id] === u.suggestion ? "Use this answer" : "Save answer"}
                 </Button>
                 <Button variant="ghost" onClick={() => setItems((x) => x.filter((y) => y.id !== u.id))}>
@@ -87,7 +84,7 @@ function Sources({ picks, onPick }: { picks?: Record<string, boolean>; onPick?: 
       <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
         {sources.map((src) => (
           <li key={src.id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
-            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-[10px] bg-panel text-muted">
+            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-[10px] border border-line bg-[#F6F6F8] text-ink">
               <Icon name={src.icon} size={17} />
             </span>
             <span className="flex min-w-0 flex-1 flex-col">

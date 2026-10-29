@@ -47,6 +47,11 @@ export function StatusDot({ status }: { status: Status }) {
   );
 }
 
+/** How an activity ended, as a dot and a word. */
+export function OutcomeDot({ outcome }: { outcome: string }) {
+  return <StatusDot status={{ label: outcome, tone: outcomeTone[outcome] === "warning" ? "warning" : outcomeTone[outcome] === "success" ? "success" : outcomeTone[outcome] === "brand" ? "brand" : "neutral" }} />;
+}
+
 export function StatusBadge({ status }: { status: Status }) {
   return (
     <Badge tone={status.tone} dot>
@@ -56,13 +61,29 @@ export function StatusBadge({ status }: { status: Status }) {
 }
 
 /** A titled white panel, the building block of each tab. */
-export function Panel({ title, description, action, children, className = "", flush = false }: { title?: string; description?: ReactNode; action?: ReactNode; children: ReactNode; className?: string; flush?: boolean }) {
+export function Panel({
+  title,
+  description,
+  action,
+  children,
+  className = "",
+  flush = false,
+  plain = false,
+}: {
+  title?: string;
+  description?: ReactNode;
+  action?: ReactNode;
+  children: ReactNode;
+  className?: string;
+  flush?: boolean;
+  /** No card: for sections inside a shared box. */ plain?: boolean;
+}) {
   return (
-    <section aria-label={title} className={`flex min-w-0 flex-col rounded-[18px] border border-line bg-white ${flush ? "" : "gap-4 p-5"} ${className}`}>
+    <section aria-label={title} className={`flex min-w-0 flex-col ${plain ? "gap-3" : `rounded-[16px] border border-line bg-white ${flush ? "" : "gap-4 p-5"}`} ${className}`}>
       {(title || action) && (
         <div className={`flex flex-wrap items-start justify-between gap-x-3 gap-y-2 ${flush ? "px-5 pt-5 pb-3" : ""}`}>
           <div className="min-w-0">
-            {title && <h2 className="m-0 text-[15.5px] font-semibold text-ink">{title}</h2>}
+            {title && <h2 className={`m-0 font-semibold text-ink ${plain ? "text-[14px]" : "text-[15px]"}`}>{title}</h2>}
             {description && <p className="m-0 mt-0.5 text-[13px] text-subtle">{description}</p>}
           </div>
           {action}

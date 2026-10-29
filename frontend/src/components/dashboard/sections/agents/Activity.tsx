@@ -4,9 +4,9 @@ import { useState } from "react";
 import { agentActivity, agents, type ActivityItem, type AgentId } from "@/content/agents";
 import type { OnboardingState } from "@/lib/onboarding";
 import { Icon } from "@/components/ui/Icon";
-import { Badge, Button, Drawer, EmptyState, SegmentedControl, useToast } from "../../kit";
+import { Button, Drawer, EmptyState, SegmentedControl, useToast } from "../../kit";
 import { TextArea } from "../settings/parts";
-import { AgentTile, outcomeTone } from "./ui";
+import { AgentTile, OutcomeDot } from "./ui";
 
 // Everything an agent did (or every agent, on the AI agents home), with the
 // conversation behind it. Rate a reply, or "teach it" a better answer, which
@@ -72,7 +72,7 @@ export function Activity({ agentId, update, initialOpen }: { agentId?: AgentId; 
                     </span>
                   </span>
                   {ratings[x.id] && <span className="hidden text-[12px] text-subtle sm:inline">{ratings[x.id] === "good" ? "Rated good" : "Needs work"}</span>}
-                  <Badge tone={outcomeTone[x.outcome] ?? "neutral"}>{x.outcome}</Badge>
+                  <OutcomeDot outcome={x.outcome} />
                   <Icon name="chevron-right" size={16} className="flex-none text-faint" />
                 </button>
               </li>
@@ -128,7 +128,7 @@ export function Activity({ agentId, update, initialOpen }: { agentId?: AgentId; 
           <div className="flex flex-col gap-5">
             <div className="flex flex-col gap-1.5">
               <span className="flex items-center gap-2">
-                <Badge tone={outcomeTone[open.outcome] ?? "neutral"}>{open.outcome}</Badge>
+                <OutcomeDot outcome={open.outcome} />
                 <span className="text-[13px] text-subtle">
                   {agentOf(open).name} · {open.when}
                 </span>

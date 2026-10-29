@@ -5,8 +5,8 @@ import { planRank } from "@/content/onboarding";
 import { plans, type PlanId } from "@/content/pricing";
 import type { OnboardingState } from "@/lib/onboarding";
 import { Icon } from "@/components/ui/Icon";
-import { Badge, Button, Menu, Tabs, useToast } from "../../kit";
-import { PageTitle, PlanNotice, SampleTag } from "../../ui";
+import { Button, Menu, Tabs, useToast } from "../../kit";
+import { PlanNotice } from "../../ui";
 import { Switch } from "../settings/parts";
 import { Activity } from "./Activity";
 import { AgentKnowledge } from "./Knowledge";
@@ -39,45 +39,55 @@ export function AgentPage({ id, tab, state, update, onOpen, plan }: { id: AgentI
   return (
     <div className={`flex flex-col gap-6 ${changes ? "pb-20" : ""}`}>
       {above && <PlanNotice feature={agent.name} planName={planName} currentName={plans.find((p) => p.id === plan)!.name} onPlans={() => onOpen("settings:plans")} />}
-      <PageTitle title={agent.name} body={agent.description} onBack={() => onOpen("agents")} backLabel="AI agents" />
-
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-3 rounded-[16px] border border-line bg-white px-4 py-3">
-        <AgentTile agent={agent} size={40} off={!s.on} />
-        <StatusDot status={statusOf(agent, s, store.paused, plan)} />
-        {agent.minPlan !== "starter" && <Badge tone="brand">{planName}</Badge>}
-        <span className="hidden min-w-0 flex-wrap items-center gap-1.5 md:flex">
-          <span className="text-[13px] text-subtle">Works on</span>
-          {agent.works.map((w) => (
-            <span key={w} className="rounded-full bg-panel px-2 py-0.5 text-[12.5px] text-ink-soft">
-              {w}
+      <header className="flex flex-col gap-4">
+        <button type="button" onClick={() => onOpen("agents")} className="inline-flex w-fit cursor-pointer items-center gap-1 text-[14px] font-medium text-subtle hover:text-ink">
+          <Icon name="chevron-left" size={16} />
+          AI agents
+        </button>
+        <div className="flex flex-wrap items-start gap-x-4 gap-y-3">
+          <AgentTile agent={agent} size={48} off={!s.on} />
+          <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+            <h1 className="m-0 font-serif text-[clamp(28px,2.8vw,38px)] leading-tight font-normal tracking-[-0.02em] text-ink">{agent.name}</h1>
+            <p className="m-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-[14px] text-subtle">
+              <StatusDot status={statusOf(agent, s, store.paused, plan)} />
+              <span aria-hidden="true">·</span>
+              <span>{agent.works.join(", ")}</span>
+              {agent.minPlan !== "starter" && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>{planName} plan</span>
+                </>
+              )}
+              <span aria-hidden="true">·</span>
+              <span className="text-[12.5px] tracking-[0.04em] uppercase">Sample data</span>
+            </p>
+          </div>
+          <span className="ml-auto flex items-center gap-3">
+            <span className="flex items-center gap-2.5 text-[14px] font-medium text-ink">
+              {s.on ? "On" : "Off"}
+              <Switch
+                checked={s.on}
+                onChange={(v) => {
+                  agentStore.setOn(id, v);
+                  toast(`${agent.name} turned ${v ? "on" : "off"}`);
+                }}
+                label={`${agent.name} on`}
+              />
             </span>
-          ))}
-        </span>
-        <span className="ml-auto flex items-center gap-3">
-          <SampleTag />
-          <span className="flex items-center gap-2.5 text-[14px] font-medium text-ink">
-            {s.on ? "On" : "Off"}
-            <Switch
-              checked={s.on}
-              onChange={(v) => {
-                agentStore.setOn(id, v);
-                toast(`${agent.name} turned ${v ? "on" : "off"}`);
-              }}
-              label={`${agent.name} on`}
+            <Menu
+              label={`More for ${agent.name}`}
+              items={[
+                { label: "Run tests", icon: "play", onSelect: () => go("test") },
+                { label: "Change history", icon: "clock", onSelect: () => go("setup") },
+                { label: "See its activity", icon: "chart", onSelect: () => go("activity") },
+                { label: "", divider: true },
+                { label: "Reset to recommended settings", icon: "refresh", onSelect: () => toast("Reset to recommended settings is part of your account (demo)", "info") },
+              ]}
             />
           </span>
-          <Menu
-            label={`More for ${agent.name}`}
-            items={[
-              { label: "Run tests", icon: "play", onSelect: () => go("test") },
-              { label: "Change history", icon: "clock", onSelect: () => go("setup") },
-              { label: "See its activity", icon: "chart", onSelect: () => go("activity") },
-              { label: "", divider: true },
-              { label: "Reset to recommended settings", icon: "refresh", onSelect: () => toast("Reset to recommended settings is part of your account (demo)", "info") },
-            ]}
-          />
-        </span>
-      </div>
+        </div>
+        <p className="m-0 max-w-[680px] text-[15.5px] leading-relaxed text-subtle">{agent.description}</p>
+      </header>
 
       <Tabs
         label={`${agent.name} sections`}
