@@ -254,6 +254,10 @@ export function Reviews({ onOpen }: { onOpen: (view: string) => void }) {
               <div>
                 <h2 className="m-0 text-[15.5px] font-semibold text-ink">How review requests work</h2>
                 <p className="m-0 mt-0.5 text-[13px] text-subtle">Happy customers are sent to Google. Anyone less happy reaches you privately first, so you can put it right.</p>
+                <button type="button" onClick={() => onOpen("agent:reviews/setup")} className="mt-1.5 inline-flex cursor-pointer items-center gap-1 text-[13px] font-semibold text-ink-soft hover:text-ink">
+                  Messages and timing are set on the Review agent
+                  <Icon name="chevron-right" size={14} />
+                </button>
               </div>
               <span className="flex items-center gap-2.5 text-[14px] font-medium text-ink">
                 {requestsOn ? "On" : "Off"}

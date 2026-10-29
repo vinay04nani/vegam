@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { sampleCalls, sampleTeam, type Call, type CallOutcome } from "@/content/dashboard";
+import { sampleCalls, type Call, type CallOutcome } from "@/content/dashboard";
 import { sampleContacts } from "@/content/contacts";
 import { sampleForwardingNumber } from "@/content/onboarding";
 import { Icon, type IconName } from "@/components/ui/Icon";
-import { Select, inputClass } from "@/components/setup/fields";
+import { inputClass } from "@/components/setup/fields";
 import { Avatar, Badge, Button, Drawer, EmptyState, SegmentedControl, Tabs, Toggle, useToast, type BadgeTone } from "../kit";
 import { PageTitle, SampleTag, SaveBar, SettingsSection } from "../ui";
 
@@ -365,10 +365,8 @@ const forwardCodes = [
   { when: "When your phone is off", code: "**62*", note: "Switched off or no signal" },
 ];
 
-function Routing() {
+function Routing({ onOpen }: { onOpen: (view: string) => void }) {
   const toast = useToast();
-  const [answer, setAnswer] = useState<"missed" | "always" | "after">("missed");
-  const [transfer, setTransfer] = useState<Record<string, boolean>>({ You: true, "R. Kumar": true, "S. Das": false });
   const [dirty, setDirty] = useState(false);
   const target = sampleForwardingNumber.replace(/\s/g, "");
   const touch = () => setDirty(true);
@@ -442,64 +440,40 @@ function Routing() {
           </div>
         </SettingsSection>
 
-        <SettingsSection title="When the AI answers" description="Pick when calls go to the AI. You can change this any time.">
-          <div className="flex flex-col gap-2" role="radiogroup" aria-label="When the AI answers">
-            {(
-              [
-                ["missed", "When you’re busy or don’t answer", "Recommended. You still take the calls you can."],
-                ["after", "Only outside business hours", "During hours your phone rings as usual."],
-                ["always", "Every call", "The AI answers first and transfers when asked."],
-              ] as const
-            ).map(([id, title, body]) => (
-              <label key={id} className={`flex cursor-pointer items-start gap-3 rounded-[14px] border p-3.5 transition ${answer === id ? "border-ink bg-[#FAFAFC]" : "border-line hover:border-line-strong"}`}>
-                <input type="radio" name="answer" checked={answer === id} onChange={() => setAnswer(id)} className="mt-1 accent-[#23243A]" />
-                <span className="flex flex-col">
-                  <span className="text-[14.5px] font-semibold text-ink">{title}</span>
-                  <span className="text-[13px] text-subtle">{body}</span>
-                </span>
-              </label>
-            ))}
+        <SettingsSection title="How the AI answers" description="When it picks up, its voice and greeting, who it transfers to and what it notes down are set on the Voice receptionist.">
+          <div className="flex flex-wrap items-center gap-3 rounded-[14px] border border-line p-4">
+            <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[12px] bg-[#EEF0FF] text-brand">
+              <Icon name="phone" size={18} />
+            </span>
+            <span className="flex min-w-0 flex-1 flex-col">
+              <span className="text-[15px] font-semibold text-ink">Voice receptionist</span>
+              <span className="text-[13px] text-subtle">Picks up after 4 rings · Asha’s voice · transfers to the front desk</span>
+            </span>
+            <Button icon="settings" onClick={() => onOpen("agent:voice/setup")}>
+              Set up
+            </Button>
           </div>
-          <label className="flex flex-col gap-2">
-            <span className="text-[14.5px] font-semibold text-ink">After hours, the AI should</span>
-            <Select defaultValue="book">
-              <option value="book">Answer questions and book visits</option>
-              <option value="message">Take a message for a call back</option>
-              <option value="whatsapp">Send a WhatsApp with the booking link</option>
-            </Select>
-          </label>
+          <div className="flex flex-wrap items-center gap-3 rounded-[14px] border border-line p-4">
+            <span className="flex h-10 w-10 flex-none items-center justify-center rounded-[12px] bg-[#E9F5EC] text-success">
+              <Icon name="send" size={18} />
+            </span>
+            <span className="flex min-w-0 flex-1 flex-col">
+              <span className="text-[15px] font-semibold text-ink">Outbound caller</span>
+              <span className="text-[13px] text-subtle">Calls new leads within a minute, 10 AM to 7 PM</span>
+            </span>
+            <Button icon="settings" onClick={() => onOpen("agent:outbound/setup")}>
+              Set up
+            </Button>
+          </div>
         </SettingsSection>
 
-        <SettingsSection title="Transfers to your team" description="When a caller asks for a person, the AI tries these people in order during business hours. If nobody answers, it takes a message.">
-          <ol className="m-0 flex list-none flex-col divide-y divide-line overflow-hidden rounded-[14px] border border-line p-0">
-            {sampleTeam.map((m, i) => (
-              <li key={m.name} className="flex items-center gap-3 px-4 py-3">
-                <span className="w-4 text-center text-[13px] font-bold text-muted">{i + 1}</span>
-                <Avatar name={m.name} size={32} />
-                <span className="min-w-0 flex-1">
-                  <Toggle
-                    checked={transfer[m.name]}
-                    onChange={(v) => {
-                      setTransfer((t) => ({ ...t, [m.name]: v }));
-                      touch();
-                    }}
-                    label={m.name === "You" ? "You (owner)" : m.name}
-                    description={`${m.role} · ${m.name === "You" ? "+91 98•• ••• 001" : m.contact}`}
-                  />
-                </span>
-              </li>
-            ))}
-          </ol>
-        </SettingsSection>
-
-        <SettingsSection title="What callers hear" description="The AI always says it’s an AI. Recording needs the caller’s consent.">
-          <Toggle checked onChange={() => undefined} disabled label="Say it’s an AI assistant at the start of every call" description="Always on." />
+        <SettingsSection title="Missed calls and recording" description="Recording needs the caller’s consent.">
+          <Toggle checked onChange={touch} label="Send a WhatsApp after every missed call" description="With your booking link, within seconds." />
           <label className="flex flex-col gap-2">
             <span className="text-[14.5px] font-semibold text-ink">Recording notice</span>
             <textarea rows={2} defaultValue="This call may be recorded so we can serve you better." className={`${inputClass} py-3`} />
             <span className="text-[13px] text-subtle">Played before recording starts. Calls are recorded only if the caller stays on the line.</span>
           </label>
-          <Toggle checked onChange={touch} label="Send a WhatsApp after every missed call" description="With your booking link, within seconds." />
           <p className="m-0 flex gap-2 rounded-[12px] bg-panel p-3 text-[13px] text-ink-soft">
             <Icon name="shield" size={15} className="mt-0.5 flex-none text-muted" />
             In India, outbound calling needs DLT registration: 160-series numbers for service calls and 140-series for promotional calls. Vegam handles this before the outbound caller is turned on.
@@ -543,7 +517,7 @@ export function Calls({ onOpen }: { onOpen: (view: string) => void }) {
           { id: "routing", label: "Numbers & routing" },
         ]}
       />
-      {tab === "log" ? <CallLog onOpen={onOpen} /> : <Routing />}
+      {tab === "log" ? <CallLog onOpen={onOpen} /> : <Routing onOpen={onOpen} />}
     </div>
   );
 }

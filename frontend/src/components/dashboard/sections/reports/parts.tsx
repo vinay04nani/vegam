@@ -94,7 +94,7 @@ export function Delta({ value, better = "up", size = "md" }: { value: number; be
 export type Kpi = { id: string; label: string; value: string; delta?: number; better?: "up" | "down"; trend: number[]; hint?: string };
 
 /** A row of KPI tiles. With `selected`/`onSelect` they work as a picker for the main chart. */
-export function KpiRow({ items, selected, onSelect, compare }: { items: Kpi[]; selected?: string; onSelect?: (id: string) => void; compare: boolean }) {
+export function KpiRow({ items, selected, onSelect, compare, vs = "vs previous period" }: { items: Kpi[]; selected?: string; onSelect?: (id: string) => void; compare: boolean; vs?: string }) {
   return (
     <div className={`grid grid-cols-2 gap-3 md:grid-cols-3 [&>*:last-child:nth-child(odd)]:col-span-2 md:[&>*:last-child:nth-child(odd)]:col-span-1 ${items.length >= 5 ? "xl:grid-cols-5" : "xl:grid-cols-4"}`}>
       {items.map((k) => {
@@ -112,7 +112,7 @@ export function KpiRow({ items, selected, onSelect, compare }: { items: Kpi[]; s
             </span>
             <span className="flex min-h-5 min-w-0 items-center gap-1.5 text-[12px] text-subtle">
               {compare && k.delta !== undefined && <Delta value={k.delta} better={k.better} size="sm" />}
-              <span className={`truncate ${compare && k.delta !== undefined ? "hidden sm:inline" : ""}`}>{compare && k.delta !== undefined ? "vs previous period" : k.hint}</span>
+              <span className={`truncate ${compare && k.delta !== undefined ? "hidden sm:inline" : ""}`}>{compare && k.delta !== undefined ? vs : k.hint}</span>
             </span>
           </>
         );

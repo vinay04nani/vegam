@@ -126,6 +126,9 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
         <PageTitle title="Payments" body="Payment links for deposits and bills, what’s been paid and what’s still owed. Customers pay by UPI or card through Stripe." />
         <div className="flex flex-wrap items-center gap-2">
           <SampleTag />
+          <Button icon="sparkle" onClick={() => onOpen("agent:payments/setup")}>
+            Reminders
+          </Button>
           <Button icon="settings" onClick={() => onOpen("settings:payments")}>
             Settings
           </Button>

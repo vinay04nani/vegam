@@ -165,11 +165,13 @@ function DashboardShell() {
       return;
     }
     setSettings(null);
+    // Moving between tabs of the same agent keeps the scroll position.
+    const sameAgent = id.startsWith("agent:") && view.split("/")[0] === id.split("/")[0];
     setView(id);
-    window.scrollTo({ top: 0 });
+    if (!sameAgent) window.scrollTo({ top: 0 });
   };
   const home = () => select("home");
-  const navView = settings !== null ? "settings" : homeViews.includes(view) ? "home" : (parentOf[view] ?? view);
+  const navView = settings !== null ? "settings" : homeViews.includes(view) ? "home" : view.startsWith("agent") ? "agents" : (parentOf[view] ?? view);
 
   const goLive = () => {
     update((s) => ({ ...s, liveAt: new Date().toISOString() }));
@@ -242,7 +244,7 @@ function DashboardShell() {
       case "setup-test":
         return <TestPage {...props} />;
       case "agents":
-        return <Agents state={state} update={update} onOpen={select} />;
+        return <Agents route="agents" state={state} update={update} onOpen={select} plan={plan} />;
       case "contacts":
         return <Contacts onOpen={select} />;
       case "billing":
@@ -264,6 +266,7 @@ function DashboardShell() {
       case "reports":
         return <Reports onOpen={select} />;
       default:
+        if (view.startsWith("agent")) return <Agents route={view} state={state} update={update} onOpen={select} plan={plan} />;
         return <LiveHome state={state} update={update} plan={plan} mode={mode} welcome={false} onDismissWelcome={() => undefined} onOpen={select} />;
     }
   })();
