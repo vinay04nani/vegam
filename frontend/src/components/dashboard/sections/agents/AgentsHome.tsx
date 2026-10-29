@@ -222,7 +222,7 @@ export function AgentsHome({ tab, state, update, onOpen, plan }: { tab: string; 
           })}
         </div>
       )}
-      {current === "knowledge" && <KnowledgeHub state={state} update={update} />}
+      {current === "knowledge" && <KnowledgeHub state={state} update={update} onOpen={onOpen} />}
       {current === "rules" && <BusinessRules plan={plan} onOpen={onOpen} />}
       {current === "activity" && <Activity update={update} />}
     </div>

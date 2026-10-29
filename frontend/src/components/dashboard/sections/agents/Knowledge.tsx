@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { sampleUnanswered, type Agent, type AgentId } from "@/content/agents";
-import { AssistantSetup } from "@/components/setup/AssistantSetup";
 import type { OnboardingState } from "@/lib/onboarding";
 import { Icon } from "@/components/ui/Icon";
 import { Button, useToast } from "../../kit";
 import { Switch, TextArea } from "../settings/parts";
+import { KnowledgeEditor } from "./KnowledgeEditor";
 import { Panel } from "./ui";
 
 // Knowledge: what the agents answer from. The hub (on the AI agents home)
@@ -110,19 +110,13 @@ function Sources({ picks, onPick }: { picks?: Record<string, boolean>; onPick?: 
 }
 
 /** The knowledge hub on the AI agents home. */
-export function KnowledgeHub({ state, update }: { state: OnboardingState; update: Update }) {
-  const toast = useToast();
+export function KnowledgeHub({ state, update, onOpen }: { state: OnboardingState; update: Update; onOpen: (view: string) => void }) {
   return (
     <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-4 xl:grid-cols-[minmax(0,1fr)_380px]">
       <div className="flex min-w-0 flex-col gap-4">
         <Unanswered update={update} />
-        <Panel title="Services, prices and answers" description="What every agent answers from. Keep it short and true.">
-          <AssistantSetup state={state} update={update} />
-          <div className="flex justify-end border-t border-line pt-4">
-            <Button variant="primary" onClick={() => toast("Knowledge saved")}>
-              Save knowledge
-            </Button>
-          </div>
+        <Panel title="What your agents know" description="Services, prices, hours and answers, shared by every agent.">
+          <KnowledgeEditor state={state} update={update} onOpen={onOpen} />
         </Panel>
       </div>
       <Sources />
