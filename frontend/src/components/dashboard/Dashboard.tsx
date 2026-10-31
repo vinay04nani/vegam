@@ -297,16 +297,9 @@ function DashboardShell() {
               <Icon name="chevron-right" size={16} />
             </button>
           )}
-          <nav aria-label="Dashboard" className="-mx-1 flex flex-1 flex-col overflow-y-auto px-1 [scrollbar-width:thin]">
-            {navGroups.map((g) => (
-              <div key={g.id} className="flex flex-col gap-0.5">
-                {g.label && <span aria-hidden="true" className="mx-3 my-2.5 h-px bg-line" />}
-                {nav
-                  .filter((n) => n.group === g.id)
-                  .map((n) => (
-                    <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
-                  ))}
-              </div>
+          <nav aria-label="Dashboard" className="-mx-1 flex flex-1 flex-col gap-0.5 overflow-y-auto px-1 [scrollbar-width:thin]">
+            {navGroups.flatMap((g) => nav.filter((n) => n.group === g.id)).map((n) => (
+              <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
             ))}
           </nav>
           <div className="mt-3 flex items-center gap-1 border-t border-line pt-3">
