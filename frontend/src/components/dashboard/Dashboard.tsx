@@ -300,7 +300,7 @@ function DashboardShell() {
           <nav aria-label="Dashboard" className="-mx-1 flex flex-1 flex-col overflow-y-auto px-1 [scrollbar-width:thin]">
             {navGroups.map((g) => (
               <div key={g.id} className="flex flex-col gap-0.5">
-                {g.label && <p className="m-0 mt-4 mb-1 px-3 text-[11.5px] font-semibold tracking-[0.1em] text-subtle uppercase">{g.label}</p>}
+                {g.label && <span aria-hidden="true" className="mx-3 my-2.5 h-px bg-line" />}
                 {nav
                   .filter((n) => n.group === g.id)
                   .map((n) => (
