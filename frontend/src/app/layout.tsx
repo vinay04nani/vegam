@@ -48,7 +48,7 @@ const notoThai = Noto_Sans_Thai({
   preload: false,
 });
 
-const themeBoot = `(function(){try{var d=document.documentElement;var q=new URLSearchParams(location.search).get("theme");var dark=q?q==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;d.setAttribute("data-theme",dark?"dark":"light");var lang=navigator.language||"en";d.lang=lang;d.dir=/^(ar|he|fa|ur|yi|dv|ps|ckb)\\b/i.test(lang)?"rtl":"ltr";}catch(e){}})();`;
+const themeBoot = `(function(){try{var d=document.documentElement;var params=new URLSearchParams(location.search);var q=params.get("theme");var dark=q?q==="dark":window.matchMedia("(prefers-color-scheme: dark)").matches;d.setAttribute("data-theme",dark?"dark":"light");d.lang=navigator.language||"en";d.dir=params.get("dir")==="rtl"?"rtl":"ltr";}catch(e){}})();`;
 
 export const metadata: Metadata = {
   title: "Vegam · Every customer, answered in seconds",

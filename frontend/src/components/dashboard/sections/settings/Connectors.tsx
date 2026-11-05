@@ -140,7 +140,7 @@ export function Connectors({ state, update }: Props) {
             <Group title="Approvals">
               {open.approvals.map((a) => (
                 <div key={a.label} className="flex items-center gap-3 py-3">
-                  <span className={`flex h-6 w-6 flex-none items-center justify-center rounded-full ${s === "connected" ? "bg-[#E8F3EA] text-success" : "bg-signal/15 text-warning"}`}>
+                  <span className={`flex h-6 w-6 flex-none items-center justify-center rounded-full ${s === "connected" ? "bg-success-subtle text-success" : "bg-signal/15 text-warning"}`}>
                     <Icon name={s === "connected" ? "check" : "clock"} size={13} />
                   </span>
                   <span className="flex-1 text-body text-ink">{a.label}</span>

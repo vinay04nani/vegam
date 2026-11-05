@@ -232,7 +232,7 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
           {c.timeline.map((e, i) => (
             <li key={`${e.at}-${i}`} className="relative flex gap-3 pb-4 last:pb-0">
               {i < c.timeline.length - 1 && <span aria-hidden="true" className="absolute top-8 bottom-0 start-[13px] w-px bg-line" />}
-              <span className={`flex h-7 w-7 flex-none items-center justify-center rounded-full ${e.kind === "optout" ? "bg-[#FDECEC] text-danger" : e.kind === "optin" ? "bg-[#E8F3EA] text-success" : "bg-panel text-muted"}`}>
+              <span className={`flex h-7 w-7 flex-none items-center justify-center rounded-full ${e.kind === "optout" ? "bg-danger-subtle text-danger" : e.kind === "optin" ? "bg-success-subtle text-success" : "bg-panel text-muted"}`}>
                 <Icon name={eventIcon[e.kind]} size={14} />
               </span>
               <span className="flex flex-col pt-0.5">

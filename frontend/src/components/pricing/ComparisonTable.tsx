@@ -7,11 +7,11 @@ import { Icon } from "@/components/ui/Icon";
 function Value({ v }: { v: boolean | string }) {
   if (v === true)
     return (
-      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#E8F3EA] text-success" aria-label="Included">
+      <span role="img" className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-success-subtle text-success" aria-label="Included">
         <Icon name="check" size={18} strokeWidth={2} />
       </span>
     );
-  if (v === false) return <span className="text-faint" aria-label="Not included">–</span>;
+  if (v === false) return <span role="img" className="text-faint" aria-label="Not included">–</span>;
   return <span className="text-body font-semibold text-ink">{v}</span>;
 }
 

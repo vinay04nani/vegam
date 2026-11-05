@@ -69,7 +69,7 @@ export function AgentsHome({ tab, state, update, onOpen, plan }: { tab: string; 
             {attention > 0 && (
               <>
                 <span aria-hidden="true">·</span>
-                <button type="button" onClick={() => setFilter("attention")} className="cursor-pointer font-medium text-[#8A4B00] underline decoration-[#E8C48C] underline-offset-2 hover:decoration-[#8A4B00]">
+                <button type="button" onClick={() => setFilter("attention")} className="cursor-pointer font-medium text-signal-ink underline decoration-warning/50 underline-offset-2 hover:decoration-signal-ink">
                   {attention} need{attention === 1 ? "s" : ""} attention
                 </button>
               </>
@@ -94,8 +94,8 @@ export function AgentsHome({ tab, state, update, onOpen, plan }: { tab: string; 
       </header>
 
       {store.paused && (
-        <p role="status" className="m-0 -mt-2 flex items-center gap-2.5 rounded-lg bg-[#FFF6E8] px-4 py-3 text-body text-ink">
-          <span className="h-2 w-2 flex-none rounded-full bg-[#E08A00]" />
+        <p role="status" className="m-0 -mt-2 flex items-center gap-2.5 rounded-lg bg-warning-subtle px-4 py-3 text-body text-ink">
+          <span className="h-2 w-2 flex-none rounded-full bg-warning" />
           Every agent is paused. Customers get your away message and your team sees every chat and call.
         </p>
       )}
@@ -175,7 +175,7 @@ export function AgentsHome({ tab, state, update, onOpen, plan }: { tab: string; 
                     return (
                       <article
                         key={a.id}
-                        className="group relative flex min-h-[176px] flex-col gap-3 rounded-lg border border-line bg-surface p-5 transition hover:border-line-strong hover:bg-[#FCFCFD] hover:shadow-1"
+                        className="group relative flex min-h-[176px] flex-col gap-3 rounded-lg border border-line bg-surface p-5 transition hover:border-line-strong hover:bg-surface-muted hover:shadow-1"
                       >
                         <div className="flex items-start justify-between gap-3">
                           <AgentTile agent={a} size={36} off={!s.on} />
@@ -211,7 +211,7 @@ export function AgentsHome({ tab, state, update, onOpen, plan }: { tab: string; 
                             </>
                           )}
                         </div>
-                        {needs(a) && !store.paused && <p className="m-0 -mt-1 truncate text-label text-[#8A4B00]">{a.alerts[0].text}</p>}
+                        {needs(a) && !store.paused && <p className="m-0 -mt-1 truncate text-label text-signal-ink">{a.alerts[0].text}</p>}
                         <Icon name="chevron-right" size={16} className="absolute end-4 bottom-5 text-faint opacity-0 transition group-hover:opacity-100" />
                       </article>
                     );

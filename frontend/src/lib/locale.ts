@@ -55,14 +55,17 @@ const INR_PER: Record<Currency, number> = {
   AED: 22.6,
 };
 
-const RTL = /^(ar|he|fa|ur|yi|dv|ps|ckb|sd)\b/i;
-
 export function currencyForRegion(region: string): Currency {
   return REGION_CURRENCY[region] ?? "USD";
 }
 
-export function dirForLocale(locale: string): TextDirection {
-  return RTL.test(locale) ? "rtl" : "ltr";
+/** RTL only when that locale has translated copy. None do yet, so English stays LTR. `?dir=rtl` forces it for layout checks. */
+export function dirForLocale(_locale: string): TextDirection {
+  if (typeof window !== "undefined") {
+    const forced = new URLSearchParams(window.location.search).get("dir");
+    if (forced === "rtl" || forced === "ltr") return forced;
+  }
+  return "ltr";
 }
 
 function regionFromTimeZone(timeZone: string): string {

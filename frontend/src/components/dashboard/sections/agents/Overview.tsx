@@ -46,7 +46,7 @@ export function Overview({ agent, s, go, onOpen }: { agent: Agent; s: AgentState
             <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
               {agent.steps.map((st) => (
                 <li key={st.label} className="flex items-center gap-3 py-2.5">
-                  <span className={`flex h-6 w-6 flex-none items-center justify-center rounded-full ${st.done ? "bg-[#E8F3EA] text-success" : "border-2 border-line-strong"}`}>
+                  <span className={`flex h-6 w-6 flex-none items-center justify-center rounded-full ${st.done ? "bg-success-subtle text-success" : "border-2 border-line-strong"}`}>
                     {st.done && <Icon name="check" size={13} strokeWidth={2.6} className="[&_circle]:hidden" />}
                   </span>
                   <span className={`min-w-0 flex-1 text-body ${st.done ? "text-subtle line-through decoration-line-strong" : "font-medium text-ink"}`}>{st.label}</span>
@@ -105,7 +105,7 @@ export function Overview({ agent, s, go, onOpen }: { agent: Agent; s: AgentState
             <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
               {agent.alerts.map((al) => (
                 <li key={al.text} className="flex items-start gap-2.5">
-                  <span aria-hidden="true" className="mt-[7px] h-2 w-2 flex-none rounded-full bg-[#E08A00]" />
+                  <span aria-hidden="true" className="mt-[7px] h-2 w-2 flex-none rounded-full bg-warning" />
                   <span className="flex min-w-0 flex-1 flex-col gap-1 text-body text-ink">
                     {al.text}
                     {al.action && (

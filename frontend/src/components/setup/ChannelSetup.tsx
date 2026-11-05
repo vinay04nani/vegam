@@ -106,7 +106,7 @@ export function ChannelSetup({ state, update, only }: Props) {
                     name="wa-number"
                     checked={state.whatsappNumber === id}
                     onChange={() => update((s) => ({ ...s, whatsappNumber: id }))}
-                    className="mt-1 accent-[#23243A]"
+                    className="mt-1 accent-brand-fill"
                   />
                   <span className="flex flex-col">
                     <span className="text-body font-medium text-ink">{title}</span>
@@ -120,7 +120,7 @@ export function ChannelSetup({ state, update, only }: Props) {
             </SecondaryButton>
           </div>
         ) : (
-          <p className="m-0 rounded-lg bg-[#FFF8F0] px-4 py-3 text-body text-ink-soft sm:ms-15">
+          <p className="m-0 rounded-lg bg-warning-subtle px-4 py-3 text-body text-ink-soft sm:ms-15">
             Meta is reviewing your display name. This usually takes a few hours, sometimes up to 2 days. You can finish setting up and test your assistant meanwhile; we’ll message you when it’s approved.
           </p>
         );

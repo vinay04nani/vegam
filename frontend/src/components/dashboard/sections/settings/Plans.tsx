@@ -51,7 +51,7 @@ export function Plans({ state, update, onOpen }: Props) {
   if (step === "done" && chosen) {
     return (
       <div className="flex flex-col items-center gap-3 py-10 text-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-[#E8F3EA] text-success">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-success-subtle text-success">
           <Icon name="check" size={26} />
         </span>
         <h3 className="m-0 text-h3 font-semibold text-ink">You’re on {chosen.name}</h3>
@@ -97,12 +97,12 @@ export function Plans({ state, update, onOpen }: Props) {
 
         <Group title="Pay with" description="Card details go straight to Stripe. Vegam never sees or stores them.">
           <label className="flex cursor-pointer items-center gap-3 py-4">
-            <input type="radio" name="card" checked={card === "saved"} onChange={() => setCard("saved")} className="accent-[#23243A]" />
+            <input type="radio" name="card" checked={card === "saved"} onChange={() => setCard("saved")} className="accent-brand-fill" />
             <span className="flex-1 text-body text-ink">Visa •••• 4242 · expires 08/29</span>
           </label>
           <div className="py-4">
             <label className="flex cursor-pointer items-center gap-3">
-              <input type="radio" name="card" checked={card === "new"} onChange={() => setCard("new")} className="accent-[#23243A]" />
+              <input type="radio" name="card" checked={card === "new"} onChange={() => setCard("new")} className="accent-brand-fill" />
               <span className="flex-1 text-body text-ink">A new card</span>
             </label>
             {card === "new" && (

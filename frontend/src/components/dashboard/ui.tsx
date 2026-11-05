@@ -31,13 +31,13 @@ export function Ring({ done, total }: { done: number; total: number }) {
   const c = 2 * Math.PI * r;
   return (
     <svg width="56" height="56" viewBox="0 0 56 56" role="img" aria-label={`${done} of ${total} done`}>
-      <circle cx="28" cy="28" r={r} fill="none" stroke="#ECEDF2" strokeWidth="6" />
+      <circle cx="28" cy="28" r={r} fill="none" stroke="var(--v-border)" strokeWidth="6" />
       <circle
         cx="28"
         cy="28"
         r={r}
         fill="none"
-        stroke="#EE7A2E"
+        stroke="var(--v-brand)"
         strokeWidth="6"
         strokeLinecap="round"
         strokeDasharray={c}

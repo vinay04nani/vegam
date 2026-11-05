@@ -143,7 +143,7 @@ function CallDetails({ call, onOpen }: { call: Call; onOpen: (view: string) => v
       )}
 
       {call.outcome === "Callback" && (
-        <p className="m-0 flex items-start gap-2.5 rounded-lg border border-[#FBDDBF] bg-[#FFF8F0] p-3.5 text-body text-ink">
+        <p className="m-0 flex items-start gap-2.5 rounded-lg border border-warning/40 bg-warning-subtle p-3.5 text-body text-ink">
           <Icon name="clock" size={16} className="mt-0.5 flex-none text-warning" />
           <span>
             <span className="font-semibold">Waiting for your call back.</span> The caller asked for a person; nobody has called yet.
@@ -292,7 +292,7 @@ function CallLog({ onOpen }: { onOpen: (view: string) => void }) {
                     <tr key={c.id} onClick={() => setOpenId(c.id)} className="cursor-pointer border-t border-line transition hover:bg-surface-muted">
                       <td className="py-3 ps-4">
                         <button type="button" onClick={() => setOpenId(c.id)} className="flex cursor-pointer items-center gap-3 text-start">
-                          <span className={`flex h-9 w-9 flex-none items-center justify-center rounded-full ${c.direction === "out" ? "bg-[#EEF7EF] text-success" : "bg-periwinkle-soft text-brand"}`}>
+                          <span className={`flex h-9 w-9 flex-none items-center justify-center rounded-full ${c.direction === "out" ? "bg-success-subtle text-success" : "bg-periwinkle-soft text-brand"}`}>
                             <Icon name={c.direction === "out" ? "arrow" : "phone"} size={16} className={c.direction === "out" ? "-rotate-45" : ""} />
                           </span>
                           <span className="flex flex-col">
@@ -442,7 +442,7 @@ function Routing({ onOpen }: { onOpen: (view: string) => void }) {
 
         <SettingsSection title="How the AI answers" description="When it picks up, its voice and greeting, who it transfers to and what it notes down are set on the Voice receptionist.">
           <div className="flex flex-wrap items-center gap-3 rounded-lg border border-line p-4">
-            <span className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-[#EEF0FF] text-brand">
+            <span className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-brand-subtle text-brand">
               <Icon name="phone" size={18} />
             </span>
             <span className="flex min-w-0 flex-1 flex-col">
@@ -454,7 +454,7 @@ function Routing({ onOpen }: { onOpen: (view: string) => void }) {
             </Button>
           </div>
           <div className="flex flex-wrap items-center gap-3 rounded-lg border border-line p-4">
-            <span className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-[#E9F5EC] text-success">
+            <span className="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-success-subtle text-success">
               <Icon name="send" size={18} />
             </span>
             <span className="flex min-w-0 flex-1 flex-col">

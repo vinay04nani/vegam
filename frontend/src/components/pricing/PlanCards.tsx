@@ -116,14 +116,14 @@ export function PlanCards({ highlight }: { highlight: PlanId | null }) {
                     </li>
                   ))}
                 </ul>
-                <dl className="m-0 mt-auto grid grid-cols-1 gap-2 pt-8 text-label">
+                <ul className="m-0 mt-auto grid list-none grid-cols-1 gap-2 p-0 pt-8 text-label">
                   {plan.limits.map((l) => (
-                    <div key={l} className="flex items-center gap-2 text-text-3">
+                    <li key={l} className="flex items-center gap-2 text-text-3">
                       <span className="h-1.5 w-1.5 rounded-full bg-brand" />
-                      <dd className="m-0">{l}</dd>
-                    </div>
+                      {l}
+                    </li>
                   ))}
-                </dl>
+                </ul>
               </article>
             </Reveal>
           );

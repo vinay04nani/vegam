@@ -281,7 +281,7 @@ export function Reviews({ onOpen }: { onOpen: (view: string) => void }) {
                   <option value="next">The next morning</option>
                 </Dropdown>
               </li>
-              <li className="flex flex-col gap-2 rounded-lg bg-[#EEF7EF] p-4">
+              <li className="flex flex-col gap-2 rounded-lg bg-success-subtle p-4">
                 <span className="text-caption font-semibold tracking-[0.06em] text-success uppercase">2a · Happy</span>
                 <span className="text-body text-ink">They get your Google review link with a thank-you.</span>
                 <Dropdown aria-label="Stars that go to Google" defaultValue="4" className="mt-auto w-full">
@@ -289,7 +289,7 @@ export function Reviews({ onOpen }: { onOpen: (view: string) => void }) {
                   <option value="5">Only 5 stars go to Google</option>
                 </Dropdown>
               </li>
-              <li className="flex flex-col gap-2 rounded-lg bg-[#FFF4EC] p-4">
+              <li className="flex flex-col gap-2 rounded-lg bg-warning-subtle p-4">
                 <span className="text-caption font-semibold tracking-[0.06em] text-warning uppercase">2b · Less happy</span>
                 <span className="text-body text-ink">They’re asked what went wrong. You get it here and on WhatsApp straight away.</span>
                 <span className="mt-auto text-caption text-subtle">Google’s rules: everyone can still review you; we never block or filter reviews.</span>

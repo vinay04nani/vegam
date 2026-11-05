@@ -48,7 +48,7 @@ export function NotificationPrefs() {
                   </th>
                   {channels.map((c) => (
                     <td key={c} className="px-2 py-3.5 text-center">
-                      <input type="checkbox" aria-label={`${e.label}: ${c}`} checked={prefs[e.id].includes(c)} onChange={() => toggle(e.id, c)} className="h-4 w-4 cursor-pointer accent-[#23243A]" />
+                      <input type="checkbox" aria-label={`${e.label}: ${c}`} checked={prefs[e.id].includes(c)} onChange={() => toggle(e.id, c)} className="h-4 w-4 cursor-pointer accent-brand-fill" />
                     </td>
                   ))}
                 </tr>

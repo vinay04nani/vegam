@@ -35,7 +35,7 @@ export function statusOf(agent: Agent, s: AgentState, paused: boolean, plan: Pla
   return { label: "Live", tone: "success" };
 }
 
-const dot: Record<string, string> = { success: "bg-[#2E9D4F]", warning: "bg-[#E08A00]", brand: "bg-indigo", neutral: "bg-[#B9BBC7]", danger: "bg-danger" };
+const dot: Record<string, string> = { success: "bg-success", warning: "bg-warning", brand: "bg-indigo", neutral: "bg-text-3", danger: "bg-danger" };
 
 /** A coloured dot and a word: quieter than a badge. */
 export function StatusDot({ status }: { status: Status }) {

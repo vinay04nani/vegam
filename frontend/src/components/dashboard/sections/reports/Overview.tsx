@@ -66,7 +66,7 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
   const highlights: { icon: IconName; tone: string; body: ReactNode; action?: { label: string; view: string } }[] = [
     {
       icon: "chart",
-      tone: dBook >= 0 ? "bg-[#E8F3EA] text-success" : "bg-[#FDECEC] text-danger",
+      tone: dBook >= 0 ? "bg-success-subtle text-success" : "bg-danger-subtle text-danger",
       body: (
         <>
           Bookings are <strong className="font-semibold text-ink">{dBook >= 0 ? "up" : "down"} {pct(Math.abs(dBook))}</strong> on the previous period, and {pct(cur.conversion)} of enquiries became a booking.
@@ -75,7 +75,7 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
     },
     {
       icon: "message",
-      tone: "bg-[#EAF2FC] text-[#1d5fae]",
+      tone: "bg-info-subtle text-info",
       body: (
         <>
           <strong className="font-semibold text-ink">{best.label}</strong> converts best: {pct(best.rate)} of its enquiries became bookings.
@@ -93,7 +93,7 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
     },
     {
       icon: "sun",
-      tone: "bg-[#F1EEFB] text-[#5B4BC4]",
+      tone: "bg-brand-subtle text-brand",
       body: (
         <>
           <strong className="font-semibold text-ink">{formatNumber(Math.round(cur.enquiries * 0.31))}</strong> enquiries came after closing time. The AI answered every one.
@@ -102,7 +102,7 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
     },
     {
       icon: "sparkle",
-      tone: "bg-[#FDF3DC] text-[#8A5A00]",
+      tone: "bg-warning-subtle text-signal-ink",
       body: (
         <>
           <strong className="font-semibold text-ink">{unanswered} questions</strong> the AI couldn’t answer this period.

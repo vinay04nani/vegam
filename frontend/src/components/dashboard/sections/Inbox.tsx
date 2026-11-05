@@ -73,7 +73,7 @@ function Message({ m, who }: { m: ThreadMessage; who: string }) {
   if (m.kind === "note") {
     return (
       <div className="flex max-w-[80%] flex-col items-end gap-1 self-end">
-        <div className="rounded-lg rounded-se-[4px] border border-[#F2DFA0] bg-signal/15 px-3.5 py-2.5 text-body leading-snug text-ink">{m.text}</div>
+        <div className="rounded-lg rounded-se-[4px] border border-warning/40 bg-warning-subtle px-3.5 py-2.5 text-body leading-snug text-ink">{m.text}</div>
         <span className="flex items-center gap-1 px-1 text-caption text-subtle">
           <Icon name="lock" size={11} />
           Internal note · {m.time}
@@ -296,7 +296,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
         ? { tone: "bg-periwinkle-soft/60 text-brand", icon: "sparkle" as IconName, text: "The AI assistant is answering this chat.", action: "Take over", onAction: takeOver }
         : open.owner === "needs"
           ? { tone: "bg-signal/15 text-warning", icon: "bell" as IconName, text: "The AI handed this chat to your team.", action: "Take over", onAction: takeOver }
-          : { tone: "bg-[#E8F3EA] text-success", icon: "users" as IconName, text: `${open.assignee && open.assignee !== "You" ? `${open.assignee} is` : "You’re"} handling this chat. The AI is paused.`, action: "Hand back to AI", onAction: handBack };
+          : { tone: "bg-success-subtle text-success", icon: "users" as IconName, text: `${open.assignee && open.assignee !== "You" ? `${open.assignee} is` : "You’re"} handling this chat. The AI is paused.`, action: "Hand back to AI", onAction: handBack };
 
   return (
     <div className="flex h-[calc(100svh-56px-64px)] flex-col overflow-hidden bg-surface lg:h-[calc(100svh-48px)] lg:rounded-xl lg:border lg:border-line lg:shadow-1">
@@ -393,7 +393,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                           {last.from === "ai" ? "AI: " : last.from === "team" ? (last.kind === "note" ? "Note: " : "You: ") : ""}
                           {last.kind === "voice" ? "Voice note" : last.kind === "image" ? "Photo" : last.text}
                         </span>
-                        {t.unread && <span className="h-2 w-2 flex-none rounded-full bg-indigo" aria-label="Unread" />}
+                        {t.unread && <span role="img" className="h-2 w-2 flex-none rounded-full bg-indigo" aria-label="Unread" />}
                       </span>
                       {(t.owner === "needs" || t.assignee || t.status === "snoozed") && (
                         <span className="mt-1 flex flex-wrap items-center gap-1.5">
@@ -530,7 +530,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
 
               {/* Reply box */}
               <div className="border-t border-line bg-surface p-3 sm:px-5">
-                <div className={`relative rounded-lg border transition focus-within:border-indigo focus-within:ring-4 focus-within:ring-indigo/10 ${mode === "note" ? "border-[#F2DFA0] bg-[#FFFBEB]" : "border-line-strong bg-surface"}`}>
+                <div className={`relative rounded-lg border transition focus-within:border-indigo focus-within:ring-4 focus-within:ring-indigo/10 ${mode === "note" ? "border-warning/40 bg-warning-subtle" : "border-line-strong bg-surface"}`}>
                   {replies.length > 0 && (
                     <div role="listbox" aria-label="Saved replies" className="absolute inset-x-0 bottom-full z-20 mb-2 overflow-hidden rounded-lg border border-line bg-surface shadow-2">
                       <p className="m-0 flex items-center justify-between border-b border-line px-3.5 py-2 text-caption font-semibold tracking-[0.04em] text-muted uppercase">

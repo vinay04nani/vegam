@@ -199,7 +199,7 @@ export function TimeGrid({ today, days, itemsFor, open, close, serviceName, onSe
               </span>
             ))}
             {showNow && (
-              <span className="absolute end-1 z-40 -translate-y-1/2 rounded-full bg-[#D0302F] px-1.5 py-0.5 text-caption leading-none font-semibold whitespace-nowrap text-white" style={{ top: pos(nowMin) }}>
+              <span className="absolute end-1 z-40 -translate-y-1/2 rounded-full bg-danger px-1.5 py-0.5 text-caption leading-none font-semibold whitespace-nowrap text-white" style={{ top: pos(nowMin) }}>
                 {fmtMin(nowMin).replace(" AM", "am").replace(" PM", "pm")}
               </span>
             )}
@@ -222,8 +222,8 @@ export function TimeGrid({ today, days, itemsFor, open, close, serviceName, onSe
                 ))}
                 {d === 0 && showNow && (
                   <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 z-40 flex items-center opacity-90" style={{ top: pos(nowMin) - 1 }}>
-                    <span className="-ms-[5px] h-2.5 w-2.5 flex-none rounded-full bg-[#D0302F]" />
-                    <span className="h-[2px] flex-1 bg-[#D0302F]" />
+                    <span className="-ms-[5px] h-2.5 w-2.5 flex-none rounded-full bg-danger" />
+                    <span className="h-[2px] flex-1 bg-danger" />
                   </div>
                 )}
               </div>

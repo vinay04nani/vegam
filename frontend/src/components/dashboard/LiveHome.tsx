@@ -237,7 +237,7 @@ export function LiveHome({ state, update, plan, mode, welcome, onDismissWelcome,
                   </span>
                   <span className="flex flex-col items-end gap-1">
                     <span className="text-caption text-subtle">{c.time}</span>
-                    <span className={`rounded-full px-2 py-0.5 text-caption font-semibold ${c.by === "AI" ? "bg-periwinkle-soft text-brand" : "bg-[#E8F3EA] text-success"}`}>{c.by}</span>
+                    <span className={`rounded-full px-2 py-0.5 text-caption font-semibold ${c.by === "AI" ? "bg-periwinkle-soft text-brand" : "bg-success-subtle text-success"}`}>{c.by}</span>
                   </span>
                 </li>
               ))}

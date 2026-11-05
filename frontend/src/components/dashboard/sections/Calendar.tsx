@@ -202,7 +202,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                     <button
                       type="button"
                       onClick={() => setSelected({ kind: "booking", ...b })}
-                      className={`flex w-full cursor-pointer items-center gap-2.5 rounded-lg p-2 text-start transition hover:bg-panel ${i === 0 ? "bg-[#F7F8FF]" : ""}`}
+                      className={`flex w-full cursor-pointer items-center gap-2.5 rounded-lg p-2 text-start transition hover:bg-panel ${i === 0 ? "bg-brand-subtle" : ""}`}
                     >
                       <span className="w-[60px] flex-none text-caption leading-tight font-semibold whitespace-nowrap text-ink tabular-nums">{fmtMin(toMin(b.start))}</span>
                       <span className="h-8 w-[3px] flex-none rounded-full" style={{ background: serviceColors[b.service % serviceColors.length][0] }} />
@@ -244,13 +244,13 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
             })}
             <div className="mt-1 flex flex-col gap-2 border-t border-line pt-3 text-caption text-subtle">
               <span className="flex items-center gap-2">
-                <span className="relative h-4 w-6 overflow-hidden rounded-sm bg-[#EEF0FF]">
+                <span className="relative h-4 w-6 overflow-hidden rounded-sm bg-brand-subtle">
                   <span className="absolute inset-y-0 start-0 w-[3px] bg-[#4A47E0]" />
                 </span>
                 Confirmed
               </span>
               <span className="flex items-center gap-2">
-                <span className="relative flex h-4 w-6 items-center justify-center overflow-hidden rounded-sm bg-[#EEF0FF] text-[#1E1C6E] shadow-[inset_0_0_0_1px_#4A47E0]">
+                <span className="relative flex h-4 w-6 items-center justify-center overflow-hidden rounded-sm bg-brand-subtle text-brand shadow-[inset_0_0_0_1px_#4A47E0]">
                   <Icon name="clock" size={10} />
                 </span>
                 Waiting to confirm
@@ -318,7 +318,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                 </Button>
                 <Button
                   variant="primary"
-                  className="bg-danger hover:bg-[#a30d0d]"
+                  className="bg-danger hover:bg-danger/80"
                   onClick={() => {
                     setBookings((bs) => bs.filter((b) => b.id !== selected.id));
                     setSelected(null);
@@ -473,7 +473,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
               </Field>
             </div>
             {clash ? (
-              <p role="alert" className="m-0 flex items-center gap-2 rounded-lg bg-[#FDECEC] px-3.5 py-2.5 text-body text-danger">
+              <p role="alert" className="m-0 flex items-center gap-2 rounded-lg bg-danger-subtle px-3.5 py-2.5 text-body text-danger">
                 <Icon name="clock" size={16} />
                 That time overlaps with {clash.kind === "booking" ? clash.who : "blocked time"} ({fmtMin(toMin(clash.start))}).
               </p>

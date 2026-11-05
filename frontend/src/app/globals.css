@@ -25,8 +25,13 @@
   --v-signal: #ffb020;
   --v-signal-ink: #c2410c;
   --v-success: #15803d;
+  --v-success-subtle: #dcfce7;
   --v-warning: #c2410c;
+  --v-warning-subtle: #ffedd5;
   --v-danger: #b42318;
+  --v-danger-subtle: #fee2e2;
+  --v-info: #1d4ed8;
+  --v-info-subtle: #dbeafe;
   --v-shadow-1: 0 1px 2px rgb(20 21 31 / 0.06);
   --v-shadow-2: 0 8px 24px rgb(20 21 31 / 0.08);
   --v-shadow-3: 0 24px 60px rgb(20 21 31 / 0.16);
@@ -50,8 +55,13 @@
   --v-signal: #ffc14d;
   --v-signal-ink: #fb923c;
   --v-success: #4ade80;
+  --v-success-subtle: #052e16;
   --v-warning: #fb923c;
+  --v-warning-subtle: #431407;
   --v-danger: #f87171;
+  --v-danger-subtle: #450a0a;
+  --v-info: #93c5fd;
+  --v-info-subtle: #172554;
   --v-shadow-1: 0 1px 2px rgb(0 0 0 / 0.45);
   --v-shadow-2: 0 8px 24px rgb(0 0 0 / 0.5);
   --v-shadow-3: 0 24px 60px rgb(0 0 0 / 0.6);
@@ -80,8 +90,13 @@
   --color-signal: var(--v-signal);
   --color-signal-ink: var(--v-signal-ink);
   --color-success: var(--v-success);
+  --color-success-subtle: var(--v-success-subtle);
   --color-warning: var(--v-warning);
+  --color-warning-subtle: var(--v-warning-subtle);
   --color-danger: var(--v-danger);
+  --color-danger-subtle: var(--v-danger-subtle);
+  --color-info: var(--v-info);
+  --color-info-subtle: var(--v-info-subtle);
 
   /* Previous names, mapped so existing classes follow the same theme. */
   --color-page: var(--v-bg);
@@ -154,6 +169,32 @@
     0%, 100% { opacity: 1; }
     50% { opacity: 0.45; }
   }
+}
+
+/* Chat mockups stay a light WhatsApp-style surface in both themes, so their text does not follow dark ink. */
+@utility light-surface {
+  color-scheme: light;
+  --v-bg: #fbfbfd;
+  --v-surface: #ffffff;
+  --v-surface-muted: #f5f6fa;
+  --v-border: #e6e8f0;
+  --v-border-strong: #d5d8e3;
+  --v-text: #14151f;
+  --v-text-2: #4a4c5c;
+  --v-text-3: #6b6e80;
+  --v-brand: #3d35d9;
+  --v-brand-fill: #3d35d9;
+  --v-brand-subtle: #eeefff;
+  --v-success: #15803d;
+  --v-success-subtle: #dcfce7;
+  --v-warning: #c2410c;
+  --v-warning-subtle: #ffedd5;
+  --v-danger: #b42318;
+  --v-danger-subtle: #fee2e2;
+  --v-info: #1d4ed8;
+  --v-info-subtle: #dbeafe;
+  --v-signal-ink: #c2410c;
+  color: var(--v-text);
 }
 
 @layer base {

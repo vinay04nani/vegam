@@ -79,7 +79,7 @@ export function RowButton({ children, onClick, tone = "default", ariaLabel, icon
   const styles = {
     default: "border border-line-strong bg-surface text-ink hover:bg-panel",
     primary: "bg-brand-fill text-white hover:bg-brand-hover",
-    danger: "border border-[#F2C4C4] bg-surface text-danger hover:bg-[#FDF2F2]",
+    danger: "border border-danger/40 bg-surface text-danger hover:bg-danger-subtle",
   }[tone];
   return (
     <button type="button" onClick={onClick} aria-label={ariaLabel} className={`inline-flex h-8 flex-none cursor-pointer items-center gap-1.5 rounded-md px-3 text-label font-medium whitespace-nowrap transition ${styles}`}>

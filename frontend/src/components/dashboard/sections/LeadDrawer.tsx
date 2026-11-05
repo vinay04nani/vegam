@@ -29,7 +29,7 @@ function ScoreRing({ score }: { score: number }) {
   const t = leadTemp(score);
   return (
     <svg width="60" height="60" viewBox="0 0 60 60" role="img" aria-label={`Score ${score} of 100`} className="flex-none">
-      <circle cx="30" cy="30" r={r} fill="none" stroke="#ECEDF2" strokeWidth="6" />
+      <circle cx="30" cy="30" r={r} fill="none" stroke="var(--v-border)" strokeWidth="6" />
       <circle cx="30" cy="30" r={r} fill="none" stroke={tempColor[t]} strokeWidth="6" strokeLinecap="round" strokeDasharray={c} strokeDashoffset={c * (1 - score / 100)} transform="rotate(-90 30 30)" />
       <text x="30" y="35" textAnchor="middle" className="fill-ink text-body font-bold">
         {score}
@@ -187,7 +187,7 @@ export function LeadDrawer({
           <ol className="relative m-0 flex list-none flex-col gap-4 p-0 before:absolute before:top-2 before:bottom-2 before:start-[13px] before:w-px before:bg-line-strong">
             {[...lead.activity].reverse().map((a, i) => (
               <li key={i} className="relative flex gap-3">
-                <span className={`relative z-10 flex h-7 w-7 flex-none items-center justify-center rounded-full ring-4 ring-white ${a.kind === "ai" ? "bg-periwinkle-soft text-brand" : a.kind === "booking" ? "bg-[#E8F3EA] text-success" : "bg-panel text-muted"}`}>
+                <span className={`relative z-10 flex h-7 w-7 flex-none items-center justify-center rounded-full ring-4 ring-white ${a.kind === "ai" ? "bg-periwinkle-soft text-brand" : a.kind === "booking" ? "bg-success-subtle text-success" : "bg-panel text-muted"}`}>
                   <Icon name={activityIcon[a.kind]} size={14} />
                 </span>
                 <span className="flex flex-col pt-0.5">

@@ -82,7 +82,7 @@ function PlainTable({ data }: { data: TableData }) {
 export function Delta({ value, better = "up", size = "md" }: { value: number; better?: "up" | "down"; size?: "sm" | "md" }) {
   const flat = Math.abs(value) < 0.005;
   const good = better === "up" ? value >= 0 : value <= 0;
-  const tone = flat ? "bg-panel text-muted" : good ? "bg-[#E8F3EA] text-success" : "bg-[#FDECEC] text-danger";
+  const tone = flat ? "bg-panel text-muted" : good ? "bg-success-subtle text-success" : "bg-danger-subtle text-danger";
   return (
     <span className={`inline-flex flex-none items-center gap-0.5 rounded-full font-semibold tabular-nums ${tone} ${size === "sm" ? "px-1.5 py-px text-caption" : "px-2 py-0.5 text-caption"}`}>
       {!flat && <Icon name="chevron-down" size={12} strokeWidth={2.6} className={value >= 0 ? "rotate-180" : ""} />}

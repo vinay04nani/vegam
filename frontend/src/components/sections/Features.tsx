@@ -29,7 +29,7 @@ export function Features() {
       </Reveal>
 
       <div className="flex flex-wrap items-stretch gap-4">
-        <Reveal className="flex min-w-0 flex-[1_1_460px] flex-col gap-8 rounded-xl border border-line bg-[linear-gradient(to_bottom,#FFFFFF_70%,#F1F2FC_100%)] px-[clamp(20px,3vw,56px)] py-[clamp(24px,4vw,56px)]">
+        <Reveal className="flex min-w-0 flex-[1_1_460px] flex-col gap-8 rounded-xl border border-line bg-surface px-[clamp(20px,3vw,56px)] py-[clamp(24px,4vw,56px)]">
           <h3 className="m-0 font-serif text-display leading-tight font-normal tracking-[-0.02em]">
             Answer <span className="text-indigo">every channel</span>
             <br />

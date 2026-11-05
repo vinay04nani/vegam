@@ -36,7 +36,7 @@ function ReminderDots({ p }: { p: PaymentLink }) {
   const sent = remindersSent(p);
   const live = p.status === "unpaid";
   return (
-    <span className="flex items-center gap-1" aria-label={live ? `${sent} of ${reminderDays.length} reminders sent` : "No reminders needed"} title={live ? `Reminders on day ${reminderDays.join(", ")}` : undefined}>
+    <span role="img" className="flex items-center gap-1" aria-label={live ? `${sent} of ${reminderDays.length} reminders sent` : "No reminders needed"} title={live ? `Reminders on day ${reminderDays.join(", ")}` : undefined}>
       {reminderDays.map((d, i) => (
         <span key={d} className={`h-2 w-2 rounded-full ${!live && sent <= i ? "bg-line" : i < sent ? "bg-brand-fill" : "border border-line-strong bg-surface"}`} />
       ))}

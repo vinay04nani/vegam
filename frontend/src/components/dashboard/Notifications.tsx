@@ -21,9 +21,9 @@ const tabs: { id: Tab; label: string }[] = [
 ];
 
 const tile: Record<AppNotification["group"], string> = {
-  "Needs you": "bg-signal/15 text-[#C2560F]",
-  Bookings: "bg-[#E8F3EA] text-success",
-  System: "bg-[#EAF2FF] text-[#2F6FDB]",
+  "Needs you": "bg-warning-subtle text-signal-ink",
+  Bookings: "bg-success-subtle text-success",
+  System: "bg-info-subtle text-info",
 };
 
 export function NotificationBell({ onOpen, variant = "icon" }: { onOpen: (view: string) => void; variant?: "icon" | "sidebar" }) {
@@ -140,7 +140,7 @@ export function NotificationBell({ onOpen, variant = "icon" }: { onOpen: (view: 
                           {n.title}
                           {n.unread && <span className="sr-only"> (unread)</span>}
                         </span>
-                        {n.unread && <span aria-hidden="true" className="mt-2 h-2 w-2 flex-none rounded-full bg-[#E5484D]" />}
+                        {n.unread && <span aria-hidden="true" className="mt-2 h-2 w-2 flex-none rounded-full bg-danger" />}
                       </span>
                       <span className="text-body leading-relaxed text-ink-soft">{n.body}</span>
                       <span className="text-label text-subtle">{n.time}</span>

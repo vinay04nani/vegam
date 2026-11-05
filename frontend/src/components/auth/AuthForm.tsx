@@ -85,7 +85,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
         </p>
         <a
           href={mode === "signup" ? withBase(`/onboarding/${planQuery()}`) : withBase("/app/")}
-          className="inline-flex min-h-13 items-center gap-2 rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] px-7 text-body-lg font-semibold text-white"
+          className="inline-flex min-h-12 items-center gap-2 rounded-full bg-brand-fill px-7 text-body-lg font-semibold text-white"
         >
           {mode === "signup" ? "Set up your front desk" : "Open your dashboard"}
           <Icon name="chevron-right" size={18} />
@@ -174,7 +174,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
             type="checkbox"
             checked={agree}
             onChange={(e) => setAgree(e.target.checked)}
-            className="mt-0.5 h-5 w-5 flex-none cursor-pointer rounded-md accent-[#23243A]"
+            className="mt-0.5 h-5 w-5 flex-none cursor-pointer rounded-md accent-brand-fill"
           />
           <span>
             I accept the{" "}
@@ -191,7 +191,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
         <button
           type="submit"
           disabled={!valid}
-          className="mt-2 min-h-14 w-full cursor-pointer rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] text-body-lg font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16)] transition hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_12px_30px_rgb(30_31_43/0.25)] disabled:cursor-not-allowed disabled:border-transparent disabled:bg-none disabled:bg-border disabled:text-muted disabled:shadow-none"
+          className="mt-2 min-h-12 w-full cursor-pointer rounded-full bg-brand-fill text-body-lg font-semibold text-white shadow-1 transition hover:bg-brand-hover disabled:cursor-not-allowed disabled:bg-border disabled:text-muted disabled:shadow-none"
         >
           Continue
         </button>

@@ -121,8 +121,8 @@ export function PaymentLinkModal({ open, onClose, initial, business = "Nila & Co
 
         <div className="flex flex-col gap-2">
           <span className="text-label font-medium text-subtle">What they’ll get</span>
-          <div className="rounded-lg bg-[#E9E1D8] p-3">
-            <div className="rounded-md rounded-ss-none bg-surface p-3 text-label leading-[1.45] text-[#111B21] shadow-1">
+          <div className="light-surface rounded-lg bg-[#E9E1D8] p-3">
+            <div className="rounded-md rounded-ss-none bg-surface p-3 text-label leading-[1.45] text-ink shadow-1">
               Hi{" "}
               {d.who
                 .trim()
@@ -133,7 +133,7 @@ export function PaymentLinkModal({ open, onClose, initial, business = "Nila & Co
                 {d.purpose} · {d.item || "Your visit"}
               </span>
               <span className="block text-body-lg font-bold">{formatFromInr(amount || 0)}</span>
-              <span className="mt-2 flex items-center gap-1.5 rounded-md bg-[#F0F2F5] px-2.5 py-2 text-caption text-[#027EB5]">
+              <span className="mt-2 flex items-center gap-1.5 rounded-md bg-info-subtle px-2.5 py-2 text-caption text-info">
                 <Icon name="link" size={13} />
                 {linkUrl(id)}
               </span>

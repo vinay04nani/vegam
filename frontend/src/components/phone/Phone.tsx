@@ -26,7 +26,7 @@ export function Phone({
 }) {
   return (
     <div className={`w-[300px] flex-none rounded-xl bg-brand-fill p-2.5 shadow-2 md:shadow-3 ring-1 ring-black/10 ${className}`}>
-      <div className="flex h-[580px] flex-col overflow-hidden rounded-xl bg-[#EFEAE2] text-start dark:bg-surface">
+      <div className="light-surface flex h-[580px] flex-col overflow-hidden rounded-xl bg-[#EFEAE2] text-start">
         <div className="flex items-center justify-between bg-surface px-6 pt-3 text-caption font-semibold text-ink" aria-hidden="true">
           <span>{time}</span>
           <span className="h-5 w-20 rounded-full bg-brand-fill" />
@@ -43,7 +43,7 @@ export function Phone({
             <span className="text-caption text-subtle">{status}</span>
           </div>
         </div>
-        <div ref={bodyRef} className="flex flex-1 flex-col gap-2 overflow-y-auto bg-[#ECE5DD] px-3 py-3 text-body leading-snug [scrollbar-width:none] dark:bg-[#0B141A]">
+        <div ref={bodyRef} tabIndex={0} role="region" aria-label="Sample conversation" className="flex flex-1 flex-col gap-2 overflow-y-auto bg-[#ECE5DD] px-3 py-3 text-body leading-snug [scrollbar-width:none]">
           {children}
         </div>
         {footer}
@@ -57,7 +57,7 @@ export function Bubble({ from, time, children }: { from: "them" | "me"; time: st
   return (
     <div className={`max-w-[86%] rounded-lg px-3 pt-2 pb-1.5 text-ink shadow-1 ${me ? "self-end rounded-se-[4px] bg-[#D9FDD3]" : "self-start rounded-ss-[4px] bg-surface"}`}>
       {children}
-      <span className="mt-0.5 flex items-center justify-end gap-1 text-caption text-[#5d6b63]">
+      <span className="mt-0.5 flex items-center justify-end gap-1 text-caption text-text-3">
         {time}
         {me && <Icon name="check" size={13} strokeWidth={2.4} className="text-[#2B7DBF] [&_circle]:hidden" />}
       </span>

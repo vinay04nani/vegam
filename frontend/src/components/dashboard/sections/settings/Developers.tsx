@@ -164,7 +164,7 @@ export function Developers() {
                     type="checkbox"
                     checked={hook.events.includes(ev)}
                     onChange={() => setHook((h) => ({ ...h, events: h.events.includes(ev) ? h.events.filter((x) => x !== ev) : [...h.events, ev] }))}
-                    className="h-4 w-4 accent-[#23243A]"
+                    className="h-4 w-4 accent-brand-fill"
                   />
                   <span className="font-mono text-ink">{ev}</span>
                 </label>

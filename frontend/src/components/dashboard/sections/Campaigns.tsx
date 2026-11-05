@@ -17,7 +17,7 @@ const typeInfo: Record<CampaignType, string> = {
 };
 
 const statusStyle: Record<Campaign["status"], string> = {
-  Sent: "bg-[#E8F3EA] text-success",
+  Sent: "bg-success-subtle text-success",
   Running: "bg-periwinkle-soft text-brand",
   Scheduled: "bg-signal/15 text-warning",
   Draft: "bg-panel text-muted",

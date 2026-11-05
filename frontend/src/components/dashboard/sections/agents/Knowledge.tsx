@@ -84,7 +84,7 @@ function Sources({ picks, onPick }: { picks?: Record<string, boolean>; onPick?: 
       <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
         {sources.map((src) => (
           <li key={src.id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
-            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-md border border-line bg-[#F6F6F8] text-ink">
+            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-md border border-line bg-surface-muted text-ink">
               <Icon name={src.icon} size={17} />
             </span>
             <span className="flex min-w-0 flex-1 flex-col">

@@ -18,7 +18,7 @@ export const quiet = "#B9BBC7";
 /** Blue sequential ramp, light → dark, for magnitude (heatmap). */
 export const blueRamp = ["#edf4fd", "#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#104281"];
 
-const ink = { primary: "#1E1F2B", secondary: "#5D5F6E", muted: "#8A8C99", grid: "#ECEDF2" };
+const ink = { primary: "var(--v-text)", secondary: "var(--v-text-2)", muted: "var(--v-text-3)", grid: "var(--v-border)" };
 
 /** Compact numbers for axes: 950, 1.2K, 3.4L, 1.1Cr (Indian grouping). */
 export function compact(v: number) {
@@ -179,12 +179,12 @@ export function LineChart({
           {[...data].reverse().map((s) => (
             <polyline key={s.id} points={s.values.map((v, i) => `${x(i)},${y(v)}`).join(" ")} fill="none" stroke={s.color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
           ))}
-          {hover === null && main && <circle cx={x(n - 1)} cy={y(main.values[n - 1])} r="4" fill={main.color} stroke="#fff" strokeWidth="2" />}
+          {hover === null && main && <circle cx={x(n - 1)} cy={y(main.values[n - 1])} r="4" fill={main.color} stroke="var(--v-surface)" strokeWidth="2" />}
           {hover !== null && (
             <g>
               <line x1={x(hover)} x2={x(hover)} y1={pad.t} y2={pad.t + ih} stroke={ink.secondary} strokeWidth="1" />
               {data.map((s) => (
-                <circle key={s.id} cx={x(hover)} cy={y(s.values[hover])} r="4.5" fill={s.color} stroke="#fff" strokeWidth="2" />
+                <circle key={s.id} cx={x(hover)} cy={y(s.values[hover])} r="4.5" fill={s.color} stroke="var(--v-surface)" strokeWidth="2" />
               ))}
             </g>
           )}
@@ -283,7 +283,7 @@ export function ColumnChart({
               </g>
             );
           })}
-          <line x1={pad.l} x2={width - pad.r} y1={pad.t + ih} y2={pad.t + ih} stroke="#D9DAE3" strokeWidth="1" />
+          <line x1={pad.l} x2={width - pad.r} y1={pad.t + ih} y2={pad.t + ih} stroke="var(--v-border)" strokeWidth="1" />
         </svg>
       )}
       {hover !== null && width > 0 && (
@@ -413,7 +413,7 @@ export function Funnel({ steps, format = (v: number) => formatNumber(v) }: { ste
                   <span className="ms-2 inline-block w-10 text-end text-subtle tabular-nums">{Math.round((s.value / first) * 100)}%</span>
                 </span>
               </span>
-              <span className="block h-5 rounded-sm bg-[#edf4fd]">
+              <span className="block h-5 rounded-sm bg-info-subtle">
                 <span className="block h-full rounded-sm" style={{ width: `${Math.max(1.5, (s.value / first) * 100)}%`, background: series.blue }} />
               </span>
             </div>

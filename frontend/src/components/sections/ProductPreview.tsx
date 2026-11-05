@@ -30,7 +30,7 @@ function CustomerChat() {
         Yes, 6:30 works
       </Bubble>
       <Bubble from="them" time="9:42 PM">
-        <span className="mb-1.5 flex items-center gap-2 rounded-md bg-[#F1F7F2] px-2.5 py-2">
+        <span className="mb-1.5 flex items-center gap-2 rounded-md bg-success-subtle px-2.5 py-2">
           <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-success text-white">
             <Icon name="check" size={16} strokeWidth={2.6} className="[&_circle]:hidden" />
           </span>

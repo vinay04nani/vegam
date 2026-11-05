@@ -166,7 +166,7 @@ export function ContactForm() {
           </div>
 
           <label className="mt-8 flex cursor-pointer items-start gap-3 text-body text-ink-soft">
-            <input type="checkbox" checked={f.agree} onChange={(e) => set("agree", e.target.checked)} className="mt-0.5 h-5 w-5 flex-none cursor-pointer accent-[#23243A]" />
+            <input type="checkbox" checked={f.agree} onChange={(e) => set("agree", e.target.checked)} className="mt-0.5 h-5 w-5 flex-none cursor-pointer accent-brand-fill" />
             <span>
               I agree to the{" "}
               <a href={links.terms} className="text-ink underline underline-offset-2">
@@ -293,7 +293,7 @@ function PrimaryButton({ children, ...rest }: React.ComponentProps<"button">) {
   return (
     <button
       {...rest}
-      className="inline-flex min-h-15 cursor-pointer items-center gap-2 rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] px-7 text-h3 font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16),0_1px_2px_rgb(15_16_30/0.3)] transition hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_12px_30px_rgb(30_31_43/0.28)] disabled:cursor-wait disabled:opacity-70"
+      className="inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-full bg-brand-fill px-7 text-h3 font-semibold text-white shadow-1 transition hover:bg-brand-hover disabled:cursor-wait disabled:opacity-70"
     >
       {children}
     </button>
@@ -308,13 +308,13 @@ function StepRing({ step }: { step: number }) {
     <div className="flex items-center gap-3 text-sm text-subtle">
       <span className="hidden whitespace-nowrap sm:inline">Step {step} of 2</span>
       <svg width="40" height="40" viewBox="0 0 40 40" role="img" aria-label={`Step ${step} of 2`} className="flex-none -rotate-90">
-        <circle cx="20" cy="20" r={r} fill="none" stroke="#ECEDF2" strokeWidth="3" />
+        <circle cx="20" cy="20" r={r} fill="none" stroke="var(--v-border)" strokeWidth="3" />
         <circle
           cx="20"
           cy="20"
           r={r}
           fill="none"
-          stroke="#1E1F2B"
+          stroke="var(--v-text)"
           strokeWidth="3"
           strokeLinecap="round"
           strokeDasharray={c}

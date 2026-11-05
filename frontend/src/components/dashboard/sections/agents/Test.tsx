@@ -32,8 +32,8 @@ const after = (h: string) => ({ "4": "4 hours later", "24": "1 day later", "72":
 function Bubble({ text, note }: { text: string; note?: string }) {
   return (
     <div className="flex flex-col gap-1">
-      {note && <span className="px-1 text-caption font-semibold text-[#54656F]">{note}</span>}
-      <div className="max-w-[90%] rounded-md rounded-ss-none bg-surface px-3 py-2 text-body leading-[1.45] text-[#111B21] shadow-1">{fill(text)}</div>
+      {note && <span className="px-1 text-caption font-semibold text-text-3">{note}</span>}
+      <div className="max-w-[90%] rounded-md rounded-ss-none bg-surface px-3 py-2 text-body leading-[1.45] text-ink shadow-1">{fill(text)}</div>
     </div>
   );
 }
@@ -55,7 +55,7 @@ function MessagePreview({ agent, cfg }: { agent: Agent; cfg: Config }) {
             ];
   return (
     <Panel title="Preview" description="What a customer called Priya would get, with your unsaved changes.">
-      <div className="flex flex-col gap-3 rounded-lg bg-[#EFEAE2] p-4">
+      <div className="light-surface flex flex-col gap-3 rounded-lg bg-[#EFEAE2] p-4">
         {msgs.map((m, i) => (
           <Bubble key={i} note={m.note} text={m.text} />
         ))}
@@ -77,8 +77,8 @@ function ReportPreview({ cfg }: { cfg: Config }) {
         </Button>
       }
     >
-      <div className="rounded-lg bg-[#EFEAE2] p-4">
-        <div className="max-w-[92%] rounded-md rounded-ss-none bg-surface px-3.5 py-3 text-body leading-[1.55] text-[#111B21] shadow-1">
+      <div className="light-surface rounded-lg bg-[#EFEAE2] p-4">
+        <div className="max-w-[92%] rounded-md rounded-ss-none bg-surface px-3.5 py-3 text-body leading-[1.55] text-ink shadow-1">
           <strong className="font-semibold">Good morning! Here’s yesterday at Nila & Co:</strong>
           {parts.includes("Yesterday’s numbers") && <span className="block">14 enquiries, all replied · 6 new bookings · 2 missed calls, both followed up</span>}
           {parts.includes("What needs you") && <span className="mt-1.5 block">⚠️ Needs you: 1 customer asked about a refund</span>}
@@ -102,12 +102,12 @@ function OwnerSimulator() {
   const [log, setLog] = useState<{ q: string; a: string }[]>([]);
   return (
     <Panel title="Try a command" description="As if you messaged it from your own WhatsApp.">
-      <div className="flex min-h-[220px] flex-col gap-2.5 rounded-lg bg-[#EFEAE2] p-4">
-        {log.length === 0 && <p className="m-auto text-label text-[#54656F]">Pick a command below.</p>}
+      <div className="light-surface flex min-h-[220px] flex-col gap-2.5 rounded-lg bg-[#EFEAE2] p-4">
+        {log.length === 0 && <p className="m-auto text-label text-text-3">Pick a command below.</p>}
         {log.map((m, i) => (
           <div key={i} className="flex flex-col gap-2">
-            <span className="max-w-[85%] self-end rounded-md rounded-se-none bg-[#D9FDD3] px-3 py-2 text-body text-[#111B21]">{m.q}</span>
-            <span className="max-w-[90%] self-start rounded-md rounded-ss-none bg-surface px-3 py-2 text-body text-[#111B21] shadow-1">{m.a}</span>
+            <span className="max-w-[85%] self-end rounded-md rounded-se-none bg-[#D9FDD3] px-3 py-2 text-body text-ink">{m.q}</span>
+            <span className="max-w-[90%] self-start rounded-md rounded-ss-none bg-surface px-3 py-2 text-body text-ink shadow-1">{m.a}</span>
           </div>
         ))}
       </div>
@@ -203,7 +203,7 @@ function TestSet({ agent, s }: { agent: Agent; s: AgentState }) {
         />
       )}
       {run === "done" && (
-        <p className={`m-0 flex items-center gap-2 rounded-lg px-3.5 py-2.5 text-body font-medium ${failed ? "bg-[#FDECEC] text-danger" : "bg-[#E8F3EA] text-success"}`} role="status">
+        <p className={`m-0 flex items-center gap-2 rounded-lg px-3.5 py-2.5 text-body font-medium ${failed ? "bg-danger-subtle text-danger" : "bg-success-subtle text-success"}`} role="status">
           <Icon name={failed ? "close" : "check"} size={16} />
           {failed ? `${failed} of ${tests.length} failed. Fix the setting, then run again.` : `All ${tests.length} passed.`}
         </p>
@@ -212,7 +212,7 @@ function TestSet({ agent, s }: { agent: Agent; s: AgentState }) {
         {results.map((t) => (
           <li key={t.id} className="flex items-start gap-3 py-3 first:pt-0 last:pb-0">
             <span
-              className={`mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full ${run !== "done" ? (run === "running" ? "animate-pulse bg-panel" : "border-2 border-line-strong") : t.fail ? "bg-[#FDECEC] text-danger" : "bg-[#E8F3EA] text-success"}`}
+              className={`mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-full ${run !== "done" ? (run === "running" ? "animate-pulse bg-panel" : "border-2 border-line-strong") : t.fail ? "bg-danger-subtle text-danger" : "bg-success-subtle text-success"}`}
             >
               {run === "done" && <Icon name={t.fail ? "close" : "check"} size={13} strokeWidth={2.6} className="[&_circle]:hidden" />}
             </span>

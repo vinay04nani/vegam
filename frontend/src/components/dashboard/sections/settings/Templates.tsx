@@ -17,10 +17,10 @@ const fill = (body: string) => body.replace(/\{\{(\d+)\}\}/g, (_, n) => samples[
 /** A WhatsApp-style preview of a template with sample values. */
 function Preview({ body }: { body: string }) {
   return (
-    <div className="rounded-lg bg-[#ECE5DD] p-4">
-      <div className="ms-auto max-w-[300px] rounded-md rounded-se-[2px] bg-[#DCF8C6] px-3 py-2 text-body leading-snug whitespace-pre-wrap text-[#111B21] shadow-1">
-        {fill(body) || <span className="text-[#667781]">Your message preview appears here</span>}
-        <span className="mt-1 block text-end text-caption text-[#667781]">10:42 ✓✓</span>
+    <div className="light-surface rounded-lg bg-[#ECE5DD] p-4">
+      <div className="ms-auto max-w-[300px] rounded-md rounded-se-[2px] bg-[#DCF8C6] px-3 py-2 text-body leading-snug whitespace-pre-wrap text-ink shadow-1">
+        {fill(body) || <span className="text-text-3">Your message preview appears here</span>}
+        <span className="mt-1 block text-end text-caption text-text-3">10:42 ✓✓</span>
       </div>
     </div>
   );
@@ -97,7 +97,7 @@ export function Templates() {
       >
         {editing && (
           <div className="flex flex-col gap-4">
-            {editing.status === "Rejected" && editing.note && <p className="m-0 rounded-md bg-[#FDECEC] p-3 text-label text-danger">{editing.note}</p>}
+            {editing.status === "Rejected" && editing.note && <p className="m-0 rounded-md bg-danger-subtle p-3 text-label text-danger">{editing.note}</p>}
             <label className="flex flex-col gap-1.5">
               <span className="text-body font-medium text-ink">Name</span>
               <Input value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value.toLowerCase().replace(/\s+/g, "_") })} placeholder="appointment_reminder" />

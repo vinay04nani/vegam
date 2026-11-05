@@ -81,7 +81,7 @@ export function Button({
     primary: "bg-brand-fill text-white hover:bg-brand-hover shadow-1",
     secondary: "border border-line-strong bg-surface text-ink hover:bg-panel",
     ghost: "text-ink-soft hover:bg-panel hover:text-ink",
-    danger: "text-danger hover:bg-[#FDECEC]",
+    danger: "text-danger hover:bg-danger-subtle",
   }[variant];
   return (
     <button
@@ -98,7 +98,7 @@ export function Button({
   );
 }
 
-const avatarTones = ["bg-[#E6E8FD] text-brand", "bg-[#FFEBD9] text-[#8A3B00]", "bg-[#E3F2E6] text-[#1F5F25]", "bg-[#F1E6FA] text-[#5B2C83]", "bg-[#E2F0F7] text-[#14506B]", "bg-[#FBE7EA] text-[#8A1F33]"];
+const avatarTones = ["bg-brand-subtle text-brand", "bg-warning-subtle text-signal-ink", "bg-success-subtle text-success", "bg-brand-subtle text-brand", "bg-info-subtle text-info", "bg-danger-subtle text-danger"];
 
 export function Avatar({ name, size = 32 }: { name: string; size?: number }) {
   const letters = name.replace(/[^A-Za-z ]/g, "").trim();
@@ -115,13 +115,13 @@ export type BadgeTone = "neutral" | "brand" | "success" | "warning" | "danger" |
 
 const badgeTones: Record<BadgeTone, string> = {
   neutral: "bg-panel text-muted ring-line",
-  brand: "bg-periwinkle-soft text-brand ring-[#D9DCFB]",
-  success: "bg-[#E8F3EA] text-success ring-[#CFE6D3]",
-  warning: "bg-signal/15 text-warning ring-[#FBDDBF]",
-  danger: "bg-[#FDECEC] text-danger ring-[#F7CFCF]",
-  hot: "bg-[#FFEDE0] text-[#9C3D00] ring-[#FAD1B3]",
-  warm: "bg-[#FFF6DB] text-signal-ink ring-[#F5E2A6]",
-  cold: "bg-[#EAF0FB] text-[#2F4F86] ring-[#D3DEF3]",
+  brand: "bg-brand-subtle text-brand ring-brand/20",
+  success: "bg-success-subtle text-success ring-success/25",
+  warning: "bg-warning-subtle text-warning ring-warning/25",
+  danger: "bg-danger-subtle text-danger ring-danger/25",
+  hot: "bg-warning-subtle text-signal-ink ring-warning/30",
+  warm: "bg-warning-subtle text-signal-ink ring-warning/20",
+  cold: "bg-info-subtle text-info ring-info/25",
 };
 
 export function Badge({ tone = "neutral", children, dot = false }: { tone?: BadgeTone; children: ReactNode; dot?: boolean }) {
@@ -308,7 +308,7 @@ export function Menu({
     <div ref={root} className={`relative ${className}`} onClick={(e) => e.stopPropagation()}>
       <button
         type="button"
-        aria-label={label}
+        aria-label={trigger ? undefined : label}
         title={label}
         aria-haspopup="menu"
         aria-expanded={open}

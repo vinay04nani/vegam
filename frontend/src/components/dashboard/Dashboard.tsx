@@ -54,7 +54,6 @@ function NavButton({ id, label, icon, compact = false, view, plan, onSelect, cou
     <button
       type="button"
       aria-current={active ? "page" : undefined}
-      aria-label={count ? `${label}, ${count} unread` : undefined}
       onClick={() => onSelect(id)}
       className={
         compact
@@ -72,8 +71,9 @@ function NavButton({ id, label, icon, compact = false, view, plan, onSelect, cou
       </span>
       {label}
       {!!count && !compact && (
-        <span aria-hidden="true" className="ms-auto rounded-full bg-brand-fill px-1.5 text-caption leading-5 font-bold text-white">
+        <span className="ms-auto rounded-full bg-brand-fill px-1.5 text-caption leading-5 font-bold text-white">
           {count}
+          <span className="sr-only"> unread</span>
         </span>
       )}
       {locked && !compact && <Icon name="lock" size={14} className="ms-auto text-faint" />}

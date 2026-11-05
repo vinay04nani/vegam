@@ -371,7 +371,7 @@ export function Contacts({ onOpen }: { onOpen: (view: string) => void }) {
               </table>
             </div>
             <label className="flex cursor-pointer items-start gap-3 rounded-lg bg-signal/15 p-4">
-              <input type="checkbox" checked={consented} onChange={(e) => setConsented(e.target.checked)} className="mt-0.5 h-4 w-4 flex-none cursor-pointer accent-[#23243A]" />
+              <input type="checkbox" checked={consented} onChange={(e) => setConsented(e.target.checked)} className="mt-0.5 h-4 w-4 flex-none cursor-pointer accent-brand-fill" />
               <span className="flex flex-col gap-1">
                 <span className="text-body font-semibold text-ink">These people agreed to hear from us on WhatsApp</span>
                 <span className="text-label text-ink-soft">WhatsApp’s rules and privacy law require it. If you’re not sure, leave this unticked: they’ll be marked “Not asked”, and Vegam asks them before sending any reminders.</span>

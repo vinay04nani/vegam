@@ -244,7 +244,7 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
                         aria-label="Select all"
                         checked={allSelected}
                         onChange={() => setSelected(allSelected ? [] : visible.map((l) => l.id))}
-                        className="h-4 w-4 cursor-pointer accent-[#23243A]"
+                        className="h-4 w-4 cursor-pointer accent-brand-fill"
                       />
                     </th>
                     <SortHeader label="Lead" k="name" sort={sort} onSort={onSort} />
@@ -277,7 +277,7 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
                         className={`cursor-pointer border-b border-line transition last:border-b-0 ${isSel ? "bg-periwinkle-soft/50" : "hover:bg-surface-muted"}`}
                       >
                         <td className="py-3 ps-4" onClick={(e) => e.stopPropagation()}>
-                          <input type="checkbox" aria-label={`Select ${l.name}`} checked={isSel} onChange={() => toggle(l.id)} className="h-4 w-4 cursor-pointer accent-[#23243A]" />
+                          <input type="checkbox" aria-label={`Select ${l.name}`} checked={isSel} onChange={() => toggle(l.id)} className="h-4 w-4 cursor-pointer accent-brand-fill" />
                         </td>
                         <td className="px-3 py-3">
                           <span className="flex items-center gap-3">
