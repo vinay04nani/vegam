@@ -19,7 +19,7 @@ export function WhatsAppProfile({ name, onOpen }: { name: string; onOpen: (view:
           <Badge tone="success">High</Badge>
         </Row>
         <Row label="Daily limit" description="New people you can message first each day. It grows as you send good messages.">
-          <span className="text-[14px] text-ink">1,000 / day</span>
+          <span className="text-body text-ink">1,000 / day</span>
         </Row>
       </Group>
       <Group title="Business profile" description="What people see when they tap your name in WhatsApp. Changes are reviewed by Meta.">

@@ -1,6 +1,8 @@
 # Security and Incident Response Policy (internal)
 
 > Internal policy. Draft for review. Confirm legal reporting deadlines with a lawyer before relying on them.
+>
+> The controls below are the target. They are not implemented. The public site is a static preview on GitHub Pages. That host does not send the nginx security headers in `frontend/nginx/`. There is no database, so there is no row-level tenant isolation and no encryption at rest.
 
 **Owner:** Vinay Kumar · **Version:** 0.1 (draft) · **Last reviewed:** [date]
 

@@ -1,3 +1,4 @@
+import { regionalView } from "@/lib/regional";
 // What each AI agent can be set up to do, as data. The Setup tab draws these
 // sections and fields; the defaults are each agent's starting settings, and
 // the labels name changes in the change history.
@@ -54,7 +55,7 @@ const quiet = (): SetupField => ({
   ],
 });
 
-export const agentSetup: Record<AgentId, SetupSection[]> = {
+export const agentSetup: Record<AgentId, SetupSection[]> = regionalView({
   chat: [
     {
       id: "identity",
@@ -575,10 +576,10 @@ export const agentSetup: Record<AgentId, SetupSection[]> = {
       ],
     },
   ],
-};
+});
 
 /** Shared by every agent unless an agent overrides it. */
-export const businessRules: SetupSection[] = [
+export const businessRules: SetupSection[] = regionalView([
   {
     id: "voice",
     title: "How your AI sounds",
@@ -630,6 +631,6 @@ export const businessRules: SetupSection[] = [
       },
     ],
   },
-];
+]);
 
 export const defaultsOf = (sections: SetupSection[]): Config => Object.fromEntries(sections.flatMap((s) => s.fields.map((f) => [f.key, f.default])));

@@ -32,9 +32,11 @@ docker run -p 8080:8080 vegam-frontend
 
 The image (about 76 MB) includes:
 - gzip, one-year caching for hashed assets, `no-cache` for pages
-- security headers (`nosniff`, `DENY` framing, referrer and permissions policies)
+- nginx security headers (`nosniff`, `DENY` framing, referrer and permissions policies) that apply only when the site is served from this container
 - the real 404 page, `/login` → `/login/` redirects
 - a `/healthz` endpoint used by the container health check
+
+The live site on GitHub Pages does not send those headers. GitHub Pages does not use this nginx config, so those headers are not a property of the published site.
 
 **GitHub Pages (live site):** `.github/workflows/pages.yml` publishes the site to https://vinay04nani.github.io/vegam/ on every push to `main`, so merging `dev` into `main` releases the UI. The build sets `NEXT_PUBLIC_BASE_PATH=/vegam` because Pages serves the site from that sub-path. Use `withBase()` from `src/lib/paths.ts` for any new link that starts with `/`. If a custom domain is added later, the base path becomes empty automatically.
 

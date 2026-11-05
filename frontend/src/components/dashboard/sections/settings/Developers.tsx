@@ -30,7 +30,7 @@ export function Developers() {
         {keys.length === 0 && <Row label={<span className="text-subtle">No keys yet.</span>} />}
         {keys.map((k) => (
           <Row key={k.id} label={k.name} description={<span className="font-mono">{k.key}</span>}>
-            <span className="hidden text-[13px] text-subtle sm:inline">Used {k.lastUsed.toLowerCase()}</span>
+            <span className="hidden text-label text-subtle sm:inline">Used {k.lastUsed.toLowerCase()}</span>
             <RowButton
               tone="danger"
               ariaLabel={`Revoke ${k.name}`}
@@ -56,7 +56,7 @@ export function Developers() {
       >
         {hooks.length === 0 && <Row label={<span className="text-subtle">No webhooks yet.</span>} />}
         {hooks.map((h) => (
-          <Row key={h.id} label={<span className="font-mono text-[13.5px]">{h.url}</span>} description={`${h.events.join(", ")} · last delivery ${h.lastDelivery}`}>
+          <Row key={h.id} label={<span className="font-mono text-label">{h.url}</span>} description={`${h.events.join(", ")} · last delivery ${h.lastDelivery}`}>
             <RowButton onClick={() => toast("Test event sent (demo)")} ariaLabel={`Send a test event to ${h.url}`}>
               Test
             </RowButton>
@@ -105,9 +105,9 @@ export function Developers() {
       >
         {newKey.created ? (
           <div className="flex flex-col gap-3">
-            <p className="m-0 text-[14px] text-ink-soft">This is the only time you’ll see the full key. Store it somewhere safe.</p>
-            <div className="flex items-center gap-2 rounded-[10px] bg-panel p-3">
-              <code className="min-w-0 flex-1 font-mono text-[13.5px] break-all text-ink">{newKey.created}</code>
+            <p className="m-0 text-body text-ink-soft">This is the only time you’ll see the full key. Store it somewhere safe.</p>
+            <div className="flex items-center gap-2 rounded-md bg-panel p-3">
+              <code className="min-w-0 flex-1 font-mono text-label break-all text-ink">{newKey.created}</code>
               <RowButton
                 icon="copy"
                 onClick={() => {
@@ -121,7 +121,7 @@ export function Developers() {
           </div>
         ) : (
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Name</span>
+            <span className="text-body font-medium text-ink">Name</span>
             <Input value={newKey.name} onChange={(e) => setNewKey((n) => ({ ...n, name: e.target.value }))} placeholder="e.g. Website booking widget" autoFocus />
           </label>
         )}
@@ -152,14 +152,14 @@ export function Developers() {
       >
         <div className="flex flex-col gap-4">
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Endpoint URL</span>
+            <span className="text-body font-medium text-ink">Endpoint URL</span>
             <Input type="url" value={hook.url} onChange={(e) => setHook((h) => ({ ...h, url: e.target.value }))} placeholder="https://example.com/hooks/vegam" autoFocus />
           </label>
           <fieldset className="m-0 border-0 p-0">
-            <legend className="mb-2 text-[14px] font-medium text-ink">Events</legend>
+            <legend className="mb-2 text-body font-medium text-ink">Events</legend>
             <div className="grid gap-2 sm:grid-cols-2">
               {webhookEvents.map((ev) => (
-                <label key={ev} className="flex cursor-pointer items-center gap-2 text-[13.5px]">
+                <label key={ev} className="flex cursor-pointer items-center gap-2 text-label">
                   <input
                     type="checkbox"
                     checked={hook.events.includes(ev)}

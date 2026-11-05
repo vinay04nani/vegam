@@ -1,5 +1,7 @@
 "use client";
 
+import { formatNumber } from "@/lib/locale";
+
 import { busyGrid, handledSplit, hours, ratings, replyBuckets, topics, weekdays } from "@/content/reports";
 import { BarList, ColumnChart, Heatmap, Legend, SplitBar, slots } from "./charts";
 import { change, type Model } from "./model";
@@ -19,7 +21,7 @@ export function Conversations({ m, compare }: { m: Model; compare: boolean }) {
       <KpiRow
         compare={compare}
         items={[
-          { id: "conv", label: "Conversations", value: n.toLocaleString("en-IN"), delta: change(n, prev.enquiries), trend: m.buckets.map((b) => b.enquiries) },
+          { id: "conv", label: "Conversations", value: formatNumber(n), delta: change(n, prev.enquiries), trend: m.buckets.map((b) => b.enquiries) },
           { id: "reply", label: "Average first reply", value: seconds(cur.reply), delta: change(cur.reply, prev.reply), better: "down", trend: m.buckets.map((b) => b.reply) },
           { id: "resolve", label: "Time to resolve", value: "4 min", delta: -0.09, better: "down", trend: trend((i) => 5 - i / m.buckets.length), hint: "median" },
           { id: "rating", label: "Customer rating", value: `${avgRating.toFixed(1)} / 5`, delta: 0.02, trend: trend((i) => 4.5 + (i / m.buckets.length) * 0.2 + Math.sin(i) * 0.05), hint: "after a chat closes" },
@@ -49,7 +51,7 @@ export function Conversations({ m, compare }: { m: Model; compare: boolean }) {
               { id: "team", label: "Your team", color: slots[1], values: replyBuckets.map((b) => Math.round(b.team * n)) },
             ]}
           />
-          <p className="m-0 text-[13px] text-subtle">
+          <p className="m-0 text-label text-subtle">
             <span className="font-semibold text-ink">{pct(replyBuckets[0].ai + replyBuckets[0].team)}</span> got an answer in under 10 seconds. Slow replies are the ones handed to your team.
           </p>
         </Panel>
@@ -75,12 +77,12 @@ export function Conversations({ m, compare }: { m: Model; compare: boolean }) {
         </Panel>
         <Panel
           title="Customer ratings"
-          description={`${Math.round(n * 0.42).toLocaleString("en-IN")} customers rated their chat`}
+          description={`${formatNumber(Math.round(n * 0.42))} customers rated their chat`}
           table={{ columns: ["Rating", "Customers", "Share"], rows: ratings.map((r) => [`${r.stars} stars`, Math.round(r.share * n * 0.42), pct(r.share)]) }}
         >
           <div className="flex items-baseline gap-2">
-            <span className="text-[34px] leading-none font-semibold tracking-[-0.02em] text-ink">{avgRating.toFixed(1)}</span>
-            <span className="text-[13px] text-subtle">out of 5 · {pct(ratings[0].share + ratings[1].share)} gave 4 or 5 stars</span>
+            <span className="text-h1 leading-none font-semibold tracking-[-0.02em] text-ink">{avgRating.toFixed(1)}</span>
+            <span className="text-label text-subtle">out of 5 · {pct(ratings[0].share + ratings[1].share)} gave 4 or 5 stars</span>
           </div>
           <BarList rows={ratings.map((r) => ({ label: `${r.stars} star${r.stars > 1 ? "s" : ""}`, value: Math.round(r.share * n * 0.42) }))} labelWidth={64} note={(r) => `${r.label}: ${r.value} customers`} />
         </Panel>

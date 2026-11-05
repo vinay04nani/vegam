@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { sampleClosures, sampleHours, weekDays, type DayHours } from "@/content/settings";
+import { formatDate } from "@/lib/locale";
 import { Icon } from "@/components/ui/Icon";
 import { Button, Modal, useToast } from "../../kit";
 import { Dropdown, Group, Input, Row, RowButton, Switch } from "./parts";
@@ -24,7 +25,7 @@ export function Hours() {
         title="Opening hours"
         description="The AI only offers times when you’re open."
         action={
-          <button type="button" onClick={() => setHours((h) => h.map((d, i) => (i < 5 ? { ...h[0] } : d)))} className="cursor-pointer text-[13.5px] font-medium text-indigo hover:underline">
+          <button type="button" onClick={() => setHours((h) => h.map((d, i) => (i < 5 ? { ...h[0] } : d)))} className="cursor-pointer text-label font-medium text-indigo hover:underline">
             Copy Monday to weekdays
           </button>
         }
@@ -36,11 +37,11 @@ export function Hours() {
               {d.open ? (
                 <span className="flex items-center gap-2">
                   <Input type="time" aria-label={`${day} opens at`} value={d.from} onChange={(e) => setDay(i, { from: e.target.value })} className="w-[132px]" />
-                  <span className="text-[13px] text-subtle">to</span>
+                  <span className="text-label text-subtle">to</span>
                   <Input type="time" aria-label={`${day} closes at`} value={d.to} onChange={(e) => setDay(i, { to: e.target.value })} className="w-[132px]" />
                 </span>
               ) : (
-                <span className="w-[284px] text-right text-[14px] text-subtle">Closed</span>
+                <span className="w-[284px] text-end text-body text-subtle">Closed</span>
               )}
               <Switch checked={d.open} onChange={(v) => setDay(i, { open: v })} label={`Open on ${day}`} />
             </Row>
@@ -56,7 +57,7 @@ export function Hours() {
               type="button"
               aria-label={`Remove ${c.date}`}
               onClick={() => setClosures((cs) => cs.filter((x) => x.id !== c.id))}
-              className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-danger"
+              className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-muted hover:bg-panel hover:text-danger"
             >
               <Icon name="trash" size={15} />
             </button>
@@ -114,7 +115,7 @@ export function Hours() {
               variant="primary"
               disabled={!closure.date}
               onClick={() => {
-                const label = new Date(closure.date).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short", year: "numeric" });
+                const label = formatDate(new Date(closure.date), undefined, { weekday: "short", day: "numeric", month: "short", year: "numeric" });
                 setClosures((cs) => [...cs, { id: `x${Date.now()}`, date: label, reason: closure.reason || "Closed", allDay: true }]);
                 setClosure({ date: "", reason: "" });
                 setAdding(false);
@@ -128,13 +129,13 @@ export function Hours() {
       >
         <div className="flex flex-col gap-4">
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Date</span>
+            <span className="text-body font-medium text-ink">Date</span>
             <Input type="date" value={closure.date} onChange={(e) => setClosure((c) => ({ ...c, date: e.target.value }))} />
           </label>
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Reason (optional)</span>
+            <span className="text-body font-medium text-ink">Reason (optional)</span>
             <Input value={closure.reason} onChange={(e) => setClosure((c) => ({ ...c, reason: e.target.value }))} placeholder="e.g. Diwali" />
-            <span className="text-[12.5px] text-subtle">The AI tells customers this.</span>
+            <span className="text-caption text-subtle">The AI tells customers this.</span>
           </label>
         </div>
       </Modal>

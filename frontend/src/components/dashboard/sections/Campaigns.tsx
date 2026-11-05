@@ -19,7 +19,7 @@ const typeInfo: Record<CampaignType, string> = {
 const statusStyle: Record<Campaign["status"], string> = {
   Sent: "bg-[#E8F3EA] text-success",
   Running: "bg-periwinkle-soft text-brand",
-  Scheduled: "bg-[#FFF3E6] text-warning",
+  Scheduled: "bg-signal/15 text-warning",
   Draft: "bg-panel text-muted",
 };
 
@@ -49,7 +49,7 @@ export function Campaigns() {
             type="button"
             onClick={() => setCreating((c) => !c)}
             aria-expanded={creating}
-            className="inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-full bg-ink px-5 text-[15px] font-semibold text-white"
+            className="inline-flex min-h-11 cursor-pointer items-center gap-1.5 rounded-full bg-brand-fill px-5 text-body font-semibold text-white"
           >
             <Icon name="plus" size={17} />
             New campaign
@@ -84,7 +84,7 @@ export function Campaigns() {
             <PrimaryButton onClick={save} disabled={!form.name.trim() || !form.message.trim()}>
               Save draft
             </PrimaryButton>
-            <button type="button" onClick={() => setCreating(false)} className="min-h-11 cursor-pointer px-3 text-[15px] font-semibold text-subtle hover:text-ink">
+            <button type="button" onClick={() => setCreating(false)} className="min-h-11 cursor-pointer px-3 text-body font-semibold text-subtle hover:text-ink">
               Cancel
             </button>
           </div>
@@ -97,25 +97,25 @@ export function Campaigns() {
           { label: "Replies", value: totals.replies },
           { label: "Bookings", value: totals.bookings },
         ].map((t) => (
-          <div key={t.label} className="flex flex-col gap-1 rounded-[18px] border border-line bg-white p-4">
-            <span className="text-[26px] leading-none font-bold text-ink">{t.value}</span>
-            <span className="text-[13.5px] text-subtle">{t.label}</span>
+          <div key={t.label} className="flex flex-col gap-1 rounded-xl border border-line bg-surface p-4">
+            <span className="text-h2 leading-none font-bold text-ink">{t.value}</span>
+            <span className="text-label text-subtle">{t.label}</span>
           </div>
         ))}
       </div>
 
       <div className="flex flex-col gap-3">
         {campaigns.map((c) => (
-          <article key={c.id} className="flex flex-col gap-3 rounded-[20px] border border-line bg-white p-5 sm:flex-row sm:items-center">
-            <span className="flex h-11 w-11 flex-none items-center justify-center rounded-[14px] bg-periwinkle-soft text-indigo">
+          <article key={c.id} className="flex flex-col gap-3 rounded-xl border border-line bg-surface p-5 sm:flex-row sm:items-center">
+            <span className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-periwinkle-soft text-indigo">
               <Icon name={c.type === "Broadcast" ? "megaphone" : c.type === "Win-back" ? "users" : "calendar"} size={20} />
             </span>
             <div className="flex min-w-0 flex-1 flex-col gap-1">
               <span className="flex flex-wrap items-center gap-2">
-                <span className="text-[16px] font-semibold text-ink">{c.name}</span>
-                <span className={`rounded-full px-2 py-0.5 text-[12px] font-semibold ${statusStyle[c.status]}`}>{c.status}</span>
+                <span className="text-body-lg font-semibold text-ink">{c.name}</span>
+                <span className={`rounded-full px-2 py-0.5 text-caption font-semibold ${statusStyle[c.status]}`}>{c.status}</span>
               </span>
-              <span className="text-[13.5px] text-subtle">
+              <span className="text-label text-subtle">
                 {c.type} · {c.audience} people
               </span>
             </div>
@@ -126,8 +126,8 @@ export function Campaigns() {
                 ["Bookings", c.bookings],
               ].map(([k, v]) => (
                 <div key={k as string}>
-                  <dt className="text-[12.5px] text-subtle">{k}</dt>
-                  <dd className="m-0 text-[18px] font-bold text-ink">{v}</dd>
+                  <dt className="text-caption text-subtle">{k}</dt>
+                  <dd className="m-0 text-h3 font-bold text-ink">{v}</dd>
                 </div>
               ))}
             </dl>

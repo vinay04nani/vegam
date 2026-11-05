@@ -24,7 +24,7 @@ function ScoreCell({ score }: { score: number }) {
   const t = leadTemp(score);
   return (
     <span className="flex items-center gap-2.5">
-      <span className="w-7 text-right text-[14px] font-bold text-ink tabular-nums">{score}</span>
+      <span className="w-7 text-end text-body font-bold text-ink tabular-nums">{score}</span>
       <span className="hidden h-1.5 w-14 overflow-hidden rounded-full bg-panel xl:block" aria-hidden="true">
         <span className="block h-full rounded-full" style={{ width: `${score}%`, background: tempColor[t] }} />
       </span>
@@ -36,8 +36,8 @@ function ScoreCell({ score }: { score: number }) {
 function SortHeader({ label, k, sort, onSort, className = "" }: { label: string; k: SortKey; sort: Sort; onSort: (k: SortKey) => void; className?: string }) {
   const active = sort.key === k;
   return (
-    <th scope="col" aria-sort={active ? (sort.dir === "asc" ? "ascending" : "descending") : "none"} className={`px-3 py-3 text-left ${className}`}>
-      <button type="button" onClick={() => onSort(k)} className={`inline-flex cursor-pointer items-center gap-1 text-[12.5px] font-semibold tracking-[0.04em] whitespace-nowrap uppercase ${active ? "text-ink" : "text-muted hover:text-ink"}`}>
+    <th scope="col" aria-sort={active ? (sort.dir === "asc" ? "ascending" : "descending") : "none"} className={`px-3 py-3 text-start ${className}`}>
+      <button type="button" onClick={() => onSort(k)} className={`inline-flex cursor-pointer items-center gap-1 text-caption font-semibold tracking-[0.04em] whitespace-nowrap uppercase ${active ? "text-ink" : "text-muted hover:text-ink"}`}>
         {label}
         <Icon name="chevron-down" size={14} className={`transition ${active ? "opacity-100" : "opacity-30"} ${active && sort.dir === "asc" ? "rotate-180" : ""}`} />
       </button>
@@ -145,15 +145,15 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
       </div>
 
       {/* Toolbar */}
-      <div className="flex flex-col gap-3 rounded-[18px] border border-line bg-white p-3 lg:flex-row lg:items-center">
+      <div className="flex flex-col gap-3 rounded-xl border border-line bg-surface p-3 lg:flex-row lg:items-center">
         <label className="relative min-w-0 flex-1">
           <span className="sr-only">Search leads</span>
-          <Icon name="search" size={16} className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-subtle" />
+          <Icon name="search" size={16} className="pointer-events-none absolute top-1/2 start-3.5 -translate-y-1/2 text-subtle" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search name, number or interest"
-            className="min-h-10 w-full rounded-[10px] border border-line-strong bg-white pr-3 pl-10 text-[14.5px] text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
+            className="min-h-10 w-full rounded-md border border-line-strong bg-surface pe-3 ps-10 text-body text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
           />
         </label>
         <div className="flex flex-wrap items-center gap-2">
@@ -174,14 +174,14 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
             <select
               value={source}
               onChange={(e) => setSource(e.target.value as "all" | LeadSource)}
-              className="min-h-10 cursor-pointer appearance-none rounded-[10px] border border-line-strong bg-white pr-8 pl-3 text-[14px] font-medium text-ink"
+              className="min-h-10 cursor-pointer appearance-none rounded-md border border-line-strong bg-surface pe-8 ps-3 text-body font-medium text-ink"
             >
               <option value="all">All sources</option>
               {sources.map((s) => (
                 <option key={s}>{s}</option>
               ))}
             </select>
-            <Icon name="chevron-down" size={14} className="pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2 text-subtle" />
+            <Icon name="chevron-down" size={14} className="pointer-events-none absolute top-1/2 end-2.5 -translate-y-1/2 text-subtle" />
           </label>
           <SegmentedControl
             label="View"
@@ -198,12 +198,12 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
 
       {/* Bulk actions */}
       {selected.length > 0 && (
-        <div role="region" aria-label="Bulk actions" className="flex flex-wrap items-center gap-2 rounded-[14px] bg-ink px-4 py-2.5 text-white">
-          <span className="mr-2 text-[14px] font-semibold">{selected.length} selected</span>
+        <div role="region" aria-label="Bulk actions" className="flex flex-wrap items-center gap-2 rounded-lg bg-brand-fill px-4 py-2.5 text-white">
+          <span className="me-2 text-body font-semibold">{selected.length} selected</span>
           <button
             type="button"
             onClick={() => bulk((l) => ({ ...l, stage: l.stage === "new" ? "contacted" : l.stage, lastActivity: "Just now", lastMins: 0, activity: [...l.activity, { at: "Just now", kind: "note", text: "Marked as contacted" }] }))}
-            className="min-h-8 cursor-pointer rounded-[8px] bg-white/12 px-3 text-[13.5px] font-semibold hover:bg-white/20"
+            className="min-h-8 cursor-pointer rounded-md bg-white/12 px-3 text-label font-semibold hover:bg-white/20"
           >
             Mark contacted
           </button>
@@ -212,7 +212,7 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
             <select
               value=""
               onChange={(e) => e.target.value && bulk((l) => ({ ...l, owner: e.target.value }))}
-              className="min-h-8 cursor-pointer appearance-none rounded-[8px] bg-white/12 pr-7 pl-3 text-[13.5px] font-semibold text-white hover:bg-white/20 [&>option]:text-ink"
+              className="min-h-8 cursor-pointer appearance-none rounded-md bg-white/12 pe-7 ps-3 text-label font-semibold text-white hover:bg-white/20 [&>option]:text-ink"
             >
               <option value="">Assign to…</option>
               <option value="AI">AI assistant</option>
@@ -220,25 +220,25 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
                 <option key={m.name}>{m.name}</option>
               ))}
             </select>
-            <Icon name="chevron-down" size={13} className="pointer-events-none absolute top-1/2 right-2 -translate-y-1/2" />
+            <Icon name="chevron-down" size={13} className="pointer-events-none absolute top-1/2 end-2 -translate-y-1/2" />
           </label>
-          <button type="button" onClick={() => setSelected([])} className="ml-auto cursor-pointer text-[13.5px] font-semibold text-white/75 hover:text-white">
+          <button type="button" onClick={() => setSelected([])} className="ms-auto cursor-pointer text-label font-semibold text-white/75 hover:text-white">
             Clear
           </button>
         </div>
       )}
 
       {view === "table" ? (
-        <div className="overflow-hidden rounded-[18px] border border-line bg-white">
+        <div className="overflow-hidden rounded-xl border border-line bg-surface">
           {visible.length === 0 ? (
             <EmptyState icon="users" title="No leads match" body="Try another filter or search." />
           ) : (
             <>
               {/* Desktop table */}
               <table className="hidden w-full border-collapse md:table">
-                <thead className="border-b border-line bg-[#FAFAFC]">
+                <thead className="border-b border-line bg-surface-muted">
                   <tr>
-                    <th scope="col" className="w-10 py-3 pl-4">
+                    <th scope="col" className="w-10 py-3 ps-4">
                       <input
                         type="checkbox"
                         aria-label="Select all"
@@ -248,21 +248,21 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
                       />
                     </th>
                     <SortHeader label="Lead" k="name" sort={sort} onSort={onSort} />
-                    <th scope="col" className="hidden px-3 py-3 text-left text-[12.5px] font-semibold tracking-[0.04em] text-muted uppercase lg:table-cell">
+                    <th scope="col" className="hidden px-3 py-3 text-start text-caption font-semibold tracking-[0.04em] text-muted uppercase lg:table-cell">
                       Source
                     </th>
                     <SortHeader label="Score" k="score" sort={sort} onSort={onSort} />
-                    <th scope="col" className="px-3 py-3 text-left text-[12.5px] font-semibold tracking-[0.04em] text-muted uppercase">
+                    <th scope="col" className="px-3 py-3 text-start text-caption font-semibold tracking-[0.04em] text-muted uppercase">
                       Stage
                     </th>
-                    <th scope="col" className="hidden px-3 py-3 text-left text-[12.5px] font-semibold tracking-[0.04em] text-muted uppercase xl:table-cell">
+                    <th scope="col" className="hidden px-3 py-3 text-start text-caption font-semibold tracking-[0.04em] text-muted uppercase xl:table-cell">
                       Owner
                     </th>
                     <SortHeader label="Last activity" k="activity" sort={sort} onSort={onSort} className="hidden lg:table-cell" />
-                    <th scope="col" className="px-3 py-3 text-left text-[12.5px] font-semibold tracking-[0.04em] text-muted uppercase">
+                    <th scope="col" className="px-3 py-3 text-start text-caption font-semibold tracking-[0.04em] text-muted uppercase">
                       Next step
                     </th>
-                    <th scope="col" className="w-10 pr-4">
+                    <th scope="col" className="w-10 pe-4">
                       <span className="sr-only">Open</span>
                     </th>
                   </tr>
@@ -274,17 +274,17 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
                       <tr
                         key={l.id}
                         onClick={() => setOpenId(l.id)}
-                        className={`cursor-pointer border-b border-line transition last:border-b-0 ${isSel ? "bg-periwinkle-soft/50" : "hover:bg-[#FAFAFC]"}`}
+                        className={`cursor-pointer border-b border-line transition last:border-b-0 ${isSel ? "bg-periwinkle-soft/50" : "hover:bg-surface-muted"}`}
                       >
-                        <td className="py-3 pl-4" onClick={(e) => e.stopPropagation()}>
+                        <td className="py-3 ps-4" onClick={(e) => e.stopPropagation()}>
                           <input type="checkbox" aria-label={`Select ${l.name}`} checked={isSel} onChange={() => toggle(l.id)} className="h-4 w-4 cursor-pointer accent-[#23243A]" />
                         </td>
                         <td className="px-3 py-3">
                           <span className="flex items-center gap-3">
                             <Avatar name={l.name} size={34} />
                             <span className="flex min-w-0 flex-col">
-                              <span className="truncate text-[14.5px] font-semibold text-ink">{l.name}</span>
-                              <span className="max-w-[260px] truncate text-[13px] text-subtle">{l.interest}</span>
+                              <span className="truncate text-body font-semibold text-ink">{l.name}</span>
+                              <span className="max-w-[260px] truncate text-label text-subtle">{l.interest}</span>
                             </span>
                           </span>
                         </td>
@@ -298,9 +298,9 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
                           <Badge tone={stageTone[l.stage]}>{stageLabel[l.stage]}</Badge>
                         </td>
                         <td className="hidden px-3 py-3 xl:table-cell">
-                          <span className="flex items-center gap-2 text-[13.5px] whitespace-nowrap text-ink-soft">
+                          <span className="flex items-center gap-2 text-label whitespace-nowrap text-ink-soft">
                             {l.owner === "AI" ? (
-                              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-ink text-accent">
+                              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-fill text-accent">
                                 <Icon name="sparkle" size={12} />
                               </span>
                             ) : (
@@ -309,11 +309,11 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
                             {l.owner === "AI" ? "AI" : l.owner}
                           </span>
                         </td>
-                        <td className="hidden px-3 py-3 text-[13.5px] whitespace-nowrap text-subtle lg:table-cell">{l.lastActivity}</td>
+                        <td className="hidden px-3 py-3 text-label whitespace-nowrap text-subtle lg:table-cell">{l.lastActivity}</td>
                         <td className="px-3 py-3">
-                          <span className={`text-[13.5px] font-semibold whitespace-nowrap ${l.next.startsWith("Call") ? "text-warning" : "text-ink-soft"}`}>{l.next}</span>
+                          <span className={`text-label font-semibold whitespace-nowrap ${l.next.startsWith("Call") ? "text-warning" : "text-ink-soft"}`}>{l.next}</span>
                         </td>
-                        <td className="pr-4 text-right">
+                        <td className="pe-4 text-end">
                           <Icon name="chevron-right" size={18} className="text-faint" />
                         </td>
                       </tr>
@@ -326,25 +326,25 @@ export function Leads({ onOpen }: { onOpen: (view: string) => void }) {
               <ul className="m-0 list-none p-0 md:hidden">
                 {visible.map((l) => (
                   <li key={l.id} className="border-b border-line last:border-b-0">
-                    <button type="button" onClick={() => setOpenId(l.id)} className="flex w-full cursor-pointer items-start gap-3 p-4 text-left">
+                    <button type="button" onClick={() => setOpenId(l.id)} className="flex w-full cursor-pointer items-start gap-3 p-4 text-start">
                       <Avatar name={l.name} size={38} />
                       <span className="flex min-w-0 flex-1 flex-col gap-1.5">
                         <span className="flex items-center justify-between gap-2">
-                          <span className="truncate text-[15px] font-semibold text-ink">{l.name}</span>
+                          <span className="truncate text-body font-semibold text-ink">{l.name}</span>
                           <ScoreCell score={l.score} />
                         </span>
-                        <span className="truncate text-[13.5px] text-subtle">{l.interest}</span>
+                        <span className="truncate text-label text-subtle">{l.interest}</span>
                         <span className="flex flex-wrap items-center gap-2">
                           <Badge tone={stageTone[l.stage]}>{stageLabel[l.stage]}</Badge>
                           <SourceLabel source={l.source} />
                         </span>
-                        <span className={`text-[13px] font-semibold ${l.next.startsWith("Call") ? "text-warning" : "text-ink-soft"}`}>{l.next}</span>
+                        <span className={`text-label font-semibold ${l.next.startsWith("Call") ? "text-warning" : "text-ink-soft"}`}>{l.next}</span>
                       </span>
                     </button>
                   </li>
                 ))}
               </ul>
-              <p className="m-0 border-t border-line bg-[#FAFAFC] px-4 py-2.5 text-[13px] text-subtle">
+              <p className="m-0 border-t border-line bg-surface-muted px-4 py-2.5 text-label text-subtle">
                 Showing {visible.length} of {leads.length} leads
               </p>
             </>

@@ -30,9 +30,9 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
   const result = complete ? plans.find((p) => p.id === recommend(answers)) : undefined;
 
   return (
-    <div className="rounded-[28px] bg-white p-[clamp(20px,3vw,32px)] shadow-[0_30px_80px_rgb(0_0_0/0.3)]">
+    <div className="rounded-xl bg-surface p-[clamp(20px,3vw,32px)] shadow-2">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="m-0 text-[20px] font-semibold tracking-[-0.01em]">Which plan fits you?</h2>
+        <h2 className="m-0 text-h3 font-semibold tracking-[-0.01em]">Which plan fits you?</h2>
         <span className="text-sm font-medium text-subtle" aria-live="polite">
           {answered} of {pickerQuestions.length} answered
         </span>
@@ -44,7 +44,7 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
       <div className="mt-6 flex flex-col gap-5">
         {pickerQuestions.map((q) => (
           <fieldset key={q.id} className="m-0 flex flex-col gap-3 border-0 p-0">
-            <legend className="mb-2.5 p-0 text-[15px] font-semibold text-ink">{q.question}</legend>
+            <legend className="mb-2.5 p-0 text-body font-semibold text-ink">{q.question}</legend>
             <div className="flex flex-wrap gap-2">
               {q.options.map((o, i) => {
                 const active = answers[q.id] === i;
@@ -54,8 +54,8 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
                     type="button"
                     aria-pressed={active}
                     onClick={() => choose(q.id, i)}
-                    className={`min-h-10 cursor-pointer rounded-full border px-3.5 text-[14px] font-medium transition ${
-                      active ? "border-ink bg-ink text-white" : "border-line-strong bg-white text-ink hover:border-subtle"
+                    className={`min-h-10 cursor-pointer rounded-full border px-3.5 text-body font-medium transition ${
+                      active ? "border-ink bg-brand-fill text-white" : "border-line-strong bg-surface text-ink hover:border-subtle"
                     }`}
                   >
                     {o.label}
@@ -67,10 +67,10 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
         ))}
       </div>
 
-      <div className="mt-6 flex min-h-14 flex-wrap items-center justify-between gap-3 rounded-[18px] bg-panel px-5 py-4" aria-live="polite">
+      <div className="mt-6 flex min-h-14 flex-wrap items-center justify-between gap-3 rounded-xl bg-panel px-5 py-4" aria-live="polite">
         {result ? (
           <>
-            <p className="m-0 text-[17px] text-ink">
+            <p className="m-0 text-body-lg text-ink">
               We recommend <strong className="font-semibold">{result.name}</strong>: {result.promise.toLowerCase()}.
             </p>
             <div className="flex gap-3">
@@ -91,7 +91,7 @@ export function PlanPicker({ onPick }: { onPick: (plan: PlanId | null) => void }
             </div>
           </>
         ) : (
-          <p className="m-0 text-[15px] text-subtle">Answer the questions and we’ll highlight the plan that fits.</p>
+          <p className="m-0 text-body text-subtle">Answer the questions and we’ll highlight the plan that fits.</p>
         )}
       </div>
     </div>

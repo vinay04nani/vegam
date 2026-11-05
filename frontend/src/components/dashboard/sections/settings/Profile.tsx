@@ -21,12 +21,12 @@ export function Profile({ name, business }: { name: string; business: string }) 
   return (
     <>
       <div className="flex items-center gap-4 border-b border-line pb-6">
-        <span className="flex h-16 w-16 flex-none items-center justify-center overflow-hidden rounded-full bg-ink text-[24px] font-bold text-white">
+        <span className="flex h-16 w-16 flex-none items-center justify-center overflow-hidden rounded-full bg-brand-fill text-h2 font-bold text-white">
           {photo ? <img src={photo} alt="Your photo" className="h-full w-full object-cover" /> : name[0]}
         </span>
         <span className="flex min-w-0 flex-1 flex-col">
-          <span className="text-[17px] font-semibold text-ink">{name}</span>
-          <span className="text-[13.5px] text-subtle">Owner · {business}</span>
+          <span className="text-body-lg font-semibold text-ink">{name}</span>
+          <span className="text-label text-subtle">Owner · {business}</span>
         </span>
         <RowButton onClick={() => file.current?.click()}>{photo ? "Change photo" : "Add photo"}</RowButton>
         <input
@@ -54,7 +54,7 @@ export function Profile({ name, business }: { name: string; business: string }) 
             <Input aria-label="Mobile" type="tel" defaultValue="+91 98•• ••• 001" className="w-64" />
           </Row>
           <Row label="Role">
-            <span className="text-[14px] text-subtle">Owner</span>
+            <span className="text-body text-subtle">Owner</span>
           </Row>
         </Group>
       </div>
@@ -121,13 +121,13 @@ export function Profile({ name, business }: { name: string; business: string }) 
       >
         <div className="flex flex-col gap-4">
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Current password</span>
+            <span className="text-body font-medium text-ink">Current password</span>
             <Input type="password" autoComplete="current-password" value={pw.now} onChange={(e) => setPw({ ...pw, now: e.target.value })} />
           </label>
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">New password</span>
+            <span className="text-body font-medium text-ink">New password</span>
             <Input type="password" autoComplete="new-password" value={pw.next} onChange={(e) => setPw({ ...pw, next: e.target.value })} />
-            <span className="text-[12.5px] text-subtle">At least 8 characters.</span>
+            <span className="text-caption text-subtle">At least 8 characters.</span>
           </label>
         </div>
       </Modal>

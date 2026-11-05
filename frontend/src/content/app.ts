@@ -1,3 +1,4 @@
+import { regionalView } from "@/lib/regional";
 // Sample data for app-wide UI: notifications, help articles and search.
 // TODO(backend): replace with live data.
 
@@ -15,7 +16,7 @@ export type AppNotification = {
   view?: string;
 };
 
-export const sampleNotifications: AppNotification[] = [
+export const sampleNotifications: AppNotification[] = regionalView([
   { id: "n1", group: "Needs you", icon: "users", title: "A chat was handed to you", body: "+91 98•• ••• 210 asked about a refund.", time: "8 min ago", unread: true, view: "inbox" },
   { id: "n2", group: "Needs you", icon: "phone", title: "Callback requested", body: "+91 90•• ••• 044 wants a call after 5 PM about a group booking.", time: "1 h ago", unread: true, view: "calls" },
   { id: "n7", group: "Needs you", icon: "sparkle", title: "4 questions the AI couldn’t answer", body: "Answer once and every agent knows next time.", time: "2 h ago", unread: true, view: "agent:chat/knowledge" },
@@ -24,7 +25,7 @@ export const sampleNotifications: AppNotification[] = [
   { id: "n5", group: "System", icon: "message", title: "WhatsApp template approved", body: "“Appointment reminder” is ready to use.", time: "2 days ago", unread: false, view: "settings:templates" },
   { id: "n8", group: "System", icon: "sparkle", title: "Review agent needs a template", body: "Meta is still reviewing your review request message.", time: "2 days ago", unread: false, view: "agent:reviews" },
   { id: "n6", group: "System", icon: "chart", title: "Usage at 80%", body: "You’ve used 80% of this month’s AI conversations.", time: "3 days ago", unread: false, view: "billing" },
-];
+]);
 
 export type HelpTopic = "Getting started" | "Inbox" | "Calendar" | "Calls" | "AI agents" | "Channels" | "Billing" | "Privacy";
 
@@ -41,7 +42,7 @@ export const helpTopics: { id: HelpTopic; icon: IconName; body: string }[] = [
 
 export type HelpArticle = { id: string; topic: HelpTopic; title: string; body: string; steps?: string[]; view?: string; minutes: number };
 
-export const helpArticles: HelpArticle[] = [
+export const helpArticles: HelpArticle[] = regionalView([
   {
     id: "h1",
     topic: "Getting started",
@@ -151,9 +152,9 @@ export const helpArticles: HelpArticle[] = [
     title: "When a customer asks about their data",
     minutes: 2,
     view: "settings:privacy",
-    body: "Customers can ask what you hold about them or ask you to delete it. Set where requests go in Settings, Privacy and consent; you have 30 days to reply.",
+    body: "A way for customers to ask what you hold, or to delete it, is planned. It is not available yet. The settings screen is only a preview of where those requests would go.",
   },
-];
+]);
 
 /** Recent product updates, newest first. */
 export const whatsNew = [

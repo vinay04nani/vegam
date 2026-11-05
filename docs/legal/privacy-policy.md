@@ -57,14 +57,14 @@ Vegam is a global service. We aim to host data in a region suited to each busine
 | Data | Kept for |
 |---|---|
 | User account data | Life of the account + [90] days |
-| End Customer data | As instructed by the business; deleted within [30] days after the business's account ends, unless law requires longer |
+| End Customer data | Planned: as instructed by the business, then deleted within [30] days after the business's account ends, unless law requires longer. Deletion is not available yet. |
 | Billing records | As required by tax law (in India, generally [8] years) |
 | Security and access logs | At least [1 year], and as required by law |
 | Website analytics | [13] months |
 
 ## 7. Security
 
-We use encryption in transit and at rest, access controls, row-level separation of each business's data, audit logs and monitoring. See our [Security and Incident Response Policy](security-and-incident-response.md). If a personal data breach occurs, we will notify affected businesses, individuals and authorities as required by law.
+Encryption in transit and at rest, access controls, and separation of each business's data are planned. They are not in place yet. This website is a static preview and does not store customer data, so there is nothing to encrypt, isolate, or delete. Export and deletion tools are also planned and are not available. See our [Security and Incident Response Policy](security-and-incident-response.md) for the target controls. If a personal data breach occurs once customer data is stored, we will notify affected businesses, individuals and authorities as required by law.
 
 ## 8. Your rights
 

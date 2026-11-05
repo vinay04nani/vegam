@@ -12,7 +12,7 @@ export default function Home() {
     <>
       <a
         href="#main"
-        className="sr-only z-[60] rounded-full bg-white px-4 py-2 focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
+        className="sr-only z-[60] rounded-full bg-surface px-4 py-2 focus:not-sr-only focus:fixed focus:top-3 focus:start-3"
       >
         Skip to content
       </a>

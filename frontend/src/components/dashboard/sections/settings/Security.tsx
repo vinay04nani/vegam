@@ -1,24 +1,28 @@
 "use client";
 
 import { useState } from "react";
+import { useLocale } from "@/components/LocaleProvider";
+import { sampleFor } from "@/lib/regional";
 import { useToast } from "../../kit";
 import { Dropdown, Group, Row, RowButton, Switch } from "./parts";
 
 // Account protection for the whole team, and signed-in devices.
 // Demo: sessions are samples.
 
-const sessions = [
-  { device: "Chrome on Mac", place: "Bengaluru · this device", now: true },
-  { device: "Safari on iPhone", place: "Bengaluru · 2 hours ago", now: false },
-  { device: "Chrome on Windows", place: "Hyderabad · 3 days ago", now: false },
-];
-
 export function Security() {
   const toast = useToast();
+  const sample = sampleFor(useLocale().region);
+  const sessions = [
+    { device: "Chrome on Mac", place: `${sample.places[0]} · this device`, now: true },
+    { device: "Safari on iPhone", place: `${sample.places[1]} · 2 hours ago`, now: false },
+    { device: "Chrome on Windows", place: `${sample.places[2]} · 3 days ago`, now: false },
+  ];
   const [twoStep, setTwoStep] = useState(false);
   const [teamTwoStep, setTeamTwoStep] = useState(false);
   const [mask, setMask] = useState(true);
-  const [list, setList] = useState(sessions);
+  const [removed, setRemoved] = useState<string[]>([]);
+  const [othersOut, setOthersOut] = useState(false);
+  const list = sessions.filter((s) => !removed.includes(s.device) && (!othersOut || s.now));
   return (
     <>
       <Group title="Sign-in">
@@ -37,14 +41,14 @@ export function Security() {
         </Row>
       </Group>
       <Group title="Team access">
-        <Row label="Hide full phone numbers from front desk" description="They see +91 98•• ••• 210 and can still reply.">
+        <Row label="Hide full phone numbers from front desk" description={`They see ${sample.phones[0]} and can still reply.`}>
           <Switch checked={mask} onChange={setMask} label="Hide full phone numbers" />
         </Row>
       </Group>
-      <Group title="Signed-in devices" action={list.length > 1 ? <RowButton tone="danger" onClick={() => { setList(list.filter((s) => s.now)); toast("Signed out of other devices"); }}>Sign out others</RowButton> : undefined}>
+      <Group title="Signed-in devices" action={list.length > 1 ? <RowButton tone="danger" onClick={() => { setOthersOut(true); toast("Signed out of other devices"); }}>Sign out others</RowButton> : undefined}>
         {list.map((s) => (
           <Row key={s.device} label={s.device} description={s.place}>
-            {s.now ? <span className="text-[13px] text-subtle">Current</span> : <RowButton onClick={() => setList(list.filter((x) => x.device !== s.device))}>Sign out</RowButton>}
+            {s.now ? <span className="text-label text-subtle">Current</span> : <RowButton onClick={() => setRemoved((ids) => [...ids, s.device])}>Sign out</RowButton>}
           </Row>
         ))}
       </Group>

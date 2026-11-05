@@ -1,63 +1,56 @@
+"use client";
+
 import { links } from "@/content/site";
-import { currencySymbol, plans, type PlanId } from "@/content/pricing";
+import { plans } from "@/content/pricing";
+import { useLocale } from "@/components/LocaleProvider";
+import { ArtTile } from "@/components/ui/ArtTile";
 import { DisplayHeading } from "@/components/ui/Heading";
-import { ArtTile, type Palette } from "@/components/ui/ArtTile";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/Reveal";
-
-const cover: Record<PlanId, { palette: Palette; text: string }> = {
-  starter: { palette: "saffron", text: "text-white" },
-  growth: { palette: "indigo", text: "text-white" },
-  pro: { palette: "mist", text: "text-brand" },
-};
-
-const money = (n: number, inr: boolean) => `${currencySymbol[inr ? "INR" : "USD"]}${n.toLocaleString(inr ? "en-IN" : "en-US")}`;
+import { formatMoney, taxNote } from "@/lib/locale";
 
 export function Plans() {
+  const locale = useLocale();
   return (
-    <section id="plans" className="mx-auto flex max-w-[1240px] scroll-mt-20 flex-col gap-12 px-4 py-[clamp(40px,6vw,80px)] sm:px-10">
+    <section id="plans" className="mx-auto flex max-w-[1240px] scroll-mt-20 flex-col gap-12 px-4 py-16 sm:px-10 sm:py-24">
       <Reveal className="flex flex-col items-center gap-3.5 text-center">
-        <DisplayHeading className="text-[clamp(38px,4.4vw,60px)]">Simple plans</DisplayHeading>
-        <p className="m-0 text-[19px] text-subtle">Start with a 30-day pilot. Switch on more as you grow.</p>
-        <a href={links.pricing} className="inline-flex items-center gap-1.5 font-semibold text-indigo hover:underline hover:underline-offset-4">
+        <DisplayHeading className="text-display-xl">Simple plans</DisplayHeading>
+        <p className="m-0 text-h3 font-normal text-text-3">Start with a 30-day pilot. Switch on more as you grow.</p>
+        <a href={links.pricing} className="inline-flex items-center gap-1.5 font-semibold text-brand hover:underline hover:underline-offset-4">
           Compare plans and features
           <Icon name="chevron-right" size={18} />
         </a>
       </Reveal>
       <div className="grid grid-cols-[repeat(auto-fit,minmax(min(300px,100%),1fr))] gap-6">
-        {plans.map((p, i) => (
-          <Reveal key={p.id} delay={i * 90}>
-            <a
-              href={`${links.pricing}#plan-${p.id}`}
-              className="group flex h-full flex-col rounded-[20px] border border-line bg-white p-3 text-ink transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgb(21_16_173/0.12)]"
-            >
-              <ArtTile palette={cover[p.id].palette} className="h-[180px] rounded-[14px]">
-                <span className={`text-[44px] font-bold tracking-[-0.02em] transition duration-500 group-hover:scale-105 ${cover[p.id].text}`}>
-                  {p.name}
-                </span>
-              </ArtTile>
-              <div className="flex flex-col gap-1.5 px-3.5 pt-4.5 pb-2.5">
-                {p.price && (
-                  <p className="m-0 flex flex-wrap items-baseline gap-x-1.5">
-                    {p.from && <span className="text-base text-subtle">From</span>}
-                    <span className="text-[32px] leading-none font-bold tracking-[-0.02em]">{money(p.price.INR.monthly, true)}</span>
-                    <span className="text-base text-subtle">/ month · {money(p.price.USD.monthly, false)} outside India</span>
-                  </p>
-                )}
-                <div className="mt-2 flex items-center justify-between text-[19px] font-medium">
-                  <span>{p.promise}</span>
-                  <Icon
-                    name="arrow"
-                    size={20}
-                    strokeWidth={1.8}
-                    className="transition duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
+        {plans.map((p, i) => {
+          const amount = p.price?.[locale.currency].monthly;
+          return (
+            <Reveal key={p.id} delay={i * 90}>
+              <a
+                href={`${links.pricing}#plan-${p.id}`}
+                className="group flex h-full flex-col rounded-xl border border-border bg-surface p-3 text-text shadow-1 transition duration-150 hover:shadow-2"
+              >
+                <ArtTile className="h-[160px] rounded-lg">
+                  <span className="font-serif text-display tracking-[-0.02em] text-brand">{p.name}</span>
+                </ArtTile>
+                <div className="flex flex-col gap-1.5 px-3.5 pt-4 pb-2.5">
+                  {amount !== undefined && (
+                    <p className="m-0 flex flex-wrap items-baseline gap-x-1.5">
+                      {p.from && <span className="text-body-lg text-text-3">From</span>}
+                      <span className="text-h1 font-semibold tracking-[-0.02em] tabular-nums">{formatMoney(amount, locale.currency, locale.locale)}</span>
+                      <span className="text-body-lg text-text-3">/ month · {taxNote(locale.region)}</span>
+                    </p>
+                  )}
+                  <div className="mt-2 flex items-center justify-between text-h3 font-medium">
+                    <span className="text-text">{p.promise}</span>
+                    <Icon name="arrow" size={20} className="text-brand" />
+                  </div>
+                  <span className="text-body-lg text-text-3">{p.highlights.slice(0, 3).join(" · ")}</span>
                 </div>
-                <span className="text-base text-subtle">{p.highlights.slice(0, 3).join(" · ")}</span>
-              </div>
-            </a>
-          </Reveal>
-        ))}
+              </a>
+            </Reveal>
+          );
+        })}
       </div>
     </section>
   );

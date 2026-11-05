@@ -40,15 +40,15 @@ export function AgentPage({ id, tab, state, update, onOpen, plan }: { id: AgentI
     <div className={`flex flex-col gap-6 ${changes ? "pb-20" : ""}`}>
       {above && <PlanNotice feature={agent.name} planName={planName} currentName={plans.find((p) => p.id === plan)!.name} onPlans={() => onOpen("settings:plans")} />}
       <header className="flex flex-col gap-4">
-        <button type="button" onClick={() => onOpen("agents")} className="inline-flex w-fit cursor-pointer items-center gap-1 text-[14px] font-medium text-subtle hover:text-ink">
+        <button type="button" onClick={() => onOpen("agents")} className="inline-flex w-fit cursor-pointer items-center gap-1 text-body font-medium text-subtle hover:text-ink">
           <Icon name="chevron-left" size={16} />
           AI agents
         </button>
         <div className="flex flex-wrap items-start gap-x-4 gap-y-3">
           <AgentTile agent={agent} size={48} off={!s.on} />
           <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-            <h1 className="m-0 font-serif text-[clamp(28px,2.8vw,38px)] leading-tight font-normal tracking-[-0.02em] text-ink">{agent.name}</h1>
-            <p className="m-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-[14px] text-subtle">
+            <h1 className="m-0  text-display leading-tight font-normal tracking-[-0.02em] text-ink">{agent.name}</h1>
+            <p className="m-0 flex flex-wrap items-center gap-x-2 gap-y-1 text-body text-subtle">
               <StatusDot status={statusOf(agent, s, store.paused, plan)} />
               <span aria-hidden="true">·</span>
               <span>{agent.works.join(", ")}</span>
@@ -59,11 +59,11 @@ export function AgentPage({ id, tab, state, update, onOpen, plan }: { id: AgentI
                 </>
               )}
               <span aria-hidden="true">·</span>
-              <span className="text-[12.5px] tracking-[0.04em] uppercase">Sample data</span>
+              <span className="text-caption tracking-[0.04em] uppercase">Sample data</span>
             </p>
           </div>
-          <span className="ml-auto flex items-center gap-3">
-            <span className="flex items-center gap-2.5 text-[14px] font-medium text-ink">
+          <span className="ms-auto flex items-center gap-3">
+            <span className="flex items-center gap-2.5 text-body font-medium text-ink">
               {s.on ? "On" : "Off"}
               <Switch
                 checked={s.on}
@@ -86,7 +86,7 @@ export function AgentPage({ id, tab, state, update, onOpen, plan }: { id: AgentI
             />
           </span>
         </div>
-        <p className="m-0 max-w-[680px] text-[15.5px] leading-relaxed text-subtle">{agent.description}</p>
+        <p className="m-0 max-w-[680px] text-body-lg leading-relaxed text-subtle">{agent.description}</p>
       </header>
 
       <Tabs
@@ -116,9 +116,9 @@ export function AgentPage({ id, tab, state, update, onOpen, plan }: { id: AgentI
         <div
           role="region"
           aria-label="Unsaved changes"
-          className="fixed inset-x-3 bottom-20 z-30 mx-auto flex max-w-[720px] lg:right-auto lg:mx-0 lg:w-[min(720px,calc(100vw-660px))] lg:min-w-[520px] flex-wrap items-center gap-2 rounded-[16px] bg-ink px-4 py-3 text-white shadow-[0_18px_40px_rgb(30_31_43/0.3)] lg:bottom-6 lg:left-[280px]"
+          className="fixed inset-x-3 bottom-20 z-30 mx-auto flex max-w-[720px] lg:end-auto lg:mx-0 lg:w-[min(720px,calc(100vw-660px))] lg:min-w-[520px] flex-wrap items-center gap-2 rounded-lg bg-brand-fill px-4 py-3 text-white shadow-2 lg:bottom-6 lg:start-[280px]"
         >
-          <span className="flex min-w-0 flex-1 items-center gap-2 text-[14px] font-medium">
+          <span className="flex min-w-0 flex-1 items-center gap-2 text-body font-medium">
             <span className="h-2 w-2 flex-none rounded-full bg-accent" />
             {changes} unsaved change{changes === 1 ? "" : "s"}
             <span className="hidden text-white/60 sm:inline">· customers still get the live version</span>
@@ -129,12 +129,12 @@ export function AgentPage({ id, tab, state, update, onOpen, plan }: { id: AgentI
               agentStore.discard(id);
               toast("Changes discarded");
             }}
-            className="min-h-9 cursor-pointer rounded-[10px] px-3 text-[14px] font-semibold text-white/80 hover:bg-white/10 hover:text-white"
+            className="min-h-9 cursor-pointer rounded-md px-3 text-body font-semibold text-white/80 hover:bg-white/10 hover:text-white"
           >
             Discard
           </button>
           {current !== "test" && (
-            <button type="button" onClick={() => go("test")} className="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-[10px] border border-white/25 px-3 text-[14px] font-semibold hover:bg-white/10">
+            <button type="button" onClick={() => go("test")} className="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-md border border-white/25 px-3 text-body font-semibold hover:bg-white/10">
               <Icon name="play" size={14} />
               Test changes
             </button>

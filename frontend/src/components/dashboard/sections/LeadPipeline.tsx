@@ -32,10 +32,10 @@ function LeadCard({ lead, onOpen, onMove, dragging, onDragStart, onDragEnd }: { 
       draggable
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
-      className={`group relative flex cursor-grab flex-col hover:z-10 focus-within:z-20 gap-2.5 rounded-[14px] border border-line bg-white p-3.5 shadow-[0_1px_2px_rgb(30_31_43/0.05)] transition hover:-translate-y-0.5 hover:border-line-strong hover:shadow-[0_8px_20px_rgb(30_31_43/0.08)] active:cursor-grabbing ${dragging ? "opacity-50" : ""}`}
+      className={`group relative flex cursor-grab flex-col hover:z-10 focus-within:z-20 gap-2.5 rounded-lg border border-line bg-surface p-3.5 shadow-1 transition  hover:border-line-strong hover:shadow-1 active:cursor-grabbing ${dragging ? "opacity-50" : ""}`}
     >
       {urgent && (
-        <span className="inline-flex w-fit items-center gap-1 rounded-full bg-[#FFF3E6] px-2 py-0.5 text-[11.5px] font-semibold text-warning">
+        <span className="inline-flex w-fit items-center gap-1 rounded-full bg-signal/15 px-2 py-0.5 text-caption font-semibold text-warning">
           <Icon name="phone" size={11} />
           {lead.next}
         </span>
@@ -44,30 +44,30 @@ function LeadCard({ lead, onOpen, onMove, dragging, onDragStart, onDragEnd }: { 
         <Avatar name={lead.name} size={30} />
         <div className="flex min-w-0 flex-1 flex-col">
           {/* The name button stretches over the card, so the whole card opens the lead. */}
-          <button type="button" onClick={onOpen} className="truncate text-left text-[14.5px] font-semibold text-ink outline-none after:absolute after:inset-0 after:rounded-[14px] focus-visible:after:ring-2 focus-visible:after:ring-indigo">
+          <button type="button" onClick={onOpen} className="truncate text-start text-body font-semibold text-ink outline-none after:absolute after:inset-0 after:rounded-lg focus-visible:after:ring-2 focus-visible:after:ring-indigo">
             {lead.name}
           </button>
         </div>
         <span
           title={`Score ${lead.score} · ${tempLabel[t]}`}
           aria-label={`Score ${lead.score}, ${tempLabel[t]}`}
-          className="inline-flex flex-none items-center gap-1.5 rounded-full bg-panel px-2 py-0.5 text-[12.5px] font-bold text-ink tabular-nums"
+          className="inline-flex flex-none items-center gap-1.5 rounded-full bg-panel px-2 py-0.5 text-caption font-bold text-ink tabular-nums"
         >
           <span className="h-2 w-2 rounded-full" style={{ background: tempColor[t] }} />
           {lead.score}
         </span>
       </div>
 
-      <p className="m-0 line-clamp-2 text-[13.5px] leading-snug text-ink-soft">{lead.interest}</p>
+      <p className="m-0 line-clamp-2 text-label leading-snug text-ink-soft">{lead.interest}</p>
 
-      <div className="flex items-center gap-2 border-t border-line pt-2.5 text-[12.5px] text-subtle">
+      <div className="flex items-center gap-2 border-t border-line pt-2.5 text-caption text-subtle">
         <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-panel" title={`From ${lead.source}`} aria-label={`From ${lead.source}`} role="img">
           <Icon name={sourceIcon[lead.source] ?? "message"} size={13} className="text-muted" />
         </span>
         <span className="min-w-0 truncate">{lead.lastActivity}</span>
-        <span className="ml-auto flex-none" title={lead.owner === "AI" ? "Handled by the AI" : `Owner: ${lead.owner}`}>
+        <span className="ms-auto flex-none" title={lead.owner === "AI" ? "Handled by the AI" : `Owner: ${lead.owner}`}>
           {lead.owner === "AI" ? (
-            <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-ink text-accent">
+            <span className="flex h-[22px] w-[22px] items-center justify-center rounded-full bg-brand-fill text-accent">
               <Icon name="sparkle" size={11} />
             </span>
           ) : (
@@ -75,7 +75,7 @@ function LeadCard({ lead, onOpen, onMove, dragging, onDragStart, onDragEnd }: { 
           )}
         </span>
         {/* Above the stretched name button, so it gets its own clicks. */}
-        <div className="relative z-10 -mr-1.5">
+        <div className="relative z-10 -me-1.5">
           <Menu
             label={`Actions for ${lead.name}`}
             items={[
@@ -103,14 +103,14 @@ export function LeadPipeline({ leads, onOpen, onMove, onAdd }: Props) {
           const isOver = over === st.id && dragId !== null;
           return (
             <section key={st.id} aria-label={`${st.label} leads`} className="flex snap-start flex-col gap-2.5">
-              <header className="relative overflow-hidden rounded-[14px] border border-line bg-white px-3.5 pt-3.5 pb-3">
+              <header className="relative overflow-hidden rounded-lg border border-line bg-surface px-3.5 pt-3.5 pb-3">
                 <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[3px]" style={{ background: stageColor[st.id] }} />
                 <div className="flex min-h-9 items-center gap-2">
-                  <h3 className="m-0 text-[14.5px] font-semibold text-ink">{st.label}</h3>
-                  <span className="rounded-full bg-panel px-2 py-0.5 text-[12px] font-semibold text-muted tabular-nums">{col.length}</span>
-                  {st.id !== "lost" && <IconButton icon="plus" label={`Add lead to ${st.label}`} onClick={() => onAdd(st.id)} className="ml-auto h-7 w-7 border-transparent" />}
+                  <h3 className="m-0 text-body font-semibold text-ink">{st.label}</h3>
+                  <span className="rounded-full bg-panel px-2 py-0.5 text-caption font-semibold text-muted tabular-nums">{col.length}</span>
+                  {st.id !== "lost" && <IconButton icon="plus" label={`Add lead to ${st.label}`} onClick={() => onAdd(st.id)} className="ms-auto h-7 w-7 border-transparent" />}
                 </div>
-                <p className="m-0 mt-0.5 text-[12.5px] text-subtle">{st.id === "lost" ? "Closed" : col.length ? `Avg score ${avg}` : "Empty"}</p>
+                <p className="m-0 mt-0.5 text-caption text-subtle">{st.id === "lost" ? "Closed" : col.length ? `Avg score ${avg}` : "Empty"}</p>
               </header>
 
               <div
@@ -128,7 +128,7 @@ export function LeadPipeline({ leads, onOpen, onMove, onAdd }: Props) {
                   setDragId(null);
                   setOver(null);
                 }}
-                className={`flex min-h-[200px] flex-col gap-2.5 rounded-[16px] p-2 transition ${isOver ? "bg-periwinkle-soft ring-2 ring-indigo/40" : "bg-[#F4F4F8]"}`}
+                className={`flex min-h-[200px] flex-col gap-2.5 rounded-lg p-2 transition ${isOver ? "bg-periwinkle-soft ring-2 ring-indigo/40" : "bg-surface-muted"}`}
               >
                 {col.map((l) => (
                   <LeadCard
@@ -149,7 +149,7 @@ export function LeadPipeline({ leads, onOpen, onMove, onAdd }: Props) {
                   />
                 ))}
                 {col.length === 0 && (
-                  <p className="m-0 flex flex-1 items-center justify-center rounded-[12px] border border-dashed border-line-strong p-5 text-center text-[13px] text-subtle">
+                  <p className="m-0 flex flex-1 items-center justify-center rounded-lg border border-dashed border-line-strong p-5 text-center text-label text-subtle">
                     {isOver ? "Drop here" : "No leads in this stage"}
                   </p>
                 )}

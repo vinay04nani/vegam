@@ -1,4 +1,5 @@
 import { averagePrice, channelGroups, dailySeries, splitByChannel, type ChannelFilter, type Range } from "@/content/reports";
+import { formatDate, formatDayMonth } from "@/lib/locale";
 
 // Turns the sample daily series into what the Reports tabs show for one date
 // range and channel: totals, the previous period, chart buckets and the
@@ -29,7 +30,7 @@ export type Model = {
 
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 const avgConversion = sum(channelGroups.map((c) => c.share * c.conversion));
-const dayMonth = (d: Date) => d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+const dayMonth = (d: Date) => formatDayMonth(d);
 
 function totals(days: Day[]): Totals {
   const enquiries = sum(days.map((d) => d.enquiries));
@@ -59,8 +60,8 @@ function bucketise(days: Day[], range: Range): Bucket[] {
     const first = part[0].date;
     const last = part[part.length - 1].date;
     const mid = part[Math.floor(part.length / 2)].date;
-    const label = range === 7 ? first.toLocaleDateString("en-GB", { weekday: "short" }) : range === 30 ? dayMonth(first) : range === 90 ? dayMonth(first) : mid.toLocaleDateString("en-GB", { month: "short" });
-    const tip = part.length === 1 ? first.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }) : `${dayMonth(first)} – ${dayMonth(last)}`;
+    const label = range === 7 ? formatDate(first, undefined, { weekday: "short" }) : range === 30 ? dayMonth(first) : range === 90 ? dayMonth(first) : formatDate(mid, undefined, { month: "short" });
+    const tip = part.length === 1 ? formatDate(first, undefined, { weekday: "short", day: "numeric", month: "short" }) : `${dayMonth(first)} – ${dayMonth(last)}`;
     return { label, tip, enquiries: t.enquiries, bookings: t.bookings, value: t.value, conversion: t.conversion, reply: Math.round(t.reply * 10) / 10, enqCh: t.enqCh, bookCh: t.bookCh };
   });
 }
@@ -80,7 +81,7 @@ export function buildModel(range: Range, channel: ChannelFilter, today: Date, fa
   });
   const cur = days.slice(range);
   const prev = days.slice(0, range);
-  const fmt = (ds: Day[]) => `${dayMonth(ds[0].date)} – ${ds[ds.length - 1].date.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}`;
+  const fmt = (ds: Day[]) => `${dayMonth(ds[0].date)} – ${formatDate(ds[ds.length - 1].date, undefined, { day: "numeric", month: "short", year: "numeric" })}`;
   const all = sum(cur.map((d) => sum(d.enqCh)));
   const ct = totals(cur);
   return {

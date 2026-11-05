@@ -12,11 +12,11 @@ import { changedKeys, type AgentState } from "./store";
 // status, and a titled panel.
 
 /** Quiet, monochrome icon tiles, in the style of Claude's and OpenAI's lists. */
-const tile = "border border-line bg-[#F6F6F8] text-ink";
+const tile = "border border-line bg-surface-muted text-ink";
 
 export function AgentTile({ agent, size = 44, off = false }: { agent: Agent; size?: number; off?: boolean }) {
   return (
-    <span className={`flex flex-none items-center justify-center rounded-[12px] ${tile} ${off ? "text-muted opacity-70" : ""}`} style={{ width: size, height: size }}>
+    <span className={`flex flex-none items-center justify-center rounded-lg ${tile} ${off ? "text-muted opacity-70" : ""}`} style={{ width: size, height: size }}>
       <Icon name={agent.icon} size={Math.round(size * 0.45)} />
     </span>
   );
@@ -40,7 +40,7 @@ const dot: Record<string, string> = { success: "bg-[#2E9D4F]", warning: "bg-[#E0
 /** A coloured dot and a word: quieter than a badge. */
 export function StatusDot({ status }: { status: Status }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-[13px] text-ink-soft">
+    <span className="inline-flex items-center gap-1.5 text-label text-ink-soft">
       <span aria-hidden="true" className={`h-2 w-2 flex-none rounded-full ${dot[status.tone] ?? dot.neutral}`} />
       {status.label}
     </span>
@@ -79,12 +79,12 @@ export function Panel({
   /** No card: for sections inside a shared box. */ plain?: boolean;
 }) {
   return (
-    <section aria-label={title} className={`flex min-w-0 flex-col ${plain ? "gap-3" : `rounded-[16px] border border-line bg-white ${flush ? "" : "gap-4 p-5"}`} ${className}`}>
+    <section aria-label={title} className={`flex min-w-0 flex-col ${plain ? "gap-3" : `rounded-lg border border-line bg-surface ${flush ? "" : "gap-4 p-5"}`} ${className}`}>
       {(title || action) && (
         <div className={`flex flex-wrap items-start justify-between gap-x-3 gap-y-2 ${flush ? "px-5 pt-5 pb-3" : ""}`}>
           <div className="min-w-0">
-            {title && <h2 className={`m-0 font-semibold text-ink ${plain ? "text-[14px]" : "text-[15px]"}`}>{title}</h2>}
-            {description && <p className="m-0 mt-0.5 text-[13px] text-subtle">{description}</p>}
+            {title && <h2 className={`m-0 font-semibold text-ink ${plain ? "text-body" : "text-body"}`}>{title}</h2>}
+            {description && <p className="m-0 mt-0.5 text-label text-subtle">{description}</p>}
           </div>
           {action}
         </div>

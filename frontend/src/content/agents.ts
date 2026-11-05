@@ -1,3 +1,4 @@
+import { regionalView } from "@/lib/regional";
 // The AI agents a business can switch on, with sample stats, voices,
 // unanswered questions and an activity log.
 // TODO(backend): live stats and real agent settings.
@@ -47,7 +48,7 @@ export const agentGroups: { id: AgentGroup; title: string; body: string }[] = [
 /** A gentle repeatable trend for sample sparklines. */
 const trend = (base: number, slope: number, seed: number) => Array.from({ length: 12 }, (_, i) => Math.max(0, Math.round((base + slope * i + Math.sin(i * 1.3 + seed) * base * 0.08) * 10) / 10));
 
-export const agents: Agent[] = [
+export const agents: Agent[] = regionalView([
   {
     id: "chat",
     name: "Chat receptionist",
@@ -326,7 +327,7 @@ export const agents: Agent[] = [
     alerts: [],
     steps: [{ label: "Allowed numbers set", done: true }],
   },
-];
+]);
 
 // ---------- Activity: what each agent did, with the conversation ----------
 
@@ -338,7 +339,7 @@ const act = (agent: AgentId, id: string, when: string, who: string, channel: str
 const c = (text: string): ActivityLine => ({ from: "customer", text });
 const a = (text: string): ActivityLine => ({ from: "ai", text });
 
-export const agentActivity: ActivityItem[] = [
+export const agentActivity: ActivityItem[] = regionalView([
   act("chat", "ac1", "Today, 9:42 PM", "P. Sharma", "WhatsApp", "Booked", "Booked a standard appointment for tomorrow 6:30 PM", [
     c("Hi, can I come tomorrow evening?"),
     a("Of course! Tomorrow we have 5:30 PM and 6:30 PM free. Which suits you?"),
@@ -425,11 +426,11 @@ export const agentActivity: ActivityItem[] = [
     c("Bookings tomorrow?"),
     a("6 bookings tomorrow: 10:00 R. Mehta, 11:30 A. Khan, 12:00 L. Fernandes, 3:00 S. Rao, 5:30 J. Thomas, 6:30 P. Sharma."),
   ]),
-];
+]);
 
 // ---------- Tests: scenarios each agent should handle ----------
 
-export const testSets: Record<AgentId, { id: string; scenario: string; expect: string }[]> = {
+export const testSets: Record<AgentId, { id: string; scenario: string; expect: string }[]> = regionalView({
   chat: [
     { id: "t1", scenario: "“How much is a first visit?”", expect: "Gives the price from your services" },
     { id: "t2", scenario: "“Can I book tomorrow evening?”", expect: "Offers free times and books" },
@@ -475,22 +476,22 @@ export const testSets: Record<AgentId, { id: string; scenario: string; expect: s
     { id: "t2", scenario: "“Bookings today?” from an unknown number", expect: "Refuses politely" },
     { id: "t3", scenario: "“Cancel all bookings tomorrow”", expect: "Asks you to confirm first" },
   ],
-};
+});
 
-export const sampleVoices = [
+export const sampleVoices = regionalView([
   { id: "asha", name: "Asha", note: "Warm, Indian English and Hindi" },
   { id: "ravi", name: "Ravi", note: "Calm, Indian English and Telugu" },
   { id: "meera", name: "Meera", note: "Bright, Indian English and Tamil" },
   { id: "noah", name: "Noah", note: "Neutral, international English" },
-];
+]);
 
 /** Questions the AI couldn't answer. `suggestion` is drafted from how your team replied. */
-export const sampleUnanswered: { id: string; question: string; asked: number; last: string; channel: string; agent: AgentId; suggestion?: string }[] = [
+export const sampleUnanswered: { id: string; question: string; asked: number; last: string; channel: string; agent: AgentId; suggestion?: string }[] = regionalView([
   { id: "q1", question: "Do you open on public holidays?", asked: 3, last: "Today, 9:12 AM", channel: "WhatsApp", agent: "chat", suggestion: "We’re closed on national holidays and open 10 AM to 2 PM on other public holidays." },
   { id: "q2", question: "Do you sell gift vouchers?", asked: 2, last: "Yesterday", channel: "Website", agent: "chat", suggestion: "Yes! Gift vouchers are available at the front desk for any amount from ₹500." },
   { id: "q3", question: "Is there wheelchair access?", asked: 1, last: "2 days ago", channel: "Instagram", agent: "chat" },
   { id: "q4", question: "Can I pay in instalments?", asked: 1, last: "3 days ago", channel: "Phone", agent: "voice", suggestion: "Packages can be paid in two parts: half when you book and half at your third visit." },
-];
+]);
 
 // ---------- Setup review: the 50 test replies checked with the owner ----------
 
@@ -511,10 +512,10 @@ const phrasings = ["{q}", "Hi, {q}", "Hello! {q}", "Quick question: {q}", "Namas
 export type ReviewItem = { id: string; q: string; a: string; status: "todo" | "ok" | "fixed" };
 
 /** 50 test replies from setup. The first 32 are already reviewed in the demo. */
-export const setupReview: ReviewItem[] = phrasings.flatMap((p, pi) =>
+export const setupReview: ReviewItem[] = regionalView(phrasings.flatMap((p, pi) =>
   reviewBase.map((b, bi) => {
     const n = pi * reviewBase.length + bi;
     const q = p.replace("{q}", pi ? b.q.charAt(0).toLowerCase() + b.q.slice(1) : b.q);
     return { id: `sr${n}`, q, a: b.a, status: n < 32 ? (n % 11 === 6 ? "fixed" : "ok") : "todo" };
   }),
-);
+));

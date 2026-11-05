@@ -1,9 +1,13 @@
 "use client";
 
 import { useEffect, useState, type FormEvent, type ReactNode } from "react";
-import { contactTopics, countryCodes, forms, links, teamSizes } from "@/content/site";
+import { contactTopics, forms, links, teamSizes } from "@/content/site";
+import { useLocale } from "@/components/LocaleProvider";
+import { CountrySelect } from "@/components/ui/CountrySelect";
 import { Icon } from "@/components/ui/Icon";
-import { VegamMark } from "@/components/ui/Kolam";
+import { Mark } from "@/components/ui/Mark";
+import { countryById, exampleNational, isPhoneValid } from "@/lib/countries";
+import { sampleFor } from "@/lib/regional";
 
 type Fields = {
   firstName: string;
@@ -23,7 +27,7 @@ const EMPTY: Fields = {
   firstName: "",
   lastName: "",
   email: "",
-  country: countryCodes[0].label,
+  country: "",
   phone: "",
   company: "",
   role: "",
@@ -40,7 +44,7 @@ function validateStep1(f: Fields) {
   if (!f.firstName.trim()) e.firstName = "Enter your first name";
   if (!f.lastName.trim()) e.lastName = "Enter your last name";
   if (!EMAIL.test(f.email.trim())) e.email = "Enter a valid work email";
-  if (f.phone.replace(/\D/g, "").length < 6) e.phone = "Enter a valid phone number";
+  if (!isPhoneValid(f.phone, f.country)) e.phone = "Enter a valid phone number for the selected country.";
   if (!f.company.trim()) e.company = "Enter your company";
   if (!f.role.trim()) e.role = "Enter your role";
   if (!f.agree) e.agree = "Please accept to continue";
@@ -48,8 +52,11 @@ function validateStep1(f: Fields) {
 }
 
 export function ContactForm() {
+  const locale = useLocale();
+  const sample = sampleFor(locale.region);
   const [step, setStep] = useState<1 | 2 | 3>(1);
   const [f, setF] = useState<Fields>(EMPTY);
+  const country = f.country || locale.region;
   const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState<string | null>(null);
@@ -57,8 +64,12 @@ export function ContactForm() {
   // "Book a demo" links arrive with ?topic=demo.
   useEffect(() => {
     const topic = new URLSearchParams(window.location.search).get("topic");
-    if (topic && contactTopics.some((t) => t.id === topic)) setF((prev) => ({ ...prev, topic }));
-  }, []);
+    setF((prev) => ({
+      ...prev,
+      country: prev.country || locale.region,
+      topic: topic && contactTopics.some((t) => t.id === topic) ? topic : prev.topic,
+    }));
+  }, [locale.region]);
 
   const set = <K extends keyof Fields>(key: K, value: Fields[K]) => {
     setF((prev) => ({ ...prev, [key]: value }));
@@ -67,7 +78,7 @@ export function ContactForm() {
 
   const next = (e: FormEvent) => {
     e.preventDefault();
-    const found = validateStep1(f);
+    const found = validateStep1({ ...f, country });
     setErrors(found);
     if (Object.keys(found).length === 0) setStep(2);
   };
@@ -87,7 +98,7 @@ export function ContactForm() {
         const res = await fetch(forms.contactEndpoint, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ ...f, dialCode: countryCodes.find((c) => c.label === f.country)?.code }),
+          body: JSON.stringify({ ...f, country, dialCode: countryById(country)?.dial }),
         });
         if (!res.ok) throw new Error(String(res.status));
       } catch {
@@ -103,14 +114,14 @@ export function ContactForm() {
   if (step === 3) {
     return (
       <div className="flex flex-1 flex-col items-start justify-center gap-5 py-10">
-        <VegamMark size={56} strokeWidth={6} className="text-[#EE7A2E]" />
-        <h2 className="m-0 font-serif text-[clamp(32px,3.4vw,46px)] font-normal tracking-[-0.02em]">Thanks, {f.firstName.trim()}.</h2>
+        <Mark size={48} className="text-brand" />
+        <h2 className="m-0 font-serif text-display font-normal tracking-[-0.02em]">Thanks, {f.firstName.trim()}.</h2>
         <p className="m-0 max-w-[460px] text-lg text-subtle">
           Your message is with our team. We’ll reply to <strong className="font-semibold text-ink">{f.email.trim()}</strong>.
         </p>
         <a
           href={links.home}
-          className="mt-3 inline-flex min-h-13 items-center gap-2 rounded-full border border-line-strong bg-white px-6 font-semibold text-ink transition hover:shadow-[0_12px_30px_rgb(30_31_43/0.1)]"
+          className="mt-3 inline-flex min-h-13 items-center gap-2 rounded-full border border-line-strong bg-surface px-6 font-semibold text-ink transition hover:shadow-2"
         >
           <Icon name="chevron-left" size={18} />
           Back to home
@@ -122,7 +133,7 @@ export function ContactForm() {
   return (
     <div className="flex flex-1 flex-col">
       <div className="flex items-start justify-between gap-6">
-        <h2 className="m-0 font-serif text-[clamp(32px,3.2vw,44px)] font-normal tracking-[-0.02em] text-ink-soft">
+        <h2 className="m-0 font-serif text-display font-normal tracking-[-0.02em] text-ink-soft">
           {step === 1 ? "Let’s start with you" : "How can we help?"}
         </h2>
         <StepRing step={step} />
@@ -132,31 +143,20 @@ export function ContactForm() {
         <form onSubmit={next} noValidate className="mt-10 flex flex-1 flex-col">
           <div className="grid gap-x-7 gap-y-6 sm:grid-cols-2">
             <Field label="First name" error={errors.firstName}>
-              <input className={input(errors.firstName)} autoComplete="given-name" placeholder="Arjun" value={f.firstName} onChange={(e) => set("firstName", e.target.value)} />
+              <input className={input(errors.firstName)} autoComplete="given-name" placeholder={sample.first} value={f.firstName} onChange={(e) => set("firstName", e.target.value)} />
             </Field>
             <Field label="Last name" error={errors.lastName}>
-              <input className={input(errors.lastName)} autoComplete="family-name" placeholder="Sharma" value={f.lastName} onChange={(e) => set("lastName", e.target.value)} />
+              <input className={input(errors.lastName)} autoComplete="family-name" placeholder={sample.last} value={f.lastName} onChange={(e) => set("lastName", e.target.value)} />
             </Field>
             <Field label="Work email" error={errors.email} className="sm:col-span-2">
-              <input type="email" className={input(errors.email)} autoComplete="email" placeholder="arjun@company.com" value={f.email} onChange={(e) => set("email", e.target.value)} />
+              <input type="email" className={input(errors.email)} autoComplete="email" placeholder={sample.email} value={f.email} onChange={(e) => set("email", e.target.value)} />
             </Field>
-            <div className="grid grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] gap-3">
-              <Field label="Country code" optional>
-                <div className="relative">
-                  <select className={`${input()} cursor-pointer appearance-none pr-10`} value={f.country} onChange={(e) => set("country", e.target.value)}>
-                    {countryCodes.map((c) => (
-                      <option key={c.label} value={c.label}>
-                        {c.label}
-                      </option>
-                    ))}
-                  </select>
-                  <Icon name="chevron-down" size={16} className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-subtle" />
-                </div>
-              </Field>
-              <Field label="Phone number" error={errors.phone}>
-                <input type="tel" className={input(errors.phone)} autoComplete="tel-national" placeholder="98765 43210" value={f.phone} onChange={(e) => set("phone", e.target.value)} />
-              </Field>
-            </div>
+            <Field label="Country">
+              <CountrySelect value={country} onChange={(id) => set("country", id)} />
+            </Field>
+            <Field label="Phone number" error={errors.phone}>
+              <input type="tel" className={input(errors.phone)} autoComplete="tel-national" placeholder={exampleNational(country) || "Phone number"} value={f.phone} onChange={(e) => set("phone", e.target.value)} />
+            </Field>
             <Field label="Company" error={errors.company}>
               <input className={input(errors.company)} autoComplete="organization" placeholder="Your business name" value={f.company} onChange={(e) => set("company", e.target.value)} />
             </Field>
@@ -165,7 +165,7 @@ export function ContactForm() {
             </Field>
           </div>
 
-          <label className="mt-8 flex cursor-pointer items-start gap-3 text-[15px] text-ink-soft">
+          <label className="mt-8 flex cursor-pointer items-start gap-3 text-body text-ink-soft">
             <input type="checkbox" checked={f.agree} onChange={(e) => set("agree", e.target.checked)} className="mt-0.5 h-5 w-5 flex-none cursor-pointer accent-[#23243A]" />
             <span>
               I agree to the{" "}
@@ -194,7 +194,7 @@ export function ContactForm() {
           <Field label="Anything else we should know?" optional>
             <textarea
               rows={4}
-              className={`${input()} min-h-32 resize-y rounded-[20px] py-4`}
+              className={`${input()} min-h-32 resize-y rounded-xl py-4`}
               placeholder="Tell us about your business and how customers reach you today."
               value={f.message}
               onChange={(e) => set("message", e.target.value)}
@@ -216,7 +216,7 @@ export function ContactForm() {
 }
 
 const input = (error?: string) =>
-  `min-h-15 w-full rounded-[16px] border bg-white px-5 text-[17px] text-ink outline-none transition placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10 ${
+  `min-h-15 w-full rounded-lg border bg-surface px-5 text-body-lg text-ink outline-none transition placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10 ${
     error ? "border-danger/60" : "border-line-strong"
   }`;
 
@@ -235,7 +235,7 @@ function Field({
 }) {
   return (
     <label className={`flex flex-col gap-2.5 ${className}`}>
-      <span className="text-[16px] font-medium text-ink">
+      <span className="text-body-lg font-medium text-ink">
         {label}
         {!optional && <span className="text-danger"> *</span>}
       </span>
@@ -262,7 +262,7 @@ function ChipGroup({
 }) {
   return (
     <fieldset className="m-0 flex flex-col gap-3 border-0 p-0">
-      <legend className="mb-3 p-0 text-[16px] font-medium text-ink">
+      <legend className="mb-3 p-0 text-body-lg font-medium text-ink">
         {label}
         {!optional && <span className="text-danger"> *</span>}
       </legend>
@@ -275,8 +275,8 @@ function ChipGroup({
               type="button"
               aria-pressed={active}
               onClick={() => onChange(o.id)}
-              className={`min-h-12 cursor-pointer rounded-full border px-5 text-[15px] font-medium transition ${
-                active ? "border-ink bg-ink text-white" : "border-line-strong bg-white text-ink hover:border-subtle"
+              className={`min-h-12 cursor-pointer rounded-full border px-5 text-body font-medium transition ${
+                active ? "border-ink bg-brand-fill text-white" : "border-line-strong bg-surface text-ink hover:border-subtle"
               }`}
             >
               {o.label}
@@ -293,7 +293,7 @@ function PrimaryButton({ children, ...rest }: React.ComponentProps<"button">) {
   return (
     <button
       {...rest}
-      className="inline-flex min-h-15 cursor-pointer items-center gap-2 rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] px-7 text-[18px] font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16),0_1px_2px_rgb(15_16_30/0.3)] transition hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_12px_30px_rgb(30_31_43/0.28)] disabled:cursor-wait disabled:opacity-70"
+      className="inline-flex min-h-15 cursor-pointer items-center gap-2 rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] px-7 text-h3 font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16),0_1px_2px_rgb(15_16_30/0.3)] transition hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_12px_30px_rgb(30_31_43/0.28)] disabled:cursor-wait disabled:opacity-70"
     >
       {children}
     </button>

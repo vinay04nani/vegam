@@ -10,11 +10,12 @@ export const links = {
   contact: withBase("/contact/"),
   demo: withBase("/contact/?topic=demo"),
   pricing: withBase("/pricing/"),
-  privacy: "#privacy",
-  terms: "#terms",
+  privacy: withBase("/legal/privacy/"),
+  terms: withBase("/legal/terms/"),
+  cookies: withBase("/legal/cookies/"),
+  refunds: withBase("/legal/refunds/"),
+  help: withBase("/app/"),
 };
-
-export const companyLegalName = "[Company legal name]";
 
 export const navLinks = [
   { label: "Product", href: withBase("/#product") },
@@ -91,12 +92,12 @@ export const primaryFeatures: Feature[] = [
 ];
 
 export const languageBubbles = [
-  { lang: "es", text: "Hola, ¿tienen hora el sábado?", pos: "left-[4%] top-[6%] sm:left-[6%] sm:top-[10%]", side: "left", mobile: true },
-  { lang: "fr", text: "Bonjour, vous êtes ouverts ?", pos: "right-[4%] top-[20%] sm:right-[6%] sm:top-[14%]", side: "right", mobile: true },
-  { lang: "hi", text: "नमस्ते, कीमत क्या है?", pos: "left-[4%] top-[46%]", side: "left", mobile: false },
-  { lang: "ja", text: "こんにちは、予約できますか？", pos: "right-[4%] top-[50%]", side: "right", mobile: false },
-  { lang: "ar", text: "مرحبا، هل يمكنني الحجز؟", pos: "left-[4%] bottom-[20%] sm:left-[12%] sm:bottom-[10%]", side: "left", mobile: true },
-  { lang: "pt", text: "Olá, posso remarcar?", pos: "right-[4%] bottom-[6%] sm:right-[10%] sm:bottom-[12%]", side: "right", mobile: true },
+  { lang: "es", text: "Hola, ¿tienen hora el sábado?", pos: "start-[4%] top-[6%] sm:start-[6%] sm:top-[10%]", side: "left", mobile: true },
+  { lang: "fr", text: "Bonjour, vous êtes ouverts ?", pos: "end-[4%] top-[20%] sm:end-[6%] sm:top-[14%]", side: "right", mobile: true },
+  { lang: "hi", text: "नमस्ते, कीमत क्या है?", pos: "start-[4%] top-[46%]", side: "left", mobile: false },
+  { lang: "ja", text: "こんにちは、予約できますか？", pos: "end-[4%] top-[50%]", side: "right", mobile: false },
+  { lang: "ar", text: "مرحبا، هل يمكنني الحجز؟", pos: "start-[4%] bottom-[20%] sm:start-[12%] sm:bottom-[10%]", side: "left", mobile: true },
+  { lang: "pt", text: "Olá, posso remarcar?", pos: "end-[4%] bottom-[6%] sm:end-[10%] sm:bottom-[12%]", side: "right", mobile: true },
 ] as const;
 
 export const trustPoints = [
@@ -136,8 +137,8 @@ export const footerColumns = [
   {
     title: "Company",
     links: [
-      { label: "Careers", href: withBase("/careers/") },
       { label: "Contact us", href: links.contact },
+      { label: "Help center", href: links.help },
     ],
   },
   {
@@ -145,16 +146,11 @@ export const footerColumns = [
     links: [
       { label: "Privacy policy", href: links.privacy },
       { label: "Terms of service", href: links.terms },
+      { label: "Cookie policy", href: links.cookies },
+      { label: "Refunds", href: links.refunds },
     ],
   },
 ];
-
-export const socials = [
-  { label: "LinkedIn", href: "#linkedin", icon: "linkedin" },
-  { label: "X", href: "#x", icon: "x" },
-  { label: "Instagram", href: "#instagram", icon: "instagram" },
-  { label: "YouTube", href: "#youtube", icon: "youtube" },
-] as const;
 
 // Where form submissions go. Leave empty until a backend exists: forms then
 // show their success state without sending anything.
@@ -170,12 +166,12 @@ export const authHighlights = [
   { icon: "sun", title: "Morning report", body: "Yesterday’s enquiries, bookings and calls on your phone at 8 AM." },
 ] as const;
 
-export type ContactCard = { icon: "briefcase" | "headset" | "news"; label: string; href: string };
+export type ContactCard = { icon: "headset" | "message" | "mail"; label: string; href: string };
 
 export const contactCards: ContactCard[] = [
-  { icon: "briefcase", label: "Careers", href: withBase("/careers/") },
-  { icon: "headset", label: "Technical support", href: withBase("/support/") },
-  { icon: "news", label: "Press / Media", href: withBase("/press/") },
+  { icon: "headset", label: "Help center", href: links.help },
+  { icon: "message", label: "Pricing", href: links.pricing },
+  { icon: "mail", label: "Privacy", href: links.privacy },
 ];
 
 export const countryCodes = [

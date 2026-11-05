@@ -37,7 +37,7 @@ export function lastVisitText(days: number | null) {
 export function ChannelMark({ channel, size = 22 }: { channel: ContactChannel; size?: number }) {
   if (channel === "whatsapp" || channel === "instagram" || channel === "messenger") return <BrandLogo brand={channel} size={size} />;
   return (
-    <span role="img" aria-label={channelLabel[channel]} title={channelLabel[channel]} className="inline-flex flex-none items-center justify-center border border-line bg-white text-muted" style={{ width: size, height: size, borderRadius: size * 0.28 }}>
+    <span role="img" aria-label={channelLabel[channel]} title={channelLabel[channel]} className="inline-flex flex-none items-center justify-center border border-line bg-surface text-muted" style={{ width: size, height: size, borderRadius: size * 0.28 }}>
       <Icon name={channel === "website" ? "globe" : "phone"} size={size * 0.55} />
     </span>
   );
@@ -60,8 +60,8 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
       <div className="flex items-center gap-4">
         <Avatar name={c.name} size={56} />
         <div className="flex min-w-0 flex-col gap-1">
-          <p className="m-0 truncate text-[20px] font-semibold text-ink">{c.name}</p>
-          <p className="m-0 text-[14px] text-subtle">
+          <p className="m-0 truncate text-h3 font-semibold text-ink">{c.name}</p>
+          <p className="m-0 text-body text-subtle">
             {c.phone}
             {c.email && ` · ${c.email}`}
           </p>
@@ -88,29 +88,29 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
         </div>
       )}
 
-      <dl className="m-0 grid grid-cols-3 gap-2 rounded-[14px] bg-panel p-3">
+      <dl className="m-0 grid grid-cols-3 gap-2 rounded-lg bg-panel p-3">
         <div>
-          <dt className="text-[12px] text-subtle">Bookings</dt>
-          <dd className="m-0 text-[17px] font-bold text-ink">{c.bookings}</dd>
+          <dt className="text-caption text-subtle">Bookings</dt>
+          <dd className="m-0 text-body-lg font-bold text-ink">{c.bookings}</dd>
         </div>
         <div>
-          <dt className="text-[12px] text-subtle">Last visit</dt>
-          <dd className="m-0 text-[15px] font-bold text-ink">{lastVisitText(c.lastVisitDays)}</dd>
+          <dt className="text-caption text-subtle">Last visit</dt>
+          <dd className="m-0 text-body font-bold text-ink">{lastVisitText(c.lastVisitDays)}</dd>
         </div>
         <div>
-          <dt className="text-[12px] text-subtle">No-shows</dt>
-          <dd className={`m-0 text-[17px] font-bold ${c.noShows > 1 ? "text-warning" : "text-ink"}`}>{c.noShows}</dd>
+          <dt className="text-caption text-subtle">No-shows</dt>
+          <dd className={`m-0 text-body-lg font-bold ${c.noShows > 1 ? "text-warning" : "text-ink"}`}>{c.noShows}</dd>
         </div>
       </dl>
 
       {/* Tags */}
       <section className="flex flex-col gap-2.5">
-        <h3 className="m-0 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">Tags</h3>
+        <h3 className="m-0 text-label font-semibold tracking-[0.04em] text-muted uppercase">Tags</h3>
         <div className="flex flex-wrap items-center gap-2">
           {c.tags.map((t) => (
-            <span key={t} className="inline-flex items-center gap-1 rounded-full bg-periwinkle-soft py-1 pr-1 pl-3 text-[13px] font-semibold text-brand">
+            <span key={t} className="inline-flex items-center gap-1 rounded-full bg-periwinkle-soft py-1 pe-1 ps-3 text-label font-semibold text-brand">
               {t}
-              <button type="button" aria-label={`Remove tag ${t}`} onClick={() => onChange({ ...c, tags: c.tags.filter((x) => x !== t) })} className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full hover:bg-white">
+              <button type="button" aria-label={`Remove tag ${t}`} onClick={() => onChange({ ...c, tags: c.tags.filter((x) => x !== t) })} className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full hover:bg-surface">
                 <Icon name="close" size={12} />
               </button>
             </span>
@@ -126,7 +126,7 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
                   if (e.target.value) onChange({ ...c, tags: [...c.tags, e.target.value] });
                   setAdding(false);
                 }}
-                className="min-h-8 cursor-pointer rounded-full border border-line-strong bg-white px-3 text-[13px] font-semibold text-ink"
+                className="min-h-8 cursor-pointer rounded-full border border-line-strong bg-surface px-3 text-label font-semibold text-ink"
               >
                 <option value="">Choose a tag…</option>
                 {sampleTags
@@ -137,7 +137,7 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
               </select>
             </label>
           ) : (
-            <button type="button" onClick={() => setAdding(true)} className="inline-flex min-h-7 cursor-pointer items-center gap-1 rounded-full border border-dashed border-line-strong px-3 text-[13px] font-semibold text-muted hover:text-ink">
+            <button type="button" onClick={() => setAdding(true)} className="inline-flex min-h-7 cursor-pointer items-center gap-1 rounded-full border border-dashed border-line-strong px-3 text-label font-semibold text-muted hover:text-ink">
               <Icon name="plus" size={13} />
               Add tag
             </button>
@@ -147,16 +147,16 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
 
       {/* Consent */}
       <section className="flex flex-col gap-2.5">
-        <h3 className="m-0 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">WhatsApp messages</h3>
-        <div className="flex flex-col gap-3 rounded-[14px] border border-line p-4">
+        <h3 className="m-0 text-label font-semibold tracking-[0.04em] text-muted uppercase">WhatsApp messages</h3>
+        <div className="flex flex-col gap-3 rounded-lg border border-line p-4">
           <span className="flex items-center justify-between gap-3">
             <Badge tone={optInTone[c.optIn]} dot>
               {optInLabel[c.optIn]}
             </Badge>
             <Icon name="shield" size={16} className="text-faint" />
           </span>
-          <p className="m-0 text-[14px] leading-snug text-ink-soft">{c.consent}</p>
-          <p className="m-0 text-[13px] text-subtle">
+          <p className="m-0 text-body leading-snug text-ink-soft">{c.consent}</p>
+          <p className="m-0 text-label text-subtle">
             {c.optIn === "opted-in"
               ? "Gets reminders, follow-ups and campaigns. Replying STOP removes them straight away."
               : c.optIn === "opted-out"
@@ -203,8 +203,8 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
 
       {/* Notes */}
       <section className="flex flex-col gap-2.5">
-        <h3 className="m-0 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">Notes</h3>
-        {c.note && <p className="m-0 rounded-[12px] bg-[#FFF8E1] px-3.5 py-2.5 text-[14px] text-ink-soft">{c.note}</p>}
+        <h3 className="m-0 text-label font-semibold tracking-[0.04em] text-muted uppercase">Notes</h3>
+        {c.note && <p className="m-0 rounded-lg bg-signal/15 px-3.5 py-2.5 text-body text-ink-soft">{c.note}</p>}
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -217,7 +217,7 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
         >
           <label className="flex-1">
             <span className="sr-only">Add a note</span>
-            <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Add a note only your team sees" className={`${inputClass} min-h-10 rounded-[10px] text-[14.5px]`} />
+            <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="Add a note only your team sees" className={`${inputClass} min-h-10 rounded-md text-body`} />
           </label>
           <Button type="submit" disabled={!note.trim()}>
             Save
@@ -227,17 +227,17 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
 
       {/* History */}
       <section className="flex flex-col gap-2.5">
-        <h3 className="m-0 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">History</h3>
+        <h3 className="m-0 text-label font-semibold tracking-[0.04em] text-muted uppercase">History</h3>
         <ol className="m-0 flex list-none flex-col p-0">
           {c.timeline.map((e, i) => (
             <li key={`${e.at}-${i}`} className="relative flex gap-3 pb-4 last:pb-0">
-              {i < c.timeline.length - 1 && <span aria-hidden="true" className="absolute top-8 bottom-0 left-[13px] w-px bg-line" />}
+              {i < c.timeline.length - 1 && <span aria-hidden="true" className="absolute top-8 bottom-0 start-[13px] w-px bg-line" />}
               <span className={`flex h-7 w-7 flex-none items-center justify-center rounded-full ${e.kind === "optout" ? "bg-[#FDECEC] text-danger" : e.kind === "optin" ? "bg-[#E8F3EA] text-success" : "bg-panel text-muted"}`}>
                 <Icon name={eventIcon[e.kind]} size={14} />
               </span>
               <span className="flex flex-col pt-0.5">
-                <span className="text-[14px] text-ink">{e.text}</span>
-                <span className="text-[12.5px] text-subtle">{e.at}</span>
+                <span className="text-body text-ink">{e.text}</span>
+                <span className="text-caption text-subtle">{e.at}</span>
               </span>
             </li>
           ))}

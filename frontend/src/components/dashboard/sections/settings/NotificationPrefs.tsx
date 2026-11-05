@@ -27,10 +27,10 @@ export function NotificationPrefs() {
     <>
       <Group title="Alerts" description="Choose where each alert reaches you.">
         <div className="relative overflow-x-auto">
-          <table className="w-full min-w-[440px] border-collapse text-[14px]">
+          <table className="w-full min-w-[440px] border-collapse text-body">
             <thead>
-              <tr className="text-[12.5px] text-subtle">
-                <th scope="col" className="py-3 pr-4 text-left font-medium">
+              <tr className="text-caption text-subtle">
+                <th scope="col" className="py-3 pe-4 text-start font-medium">
                   <span className="sr-only">Alert</span>
                 </th>
                 {channels.map((c) => (
@@ -43,7 +43,7 @@ export function NotificationPrefs() {
             <tbody>
               {notificationEvents.map((e) => (
                 <tr key={e.id} className="border-t border-line">
-                  <th scope="row" className="py-3.5 pr-4 text-left font-normal text-ink">
+                  <th scope="row" className="py-3.5 pe-4 text-start font-normal text-ink">
                     {e.label}
                   </th>
                   {channels.map((c) => (

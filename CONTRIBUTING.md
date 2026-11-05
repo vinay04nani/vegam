@@ -10,9 +10,10 @@ You must have **signed a Contributor IP Assignment Agreement** with the owner be
 
 By signing it, you agree that:
 
-- everything you create for Vegam (code, designs, documents, ideas, improvements) belongs to the owner;
-- you keep the code, product plans and business information confidential; and
+- everything you create for Vegam (code, designs, documents, ideas, improvements) belongs to the owner; and
 - you will not use any of it for another product or company.
+
+The repository is public. Do not treat the published code as confidential. Do not commit secrets, customer data, or personal data.
 
 Pull requests from anyone without a signed agreement will be closed without review.
 

@@ -35,7 +35,7 @@ If we suspend or end your account for breach of the [Acceptable Use Policy](acce
 
 ## 6. Your data after cancellation
 
-You can export your data for [30] days after cancellation. After that it is deleted, as described in the [Data Processing Agreement](data-processing-agreement.md).
+Export and deletion after cancellation are planned and are not available yet. The intended rule, once they exist: you can export your data for [30] days after cancellation, and after that it is deleted, as described in the [Data Processing Agreement](data-processing-agreement.md).
 
 ## 7. Contact
 

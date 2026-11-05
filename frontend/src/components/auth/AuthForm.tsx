@@ -1,10 +1,13 @@
 "use client";
 
-import { useState, type FormEvent, type ReactNode } from "react";
-import { countryCodes, links } from "@/content/site";
+import { useEffect, useState, type FormEvent, type ReactNode } from "react";
+import { links } from "@/content/site";
+import { useLocale } from "@/components/LocaleProvider";
 import { withBase } from "@/lib/paths";
+import { CountrySelect } from "@/components/ui/CountrySelect";
 import { Icon } from "@/components/ui/Icon";
-import { VegamMark } from "@/components/ui/Kolam";
+import { Mark } from "@/components/ui/Mark";
+import { countryById, isPhoneValid } from "@/lib/countries";
 import { AppleLogo, GoogleLogo, MicrosoftLogo } from "./BrandIcons";
 
 type Mode = "login" | "signup";
@@ -43,15 +46,20 @@ export function AuthForm({ mode }: { mode: Mode }) {
   const t = copy[mode];
   const [method, setMethod] = useState<Method>("email");
   const [email, setEmail] = useState("");
-  const [country, setCountry] = useState(countryCodes[0].label);
+  const locale = useLocale();
+  const [country, setCountry] = useState("");
   const [phone, setPhone] = useState("");
   const [agree, setAgree] = useState(false);
   const [sentTo, setSentTo] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
-  const dial = countryCodes.find((c) => c.label === country)?.code ?? "+91";
-  const phoneDigits = phone.replace(/\D/g, "");
-  const valid = agree && (method === "email" ? EMAIL.test(email.trim()) : phoneDigits.length >= 6);
+  const iso = country || locale.region;
+  const dial = countryById(iso)?.dial ?? "";
+  const valid = agree && (method === "email" ? EMAIL.test(email.trim()) : isPhoneValid(phone, iso));
+
+  useEffect(() => {
+    setCountry((current) => current || locale.region);
+  }, [locale.region]);
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -64,20 +72,20 @@ export function AuthForm({ mode }: { mode: Mode }) {
   if (sentTo) {
     return (
       <div className="flex w-full max-w-[440px] flex-col items-center gap-5 text-center">
-        <VegamMark size={52} strokeWidth={6} className="text-ink" />
-        <h1 className="m-0 font-serif text-[clamp(30px,3vw,38px)] font-normal tracking-[-0.02em]">
+        <Mark size={44} className="text-brand" />
+        <h1 className="m-0  text-display font-normal tracking-[-0.02em]">
           {method === "email" ? "Check your email" : "Check your phone"}
         </h1>
-        <p className="m-0 text-[17px] text-subtle">
+        <p className="m-0 text-body-lg text-subtle">
           {method === "email" ? "We sent a sign-in link to" : "We sent a 6-digit code to"}{" "}
           <strong className="font-semibold text-ink">{sentTo}</strong>.
         </p>
-        <p className="m-0 rounded-[14px] bg-periwinkle-soft px-4 py-3 text-[14.5px] text-brand">
+        <p className="m-0 rounded-lg bg-periwinkle-soft px-4 py-3 text-body text-brand">
           Demo: no {method === "email" ? "email" : "code"} is sent yet. Continue as if you’d opened the link.
         </p>
         <a
           href={mode === "signup" ? withBase(`/onboarding/${planQuery()}`) : withBase("/app/")}
-          className="inline-flex min-h-13 items-center gap-2 rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] px-7 text-[17px] font-semibold text-white"
+          className="inline-flex min-h-13 items-center gap-2 rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] px-7 text-body-lg font-semibold text-white"
         >
           {mode === "signup" ? "Set up your front desk" : "Open your dashboard"}
           <Icon name="chevron-right" size={18} />
@@ -85,7 +93,7 @@ export function AuthForm({ mode }: { mode: Mode }) {
         <button
           type="button"
           onClick={() => setSentTo(null)}
-          className="mt-2 inline-flex cursor-pointer items-center gap-1.5 text-[15px] font-medium text-indigo hover:underline"
+          className="mt-2 inline-flex cursor-pointer items-center gap-1.5 text-body font-medium text-indigo hover:underline"
         >
           <Icon name="chevron-left" size={16} />
           Use a different {method === "email" ? "email" : "number"}
@@ -96,8 +104,8 @@ export function AuthForm({ mode }: { mode: Mode }) {
 
   return (
     <div className="flex w-full max-w-[440px] flex-col items-center">
-      <VegamMark size={52} strokeWidth={6} className="text-ink" />
-      <h1 className="m-0 mt-6 text-center font-serif text-[clamp(30px,3vw,40px)] font-normal tracking-[-0.02em]">{t.title}</h1>
+      <Mark size={44} className="text-brand" />
+      <h1 className="m-0 mt-6 text-center  text-display font-normal tracking-[-0.02em]">{t.title}</h1>
 
       <div className="mt-9 flex w-full flex-col gap-3">
         <SocialButton onClick={() => provider("Google")} icon={<GoogleLogo />}>
@@ -141,26 +149,12 @@ export function AuthForm({ mode }: { mode: Mode }) {
               placeholder="e.g. name@company.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="min-h-14 w-full rounded-full border border-line-strong bg-white px-6 text-base text-ink transition outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
+              className="min-h-14 w-full rounded-full border border-line-strong bg-surface px-6 text-base text-ink transition outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
             />
           </label>
         ) : (
           <div className="flex gap-2">
-            <label className="relative">
-              <span className="sr-only">Country code</span>
-              <select
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                className="min-h-14 w-[118px] cursor-pointer appearance-none rounded-full border border-line-strong bg-white pr-8 pl-5 text-base text-ink outline-none focus:border-indigo focus:ring-4 focus:ring-indigo/10"
-              >
-                {countryCodes.map((c) => (
-                  <option key={c.label} value={c.label}>
-                    {c.code} {c.label.replace(/ \(.+\)/, "")}
-                  </option>
-                ))}
-              </select>
-              <Icon name="chevron-down" size={16} className="pointer-events-none absolute top-1/2 right-4 -translate-y-1/2 text-subtle" />
-            </label>
+            <CountrySelect compact label="Country" value={iso} onChange={setCountry} className="w-36" />
             <label className="flex-1">
               <span className="sr-only">Phone number</span>
               <input
@@ -169,13 +163,13 @@ export function AuthForm({ mode }: { mode: Mode }) {
                 placeholder="Phone number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="min-h-14 w-full rounded-full border border-line-strong bg-white px-6 text-base text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
+                className="min-h-14 w-full rounded-full border border-line-strong bg-surface px-6 text-base text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
               />
             </label>
           </div>
         )}
 
-        <label className="flex cursor-pointer items-start gap-3 text-[15px] text-ink-soft">
+        <label className="flex cursor-pointer items-start gap-3 text-body text-ink-soft">
           <input
             type="checkbox"
             checked={agree}
@@ -197,13 +191,13 @@ export function AuthForm({ mode }: { mode: Mode }) {
         <button
           type="submit"
           disabled={!valid}
-          className="mt-2 min-h-14 w-full cursor-pointer rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] text-[17px] font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16)] transition hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_12px_30px_rgb(30_31_43/0.25)] disabled:cursor-not-allowed disabled:border-transparent disabled:bg-none disabled:bg-[#E4E6F0] disabled:text-muted disabled:shadow-none"
+          className="mt-2 min-h-14 w-full cursor-pointer rounded-full border border-white/10 bg-[linear-gradient(180deg,#3A3C58_0%,#22233A_55%,#1C1D2E_100%)] text-body-lg font-semibold text-white shadow-[inset_0_1px_0_rgb(255_255_255/0.16)] transition hover:shadow-[inset_0_1px_0_rgb(255_255_255/0.2),0_12px_30px_rgb(30_31_43/0.25)] disabled:cursor-not-allowed disabled:border-transparent disabled:bg-none disabled:bg-border disabled:text-muted disabled:shadow-none"
         >
           Continue
         </button>
       </form>
 
-      <p className="m-0 mt-8 text-[15px] text-ink-soft">
+      <p className="m-0 mt-8 text-body text-ink-soft">
         {t.switchText}{" "}
         <a href={t.switchHref} className="font-semibold text-indigo hover:underline">
           {t.switchLabel}
@@ -218,7 +212,7 @@ function SocialButton({ icon, onClick, children }: { icon: ReactNode; onClick: (
     <button
       type="button"
       onClick={onClick}
-      className="flex min-h-14 w-full cursor-pointer items-center justify-center gap-3 rounded-full bg-[#F2F2F5] text-[16px] font-medium text-ink transition hover:bg-[#E9E9EE]"
+      className="flex min-h-14 w-full cursor-pointer items-center justify-center gap-3 rounded-full bg-surface-muted text-body-lg font-medium text-ink transition hover:bg-border"
     >
       {icon}
       {children}

@@ -56,7 +56,7 @@ export function Privacy({ onOpen }: { onOpen: (view: string) => void }) {
         </Row>
       </Group>
 
-      <Group title="Data requests" description="Customers can ask what you hold about them or ask you to delete it. You have 30 days to reply.">
+      <Group title="Data requests" description="A way for customers to ask what you hold, or to delete it, is planned. It is not available yet.">
         <Row label="Requests go to" description="Given by the AI when someone asks.">
           <Input aria-label="Requests go to" type="email" placeholder="privacy@yourbusiness.com" className="w-64" />
         </Row>

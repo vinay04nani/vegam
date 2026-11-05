@@ -127,15 +127,15 @@ export function Contacts({ onOpen }: { onOpen: (view: string) => void }) {
       </div>
 
       {/* Toolbar */}
-      <div className="flex flex-col gap-3 rounded-[18px] border border-line bg-white p-3 lg:flex-row lg:items-center">
+      <div className="flex flex-col gap-3 rounded-xl border border-line bg-surface p-3 lg:flex-row lg:items-center">
         <label className="relative min-w-0 flex-1">
           <span className="sr-only">Search contacts</span>
-          <Icon name="search" size={16} className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-subtle" />
+          <Icon name="search" size={16} className="pointer-events-none absolute top-1/2 start-3.5 -translate-y-1/2 text-subtle" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search name, number, email or tag"
-            className="min-h-10 w-full rounded-[10px] border border-line-strong bg-white pr-3 pl-10 text-[14.5px] text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
+            className="min-h-10 w-full rounded-md border border-line-strong bg-surface pe-3 ps-10 text-body text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
           />
         </label>
         <div className="flex flex-wrap items-center gap-2">
@@ -153,26 +153,26 @@ export function Contacts({ onOpen }: { onOpen: (view: string) => void }) {
           />
           <label className="relative">
             <span className="sr-only">Tag</span>
-            <select value={tag} onChange={(e) => setTag(e.target.value)} className="min-h-10 cursor-pointer appearance-none rounded-[10px] border border-line-strong bg-white pr-8 pl-3 text-[14px] font-medium text-ink">
+            <select value={tag} onChange={(e) => setTag(e.target.value)} className="min-h-10 cursor-pointer appearance-none rounded-md border border-line-strong bg-surface pe-8 ps-3 text-body font-medium text-ink">
               <option value="all">All tags</option>
               {sampleTags.map((t) => (
                 <option key={t}>{t}</option>
               ))}
             </select>
-            <Icon name="chevron-down" size={14} className="pointer-events-none absolute top-1/2 right-2.5 -translate-y-1/2 text-subtle" />
+            <Icon name="chevron-down" size={14} className="pointer-events-none absolute top-1/2 end-2.5 -translate-y-1/2 text-subtle" />
           </label>
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-[18px] border border-line bg-white">
+      <div className="overflow-hidden rounded-xl border border-line bg-surface">
         {visible.length === 0 ? (
           <EmptyState icon="users" title="No contacts match" body="Try another filter or search." />
         ) : (
           <>
             <table className="hidden w-full border-collapse md:table">
-              <thead className="border-b border-line bg-[#FAFAFC]">
-                <tr className="text-left text-[12.5px] font-semibold tracking-[0.04em] text-muted uppercase">
-                  <th scope="col" className="py-3 pl-4">
+              <thead className="border-b border-line bg-surface-muted">
+                <tr className="text-start text-caption font-semibold tracking-[0.04em] text-muted uppercase">
+                  <th scope="col" className="py-3 ps-4">
                     Contact
                   </th>
                   <th scope="col" className="hidden px-3 py-3 lg:table-cell">
@@ -184,26 +184,26 @@ export function Contacts({ onOpen }: { onOpen: (view: string) => void }) {
                   <th scope="col" className="px-3 py-3">
                     Last visit
                   </th>
-                  <th scope="col" className="px-3 py-3 text-right">
+                  <th scope="col" className="px-3 py-3 text-end">
                     Bookings
                   </th>
                   <th scope="col" className="px-3 py-3">
                     WhatsApp
                   </th>
-                  <th scope="col" className="w-10 pr-4">
+                  <th scope="col" className="w-10 pe-4">
                     <span className="sr-only">Open</span>
                   </th>
                 </tr>
               </thead>
               <tbody>
                 {visible.map((c) => (
-                  <tr key={c.id} onClick={() => setOpenId(c.id)} className="cursor-pointer border-b border-line transition last:border-b-0 hover:bg-[#FAFAFC]">
-                    <td className="py-3 pl-4">
-                      <button type="button" onClick={() => setOpenId(c.id)} className="flex cursor-pointer items-center gap-3 text-left">
+                  <tr key={c.id} onClick={() => setOpenId(c.id)} className="cursor-pointer border-b border-line transition last:border-b-0 hover:bg-surface-muted">
+                    <td className="py-3 ps-4">
+                      <button type="button" onClick={() => setOpenId(c.id)} className="flex cursor-pointer items-center gap-3 text-start">
                         <Avatar name={c.name} size={34} />
                         <span className="flex min-w-0 flex-col">
-                          <span className="truncate text-[14.5px] font-semibold text-ink">{c.name}</span>
-                          <span className="text-[13px] whitespace-nowrap text-subtle">{c.phone}</span>
+                          <span className="truncate text-body font-semibold text-ink">{c.name}</span>
+                          <span className="text-label whitespace-nowrap text-subtle">{c.phone}</span>
                         </span>
                       </button>
                     </td>
@@ -216,17 +216,17 @@ export function Contacts({ onOpen }: { onOpen: (view: string) => void }) {
                     </td>
                     <td className="hidden px-3 py-3 xl:table-cell">
                       <span className="flex flex-wrap gap-1">
-                        {c.tags.length ? c.tags.map((t) => <Badge key={t}>{t}</Badge>) : <span className="text-[13px] text-faint">—</span>}
+                        {c.tags.length ? c.tags.map((t) => <Badge key={t}>{t}</Badge>) : <span className="text-label text-faint">—</span>}
                       </span>
                     </td>
-                    <td className={`px-3 py-3 text-[13.5px] whitespace-nowrap ${c.lastVisitDays !== null && c.lastVisitDays > 60 ? "font-semibold text-warning" : "text-ink-soft"}`}>{lastVisitText(c.lastVisitDays)}</td>
-                    <td className="px-3 py-3 text-right text-[14px] font-semibold text-ink tabular-nums">{c.bookings}</td>
+                    <td className={`px-3 py-3 text-label whitespace-nowrap ${c.lastVisitDays !== null && c.lastVisitDays > 60 ? "font-semibold text-warning" : "text-ink-soft"}`}>{lastVisitText(c.lastVisitDays)}</td>
+                    <td className="px-3 py-3 text-end text-body font-semibold text-ink tabular-nums">{c.bookings}</td>
                     <td className="px-3 py-3">
                       <Badge tone={optInTone[c.optIn]} dot>
                         {optInLabel[c.optIn]}
                       </Badge>
                     </td>
-                    <td className="pr-4 text-right">
+                    <td className="pe-4 text-end">
                       <Icon name="chevron-right" size={18} className="text-faint" />
                     </td>
                   </tr>
@@ -237,16 +237,16 @@ export function Contacts({ onOpen }: { onOpen: (view: string) => void }) {
             <ul className="m-0 list-none p-0 md:hidden">
               {visible.map((c) => (
                 <li key={c.id} className="border-b border-line last:border-b-0">
-                  <button type="button" onClick={() => setOpenId(c.id)} className="flex w-full cursor-pointer items-start gap-3 p-4 text-left">
+                  <button type="button" onClick={() => setOpenId(c.id)} className="flex w-full cursor-pointer items-start gap-3 p-4 text-start">
                     <Avatar name={c.name} size={38} />
                     <span className="flex min-w-0 flex-1 flex-col gap-1.5">
                       <span className="flex items-center justify-between gap-2">
-                        <span className="truncate text-[15px] font-semibold text-ink">{c.name}</span>
+                        <span className="truncate text-body font-semibold text-ink">{c.name}</span>
                         <Badge tone={optInTone[c.optIn]} dot>
                           {optInLabel[c.optIn]}
                         </Badge>
                       </span>
-                      <span className="text-[13.5px] text-subtle">
+                      <span className="text-label text-subtle">
                         {c.phone} · {c.bookings} {c.bookings === 1 ? "booking" : "bookings"} · {lastVisitText(c.lastVisitDays)}
                       </span>
                       <span className="flex items-center gap-1">
@@ -259,7 +259,7 @@ export function Contacts({ onOpen }: { onOpen: (view: string) => void }) {
                 </li>
               ))}
             </ul>
-            <p className="m-0 border-t border-line bg-[#FAFAFC] px-4 py-2.5 text-[13px] text-subtle">
+            <p className="m-0 border-t border-line bg-surface-muted px-4 py-2.5 text-label text-subtle">
               Showing {visible.length} of {contacts.length} contacts
             </p>
           </>
@@ -292,17 +292,17 @@ export function Contacts({ onOpen }: { onOpen: (view: string) => void }) {
       >
         {importing === 1 ? (
           <div className="flex flex-col gap-4">
-            <p className="m-0 text-[14.5px] text-ink-soft">Upload a CSV file from Excel, Google Sheets or your billing software. You’ll match the columns next.</p>
+            <p className="m-0 text-body text-ink-soft">Upload a CSV file from Excel, Google Sheets or your billing software. You’ll match the columns next.</p>
             <button
               type="button"
               onClick={() => fileInput.current?.click()}
-              className="flex cursor-pointer flex-col items-center gap-2 rounded-[18px] border-2 border-dashed border-line-strong bg-[#FAFAFC] px-6 py-10 text-center hover:border-indigo"
+              className="flex cursor-pointer flex-col items-center gap-2 rounded-xl border-2 border-dashed border-line-strong bg-surface-muted px-6 py-10 text-center hover:border-indigo"
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-[14px] bg-white text-ink shadow-[0_1px_2px_rgb(30_31_43/0.08)]">
+              <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-surface text-ink shadow-1">
                 <Icon name="upload" size={22} />
               </span>
-              <span className="text-[15px] font-semibold text-ink">Choose a CSV file</span>
-              <span className="text-[13px] text-subtle">Up to 10,000 rows. Names and phone numbers are enough.</span>
+              <span className="text-body font-semibold text-ink">Choose a CSV file</span>
+              <span className="text-label text-subtle">Up to 10,000 rows. Names and phone numbers are enough.</span>
             </button>
             <input
               ref={fileInput}
@@ -324,20 +324,20 @@ export function Contacts({ onOpen }: { onOpen: (view: string) => void }) {
                 setFileName("sample-contacts.csv");
                 setImporting(2);
               }}
-              className="w-fit cursor-pointer text-[14px] font-semibold text-brand underline-offset-4 hover:underline"
+              className="w-fit cursor-pointer text-body font-semibold text-brand underline-offset-4 hover:underline"
             >
               Try it with a sample file
             </button>
           </div>
         ) : (
           <div className="flex flex-col gap-5">
-            <p className="m-0 flex items-center gap-2 text-[14px] text-ink-soft">
+            <p className="m-0 flex items-center gap-2 text-body text-ink-soft">
               <Icon name="note" size={16} className="text-muted" />
               <span className="font-semibold text-ink">{fileName}</span> · {importRows.length} rows found
             </p>
-            <div className="overflow-hidden rounded-[14px] border border-line">
-              <table className="w-full border-collapse text-[14px]">
-                <thead className="bg-[#FAFAFC] text-left text-[12px] font-semibold tracking-[0.04em] text-muted uppercase">
+            <div className="overflow-hidden rounded-lg border border-line">
+              <table className="w-full border-collapse text-body">
+                <thead className="bg-surface-muted text-start text-caption font-semibold tracking-[0.04em] text-muted uppercase">
                   <tr>
                     <th scope="col" className="px-3 py-2.5">
                       Column in your file
@@ -370,11 +370,11 @@ export function Contacts({ onOpen }: { onOpen: (view: string) => void }) {
                 </tbody>
               </table>
             </div>
-            <label className="flex cursor-pointer items-start gap-3 rounded-[14px] bg-[#FFF8E1] p-4">
+            <label className="flex cursor-pointer items-start gap-3 rounded-lg bg-signal/15 p-4">
               <input type="checkbox" checked={consented} onChange={(e) => setConsented(e.target.checked)} className="mt-0.5 h-4 w-4 flex-none cursor-pointer accent-[#23243A]" />
               <span className="flex flex-col gap-1">
-                <span className="text-[14.5px] font-semibold text-ink">These people agreed to hear from us on WhatsApp</span>
-                <span className="text-[13px] text-ink-soft">WhatsApp’s rules and privacy law require it. If you’re not sure, leave this unticked: they’ll be marked “Not asked”, and Vegam asks them before sending any reminders.</span>
+                <span className="text-body font-semibold text-ink">These people agreed to hear from us on WhatsApp</span>
+                <span className="text-label text-ink-soft">WhatsApp’s rules and privacy law require it. If you’re not sure, leave this unticked: they’ll be marked “Not asked”, and Vegam asks them before sending any reminders.</span>
               </span>
             </label>
           </div>

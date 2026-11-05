@@ -12,7 +12,7 @@ function Value({ v }: { v: boolean | string }) {
       </span>
     );
   if (v === false) return <span className="text-faint" aria-label="Not included">–</span>;
-  return <span className="text-[14.5px] font-semibold text-ink">{v}</span>;
+  return <span className="text-body font-semibold text-ink">{v}</span>;
 }
 
 /** Full feature comparison: grouped rows that collapse, sticky plan headers, one-plan view on phones. */
@@ -21,9 +21,9 @@ export function ComparisonTable() {
   const [mobilePlan, setMobilePlan] = useState<PlanId>("growth");
 
   return (
-    <div className="rounded-[26px] border border-line bg-white">
+    <div className="rounded-xl border border-line bg-surface">
       {/* Phone: pick one plan to view */}
-      <div className="sticky top-[64px] z-20 flex gap-1 rounded-t-[26px] border-b border-line bg-white/95 p-2 backdrop-blur md:hidden" role="tablist" aria-label="Plan to compare">
+      <div className="sticky top-[64px] z-20 flex gap-1 rounded-t-[26px] border-b border-line bg-surface/95 p-2 backdrop-blur md:hidden" role="tablist" aria-label="Plan to compare">
         {plans.map((p) => (
           <button
             key={p.id}
@@ -31,24 +31,24 @@ export function ComparisonTable() {
             role="tab"
             aria-selected={mobilePlan === p.id}
             onClick={() => setMobilePlan(p.id)}
-            className={`min-h-10 flex-1 cursor-pointer rounded-full text-[14px] font-semibold transition ${mobilePlan === p.id ? "bg-ink text-white" : "text-muted"}`}
+            className={`min-h-10 flex-1 cursor-pointer rounded-full text-body font-semibold transition ${mobilePlan === p.id ? "bg-brand-fill text-white" : "text-muted"}`}
           >
             {p.name}
           </button>
         ))}
       </div>
 
-      <table className="w-full border-collapse text-left">
+      <table className="w-full border-collapse text-start">
         <caption className="sr-only">Features included in each plan</caption>
-        <thead className="sticky top-[64px] z-10 hidden bg-white/95 backdrop-blur md:table-header-group">
+        <thead className="sticky top-[64px] z-10 hidden bg-surface/95 backdrop-blur md:table-header-group">
           <tr>
-            <th scope="col" className="w-[44%] rounded-tl-[26px] border-b border-line px-6 py-5 text-[15px] font-semibold text-subtle">
+            <th scope="col" className="w-[44%] rounded-ss-[26px] border-b border-line px-6 py-5 text-body font-semibold text-subtle">
               Features
             </th>
             {plans.map((p) => (
-              <th key={p.id} scope="col" className={`border-b border-line px-4 py-5 text-center ${p.popular ? "bg-[#FFF3E6]" : ""} ${p.id === "pro" ? "rounded-tr-[26px]" : ""}`}>
-                <span className="block text-[18px] font-bold text-ink">{p.name}</span>
-                {p.popular && <span className="mt-0.5 block text-[12px] font-semibold tracking-[0.08em] text-[#B4500A] uppercase">Most popular</span>}
+              <th key={p.id} scope="col" className={`border-b border-line px-4 py-5 text-center ${p.popular ? "bg-signal/15" : ""} ${p.id === "pro" ? "rounded-se-[26px]" : ""}`}>
+                <span className="block text-h3 font-bold text-ink">{p.name}</span>
+                {p.popular && <span className="mt-0.5 block text-caption font-semibold tracking-[0.08em] text-signal-ink uppercase">Most popular</span>}
               </th>
             ))}
           </tr>
@@ -61,7 +61,7 @@ export function ComparisonTable() {
                   type="button"
                   aria-expanded={open[g.title]}
                   onClick={() => setOpen((o) => ({ ...o, [g.title]: !o[g.title] }))}
-                  className="flex w-full cursor-pointer items-center justify-between px-6 py-3.5 text-left text-[13px] font-semibold tracking-[0.12em] text-muted uppercase"
+                  className="flex w-full cursor-pointer items-center justify-between px-6 py-3.5 text-start text-label font-semibold tracking-[0.12em] text-muted uppercase"
                 >
                   {g.title}
                   <Icon name="chevron-down" size={18} className={`transition ${open[g.title] ? "rotate-180" : ""}`} />
@@ -73,14 +73,14 @@ export function ComparisonTable() {
                 <tr key={r.name} className="group border-b border-line last:border-b-0 hover:bg-page">
                   <th scope="row" className="px-5 py-4 align-top font-normal sm:px-6">
                     <span className="flex flex-col gap-0.5">
-                      <span className="text-[15.5px] font-medium text-ink">{r.name}</span>
-                      <span className="text-[13.5px] leading-snug text-subtle">{r.info}</span>
+                      <span className="text-body-lg font-medium text-ink">{r.name}</span>
+                      <span className="text-label leading-snug text-subtle">{r.info}</span>
                     </span>
                   </th>
                   {plans.map((p) => (
                     <td
                       key={p.id}
-                      className={`min-w-[96px] px-3 py-4 text-center align-middle whitespace-nowrap sm:px-4 ${p.popular ? "bg-[#FFF8F0]" : ""} ${mobilePlan === p.id ? "table-cell" : "hidden md:table-cell"}`}
+                      className={`min-w-[96px] px-3 py-4 text-center align-middle whitespace-nowrap sm:px-4 ${p.popular ? "bg-brand-subtle" : ""} ${mobilePlan === p.id ? "table-cell" : "hidden md:table-cell"}`}
                     >
                       <span className="inline-flex justify-center">
                         <Value v={r.values[p.id]} />

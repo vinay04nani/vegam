@@ -63,7 +63,7 @@ export function Locations({ isPro }: { isPro: boolean }) {
                   {l.name}
                   {l.primary && <Badge tone="brand">Main</Badge>}
                 </span>
-                <span className="truncate text-[13px] font-normal text-subtle">
+                <span className="truncate text-label font-normal text-subtle">
                   {l.address} · Manager: {l.manager}
                 </span>
               </span>
@@ -91,13 +91,13 @@ export function Locations({ isPro }: { isPro: boolean }) {
           <Switch checked={ownLinks} onChange={setOwnLinks} label="A booking link for each location" />
         </Row>
         <Row label="Handovers" description="Go to the manager of the customer’s location first, then anyone free.">
-          <span className="text-[14px] text-subtle">Location manager</span>
+          <span className="text-body text-subtle">Location manager</span>
         </Row>
       </Group>
 
       <Group title="Plan">
         <Row label="Locations included" description={isPro ? "Pro includes up to 3 locations. Talk to us to add more." : "Extra locations are part of Pro."}>
-          <span className="text-[14px] font-semibold text-ink">{locations.length} of 3</span>
+          <span className="text-body font-semibold text-ink">{locations.length} of 3</span>
         </Row>
       </Group>
 
@@ -119,35 +119,35 @@ export function Locations({ isPro }: { isPro: boolean }) {
         {draft && (
           <div className="flex flex-col gap-5">
             <label className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">Name</span>
+              <span className="text-body font-medium text-ink">Name</span>
               <Input value={draft.name} onChange={(e) => setDraft({ ...draft, name: e.target.value })} placeholder="e.g. Indiranagar" autoFocus />
             </label>
             <label className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">Address</span>
+              <span className="text-body font-medium text-ink">Address</span>
               <Input value={draft.address} onChange={(e) => setDraft({ ...draft, address: e.target.value })} placeholder="Street, area, city, pin code" />
             </label>
             <div className="flex flex-col gap-2">
               <span className="flex items-center justify-between gap-3">
-                <span className="text-[14px] font-medium text-ink">Its own phone and WhatsApp number</span>
+                <span className="text-body font-medium text-ink">Its own phone and WhatsApp number</span>
                 <Switch checked={draft.ownNumber} onChange={(v) => setDraft({ ...draft, ownNumber: v })} label="Its own phone and WhatsApp number" />
               </span>
               {draft.ownNumber ? (
                 <Input type="tel" value={draft.phone} onChange={(e) => setDraft({ ...draft, phone: e.target.value })} placeholder="+91" aria-label="Location phone number" />
               ) : (
-                <span className="text-[13px] text-subtle">Uses your main number. The AI asks which location they want.</span>
+                <span className="text-label text-subtle">Uses your main number. The AI asks which location they want.</span>
               )}
             </div>
             <label className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">Manager</span>
+              <span className="text-body font-medium text-ink">Manager</span>
               <Dropdown value={draft.manager} onChange={(e) => setDraft({ ...draft, manager: e.target.value })}>
                 {sampleTeam.map((m) => (
                   <option key={m.name}>{m.name}</option>
                 ))}
               </Dropdown>
-              <span className="text-[12.5px] text-subtle">Gets this location’s handovers and morning report.</span>
+              <span className="text-caption text-subtle">Gets this location’s handovers and morning report.</span>
             </label>
             <label className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">Opening hours</span>
+              <span className="text-body font-medium text-ink">Opening hours</span>
               <Dropdown value={draft.hours} onChange={(e) => setDraft({ ...draft, hours: e.target.value })}>
                 {locations
                   .filter((l) => l.id !== draft.id)
@@ -160,9 +160,9 @@ export function Locations({ isPro }: { isPro: boolean }) {
               </Dropdown>
             </label>
             <fieldset className="m-0 flex flex-col gap-2 border-0 p-0">
-              <legend className="mb-2 p-0 text-[14px] font-medium text-ink">Services offered here</legend>
+              <legend className="mb-2 p-0 text-body font-medium text-ink">Services offered here</legend>
               {services.map((s) => (
-                <label key={s} className="flex cursor-pointer items-center gap-2.5 text-[14px] text-ink">
+                <label key={s} className="flex cursor-pointer items-center gap-2.5 text-body text-ink">
                   <input
                     type="checkbox"
                     checked={draft.services.includes(s)}

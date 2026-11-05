@@ -59,7 +59,7 @@ export function Account({ state, onOpen }: Props) {
             Start over
           </RowButton>
         </Row>
-        <Row label="Close account" description="Stops your assistant and deletes your data after 30 days.">
+        <Row label="Close account" description="Planned. Closing an account and deleting its data are not available yet.">
           <RowButton tone="danger" onClick={() => setClosing(true)}>
             Close account
           </RowButton>
@@ -90,9 +90,9 @@ export function Account({ state, onOpen }: Props) {
         }
       >
         <div className="flex flex-col gap-4">
-          <p className="m-0 text-[14.5px] text-ink-soft">Your assistant stops replying straight away and your WhatsApp number is released. Your data is deleted after 30 days; export it first if you need it.</p>
+          <p className="m-0 text-body text-ink-soft">Account closing, releasing a WhatsApp number, and deleting data are planned. Nothing is deleted in this demo.</p>
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Type “{name}” to confirm</span>
+            <span className="text-body font-medium text-ink">Type “{name}” to confirm</span>
             <Input value={typed} onChange={(e) => setTyped(e.target.value)} autoFocus />
           </label>
         </div>

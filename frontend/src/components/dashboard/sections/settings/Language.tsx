@@ -16,7 +16,7 @@ export function Language({ state, update }: Props) {
       <Group title="Assistant languages" description="The AI replies in the customer’s language when it’s one of these.">
         <div role="group" aria-label="Assistant languages" className="flex flex-wrap gap-1.5 py-4">
           {languageNames.map((l) => (
-            <button key={l} type="button" aria-pressed={langs.includes(l)} onClick={() => toggle(l)} className={`h-8 cursor-pointer rounded-full px-3 text-[13px] font-medium transition ${langs.includes(l) ? "bg-ink text-white" : "bg-panel text-ink-soft hover:text-ink"}`}>
+            <button key={l} type="button" aria-pressed={langs.includes(l)} onClick={() => toggle(l)} className={`h-8 cursor-pointer rounded-full px-3 text-label font-medium transition ${langs.includes(l) ? "bg-brand-fill text-white" : "bg-panel text-ink-soft hover:text-ink"}`}>
               {l}
             </button>
           ))}

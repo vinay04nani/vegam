@@ -19,7 +19,7 @@ const markDone = (task: SetupTask) => (s: OnboardingState) => ({ ...s, setupDone
 function Footer({ hint, children }: { hint?: string; children: ReactNode }) {
   return (
     <div className="flex flex-col-reverse items-start gap-3 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-end">
-      {hint && <span className="text-[14px] text-subtle">{hint}</span>}
+      {hint && <span className="text-body text-subtle">{hint}</span>}
       {children}
     </div>
   );

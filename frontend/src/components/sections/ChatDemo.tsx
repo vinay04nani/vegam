@@ -47,8 +47,8 @@ export function ChatDemo() {
   const typing = started && next !== undefined;
 
   return (
-    <div ref={rootRef} className="overflow-hidden rounded-[14px] border border-line bg-white">
-      <div role="tablist" aria-label="Sample conversations" className="flex flex-wrap border-b border-line bg-[#F8F8FB]">
+    <div ref={rootRef} className="overflow-hidden rounded-lg border border-line bg-surface">
+      <div role="tablist" aria-label="Sample conversations" className="flex flex-wrap border-b border-line bg-surface-muted">
         {chatTabs.map((t) => {
           const active = t.id === tab.id;
           return (
@@ -60,8 +60,8 @@ export function ChatDemo() {
               aria-selected={active}
               aria-controls="chat-panel"
               onClick={() => selectTab(t.id)}
-              className={`flex min-h-13 cursor-pointer items-center gap-2 border-t-2 border-r border-r-line px-5.5 text-base transition-colors ${
-                active ? "border-t-indigo bg-white font-semibold text-ink" : "border-t-transparent font-medium text-muted hover:text-ink"
+              className={`flex min-h-13 cursor-pointer items-center gap-2 border-t-2 border-e border-e-line px-5.5 text-base transition-colors ${
+                active ? "border-t-indigo bg-surface font-semibold text-ink" : "border-t-transparent font-medium text-muted hover:text-ink"
               }`}
             >
               <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full" style={{ background: t.color }} />
@@ -95,7 +95,7 @@ function Bubble({ ai, text }: { ai: boolean; text: string }) {
   ) : (
     <div className="bubble-in flex max-w-[85%] flex-col items-end gap-0.5 self-end">
       <span className="text-xs font-semibold text-subtle">Customer</span>
-      <div className="rounded-[14px_14px_4px_14px] bg-[#F4F4F7] px-3.5 py-2.5 text-ink">{text}</div>
+      <div className="rounded-[14px_14px_4px_14px] bg-surface-muted px-3.5 py-2.5 text-ink">{text}</div>
     </div>
   );
 }
@@ -104,7 +104,7 @@ function Typing({ ai }: { ai: boolean }) {
   return (
     <div
       aria-hidden="true"
-      className={`bubble-in flex gap-1 rounded-full px-3.5 py-3 ${ai ? "self-start bg-periwinkle-soft" : "self-end bg-[#F4F4F7]"}`}
+      className={`bubble-in flex gap-1 rounded-full px-3.5 py-3 ${ai ? "self-start bg-periwinkle-soft" : "self-end bg-surface-muted"}`}
     >
       {[0, 1, 2].map((i) => (
         <span key={i} className="typing-dot h-1.5 w-1.5 rounded-full bg-subtle" style={{ animationDelay: `${i * 150}ms` }} />
