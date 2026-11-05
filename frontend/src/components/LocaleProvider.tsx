@@ -5,6 +5,34 @@ import { currencyForRegion, detectLocale, getLocaleState, setLocaleState, subscr
 
 const ONBOARDING_KEY = "vegam.onboarding.v2";
 
+const ENGLISH_BLOCKS = "p, h1, h2, h3, h4, h5, h6, li, td, th, label, figcaption, blockquote, dd, dt, caption, .light-surface";
+const RTL_LANG = /^(ar|he|fa|ur|yi|dv|ps)\b/i;
+
+/** English copy stays left-to-right inside an RTL shell, so punctuation and times do not flip. */
+function markEnglishIslands(rtl: boolean) {
+  document.querySelectorAll<HTMLElement>("[data-en-island]").forEach((el) => {
+    el.removeAttribute("dir");
+    el.removeAttribute("data-en-island");
+  });
+  if (!rtl) return;
+
+  const mark = (el: Element) => {
+    if (!(el instanceof HTMLElement) || el.hasAttribute("data-en-island")) return;
+    if (el.getAttribute("dir") === "rtl" || el.getAttribute("dir") === "ltr" || RTL_LANG.test(el.getAttribute("lang") || "")) return;
+    if (el.parentElement?.closest("[data-en-island], [dir='ltr']")) return;
+    el.dir = "ltr";
+    el.setAttribute("data-en-island", "");
+  };
+
+  document.querySelectorAll(ENGLISH_BLOCKS).forEach(mark);
+  document.querySelectorAll("span, a, strong, em, time, div").forEach((el) => {
+    if (el.closest("[data-en-island], [dir='ltr']")) return;
+    const text = [...el.childNodes].some((node) => node.nodeType === Node.TEXT_NODE && (node.textContent || "").trim().length > 0);
+    if (!text || el.children.length > 0) return;
+    mark(el);
+  });
+}
+
 export function useLocale(): LocaleState {
   return useSyncExternalStore(subscribeLocale, getLocaleState, () => DEFAULT_LOCALE);
 }
@@ -49,6 +77,18 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = locale.locale;
     document.documentElement.dir = locale.dir;
+    markEnglishIslands(locale.dir === "rtl");
+    if (locale.dir !== "rtl") return;
+    let frame = 0;
+    const observer = new MutationObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => markEnglishIslands(true));
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
   }, [locale]);
 
   return children;

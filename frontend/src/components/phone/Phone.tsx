@@ -26,7 +26,7 @@ export function Phone({
 }) {
   return (
     <div className={`w-[300px] flex-none rounded-xl bg-brand-fill p-2.5 shadow-2 md:shadow-3 ring-1 ring-black/10 ${className}`}>
-      <div className="light-surface flex h-[580px] flex-col overflow-hidden rounded-xl bg-[#EFEAE2] text-start">
+      <div dir="ltr" className="light-surface flex h-[580px] flex-col overflow-hidden rounded-xl bg-[#EFEAE2] text-start">
         <div className="flex items-center justify-between bg-surface px-6 pt-3 text-caption font-semibold text-ink" aria-hidden="true">
           <span>{time}</span>
           <span className="h-5 w-20 rounded-full bg-brand-fill" />
