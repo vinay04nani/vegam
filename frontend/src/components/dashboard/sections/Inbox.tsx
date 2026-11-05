@@ -63,7 +63,7 @@ function Message({ m, who }: { m: ThreadMessage; who: string }) {
   const toast = useToast();
   if (m.kind === "event") {
     return (
-      <p className="m-0 flex items-center gap-3 text-[12.5px] text-subtle">
+      <p className="m-0 flex items-center gap-3 text-caption text-subtle">
         <span className="h-px flex-1 bg-line" />
         {m.text} · {m.time}
         <span className="h-px flex-1 bg-line" />
@@ -73,8 +73,8 @@ function Message({ m, who }: { m: ThreadMessage; who: string }) {
   if (m.kind === "note") {
     return (
       <div className="flex max-w-[80%] flex-col items-end gap-1 self-end">
-        <div className="rounded-[14px] rounded-tr-[4px] border border-[#F2DFA0] bg-[#FFF8E1] px-3.5 py-2.5 text-[14.5px] leading-snug text-ink">{m.text}</div>
-        <span className="flex items-center gap-1 px-1 text-[12px] text-subtle">
+        <div className="rounded-lg rounded-se-[4px] border border-warning/40 bg-warning-subtle px-3.5 py-2.5 text-body leading-snug text-ink">{m.text}</div>
+        <span className="flex items-center gap-1 px-1 text-caption text-subtle">
           <Icon name="lock" size={11} />
           Internal note · {m.time}
         </span>
@@ -83,10 +83,10 @@ function Message({ m, who }: { m: ThreadMessage; who: string }) {
   }
 
   const customer = m.from === "customer";
-  const bubble = customer ? "rounded-tl-[4px] border border-line bg-white text-ink" : m.from === "ai" ? "rounded-tr-[4px] bg-periwinkle-soft text-ink" : "rounded-tr-[4px] bg-ink text-white";
+  const bubble = customer ? "rounded-ss-[4px] border border-line bg-surface text-ink" : m.from === "ai" ? "rounded-se-[4px] bg-periwinkle-soft text-ink" : "rounded-se-[4px] bg-brand-fill text-white";
   const body =
     m.kind === "image" ? (
-      <figure className={`m-0 overflow-hidden rounded-[16px] ${bubble}`}>
+      <figure className={`m-0 overflow-hidden rounded-lg ${bubble}`}>
         {m.src ? (
           <img src={m.src} alt="Photo sent by your team" className="max-h-60 w-full max-w-[280px] object-cover" />
         ) : (
@@ -94,18 +94,18 @@ function Message({ m, who }: { m: ThreadMessage; who: string }) {
             <Icon name="image" size={28} />
           </span>
         )}
-        {m.text && <figcaption className="px-3.5 py-2 text-[14.5px]">{m.text}</figcaption>}
+        {m.text && <figcaption className="px-3.5 py-2 text-body">{m.text}</figcaption>}
       </figure>
     ) : m.kind === "voice" ? (
-      <div className={`flex w-[300px] max-w-full flex-col gap-2 rounded-[16px] px-3 py-2.5 ${bubble}`}>
+      <div className={`flex w-[300px] max-w-full flex-col gap-2 rounded-lg px-3 py-2.5 ${bubble}`}>
         <span className="flex items-center gap-2.5">
-          <button type="button" aria-label={`Play voice note, ${m.duration}`} onClick={() => toast("Playing voice note (demo)", "info")} className="flex h-8 w-8 flex-none cursor-pointer items-center justify-center rounded-full bg-ink text-white">
+          <button type="button" aria-label={`Play voice note, ${m.duration}`} onClick={() => toast("Playing voice note (demo)", "info")} className="flex h-8 w-8 flex-none cursor-pointer items-center justify-center rounded-full bg-brand-fill text-white">
             <Icon name="play" size={13} />
           </button>
           <Waveform seed={m.text} />
-          <span className="flex-none text-[12.5px] font-semibold tabular-nums">{m.duration}</span>
+          <span className="flex-none text-caption font-semibold tabular-nums">{m.duration}</span>
         </span>
-        <span className="flex gap-1.5 border-t border-line pt-2 text-[13.5px] leading-snug text-ink-soft">
+        <span className="flex gap-1.5 border-t border-line pt-2 text-label leading-snug text-ink-soft">
           <Icon name="sparkle" size={13} className="mt-0.5 flex-none text-brand" />
           <span>
             <span className="sr-only">Transcript: </span>“{m.text}”
@@ -113,7 +113,7 @@ function Message({ m, who }: { m: ThreadMessage; who: string }) {
         </span>
       </div>
     ) : (
-      <div className={`rounded-[16px] px-3.5 py-2.5 text-[15px] leading-snug ${bubble}`}>{m.text}</div>
+      <div className={`rounded-lg px-3.5 py-2.5 text-body leading-snug ${bubble}`}>{m.text}</div>
     );
 
   return (
@@ -121,17 +121,17 @@ function Message({ m, who }: { m: ThreadMessage; who: string }) {
       {customer ? (
         <Avatar name={who} size={28} />
       ) : m.from === "ai" ? (
-        <span aria-hidden="true" className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-ink text-accent">
+        <span aria-hidden="true" className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-brand-fill text-accent">
           <Icon name="sparkle" size={13} />
         </span>
       ) : (
-        <span aria-hidden="true" className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-indigo text-[11px] font-bold text-white">
+        <span aria-hidden="true" className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-indigo text-caption font-bold text-white">
           You
         </span>
       )}
       <div className={`flex min-w-0 flex-col gap-1 ${customer ? "items-start" : "items-end"}`}>
         {body}
-        <span className="px-1 text-[12px] text-subtle">
+        <span className="px-1 text-caption text-subtle">
           {customer ? "" : m.from === "ai" ? "AI assistant · " : "You · "}
           {m.time}
         </span>
@@ -280,11 +280,11 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
         type="button"
         aria-current={active ? "true" : undefined}
         onClick={() => pickFolder(f)}
-        className={`flex min-h-9 w-full cursor-pointer items-center gap-2.5 rounded-[9px] px-2.5 text-left text-[14px] transition ${active ? "bg-white font-semibold text-ink shadow-[0_1px_2px_rgb(30_31_43/0.08)]" : "text-ink-soft hover:bg-white/70"}`}
+        className={`flex min-h-9 w-full cursor-pointer items-center gap-2.5 rounded-md px-2.5 text-start text-body transition ${active ? "bg-surface font-semibold text-ink shadow-1" : "text-ink-soft hover:bg-surface/70"}`}
       >
         {icon ?? <Icon name={folderMeta[f].icon} size={16} className={f === "needs" && n ? "text-warning" : "text-muted"} />}
         <span className="flex-1 truncate">{folderLabel(f)}</span>
-        {n > 0 && <span className={`text-[12px] font-semibold tabular-nums ${f === "needs" ? "rounded-full bg-warning px-1.5 text-white" : "text-subtle"}`}>{n}</span>}
+        {n > 0 && <span className={`text-caption font-semibold tabular-nums ${f === "needs" ? "rounded-full bg-warning px-1.5 text-white" : "text-subtle"}`}>{n}</span>}
       </button>
     );
   };
@@ -295,27 +295,27 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
       : open.owner === "ai"
         ? { tone: "bg-periwinkle-soft/60 text-brand", icon: "sparkle" as IconName, text: "The AI assistant is answering this chat.", action: "Take over", onAction: takeOver }
         : open.owner === "needs"
-          ? { tone: "bg-[#FFF3E6] text-warning", icon: "bell" as IconName, text: "The AI handed this chat to your team.", action: "Take over", onAction: takeOver }
-          : { tone: "bg-[#E8F3EA] text-success", icon: "users" as IconName, text: `${open.assignee && open.assignee !== "You" ? `${open.assignee} is` : "You’re"} handling this chat. The AI is paused.`, action: "Hand back to AI", onAction: handBack };
+          ? { tone: "bg-signal/15 text-warning", icon: "bell" as IconName, text: "The AI handed this chat to your team.", action: "Take over", onAction: takeOver }
+          : { tone: "bg-success-subtle text-success", icon: "users" as IconName, text: `${open.assignee && open.assignee !== "You" ? `${open.assignee} is` : "You’re"} handling this chat. The AI is paused.`, action: "Hand back to AI", onAction: handBack };
 
   return (
-    <div className="flex h-[calc(100svh-56px-64px)] flex-col overflow-hidden bg-white lg:h-[calc(100svh-48px)] lg:rounded-[20px] lg:border lg:border-line lg:shadow-[0_1px_3px_rgb(30_31_43/0.04)]">
+    <div className="flex h-[calc(100svh-56px-64px)] flex-col overflow-hidden bg-surface lg:h-[calc(100svh-48px)] lg:rounded-xl lg:border lg:border-line lg:shadow-1">
       <div className={`grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] lg:grid-cols-[320px_minmax(0,1fr)] 2xl:grid-cols-[210px_320px_minmax(0,1fr)] ${panel ? "xl:grid-cols-[320px_minmax(0,1fr)_300px] 2xl:grid-cols-[210px_320px_minmax(0,1fr)_300px]" : ""}`}>
         {/* Folders (wide screens) */}
-        <nav aria-label="Inbox folders" className="hidden min-h-0 flex-col gap-0.5 overflow-y-auto border-r border-line bg-[#F7F7FA] p-3 2xl:flex">
-          <p className="m-0 px-2.5 pt-1 pb-2 text-[12px] font-semibold tracking-[0.06em] text-subtle uppercase">Inbox</p>
+        <nav aria-label="Inbox folders" className="hidden min-h-0 flex-col gap-0.5 overflow-y-auto border-e border-line bg-surface-muted p-3 2xl:flex">
+          <p className="m-0 px-2.5 pt-1 pb-2 text-caption font-semibold tracking-[0.06em] text-subtle uppercase">Inbox</p>
           {(["open", "needs", "mine", "unassigned", "ai"] as Folder[]).map((f) => folderButton(f))}
-          <p className="m-0 px-2.5 pt-4 pb-2 text-[12px] font-semibold tracking-[0.06em] text-subtle uppercase">Channels</p>
+          <p className="m-0 px-2.5 pt-4 pb-2 text-caption font-semibold tracking-[0.06em] text-subtle uppercase">Channels</p>
           {channels.map((c) => folderButton(c, <ChannelMark channel={channelKey[c]} size={18} />))}
-          <p className="m-0 px-2.5 pt-4 pb-2 text-[12px] font-semibold tracking-[0.06em] text-subtle uppercase">Status</p>
+          <p className="m-0 px-2.5 pt-4 pb-2 text-caption font-semibold tracking-[0.06em] text-subtle uppercase">Status</p>
           {(["snoozed", "resolved"] as Folder[]).map((f) => folderButton(f))}
         </nav>
 
         {/* Conversation list */}
-        <section aria-label="Conversations" className={`min-h-0 flex-col border-r border-line ${mobileThread ? "hidden lg:flex" : "flex"}`}>
+        <section aria-label="Conversations" className={`min-h-0 flex-col border-e border-line ${mobileThread ? "hidden lg:flex" : "flex"}`}>
           <div className="flex flex-col gap-2.5 border-b border-line px-4 pt-4 pb-3">
             <div className="flex items-center justify-between gap-2">
-              <h1 className="m-0 text-[20px] font-semibold tracking-[-0.01em] text-ink">Inbox</h1>
+              <h1 className="m-0 text-h3 font-semibold tracking-[-0.01em] text-ink">Inbox</h1>
               <SampleTag />
             </div>
             <div className="flex items-center gap-2 2xl:hidden">
@@ -323,9 +323,9 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                 label="Choose folder"
                 align="left"
                 trigger={
-                  <span className="flex min-h-9 items-center gap-1.5 rounded-[9px] border border-line-strong bg-white px-3 text-[14px] font-semibold text-ink">
+                  <span className="flex min-h-9 items-center gap-1.5 rounded-md border border-line-strong bg-surface px-3 text-body font-semibold text-ink">
                     {folderLabel(folder)}
-                    <span className="text-[12px] font-semibold text-subtle tabular-nums">{count(folder)}</span>
+                    <span className="text-caption font-semibold text-subtle tabular-nums">{count(folder)}</span>
                     <Icon name="chevron-down" size={14} className="text-muted" />
                   </span>
                 }
@@ -339,19 +339,19 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                 ]}
               />
               {count("needs") > 0 && folder !== "needs" && (
-                <button type="button" onClick={() => pickFolder("needs")} className="min-h-9 cursor-pointer rounded-[9px] bg-[#FFF3E6] px-3 text-[13.5px] font-semibold text-warning">
+                <button type="button" onClick={() => pickFolder("needs")} className="min-h-9 cursor-pointer rounded-md bg-signal/15 px-3 text-label font-semibold text-warning">
                   {count("needs")} need you
                 </button>
               )}
             </div>
             <label className="relative">
               <span className="sr-only">Search conversations</span>
-              <Icon name="search" size={15} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-subtle" />
+              <Icon name="search" size={15} className="pointer-events-none absolute top-1/2 start-3 -translate-y-1/2 text-subtle" />
               <input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search conversations"
-                className="min-h-9 w-full rounded-[9px] border border-line bg-[#F7F7FA] pr-3 pl-9 text-[14px] text-ink outline-none placeholder:text-faint focus:border-indigo focus:bg-white focus:ring-4 focus:ring-indigo/10"
+                className="min-h-9 w-full rounded-md border border-line bg-surface-muted pe-3 ps-9 text-body text-ink outline-none placeholder:text-faint focus:border-indigo focus:bg-surface focus:ring-4 focus:ring-indigo/10"
               />
             </label>
           </div>
@@ -361,8 +361,8 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-panel text-muted">
                   <Icon name={folder === "resolved" ? "check" : "inbox"} size={20} />
                 </span>
-                <span className="text-[14.5px] font-semibold text-ink">{query ? "No conversations match" : "Nothing here"}</span>
-                <span className="text-[13px] text-subtle">{folder === "resolved" ? "Resolved chats show up here." : folder === "snoozed" ? "Snoozed chats come back on time." : "New chats will appear here."}</span>
+                <span className="text-body font-semibold text-ink">{query ? "No conversations match" : "Nothing here"}</span>
+                <span className="text-label text-subtle">{folder === "resolved" ? "Resolved chats show up here." : folder === "snoozed" ? "Snoozed chats come back on time." : "New chats will appear here."}</span>
               </li>
             )}
             {visible.map((t) => {
@@ -374,33 +374,33 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                     type="button"
                     onClick={() => select(t.id)}
                     aria-current={active ? "true" : undefined}
-                    className={`relative flex w-full cursor-pointer items-start gap-3 px-4 py-3 text-left transition ${active ? "bg-periwinkle-soft/45" : "hover:bg-[#FAFAFC]"}`}
+                    className={`relative flex w-full cursor-pointer items-start gap-3 px-4 py-3 text-start transition ${active ? "bg-periwinkle-soft/45" : "hover:bg-surface-muted"}`}
                   >
-                    {active && <span aria-hidden="true" className="absolute inset-y-0 left-0 w-[3px] bg-indigo" />}
+                    {active && <span aria-hidden="true" className="absolute inset-y-0 start-0 w-[3px] bg-indigo" />}
                     <span className="relative flex-none">
                       <Avatar name={t.who} size={38} />
-                      <span aria-hidden="true" className="absolute -right-2 -bottom-1 rounded-[6px] ring-2 ring-white">
+                      <span aria-hidden="true" className="absolute -end-2 -bottom-1 rounded-sm ring-2 ring-white">
                         <ChannelMark channel={channelKey[t.channel]} size={16} />
                       </span>
                     </span>
                     <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                       <span className="flex items-baseline justify-between gap-2">
-                        <span className={`truncate text-[14.5px] text-ink ${t.unread ? "font-bold" : "font-semibold"}`}>{t.who}</span>
-                        <span className={`flex-none text-[12px] ${t.unread ? "font-semibold text-indigo" : "text-subtle"}`}>{t.time}</span>
+                        <span className={`truncate text-body text-ink ${t.unread ? "font-bold" : "font-semibold"}`}>{t.who}</span>
+                        <span className={`flex-none text-caption ${t.unread ? "font-semibold text-indigo" : "text-subtle"}`}>{t.time}</span>
                       </span>
                       <span className="flex items-center gap-2">
-                        <span className={`min-w-0 flex-1 truncate text-[13.5px] ${t.unread ? "text-ink" : "text-subtle"}`}>
+                        <span className={`min-w-0 flex-1 truncate text-label ${t.unread ? "text-ink" : "text-subtle"}`}>
                           {last.from === "ai" ? "AI: " : last.from === "team" ? (last.kind === "note" ? "Note: " : "You: ") : ""}
                           {last.kind === "voice" ? "Voice note" : last.kind === "image" ? "Photo" : last.text}
                         </span>
-                        {t.unread && <span className="h-2 w-2 flex-none rounded-full bg-indigo" aria-label="Unread" />}
+                        {t.unread && <span role="img" className="h-2 w-2 flex-none rounded-full bg-indigo" aria-label="Unread" />}
                       </span>
                       {(t.owner === "needs" || t.assignee || t.status === "snoozed") && (
                         <span className="mt-1 flex flex-wrap items-center gap-1.5">
-                          {t.owner === "needs" && t.status === "open" && <span className="rounded-full bg-[#FFF3E6] px-2 py-0.5 text-[11.5px] font-semibold text-warning">Needs you</span>}
-                          {t.status === "snoozed" && <span className="rounded-full bg-panel px-2 py-0.5 text-[11.5px] font-semibold text-muted">Until {t.snoozedUntil?.toLowerCase()}</span>}
+                          {t.owner === "needs" && t.status === "open" && <span className="rounded-full bg-signal/15 px-2 py-0.5 text-caption font-semibold text-warning">Needs you</span>}
+                          {t.status === "snoozed" && <span className="rounded-full bg-panel px-2 py-0.5 text-caption font-semibold text-muted">Until {t.snoozedUntil?.toLowerCase()}</span>}
                           {t.assignee && t.status === "open" && (
-                            <span className="flex items-center gap-1 text-[12px] text-subtle">
+                            <span className="flex items-center gap-1 text-caption text-subtle">
                               <Avatar name={t.assignee} size={16} />
                               {t.assignee === "You" ? "You" : t.assignee}
                             </span>
@@ -417,19 +417,19 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
         </section>
 
         {/* Conversation */}
-        <section aria-label="Conversation" className={`min-h-0 flex-col bg-[#FAFAFC] ${mobileThread ? "flex" : "hidden lg:flex"}`}>
+        <section aria-label="Conversation" className={`min-h-0 flex-col bg-surface-muted ${mobileThread ? "flex" : "hidden lg:flex"}`}>
           {!open ? (
             <div className="flex flex-1 flex-col items-center justify-center gap-2 p-8 text-center">
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-muted shadow-[0_1px_3px_rgb(30_31_43/0.08)]">
+              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-surface text-muted shadow-1">
                 <Icon name="message" size={22} />
               </span>
-              <p className="m-0 text-[15px] font-semibold text-ink">Pick a conversation</p>
-              <p className="m-0 text-[13.5px] text-subtle">Chats from every channel land here.</p>
+              <p className="m-0 text-body font-semibold text-ink">Pick a conversation</p>
+              <p className="m-0 text-label text-subtle">Chats from every channel land here.</p>
             </div>
           ) : (
             <>
-              <header className="flex items-center gap-3 border-b border-line bg-white px-4 py-3">
-                <button type="button" onClick={() => setMobileThread(false)} aria-label="Back to conversations" className="-ml-1 flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-full text-ink hover:bg-panel lg:hidden">
+              <header className="flex items-center gap-3 border-b border-line bg-surface px-4 py-3">
+                <button type="button" onClick={() => setMobileThread(false)} aria-label="Back to conversations" className="-ms-1 flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-full text-ink hover:bg-panel lg:hidden">
                   <Icon name="chevron-left" size={22} />
                 </button>
                 <button
@@ -437,17 +437,17 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                   onClick={showDetails}
                   aria-expanded={panel || details}
                   title="View customer details"
-                  className="-my-1 -ml-1 flex min-w-0 flex-1 cursor-pointer items-center gap-3 rounded-[12px] py-1 pr-2 pl-1 text-left transition hover:bg-panel"
+                  className="-my-1 -ms-1 flex min-w-0 flex-1 cursor-pointer items-center gap-3 rounded-lg py-1 pe-2 ps-1 text-start transition hover:bg-panel"
                 >
                   <span className="relative hidden flex-none sm:block">
                     <Avatar name={contact?.name ?? open.who} size={36} />
                   </span>
                   <span className="flex min-w-0 flex-1 flex-col leading-tight">
                     <span className="flex min-w-0 items-center gap-1">
-                      <span className="truncate text-[15.5px] font-semibold text-ink">{contact?.name ?? open.who}</span>
+                      <span className="truncate text-body-lg font-semibold text-ink">{contact?.name ?? open.who}</span>
                       <Icon name="chevron-right" size={15} className={`flex-none text-faint transition ${panel ? "rotate-180" : ""}`} />
                     </span>
-                    <span className="flex items-center gap-1.5 truncate text-[12.5px] text-subtle">
+                    <span className="flex items-center gap-1.5 truncate text-caption text-subtle">
                       <ChannelMark channel={channelKey[open.channel]} size={14} />
                       {open.channel}
                       {contact && contact.phone !== open.who && contact.phone !== "Not shared" && ` · ${contact.phone}`}
@@ -457,7 +457,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                 <Menu
                   label={open.assignee ? `Assigned to ${open.assignee}` : "Assign"}
                   trigger={
-                    <span className="flex min-h-9 items-center gap-1.5 rounded-[9px] border border-line-strong bg-white px-2.5 text-[13.5px] font-semibold text-ink">
+                    <span className="flex min-h-9 items-center gap-1.5 rounded-md border border-line-strong bg-surface px-2.5 text-label font-semibold text-ink">
                       {open.assignee ? <Avatar name={open.assignee} size={20} /> : <Icon name="users" size={15} className="text-muted" />}
                       <span className="hidden sm:inline">{open.assignee ?? "Assign"}</span>
                       <Icon name="chevron-down" size={13} className="text-muted" />
@@ -474,7 +474,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                   icon="clock"
                   className="hidden 2xl:block"
                   trigger={
-                    <span className="flex h-9 w-9 items-center justify-center rounded-[9px] border border-line-strong bg-white text-ink">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-md border border-line-strong bg-surface text-ink">
                       <Icon name="clock" size={16} />
                     </span>
                   }
@@ -488,7 +488,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                 <button
                   type="button"
                   onClick={resolve}
-                  className={`inline-flex min-h-9 flex-none cursor-pointer items-center gap-1.5 rounded-[9px] px-3 text-[13.5px] font-semibold transition ${open.status === "resolved" ? "border border-line-strong bg-white text-ink hover:bg-panel" : "bg-ink text-white hover:bg-[#2c2d3d]"}`}
+                  className={`inline-flex min-h-9 flex-none cursor-pointer items-center gap-1.5 rounded-md px-3 text-label font-semibold transition ${open.status === "resolved" ? "border border-line-strong bg-surface text-ink hover:bg-panel" : "bg-brand-fill text-white hover:bg-brand-hover"}`}
                 >
                   <Icon name={open.status === "resolved" ? "refresh" : "check"} size={15} />
                   <span className="hidden sm:inline">{open.status === "resolved" ? "Reopen" : "Resolve"}</span>
@@ -497,7 +497,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                 <Menu
                   label="More actions"
                   trigger={
-                    <span className="flex h-9 w-9 items-center justify-center rounded-[9px] text-muted hover:bg-panel">
+                    <span className="flex h-9 w-9 items-center justify-center rounded-md text-muted hover:bg-panel">
                       <Icon name="more" size={17} />
                     </span>
                   }
@@ -512,28 +512,28 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
               </header>
 
               <div aria-live="polite" className="flex min-h-0 flex-1 flex-col gap-4 overflow-y-auto px-4 py-5 sm:px-6">
-                <p className="m-0 self-center rounded-full bg-white px-3 py-1 text-[12px] font-semibold text-subtle shadow-[0_1px_2px_rgb(30_31_43/0.06)]">Today</p>
+                <p className="m-0 self-center rounded-full bg-surface px-3 py-1 text-caption font-semibold text-subtle shadow-1">Today</p>
                 {open.messages.map((m, i) => (
                   <Message key={i} m={m} who={open.who} />
                 ))}
               </div>
 
               {strip && (
-                <div className={`flex items-center gap-2.5 border-t border-line px-4 py-2 text-[13.5px] sm:px-6 ${strip.tone}`}>
+                <div className={`flex items-center gap-2.5 border-t border-line px-4 py-2 text-label sm:px-6 ${strip.tone}`}>
                   <Icon name={strip.icon} size={15} className="flex-none" />
                   <span className="min-w-0 flex-1 font-medium">{strip.text}</span>
-                  <button type="button" onClick={strip.onAction} className="min-h-8 flex-none cursor-pointer rounded-[8px] bg-white px-3 text-[13px] font-semibold text-ink shadow-[0_1px_2px_rgb(30_31_43/0.1)] hover:bg-panel">
+                  <button type="button" onClick={strip.onAction} className="min-h-8 flex-none cursor-pointer rounded-md bg-surface px-3 text-label font-semibold text-ink shadow-1 hover:bg-panel">
                     {strip.action}
                   </button>
                 </div>
               )}
 
               {/* Reply box */}
-              <div className="border-t border-line bg-white p-3 sm:px-5">
-                <div className={`relative rounded-[14px] border transition focus-within:border-indigo focus-within:ring-4 focus-within:ring-indigo/10 ${mode === "note" ? "border-[#F2DFA0] bg-[#FFFBEB]" : "border-line-strong bg-white"}`}>
+              <div className="border-t border-line bg-surface p-3 sm:px-5">
+                <div className={`relative rounded-lg border transition focus-within:border-indigo focus-within:ring-4 focus-within:ring-indigo/10 ${mode === "note" ? "border-warning/40 bg-warning-subtle" : "border-line-strong bg-surface"}`}>
                   {replies.length > 0 && (
-                    <div role="listbox" aria-label="Saved replies" className="absolute inset-x-0 bottom-full z-20 mb-2 overflow-hidden rounded-[14px] border border-line bg-white shadow-[0_16px_40px_rgb(30_31_43/0.16)]">
-                      <p className="m-0 flex items-center justify-between border-b border-line px-3.5 py-2 text-[12px] font-semibold tracking-[0.04em] text-muted uppercase">
+                    <div role="listbox" aria-label="Saved replies" className="absolute inset-x-0 bottom-full z-20 mb-2 overflow-hidden rounded-lg border border-line bg-surface shadow-2">
+                      <p className="m-0 flex items-center justify-between border-b border-line px-3.5 py-2 text-caption font-semibold tracking-[0.04em] text-muted uppercase">
                         Saved replies
                         <span className="font-normal tracking-normal normal-case">↑↓ to choose, Enter to insert</span>
                       </p>
@@ -545,10 +545,10 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                           aria-selected={i === picker}
                           onMouseDown={(e) => e.preventDefault()}
                           onClick={() => pick(r.text)}
-                          className={`flex w-full cursor-pointer flex-col px-3.5 py-2 text-left ${i === picker ? "bg-periwinkle-soft/60" : "hover:bg-page"}`}
+                          className={`flex w-full cursor-pointer flex-col px-3.5 py-2 text-start ${i === picker ? "bg-periwinkle-soft/60" : "hover:bg-page"}`}
                         >
-                          <span className="text-[14px] font-semibold text-ink">{r.title}</span>
-                          <span className="truncate text-[13px] text-subtle">{r.text}</span>
+                          <span className="text-body font-semibold text-ink">{r.title}</span>
+                          <span className="truncate text-label text-subtle">{r.text}</span>
                         </button>
                       ))}
                     </div>
@@ -561,7 +561,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                         role="tab"
                         aria-selected={mode === m}
                         onClick={() => setMode(m)}
-                        className={`-mb-px flex cursor-pointer items-center gap-1 border-b-2 pb-1.5 text-[13px] font-semibold ${mode === m ? (m === "note" ? "border-[#C99A00] text-[#7A5200]" : "border-ink text-ink") : "border-transparent text-subtle hover:text-ink"}`}
+                        className={`-mb-px flex cursor-pointer items-center gap-1 border-b-2 pb-1.5 text-label font-semibold ${mode === m ? (m === "note" ? "border-[#C99A00] text-signal-ink" : "border-ink text-ink") : "border-transparent text-subtle hover:text-ink"}`}
                       >
                         {m === "note" && <Icon name="lock" size={12} />}
                         {m === "reply" ? `Reply on ${open.channel === "Missed call" ? "WhatsApp" : open.channel}` : "Internal note"}
@@ -580,11 +580,11 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                       }}
                       onKeyDown={onKeyDown}
                       placeholder={mode === "note" ? "Write a note only your team sees…" : open.owner === "team" ? "Write a reply… (type / for saved replies)" : "Reply to take over from the AI… (type / for saved replies)"}
-                      className="block max-h-40 min-h-14 w-full resize-none bg-transparent px-3.5 py-2 text-[15px] text-ink outline-none placeholder:text-faint"
+                      className="block max-h-40 min-h-14 w-full resize-none bg-transparent px-3.5 py-2 text-body text-ink outline-none placeholder:text-faint"
                     />
                   </label>
                   <div className="flex items-center gap-1 px-2 pb-2">
-                    <button type="button" onClick={() => fileInput.current?.click()} aria-label="Attach a photo" title="Attach a photo" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-ink">
+                    <button type="button" onClick={() => fileInput.current?.click()} aria-label="Attach a photo" title="Attach a photo" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-muted hover:bg-panel hover:text-ink">
                       <Icon name="image" size={17} />
                     </button>
                     <button
@@ -596,7 +596,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                       aria-label="Saved replies"
                       aria-expanded={replies.length > 0}
                       title="Saved replies"
-                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-ink"
+                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-muted hover:bg-panel hover:text-ink"
                     >
                       <Icon name="note" size={17} />
                     </button>
@@ -605,7 +605,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                       onClick={() => setPaying(true)}
                       aria-label="Request payment"
                       title="Request payment"
-                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-ink"
+                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-muted hover:bg-panel hover:text-ink"
                     >
                       <Icon name="wallet" size={17} />
                     </button>
@@ -623,13 +623,13 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                         e.target.value = "";
                       }}
                     />
-                    <span className="ml-auto hidden text-[12px] text-subtle sm:inline">Enter to send · Shift+Enter for a new line</span>
+                    <span className="ms-auto hidden text-caption text-subtle sm:inline">Enter to send · Shift+Enter for a new line</span>
                     <button
                       type="button"
                       onClick={send}
                       disabled={!draft.trim() || slash !== null}
                       aria-label={mode === "note" ? "Add note" : "Send reply"}
-                      className="ml-auto inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-[8px] bg-ink px-3 text-[13.5px] font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40 sm:ml-2"
+                      className="ms-auto inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-md bg-brand-fill px-3 text-label font-semibold text-white disabled:cursor-not-allowed disabled:opacity-40 sm:ms-2"
                     >
                       {mode === "note" ? "Add note" : "Send"}
                       <Icon name={mode === "note" ? "check" : "send"} size={14} />
@@ -643,10 +643,10 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
 
         {/* Customer details */}
         {panel && open && contact && (
-          <aside aria-label="Customer details" className="hidden min-h-0 overflow-y-auto border-l border-line p-5 xl:block">
+          <aside aria-label="Customer details" className="hidden min-h-0 overflow-y-auto border-s border-line p-5 xl:block">
             <div className="-mt-1 mb-3 flex items-center justify-between">
-              <p className="m-0 text-[13px] font-semibold tracking-[0.04em] text-muted uppercase">Customer</p>
-              <button type="button" onClick={() => setPanel(false)} aria-label="Close customer details" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-ink">
+              <p className="m-0 text-label font-semibold tracking-[0.04em] text-muted uppercase">Customer</p>
+              <button type="button" onClick={() => setPanel(false)} aria-label="Close customer details" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-muted hover:bg-panel hover:text-ink">
                 <Icon name="close" size={16} />
               </button>
             </div>

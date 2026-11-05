@@ -128,7 +128,7 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
           <Menu
             label="Export report"
             align="right"
-            triggerClassName="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-[10px] bg-ink px-3.5 text-[14px] font-semibold text-white shadow-[0_1px_2px_rgb(30_31_43/0.2)] transition hover:bg-[#2c2d3d]"
+            triggerClassName="inline-flex min-h-9 cursor-pointer items-center gap-1.5 rounded-md bg-brand-fill px-3.5 text-body font-semibold text-white shadow-1 transition hover:bg-brand-hover"
             trigger={
               <>
                 <Icon name="download" size={16} />
@@ -154,7 +154,7 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
           <Menu
             label="Filter by channel"
             align="left"
-            triggerClassName={`inline-flex min-h-[42px] cursor-pointer items-center gap-2 rounded-[12px] border px-3 text-[13.5px] font-semibold transition ${channel === "all" ? "border-line-strong bg-white text-ink hover:bg-panel" : "border-ink bg-ink text-white"}`}
+            triggerClassName={`inline-flex min-h-[42px] cursor-pointer items-center gap-2 rounded-lg border px-3 text-label font-semibold transition ${channel === "all" ? "border-line-strong bg-surface text-ink hover:bg-panel" : "border-ink bg-brand-fill text-white"}`}
             trigger={
               <>
                 <Icon name="filter" size={15} />
@@ -170,15 +170,15 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
             aria-checked={compare}
             aria-label="Compare with the previous period"
             onClick={() => setCompare(!compare)}
-            className="inline-flex min-h-[42px] cursor-pointer items-center gap-2.5 rounded-[12px] border border-line-strong bg-white px-3 text-[13.5px] font-semibold text-ink transition hover:bg-panel"
+            className="inline-flex min-h-[42px] cursor-pointer items-center gap-2.5 rounded-lg border border-line-strong bg-surface px-3 text-label font-semibold text-ink transition hover:bg-panel"
           >
-            <span aria-hidden="true" className={`relative block h-[18px] w-[30px] rounded-full transition ${compare ? "bg-ink" : "bg-line-strong"}`}>
-              <span className={`absolute top-[2px] left-[2px] h-[14px] w-[14px] rounded-full bg-white shadow-[0_1px_2px_rgb(30_31_43/0.25)] transition ${compare ? "translate-x-3" : ""}`} />
+            <span aria-hidden="true" className={`relative block h-[18px] w-[30px] rounded-full transition ${compare ? "bg-brand-fill" : "bg-line-strong"}`}>
+              <span className={`absolute top-[2px] start-[2px] h-[14px] w-[14px] rounded-full bg-surface shadow-1 transition ${compare ? "translate-x-3" : ""}`} />
             </span>
             Compare
           </button>
           {m && (
-            <p className="m-0 text-[13px] text-subtle lg:ml-auto">
+            <p className="m-0 text-label text-subtle lg:ms-auto">
               {current && <span className="font-medium text-ink-soft">{current.name} · </span>}
               <span className="font-medium text-ink-soft">{m.period}</span>
               {compare && <span className="hidden sm:inline"> · vs {m.prevPeriod}</span>}
@@ -209,16 +209,16 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
                     const isOpen = openReport === r.day;
                     return (
                       <li key={r.day}>
-                        <button type="button" aria-expanded={isOpen} onClick={() => setOpenReport(isOpen ? null : r.day)} className="flex w-full cursor-pointer items-center gap-3 py-3 text-left">
+                        <button type="button" aria-expanded={isOpen} onClick={() => setOpenReport(isOpen ? null : r.day)} className="flex w-full cursor-pointer items-center gap-3 py-3 text-start">
                           <Icon name="sun" size={17} className="flex-none text-muted" />
-                          <span className="flex-1 text-[14.5px] font-medium text-ink">{r.day}, 8:00 AM</span>
-                          <span className="hidden text-[13px] text-subtle sm:inline">
+                          <span className="flex-1 text-body font-medium text-ink">{r.day}, 8:00 AM</span>
+                          <span className="hidden text-label text-subtle sm:inline">
                             {r.enquiries} enquiries · {r.bookings} bookings
                           </span>
                           <Icon name="chevron-down" size={16} className={`flex-none text-subtle transition ${isOpen ? "rotate-180" : ""}`} />
                         </button>
                         {isOpen && (
-                          <div className="mb-3 ml-7 rounded-[12px] bg-panel p-3.5 text-[14px] leading-relaxed text-ink">
+                          <div className="mb-3 ms-7 rounded-lg bg-panel p-3.5 text-body leading-relaxed text-ink">
                             <strong className="font-semibold">Good morning. Here’s yesterday:</strong>
                             <span className="block">
                               {r.enquiries} enquiries, all replied · {r.bookings} new bookings · {r.missed} missed call{r.missed === 1 ? "" : "s"}
@@ -239,8 +239,8 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
                   <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
                     {sampleWeekWon.map((w) => (
                       <li key={w.label} className="flex items-baseline gap-3 py-3">
-                        <span className="w-9 flex-none text-right text-[24px] leading-none font-semibold text-ink">{w.value}</span>
-                        <span className="text-[14px] text-ink-soft">{w.label}</span>
+                        <span className="w-9 flex-none text-end text-h2 leading-none font-semibold text-ink">{w.value}</span>
+                        <span className="text-body text-ink-soft">{w.label}</span>
                       </li>
                     ))}
                   </ul>
@@ -257,17 +257,17 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
                   <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
                     {schedules.map((s) => (
                       <li key={s.id} className="flex items-center gap-3 py-3">
-                        <span className="flex h-8 w-8 flex-none items-center justify-center rounded-[9px] bg-panel text-muted">
+                        <span className="flex h-8 w-8 flex-none items-center justify-center rounded-md bg-panel text-muted">
                           <Icon name={s.via.includes("Email") ? "mail" : "message"} size={16} />
                         </span>
                         <span className="flex min-w-0 flex-1 flex-col">
-                          <span className="truncate text-[14px] font-medium text-ink">{s.report}</span>
-                          <span className="truncate text-[12.5px] text-subtle">
+                          <span className="truncate text-body font-medium text-ink">{s.report}</span>
+                          <span className="truncate text-caption text-subtle">
                             {s.every} · {s.time} · {s.via}
                           </span>
                         </span>
                         {s.fixed ? (
-                          <span className="text-[12px] text-subtle">Built in</span>
+                          <span className="text-caption text-subtle">Built in</span>
                         ) : (
                           <Menu
                             label={`Options for ${s.report}`}
@@ -310,9 +310,9 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
         }
       >
         <div className="flex flex-col gap-5">
-          <p className="m-0 text-[14px] text-subtle">A summary of the report, with a PDF attached, sent on a schedule. It uses the channel filter you choose at the time.</p>
+          <p className="m-0 text-body text-subtle">A summary of the report, with a PDF attached, sent on a schedule. It uses the channel filter you choose at the time.</p>
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Report</span>
+            <span className="text-body font-medium text-ink">Report</span>
             <Dropdown value={draft.report} onChange={(e) => setDraft({ ...draft, report: e.target.value })}>
               {tabs
                 .filter((t) => t.id !== "reports")
@@ -322,7 +322,7 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
             </Dropdown>
           </label>
           <div className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">How often</span>
+            <span className="text-body font-medium text-ink">How often</span>
             <SegmentedControl
               label="How often"
               size="sm"
@@ -336,7 +336,7 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
             />
           </div>
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Time</span>
+            <span className="text-body font-medium text-ink">Time</span>
             <Dropdown value={draft.time} onChange={(e) => setDraft({ ...draft, time: e.target.value })} className="w-40">
               {["07:00", "08:00", "09:00", "18:00", "21:00"].map((t) => {
                 const h = Number(t.slice(0, 2));
@@ -349,15 +349,15 @@ export function Reports({ onOpen }: { onOpen: (view: string) => void }) {
             </Dropdown>
           </label>
           <div className="flex flex-col gap-2.5">
-            <span className="text-[14px] font-medium text-ink">Send to</span>
-            <div className="flex items-center justify-between gap-3 text-[14px] text-ink">
+            <span className="text-body font-medium text-ink">Send to</span>
+            <div className="flex items-center justify-between gap-3 text-body text-ink">
               <span className="flex items-center gap-2.5">
                 <Icon name="message" size={16} className="text-muted" />
                 Your WhatsApp
               </span>
               <Switch checked={draft.whatsapp} onChange={(v) => setDraft({ ...draft, whatsapp: v })} label="Send on WhatsApp" />
             </div>
-            <div className="flex items-center justify-between gap-3 text-[14px] text-ink">
+            <div className="flex items-center justify-between gap-3 text-body text-ink">
               <span className="flex items-center gap-2.5">
                 <Icon name="mail" size={16} className="text-muted" />
                 owner@example.com

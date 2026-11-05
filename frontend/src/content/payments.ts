@@ -1,3 +1,5 @@
+import { relativeDay } from "@/lib/locale";
+import { regionalView } from "@/lib/regional";
 // Sample payment links (Pro). Days are counted back from today so the demo
 // never goes stale. Labelled "Sample data" wherever shown.
 // TODO(backend): load from Stripe Payment Links and webhooks.
@@ -27,7 +29,7 @@ export type PaymentLink = {
 /** Reminders go out on these days after the link is sent, until it's paid. */
 export const reminderDays = [3, 7, 14];
 
-export const samplePayments: PaymentLink[] = [
+export const samplePayments: PaymentLink[] = regionalView([
   { id: "p01", who: "R. Mehta", phone: "+91 98•• ••• 112", purpose: "Deposit", item: "First visit", amount: 200, sent: 0, dueIn: 3, status: "unpaid", viewed: true, location: "l1" },
   { id: "p02", who: "A. Khan", phone: "+91 90•• ••• 447", purpose: "Full payment", item: "Standard appointment", amount: 1200, sent: 0, dueIn: 3, status: "paid", paid: 0, method: "UPI", viewed: true, location: "l2" },
   { id: "p03", who: "L. Fernandes", phone: "+91 96•• ••• 058", purpose: "Deposit", item: "Extended session", amount: 500, sent: 4, dueIn: 3, status: "unpaid", viewed: true, location: "l1" },
@@ -40,7 +42,7 @@ export const samplePayments: PaymentLink[] = [
   { id: "p10", who: "P. Sharma", phone: "+91 98•• ••• 761", purpose: "Full payment", item: "Follow-up", amount: 300, sent: 6, dueIn: 3, status: "cancelled", viewed: false, location: "l1" },
   { id: "p11", who: "J. Thomas", phone: "+91 70•• ••• 529", purpose: "Full payment", item: "Package of 5", amount: 5000, sent: 11, dueIn: 7, status: "paid", paid: 3, method: "UPI", viewed: true, location: "l1" },
   { id: "p12", who: "D. Pillai", phone: "+91 95•• ••• 377", purpose: "Deposit", item: "Standard appointment", amount: 300, sent: 1, dueIn: 3, status: "unpaid", viewed: false, location: "l3" },
-];
+]);
 
 /** Unpaid and past its due date. */
 export const isOverdue = (p: PaymentLink) => p.status === "unpaid" && p.sent > p.dueIn;
@@ -48,7 +50,7 @@ export const isOverdue = (p: PaymentLink) => p.status === "unpaid" && p.sent > p
 /** Reminders already sent for an unpaid link. */
 export const remindersSent = (p: PaymentLink) => (p.status === "unpaid" ? reminderDays.filter((d) => d <= p.sent).length : reminderDays.filter((d) => p.paid !== undefined && d <= p.sent - p.paid).length);
 
-export const daysAgo = (d: number) => (d === 0 ? "Today" : d === 1 ? "Yesterday" : `${d} days ago`);
+export const daysAgo = (d: number) => relativeDay(d);
 
 /** A short, made-up link code, stable for an id. */
 export const linkUrl = (id: string) => `pay.vegam.app/${id.replace(/\D/g, "")}k${id.length * 7}x`;

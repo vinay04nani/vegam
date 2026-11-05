@@ -38,16 +38,16 @@ export function Activity({ agentId, update, initialOpen }: { agentId?: AgentId; 
 
   return (
     <>
-      <section aria-label="Activity" className="min-w-0 rounded-[18px] border border-line bg-white">
+      <section aria-label="Activity" className="min-w-0 rounded-xl border border-line bg-surface">
         <div className="flex flex-col gap-3 border-b border-line p-3 lg:flex-row lg:items-center">
           <label className="relative min-w-0 flex-1">
             <span className="sr-only">Search activity</span>
-            <Icon name="search" size={15} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-subtle" />
+            <Icon name="search" size={15} className="pointer-events-none absolute top-1/2 start-3 -translate-y-1/2 text-subtle" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search customer or what happened"
-              className="h-9 w-full rounded-[10px] border border-line-strong bg-white pr-3 pl-9 text-[14px] text-ink outline-none placeholder:text-subtle focus:border-ink"
+              className="h-9 w-full rounded-md border border-line-strong bg-surface pe-3 ps-9 text-body text-ink outline-none placeholder:text-subtle focus:border-ink"
             />
           </label>
           <div className="-mx-3 overflow-x-auto px-3">
@@ -62,16 +62,16 @@ export function Activity({ agentId, update, initialOpen }: { agentId?: AgentId; 
           <ul className="m-0 list-none p-0">
             {shown.map((x) => (
               <li key={x.id}>
-                <button type="button" onClick={() => setOpenId(x.id)} className="flex w-full cursor-pointer items-center gap-3 border-b border-line px-5 py-3.5 text-left last:border-b-0 hover:bg-[#FAFAFC]">
+                <button type="button" onClick={() => setOpenId(x.id)} className="flex w-full cursor-pointer items-center gap-3 border-b border-line px-5 py-3.5 text-start last:border-b-0 hover:bg-surface-muted">
                   {!agentId && <AgentTile agent={agentOf(x)} size={32} />}
                   <span className="flex min-w-0 flex-1 flex-col">
-                    <span className="truncate text-[14px] text-ink">{x.summary}</span>
-                    <span className="truncate text-[12.5px] text-subtle">
+                    <span className="truncate text-body text-ink">{x.summary}</span>
+                    <span className="truncate text-caption text-subtle">
                       {!agentId && `${agentOf(x).name} · `}
                       {x.who} · {x.channel} · {x.when}
                     </span>
                   </span>
-                  {ratings[x.id] && <span className="hidden text-[12px] text-subtle sm:inline">{ratings[x.id] === "good" ? "Rated good" : "Needs work"}</span>}
+                  {ratings[x.id] && <span className="hidden text-caption text-subtle sm:inline">{ratings[x.id] === "good" ? "Rated good" : "Needs work"}</span>}
                   <OutcomeDot outcome={x.outcome} />
                   <Icon name="chevron-right" size={16} className="flex-none text-faint" />
                 </button>
@@ -129,28 +129,28 @@ export function Activity({ agentId, update, initialOpen }: { agentId?: AgentId; 
             <div className="flex flex-col gap-1.5">
               <span className="flex items-center gap-2">
                 <OutcomeDot outcome={open.outcome} />
-                <span className="text-[13px] text-subtle">
+                <span className="text-label text-subtle">
                   {agentOf(open).name} · {open.when}
                 </span>
               </span>
-              <p className="m-0 text-[15px] font-medium text-ink">{open.summary}</p>
+              <p className="m-0 text-body font-medium text-ink">{open.summary}</p>
             </div>
             {open.lines.length > 0 ? (
-              <div className="flex flex-col gap-2.5 rounded-[14px] bg-panel p-3.5">
+              <div className="flex flex-col gap-2.5 rounded-lg bg-panel p-3.5">
                 {open.lines.map((l, i) => (
                   <div key={i} className={`flex max-w-[88%] flex-col gap-0.5 ${l.from === "ai" ? "self-end items-end" : "self-start"}`}>
-                    <span className="px-1 text-[11.5px] font-semibold text-subtle">{l.from === "ai" ? agentOf(open).name : l.from === "team" ? "Your team" : open.who}</span>
-                    <span className={`rounded-[14px] px-3.5 py-2 text-[14px] leading-snug ${l.from === "ai" ? "rounded-tr-[4px] bg-periwinkle-soft text-ink" : "rounded-tl-[4px] border border-line bg-white text-ink"}`}>{l.text}</span>
+                    <span className="px-1 text-caption font-semibold text-subtle">{l.from === "ai" ? agentOf(open).name : l.from === "team" ? "Your team" : open.who}</span>
+                    <span className={`rounded-lg px-3.5 py-2 text-body leading-snug ${l.from === "ai" ? "rounded-se-[4px] bg-periwinkle-soft text-ink" : "rounded-ss-[4px] border border-line bg-surface text-ink"}`}>{l.text}</span>
                   </div>
                 ))}
               </div>
             ) : (
-              <p className="m-0 text-[14px] text-subtle">No conversation for this one.</p>
+              <p className="m-0 text-body text-subtle">No conversation for this one.</p>
             )}
             {teach !== null && (
               <label className="flex flex-col gap-1.5">
-                <span className="text-[14px] font-semibold text-ink">What should it have said?</span>
-                <span className="text-[13px] text-subtle">Saved as an answer to “{firstAsk?.text ?? open.summary}”, for every agent.</span>
+                <span className="text-body font-semibold text-ink">What should it have said?</span>
+                <span className="text-label text-subtle">Saved as an answer to “{firstAsk?.text ?? open.summary}”, for every agent.</span>
                 <TextArea rows={3} value={teach} onChange={(e) => setTeach(e.target.value)} autoFocus />
               </label>
             )}

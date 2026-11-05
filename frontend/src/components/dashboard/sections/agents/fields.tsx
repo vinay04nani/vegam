@@ -17,16 +17,16 @@ import { Dropdown, Group, Input, Row, RowButton, Switch, TextArea } from "../set
 type Props = { sections: SetupSection[]; values: Record<string, FieldValue>; changed?: string[]; onChange: (key: string, v: FieldValue) => void; plan: PlanId; onOpen: (view: string) => void };
 
 const chip = (on: boolean) =>
-  `inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-full border px-3 text-[13.5px] font-medium transition ${on ? "border-ink bg-ink text-white" : "border-line-strong bg-white text-ink hover:border-ink/40"}`;
+  `inline-flex min-h-8 cursor-pointer items-center gap-1.5 rounded-full border px-3 text-label font-medium transition ${on ? "border-ink bg-brand-fill text-white" : "border-line-strong bg-surface text-ink hover:border-ink/40"}`;
 
 function Label({ f, changed, plan }: { f: SetupField; changed: boolean; plan: PlanId }) {
   const above = f.plan && planRank[plan] < planRank[f.plan];
   return (
     <span className="flex flex-wrap items-center gap-2">
       {f.label}
-      {above && <span className="rounded-full border border-line-strong px-1.5 text-[11px] leading-[18px] font-semibold text-subtle">{plans.find((p) => p.id === f.plan)?.name}</span>}
+      {above && <span className="rounded-full border border-line-strong px-1.5 text-caption leading-[18px] font-semibold text-subtle">{plans.find((p) => p.id === f.plan)?.name}</span>}
       {changed && (
-        <span className="inline-flex items-center gap-1 text-[12px] font-medium text-indigo">
+        <span className="inline-flex items-center gap-1 text-caption font-medium text-indigo">
           <span className="h-1.5 w-1.5 rounded-full bg-indigo" />
           Changed
         </span>
@@ -47,7 +47,7 @@ function ListEditor({ value, onChange, placeholder, label }: { value: string[]; 
       {value.length > 0 && (
         <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
           {value.map((x) => (
-            <li key={x} className="inline-flex items-center gap-1 rounded-full bg-panel py-1 pr-1 pl-3 text-[13.5px] text-ink">
+            <li key={x} className="inline-flex items-center gap-1 rounded-full bg-panel py-1 pe-1 ps-3 text-label text-ink">
               {x}
               <button type="button" onClick={() => onChange(value.filter((y) => y !== x))} aria-label={`Remove ${x}`} className="flex h-6 w-6 cursor-pointer items-center justify-center rounded-full text-muted hover:bg-line hover:text-ink">
                 <Icon name="close" size={13} />
@@ -93,15 +93,15 @@ function SequenceEditor({ value, onChange, plan, label }: { value: Step[]; onCha
         {value.map((st, i) => {
           const over = i >= max;
           return (
-            <li key={i} className={`flex flex-col gap-2 rounded-[12px] border p-3 ${over ? "border-dashed border-line-strong bg-panel/60" : "border-line"}`}>
-              <span className="flex flex-wrap items-center gap-2 text-[13.5px] text-ink">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-ink text-[12px] font-bold text-white">{i + 1}</span>
+            <li key={i} className={`flex flex-col gap-2 rounded-lg border p-3 ${over ? "border-dashed border-line-strong bg-panel/60" : "border-line"}`}>
+              <span className="flex flex-wrap items-center gap-2 text-label text-ink">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-fill text-caption font-bold text-white">{i + 1}</span>
                 Send
                 <select
                   aria-label={`${label}, step ${i + 1}: when`}
                   value={st.after}
                   onChange={(e) => onChange(value.map((x, j) => (j === i ? { ...x, after: e.target.value } : x)))}
-                  className="h-8 cursor-pointer rounded-[8px] border border-line-strong bg-white px-2 text-[13.5px] font-semibold"
+                  className="h-8 cursor-pointer rounded-md border border-line-strong bg-surface px-2 text-label font-semibold"
                 >
                   {delays.map((d) => (
                     <option key={d.v} value={d.v}>
@@ -110,13 +110,13 @@ function SequenceEditor({ value, onChange, plan, label }: { value: Step[]; onCha
                   ))}
                 </select>
                 {i === 0 ? "after they go quiet" : "after the last one"}
-                {over && <span className="text-[12px] text-subtle">· needs Growth or Pro</span>}
+                {over && <span className="text-caption text-subtle">· needs Growth or Pro</span>}
                 {value.length > 1 && (
                   <button
                     type="button"
                     onClick={() => onChange(value.filter((_, j) => j !== i))}
                     aria-label={`${label}: remove step ${i + 1}`}
-                    className="ml-auto cursor-pointer rounded-[8px] p-1 text-muted hover:bg-panel hover:text-danger"
+                    className="ms-auto cursor-pointer rounded-md p-1 text-muted hover:bg-panel hover:text-danger"
                   >
                     <Icon name="trash" size={15} />
                   </button>
@@ -133,7 +133,7 @@ function SequenceEditor({ value, onChange, plan, label }: { value: Step[]; onCha
             Add a step
           </RowButton>
         )}
-        <span className="text-[12.5px] text-subtle">
+        <span className="text-caption text-subtle">
           {"{name}"} becomes their first name. Your plan sends up to {max} step{max === 1 ? "" : "s"}.
         </span>
       </span>
@@ -151,10 +151,10 @@ function PermissionsEditor({ value, onChange }: { value: Permission[]; onChange:
   const [number, setNumber] = useState("");
   return (
     <div className="flex flex-col gap-2.5">
-      <ul className="m-0 flex list-none flex-col divide-y divide-line rounded-[12px] border border-line p-0">
+      <ul className="m-0 flex list-none flex-col divide-y divide-line rounded-lg border border-line p-0">
         {value.map((p, i) => (
           <li key={p.number} className="flex flex-wrap items-center gap-3 px-3 py-2.5">
-            <span className="min-w-0 flex-1 text-[14px] text-ink">{p.number}</span>
+            <span className="min-w-0 flex-1 text-body text-ink">{p.number}</span>
             <Dropdown aria-label={`What ${p.number} can do`} value={p.level} onChange={(e) => onChange(value.map((x, j) => (j === i ? { ...x, level: e.target.value as Permission["level"] } : x)))} className="w-64">
               {levels.map((l) => (
                 <option key={l.v} value={l.v}>
@@ -163,7 +163,7 @@ function PermissionsEditor({ value, onChange }: { value: Permission[]; onChange:
               ))}
             </Dropdown>
             {value.length > 1 && (
-              <button type="button" onClick={() => onChange(value.filter((_, j) => j !== i))} aria-label={`Remove ${p.number}`} className="cursor-pointer rounded-[8px] p-1 text-muted hover:bg-panel hover:text-danger">
+              <button type="button" onClick={() => onChange(value.filter((_, j) => j !== i))} aria-label={`Remove ${p.number}`} className="cursor-pointer rounded-md p-1 text-muted hover:bg-panel hover:text-danger">
                 <Icon name="trash" size={15} />
               </button>
             )}
@@ -194,10 +194,10 @@ function VoicePicker({ value, onChange }: { value: string; onChange: (v: string)
       {sampleVoices.map((v) => {
         const on = value === v.id;
         return (
-          <div key={v.id} className={`flex items-center gap-3 rounded-[12px] border px-3 py-2.5 transition ${on ? "border-ink shadow-[0_0_0_1px_#1E1F2B]" : "border-line hover:border-line-strong"}`}>
-            <button type="button" role="radio" aria-checked={on} onClick={() => onChange(v.id)} className="flex min-w-0 flex-1 cursor-pointer flex-col text-left">
-              <span className="text-[14px] font-semibold text-ink">{v.name}</span>
-              <span className="truncate text-[12.5px] text-subtle">{v.note}</span>
+          <div key={v.id} className={`flex items-center gap-3 rounded-lg border px-3 py-2.5 transition ${on ? "border-ink shadow-1" : "border-line hover:border-line-strong"}`}>
+            <button type="button" role="radio" aria-checked={on} onClick={() => onChange(v.id)} className="flex min-w-0 flex-1 cursor-pointer flex-col text-start">
+              <span className="text-body font-semibold text-ink">{v.name}</span>
+              <span className="truncate text-caption text-subtle">{v.note}</span>
             </button>
             <button
               type="button"
@@ -220,7 +220,7 @@ function PerLocation({ value, onChange, placeholder, label }: { value: Record<st
     <div className="flex flex-col gap-2">
       {locations.map((l) => (
         <label key={l.id} className="grid grid-cols-[minmax(0,1fr)] items-center gap-1.5 sm:grid-cols-[120px_minmax(0,1fr)] sm:gap-3">
-          <span className="text-[13.5px] text-ink-soft">{l.name}</span>
+          <span className="text-label text-ink-soft">{l.name}</span>
           <Input aria-label={`${label}: ${l.name}`} value={value[l.id] ?? ""} onChange={(e) => onChange({ ...value, [l.id]: e.target.value })} placeholder={placeholder} />
         </label>
       ))}
@@ -258,7 +258,7 @@ export function FieldRow({ f, value, changed, onChange, plan, onOpen }: { f: Set
     case "toggle":
       return (
         <Row label={label} description={f.description}>
-          {f.locked && <span className="text-[12.5px] text-subtle">Always on</span>}
+          {f.locked && <span className="text-caption text-subtle">Always on</span>}
           <Switch checked={value as boolean} onChange={onChange} label={f.label} disabled={f.locked} />
         </Row>
       );

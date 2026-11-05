@@ -1,5 +1,7 @@
 "use client";
 
+import { currencySymbol, formatFromInr, getLocaleState } from "@/lib/locale";
+
 import { useEffect, useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { linkUrl, reminderDays, type PaymentPurpose } from "@/content/payments";
@@ -37,7 +39,7 @@ export function PaymentLinkModal({ open, onClose, initial, business = "Nila & Co
     paymentStore.add({
       id,
       who: d.who.trim(),
-      phone: d.phone || "+91 •• ••• •••",
+      phone: d.phone || "Phone number",
       purpose: d.purpose,
       item: d.item,
       amount,
@@ -47,7 +49,7 @@ export function PaymentLinkModal({ open, onClose, initial, business = "Nila & Co
       viewed: false,
       location: branch === "all" ? locations[0].id : branch,
     });
-    toast(`Payment link for ₹${amount.toLocaleString("en-IN")} sent to ${d.who.trim()}`);
+    toast(`Payment link for ${formatFromInr(amount)} sent to ${d.who.trim()}`);
     onClose();
   };
 
@@ -72,21 +74,21 @@ export function PaymentLinkModal({ open, onClose, initial, business = "Nila & Co
         <div className="flex flex-col gap-4">
           <div className="grid grid-cols-2 gap-3">
             <label className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">Customer</span>
+              <span className="text-body font-medium text-ink">Customer</span>
               <Input value={d.who} onChange={(e) => setD({ ...d, who: e.target.value })} placeholder="Name" autoFocus={!initial?.who} />
             </label>
             <label className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">WhatsApp number</span>
+              <span className="text-body font-medium text-ink">WhatsApp number</span>
               <Input type="tel" value={d.phone} onChange={(e) => setD({ ...d, phone: e.target.value })} placeholder="+91" />
             </label>
           </div>
           <div className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">What it’s for</span>
+            <span className="text-body font-medium text-ink">What it’s for</span>
             <SegmentedControl label="What it’s for" size="sm" value={d.purpose} onChange={(v) => setD({ ...d, purpose: v })} options={(["Deposit", "Full payment", "Balance", "Invoice"] as const).map((p) => ({ id: p, label: p }))} />
           </div>
           <div className="grid grid-cols-[minmax(0,1fr)_140px] gap-3">
             <label className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">Service</span>
+              <span className="text-body font-medium text-ink">Service</span>
               <Input list="payment-items" value={d.item} onChange={(e) => setD({ ...d, item: e.target.value })} />
               <datalist id="payment-items">
                 {items.map((i) => (
@@ -95,12 +97,12 @@ export function PaymentLinkModal({ open, onClose, initial, business = "Nila & Co
               </datalist>
             </label>
             <label className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">Amount (₹)</span>
+              <span className="text-body font-medium text-ink">Amount ({currencySymbol(getLocaleState().currency)})</span>
               <Input inputMode="numeric" value={d.amount} onChange={(e) => setD({ ...d, amount: e.target.value.replace(/[^\d]/g, "") })} placeholder="0" autoFocus={!!initial?.who} />
             </label>
           </div>
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Due</span>
+            <span className="text-body font-medium text-ink">Due</span>
             <Dropdown value={d.dueIn} onChange={(e) => setD({ ...d, dueIn: e.target.value })} className="w-48">
               <option value="1">In 1 day</option>
               <option value="3">In 3 days</option>
@@ -108,19 +110,19 @@ export function PaymentLinkModal({ open, onClose, initial, business = "Nila & Co
               <option value="14">In 14 days</option>
             </Dropdown>
           </label>
-          <div className="flex items-start justify-between gap-4 rounded-[12px] bg-panel px-3.5 py-3">
+          <div className="flex items-start justify-between gap-4 rounded-lg bg-panel px-3.5 py-3">
             <span className="flex flex-col">
-              <span className="text-[14px] font-medium text-ink">Remind until paid</span>
-              <span className="text-[13px] text-subtle">A polite WhatsApp on day {reminderDays.join(", ").replace(/, (\d+)$/, " and $1")}. Stops as soon as they pay.</span>
+              <span className="text-body font-medium text-ink">Remind until paid</span>
+              <span className="text-label text-subtle">A polite WhatsApp on day {reminderDays.join(", ").replace(/, (\d+)$/, " and $1")}. Stops as soon as they pay.</span>
             </span>
             <Switch checked={d.remind} onChange={(v) => setD({ ...d, remind: v })} label="Remind until paid" />
           </div>
         </div>
 
         <div className="flex flex-col gap-2">
-          <span className="text-[13px] font-medium text-subtle">What they’ll get</span>
-          <div className="rounded-[14px] bg-[#E9E1D8] p-3">
-            <div className="rounded-[10px] rounded-tl-none bg-white p-3 text-[13.5px] leading-[1.45] text-[#111B21] shadow-[0_1px_1px_rgb(0_0_0/0.08)]">
+          <span className="text-label font-medium text-subtle">What they’ll get</span>
+          <div className="light-surface rounded-lg bg-[#E9E1D8] p-3">
+            <div className="rounded-md rounded-ss-none bg-surface p-3 text-label leading-[1.45] text-ink shadow-1">
               Hi{" "}
               {d.who
                 .trim()
@@ -130,12 +132,12 @@ export function PaymentLinkModal({ open, onClose, initial, business = "Nila & Co
               <span className="mt-2 block font-semibold">
                 {d.purpose} · {d.item || "Your visit"}
               </span>
-              <span className="block text-[17px] font-bold">₹{(amount || 0).toLocaleString("en-IN")}</span>
-              <span className="mt-2 flex items-center gap-1.5 rounded-[8px] bg-[#F0F2F5] px-2.5 py-2 text-[12.5px] text-[#027EB5]">
+              <span className="block text-body-lg font-bold">{formatFromInr(amount || 0)}</span>
+              <span className="mt-2 flex items-center gap-1.5 rounded-md bg-info-subtle px-2.5 py-2 text-caption text-info">
                 <Icon name="link" size={13} />
                 {linkUrl(id)}
               </span>
-              <span className="mt-2 block text-[12.5px] text-[#667781]">Pay by UPI or card. Secured by Stripe.</span>
+              <span className="mt-2 block text-caption text-text-3">Pay by card, wallet or a local method. Secured by Stripe.</span>
             </div>
           </div>
         </div>

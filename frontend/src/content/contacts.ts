@@ -1,3 +1,4 @@
+import { regionalView } from "@/lib/regional";
 // Sample customers for the Contacts page. Names and numbers are made up and
 // masked; every screen that shows them carries a "Sample data" tag.
 // TODO(backend): load from the business's customer records.
@@ -37,7 +38,7 @@ export const optInLabel: Record<OptIn, string> = { "opted-in": "Opted in", "opte
 
 export const sampleTags = ["Regular", "New", "VIP", "Family", "Corporate", "Needs reminder", "Lapsed"];
 
-export const sampleContacts: Contact[] = [
+export const sampleContacts: Contact[] = regionalView([
   {
     id: "c1",
     name: "M. D’Souza",
@@ -240,4 +241,4 @@ export const sampleContacts: Contact[] = [
     firstSeen: "This week",
     timeline: [{ at: "2 days ago", kind: "call", text: "Called after hours; the AI took a message for a callback" }],
   },
-];
+]);

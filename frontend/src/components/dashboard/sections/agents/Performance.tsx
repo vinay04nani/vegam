@@ -1,5 +1,7 @@
 "use client";
 
+import { formatNumber } from "@/lib/locale";
+
 import type { Agent } from "@/content/agents";
 import { Button, Progress } from "../../kit";
 import { BarList, LineChart, SplitBar, slots } from "../reports/charts";
@@ -25,14 +27,14 @@ export function Performance({ agent, onOpen }: { agent: Agent; onOpen: (view: st
           <SplitBar parts={agent.outcomes.map((o, i) => ({ label: o.label, share: o.share, color: slots[i % slots.length] }))} />
           {agent.usage && (
             <div className="mt-auto flex flex-col gap-1.5 border-t border-line pt-4">
-              <span className="flex justify-between gap-3 text-[13px]">
+              <span className="flex justify-between gap-3 text-label">
                 <span className="text-ink-soft">{agent.usage.label} this month</span>
                 <span className="text-subtle tabular-nums">
-                  {agent.usage.used.toLocaleString("en-IN")} of {agent.usage.max.toLocaleString("en-IN")}
+                  {formatNumber(agent.usage.used)} of {formatNumber(agent.usage.max)}
                 </span>
               </span>
               <Progress value={agent.usage.used} max={agent.usage.max} label={agent.usage.label} />
-              <span className="text-[12px] text-subtle">Shared by all agents on your plan.</span>
+              <span className="text-caption text-subtle">Shared by all agents on your plan.</span>
             </div>
           )}
         </Panel>

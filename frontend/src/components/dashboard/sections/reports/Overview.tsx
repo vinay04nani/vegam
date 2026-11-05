@@ -1,5 +1,7 @@
 "use client";
 
+import { formatFromInr, formatNumber } from "@/lib/locale";
+
 import { useState, type ReactNode } from "react";
 import { busyGrid, channelGroups, hours, topQuestions, weekdayNames } from "@/content/reports";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -15,9 +17,9 @@ import { DataTable, Delta, KpiRow, Panel, ShareBar, pct, rupees, rupeesShort, se
 type Metric = "enquiries" | "bookings" | "value" | "conversion" | "reply";
 
 const metrics: Record<Metric, { label: string; format: (v: number) => string; axis?: (v: number) => string; better?: "down" }> = {
-  enquiries: { label: "Enquiries", format: (v) => v.toLocaleString("en-IN") },
-  bookings: { label: "Bookings", format: (v) => v.toLocaleString("en-IN") },
-  value: { label: "Booking value", format: rupees, axis: (v) => (v >= 1e5 ? `₹${v / 1e5}L` : v >= 1e3 ? `₹${v / 1e3}K` : `₹${v}`) },
+  enquiries: { label: "Enquiries", format: (v) => formatNumber(v) },
+  bookings: { label: "Bookings", format: (v) => formatNumber(v) },
+  value: { label: "Booking value", format: rupees, axis: (v) => formatFromInr(v, undefined, true) },
   conversion: { label: "Conversion rate", format: (v) => `${v.toFixed(1)}%`, axis: (v) => `${v}%` },
   reply: { label: "First reply", format: (v) => seconds(v), axis: (v) => `${v}s`, better: "down" },
 };
@@ -31,8 +33,8 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
   const spark = (k: Metric) => m.buckets.map((b) => valueOf(k, b));
 
   const kpis: Kpi[] = [
-    { id: "enquiries", label: "Enquiries", value: cur.enquiries.toLocaleString("en-IN"), delta: change(cur.enquiries, prev.enquiries), trend: spark("enquiries"), hint: "all channels" },
-    { id: "bookings", label: "Bookings", value: cur.bookings.toLocaleString("en-IN"), delta: change(cur.bookings, prev.bookings), trend: spark("bookings"), hint: "confirmed" },
+    { id: "enquiries", label: "Enquiries", value: formatNumber(cur.enquiries), delta: change(cur.enquiries, prev.enquiries), trend: spark("enquiries"), hint: "all channels" },
+    { id: "bookings", label: "Bookings", value: formatNumber(cur.bookings), delta: change(cur.bookings, prev.bookings), trend: spark("bookings"), hint: "confirmed" },
     { id: "value", label: "Booking value", value: rupeesShort(cur.value), delta: change(cur.value, prev.value), trend: spark("value"), hint: "at your prices" },
     { id: "conversion", label: "Conversion rate", value: pct(cur.conversion, 1), delta: change(cur.conversion, prev.conversion), trend: spark("conversion"), hint: "enquiry to booking" },
     { id: "reply", label: "Average first reply", value: seconds(cur.reply), delta: change(cur.reply, prev.reply), better: "down", trend: spark("reply"), hint: "day and night" },
@@ -64,7 +66,7 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
   const highlights: { icon: IconName; tone: string; body: ReactNode; action?: { label: string; view: string } }[] = [
     {
       icon: "chart",
-      tone: dBook >= 0 ? "bg-[#E8F3EA] text-success" : "bg-[#FDECEC] text-danger",
+      tone: dBook >= 0 ? "bg-success-subtle text-success" : "bg-danger-subtle text-danger",
       body: (
         <>
           Bookings are <strong className="font-semibold text-ink">{dBook >= 0 ? "up" : "down"} {pct(Math.abs(dBook))}</strong> on the previous period, and {pct(cur.conversion)} of enquiries became a booking.
@@ -73,7 +75,7 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
     },
     {
       icon: "message",
-      tone: "bg-[#EAF2FC] text-[#1d5fae]",
+      tone: "bg-info-subtle text-info",
       body: (
         <>
           <strong className="font-semibold text-ink">{best.label}</strong> converts best: {pct(best.rate)} of its enquiries became bookings.
@@ -82,7 +84,7 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
     },
     {
       icon: "clock",
-      tone: "bg-[#FFF3E8] text-[#B4500A]",
+      tone: "bg-signal/15 text-signal-ink",
       body: (
         <>
           <strong className="font-semibold text-ink">{weekdayNames[busiestDay]}s</strong> are busiest ({pct(dayTotals[busiestDay] / avgDay - 1)} above an average day), peaking around {peak > 12 ? `${peak - 12} PM` : `${peak} AM`}.
@@ -91,16 +93,16 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
     },
     {
       icon: "sun",
-      tone: "bg-[#F1EEFB] text-[#5B4BC4]",
+      tone: "bg-brand-subtle text-brand",
       body: (
         <>
-          <strong className="font-semibold text-ink">{Math.round(cur.enquiries * 0.31).toLocaleString("en-IN")}</strong> enquiries came after closing time. The AI answered every one.
+          <strong className="font-semibold text-ink">{formatNumber(Math.round(cur.enquiries * 0.31))}</strong> enquiries came after closing time. The AI answered every one.
         </>
       ),
     },
     {
       icon: "sparkle",
-      tone: "bg-[#FDF3DC] text-[#8A5A00]",
+      tone: "bg-warning-subtle text-signal-ink",
       body: (
         <>
           <strong className="font-semibold text-ink">{unanswered} questions</strong> the AI couldn’t answer this period.
@@ -119,7 +121,7 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
           title={def.label}
           description={
             <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <span className="text-[22px] font-semibold tracking-[-0.01em] text-ink">{def.format(curTotal)}</span>
+              <span className="text-h2 font-semibold tracking-[-0.01em] text-ink">{def.format(curTotal)}</span>
               {compare && <Delta value={change(curTotal, prevTotal)} better={def.better} />}
               <span>
                 {m.grain.toLowerCase()} · {metric === "conversion" || metric === "reply" ? "average" : "total"} for the period
@@ -158,13 +160,13 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
           <ul className="m-0 flex list-none flex-col gap-3.5 p-0">
             {highlights.map((h, i) => (
               <li key={i} className="flex gap-3">
-                <span className={`flex h-8 w-8 flex-none items-center justify-center rounded-[9px] ${h.tone}`}>
+                <span className={`flex h-8 w-8 flex-none items-center justify-center rounded-md ${h.tone}`}>
                   <Icon name={h.icon} size={16} />
                 </span>
-                <span className="min-w-0 text-[13.5px] leading-[1.45] text-ink-soft">
+                <span className="min-w-0 text-label leading-[1.45] text-ink-soft">
                   {h.body}
                   {h.action && (
-                    <button type="button" onClick={() => onOpen(h.action!.view)} className="ml-1 cursor-pointer font-semibold text-ink underline decoration-line-strong underline-offset-2 hover:decoration-ink">
+                    <button type="button" onClick={() => onOpen(h.action!.view)} className="ms-1 cursor-pointer font-semibold text-ink underline decoration-line-strong underline-offset-2 hover:decoration-ink">
                       {h.action.label}
                     </button>
                   )}
@@ -240,14 +242,14 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
               value: (r) => r.label,
               render: (r) => (
                 <span className="flex items-center gap-2.5 font-medium whitespace-nowrap text-ink">
-                  <span aria-hidden="true" className="h-2.5 w-2.5 flex-none rounded-[3px]" style={{ background: slots[r.j] }} />
+                  <span aria-hidden="true" className="h-2.5 w-2.5 flex-none rounded-sm" style={{ background: slots[r.j] }} />
                   {r.label}
                 </span>
               ),
             },
-            { id: "enquiries", label: "Enquiries", align: "right", value: (r) => r.enquiries, render: (r) => r.enquiries.toLocaleString("en-IN") },
+            { id: "enquiries", label: "Enquiries", align: "right", value: (r) => r.enquiries, render: (r) => formatNumber(r.enquiries) },
             { id: "share", label: "Share", align: "right", value: (r) => r.share, render: (r) => <ShareBar share={r.share} /> },
-            { id: "bookings", label: "Bookings", align: "right", value: (r) => r.bookings, render: (r) => r.bookings.toLocaleString("en-IN") },
+            { id: "bookings", label: "Bookings", align: "right", value: (r) => r.bookings, render: (r) => formatNumber(r.bookings) },
             { id: "conversion", label: "Conversion", align: "right", value: (r) => r.conversion, render: (r) => pct(r.conversion, 1) },
             { id: "value", label: "Booking value", align: "right", value: (r) => r.value, render: (r) => rupees(r.value) },
             ...(compare ? [{ id: "delta", label: "Bookings change", align: "right" as const, value: (r: { delta: number }) => r.delta, render: (r: { delta: number }) => <Delta value={r.delta} size="sm" /> }] : []),
@@ -271,14 +273,14 @@ export function Overview({ m, compare, onOpen }: { m: Model; compare: boolean; o
                 label: "Location",
                 value: (l) => l.name,
                 render: (l) => (
-                  <button type="button" onClick={() => setBranch(l.id)} className="cursor-pointer text-left font-medium text-ink hover:underline">
+                  <button type="button" onClick={() => setBranch(l.id)} className="cursor-pointer text-start font-medium text-ink hover:underline">
                     {l.name}
                   </button>
                 ),
               },
-              { id: "enquiries", label: "Enquiries", align: "right", value: (l) => l.enquiries, render: (l) => l.enquiries.toLocaleString("en-IN") },
+              { id: "enquiries", label: "Enquiries", align: "right", value: (l) => l.enquiries, render: (l) => formatNumber(l.enquiries) },
               { id: "share", label: "Share", align: "right", value: (l) => l.share, render: (l) => <ShareBar share={l.share} /> },
-              { id: "bookings", label: "Bookings", align: "right", value: (l) => l.bookings, render: (l) => l.bookings.toLocaleString("en-IN") },
+              { id: "bookings", label: "Bookings", align: "right", value: (l) => l.bookings, render: (l) => formatNumber(l.bookings) },
               { id: "conv", label: "Conversion", align: "right", value: (l) => l.conv, render: (l) => pct(l.conv, 1) },
               { id: "value", label: "Booking value", align: "right", value: (l) => l.value, render: (l) => rupees(l.value) },
               { id: "rating", label: "Google rating", align: "right", value: (l) => l.rating, render: (l) => (l.rating ? `${l.rating.toFixed(1)} ★` : "—") },

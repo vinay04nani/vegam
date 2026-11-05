@@ -21,15 +21,15 @@ export function ContactFields() {
       <Group title="Tags" description="Group contacts for campaigns and reports.">
         <div className="flex flex-wrap items-center gap-1.5 py-4">
           {tags.map((t) => (
-            <span key={t} className="inline-flex h-7 items-center gap-1 rounded-full bg-panel pr-1 pl-3 text-[13px] text-ink">
+            <span key={t} className="inline-flex h-7 items-center gap-1 rounded-full bg-panel pe-1 ps-3 text-label text-ink">
               {t}
-              <button type="button" aria-label={`Delete tag ${t}`} onClick={() => setTags((ts) => ts.filter((x) => x !== t))} className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full text-muted hover:bg-white hover:text-ink">
+              <button type="button" aria-label={`Delete tag ${t}`} onClick={() => setTags((ts) => ts.filter((x) => x !== t))} className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-full text-muted hover:bg-surface hover:text-ink">
                 <Icon name="close" size={11} />
               </button>
             </span>
           ))}
           <form onSubmit={(e) => { e.preventDefault(); if (tag.trim() && !tags.includes(tag.trim())) setTags([...tags, tag.trim()]); setTag(""); }} className="flex items-center">
-            <Input aria-label="New tag" value={tag} onChange={(e) => setTag(e.target.value)} placeholder="New tag" className="h-7 w-32 rounded-full text-[13px]" />
+            <Input aria-label="New tag" value={tag} onChange={(e) => setTag(e.target.value)} placeholder="New tag" className="h-7 w-32 rounded-full text-label" />
           </form>
         </div>
       </Group>
@@ -43,7 +43,7 @@ export function ContactFields() {
               <option>Date</option>
               <option>Yes / no</option>
             </Dropdown>
-            <button type="button" aria-label={`Remove ${f.name || "field"}`} onClick={() => setFields(fields.filter((_, j) => j !== i))} className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-danger">
+            <button type="button" aria-label={`Remove ${f.name || "field"}`} onClick={() => setFields(fields.filter((_, j) => j !== i))} className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-md text-muted hover:bg-panel hover:text-danger">
               <Icon name="trash" size={15} />
             </button>
           </div>

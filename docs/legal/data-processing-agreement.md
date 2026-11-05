@@ -78,7 +78,7 @@ Vegam will:
 
 ## 8. Data Principal requests
 
-If Vegam receives a request directly from a Data Principal about Customer Personal Data, it will forward it to Customer without undue delay and will not respond except on Customer's instructions or as required by law. The Service provides tools for Customer to export, correct and delete a contact's data.
+If Vegam receives a request directly from a Data Principal about Customer Personal Data, it will forward it to Customer without undue delay and will not respond except on Customer's instructions or as required by law. Tools for Customer to export, correct and delete a contact's data are planned and are not built yet.
 
 ## 9. Audits
 
@@ -86,7 +86,7 @@ On reasonable written request, no more than once a year (or after a Personal Dat
 
 ## 10. Return and deletion
 
-On termination, Customer may export Customer Personal Data for [30] days. After that, Vegam will delete it, including from backups within [90] days, unless law requires retention, in which case Vegam will continue to protect it and process it only for that purpose. On request, Vegam will confirm deletion in writing.
+Export and deletion are planned and are not available yet. The intended rule, once they exist: on termination, Customer may export Customer Personal Data for [30] days. After that, Vegam deletes it, including from backups within [90] days, unless law requires retention, in which case Vegam continues to protect it and processes it only for that purpose. On request, Vegam confirms deletion in writing.
 
 ## 11. Liability and precedence
 
@@ -94,8 +94,10 @@ Each party's liability under this DPA is subject to the limitations in the Agree
 
 ## Annex 1: Security measures
 
-- Encryption in transit (TLS 1.2+) and at rest.
-- Logical separation of each customer's data, enforced by row-level security on every table.
+These are the planned measures. They are not implemented. The public site is a static preview and does not store customer data. GitHub Pages, where the site is hosted, does not send the nginx security headers in this repository.
+
+- Encryption in transit (TLS 1.2+) and at rest, planned.
+- Logical separation of each customer's data, enforced by row-level security on every table, planned.
 - Role-based access for Users (owner, manager, staff); least-privilege access for Vegam personnel, with multi-factor authentication.
 - Secrets and channel credentials stored in a secret store, never in plaintext.
 - Verification of webhook signatures from messaging and telephony providers.

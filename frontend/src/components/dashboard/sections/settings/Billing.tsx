@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { overage, planLimits, plans } from "@/content/pricing";
+import { convertInr, sampleTaxRate, taxNote } from "@/lib/locale";
 import { currencyFor, formatMoney, type OnboardingState } from "@/lib/onboarding";
 import { downloadPdf } from "@/lib/pdf";
 import { Badge, Progress, useToast } from "../../kit";
@@ -16,10 +17,11 @@ type Props = { state: OnboardingState; onOpen: (view: string) => void };
 export function Billing({ state, onOpen }: Props) {
   const toast = useToast();
   const currency = currencyFor(state);
-  const india = currency === "INR";
+  const rate = sampleTaxRate(state.business.country);
+  const note = taxNote(state.business.country);
   const plan = plans.find((p) => p.id === (state.plan ?? "growth"))!;
-  const base = plan.price?.[currency].monthly ?? (india ? 4999 : 99);
-  const tax = india ? Math.round(base * 0.18) : 0;
+  const base = plan.price?.[currency].monthly ?? 99;
+  const tax = Math.round(base * rate);
   const [method, setMethod] = useState<string | null>("Visa •••• 4242 · expires 08/29");
   const [alerts, setAlerts] = useState(true);
   const limits = planLimits[plan.id];
@@ -31,20 +33,20 @@ export function Billing({ state, onOpen }: Props) {
   const near = usage.find((u) => u.used / u.max >= 0.8);
 
   const invoices = [
-    { id: "VG-2026-0003", date: "1 Oct 2026", period: "Oct 2026", amount: base + tax, status: "Paid" as const, wa: india ? 412 : 9 },
-    { id: "VG-2026-0002", date: "1 Sep 2026", period: "Sep 2026", amount: base + tax, status: "Paid" as const, wa: india ? 365 : 8 },
+    { id: "VG-2026-0003", date: "1 Oct 2026", period: "Oct 2026", amount: base + tax, status: "Paid" as const, wa: convertInr(412, currency) },
+    { id: "VG-2026-0002", date: "1 Sep 2026", period: "Sep 2026", amount: base + tax, status: "Paid" as const, wa: convertInr(365, currency) },
     { id: "VG-2026-0001", date: "1 Aug 2026", period: "Aug 2026 · pilot", amount: 0, status: "Free pilot" as const, wa: 0 },
   ];
 
   const pdf = (inv: (typeof invoices)[number]) =>
     downloadPdf(`${inv.id}.pdf`, [
       { text: "VEGAM", size: 20, bold: true },
-      { text: india ? "Tax invoice (sample)" : "Invoice (sample)", size: 13, gap: 26 },
+      { text: rate ? "Tax invoice (sample)" : "Invoice (sample)", size: 13, gap: 26 },
       { text: `Invoice ${inv.id}    Date ${inv.date}`, gap: 30 },
       { text: `Billed to: ${state.business.name || "Nila & Co"}` },
       { text: `${plan.name} plan - ${inv.period}`, gap: 34 },
       { text: `Plan: ${formatMoney(inv.amount ? base : 0, currency)}` },
-      ...(india ? [{ text: `GST 18%: ${formatMoney(inv.amount ? tax : 0, currency)}` }] : []),
+      ...(rate ? [{ text: `${note} ${Math.round(rate * 100)}%: ${formatMoney(inv.amount ? tax : 0, currency)}` }] : []),
       { text: `WhatsApp fees passed on at cost: ${formatMoney(inv.wa, currency)}` },
       { text: `Total: ${formatMoney(inv.amount + inv.wa, currency)}`, bold: true, size: 13, gap: 28 },
       { text: `Status: ${inv.status}`, gap: 24 },
@@ -54,13 +56,13 @@ export function Billing({ state, onOpen }: Props) {
   return (
     <>
       <Group title="Plan">
-        <Row label={`${plan.name} plan`} description={`${formatMoney(base, currency)}/month${india ? " + GST" : ""} · renews 1 Nov 2026`}>
+        <Row label={`${plan.name} plan`} description={`${formatMoney(base, currency)}/month · ${note} · renews 1 Nov 2026`}>
           <RowButton onClick={() => onOpen("settings:plans")}>Change plan</RowButton>
         </Row>
         <Row label="Usage this month" description="Resets on 1 Nov." stacked>
           <div className="flex flex-col gap-4">
             {near && (
-              <p className="m-0 flex items-start gap-2.5 rounded-[12px] bg-[#FFF6E5] px-3.5 py-3 text-[13.5px] text-[#7A4A00]">
+              <p className="m-0 flex items-start gap-2.5 rounded-lg bg-signal/15 px-3.5 py-3 text-label text-signal-ink">
                 <Icon name="bell" size={16} className="mt-0.5 flex-none" />
                 <span>
                   You’ve used {Math.round((near.used / near.max) * 100)}% of your {near.label}. Nothing stops if you go over: extra ones cost {near.rate.replace(" after that", "")}.{" "}
@@ -74,22 +76,22 @@ export function Billing({ state, onOpen }: Props) {
             )}
             {usage.map((u) => (
               <div key={u.label} className="flex flex-col gap-1">
-                <span className="flex justify-between gap-3 text-[13px]">
+                <span className="flex justify-between gap-3 text-label">
                   <span className="text-ink-soft">{u.label}</span>
                   <span className="text-subtle tabular-nums">
                     {u.used.toLocaleString()} of {u.max.toLocaleString()}
                   </span>
                 </span>
                 <Progress value={u.used} max={u.max} label={u.label} />
-                <span className="text-[12px] text-subtle">{u.rate}</span>
+                <span className="text-caption text-subtle">{u.rate}</span>
               </div>
             ))}
             <div className="flex items-start justify-between gap-3 border-t border-line pt-3">
               <span className="flex flex-col">
-                <span className="text-[13.5px] text-ink-soft">WhatsApp fees so far</span>
-                <span className="text-[12px] text-subtle">318 reminders and confirmations, 94 campaign messages. Meta’s fees, passed on at cost on your next invoice.</span>
+                <span className="text-label text-ink-soft">WhatsApp fees so far</span>
+                <span className="text-caption text-subtle">318 reminders and confirmations, 94 campaign messages. Meta’s fees, passed on at cost on your next invoice.</span>
               </span>
-              <span className="text-[14px] font-semibold text-ink tabular-nums">{formatMoney(india ? 412 : 9, currency)}</span>
+              <span className="text-body font-semibold text-ink tabular-nums">{formatMoney(convertInr(412, currency), currency)}</span>
             </div>
           </div>
         </Row>
@@ -110,7 +112,7 @@ export function Billing({ state, onOpen }: Props) {
       <Group title="Invoices" description="Sample data.">
         {invoices.map((inv) => (
           <Row key={inv.id} label={inv.period} description={`${inv.id} · ${inv.date}`}>
-            <span className="w-24 text-right text-[14px] text-ink tabular-nums">{formatMoney(inv.amount + inv.wa, currency)}</span>
+            <span className="w-24 text-end text-body text-ink tabular-nums">{formatMoney(inv.amount + inv.wa, currency)}</span>
             <Badge tone={inv.status === "Paid" ? "success" : "neutral"}>{inv.status}</Badge>
             <RowButton icon="download" ariaLabel={`Download ${inv.id} as PDF`} onClick={() => pdf(inv)}>
               PDF

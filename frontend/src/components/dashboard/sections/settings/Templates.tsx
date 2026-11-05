@@ -17,10 +17,10 @@ const fill = (body: string) => body.replace(/\{\{(\d+)\}\}/g, (_, n) => samples[
 /** A WhatsApp-style preview of a template with sample values. */
 function Preview({ body }: { body: string }) {
   return (
-    <div className="rounded-[12px] bg-[#ECE5DD] p-4">
-      <div className="ml-auto max-w-[300px] rounded-[10px] rounded-tr-[2px] bg-[#DCF8C6] px-3 py-2 text-[14px] leading-snug whitespace-pre-wrap text-[#111B21] shadow-[0_1px_0.5px_rgb(0_0_0/0.13)]">
-        {fill(body) || <span className="text-[#667781]">Your message preview appears here</span>}
-        <span className="mt-1 block text-right text-[11px] text-[#667781]">10:42 ✓✓</span>
+    <div className="light-surface rounded-lg bg-[#ECE5DD] p-4">
+      <div className="ms-auto max-w-[300px] rounded-md rounded-se-[2px] bg-[#DCF8C6] px-3 py-2 text-body leading-snug whitespace-pre-wrap text-ink shadow-1">
+        {fill(body) || <span className="text-text-3">Your message preview appears here</span>}
+        <span className="mt-1 block text-end text-caption text-text-3">10:42 ✓✓</span>
       </div>
     </div>
   );
@@ -46,16 +46,16 @@ export function Templates() {
         }
       >
         {templates.map((t) => (
-          <button key={t.id} type="button" onClick={() => setEditing(t)} className="-mx-2 flex w-[calc(100%+16px)] cursor-pointer items-center gap-4 rounded-[8px] px-2 py-3.5 text-left hover:bg-[#F7F7FA]">
+          <button key={t.id} type="button" onClick={() => setEditing(t)} className="-mx-2 flex w-[calc(100%+16px)] cursor-pointer items-center gap-4 rounded-md px-2 py-3.5 text-start hover:bg-surface-muted">
             <span className="flex min-w-0 flex-1 flex-col gap-0.5">
               <span className="flex flex-wrap items-center gap-2">
-                <span className="font-mono text-[13.5px] text-ink">{t.name}</span>
+                <span className="font-mono text-label text-ink">{t.name}</span>
                 <Badge tone={statusTone[t.status]}>{t.status}</Badge>
               </span>
-              <span className="truncate text-[13px] text-subtle">{t.body}</span>
-              {t.note && <span className="text-[13px] text-danger">{t.note}</span>}
+              <span className="truncate text-label text-subtle">{t.body}</span>
+              {t.note && <span className="text-label text-danger">{t.note}</span>}
             </span>
-            <span className="hidden flex-none text-[13px] text-subtle sm:inline">
+            <span className="hidden flex-none text-label text-subtle sm:inline">
               {t.category} · {t.language}
             </span>
             <Icon name="chevron-right" size={16} className="flex-none text-faint" />
@@ -64,7 +64,7 @@ export function Templates() {
       </Group>
 
       <Group title="Fees">
-        <p className="m-0 py-4 text-[14px] leading-relaxed text-ink-soft">
+        <p className="m-0 py-4 text-body leading-relaxed text-ink-soft">
           Replies within 24 hours of a customer’s message are free. Meta charges for each template message after that; Utility templates (reminders, confirmations) cost less than Marketing ones. Vegam passes these fees on at cost, and Marketing templates only go to contacts who opted in.
         </p>
       </Group>
@@ -97,22 +97,22 @@ export function Templates() {
       >
         {editing && (
           <div className="flex flex-col gap-4">
-            {editing.status === "Rejected" && editing.note && <p className="m-0 rounded-[10px] bg-[#FDECEC] p-3 text-[13.5px] text-danger">{editing.note}</p>}
+            {editing.status === "Rejected" && editing.note && <p className="m-0 rounded-md bg-danger-subtle p-3 text-label text-danger">{editing.note}</p>}
             <label className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">Name</span>
+              <span className="text-body font-medium text-ink">Name</span>
               <Input value={editing.name} onChange={(e) => setEditing({ ...editing, name: e.target.value.toLowerCase().replace(/\s+/g, "_") })} placeholder="appointment_reminder" />
-              <span className="text-[12.5px] text-subtle">Lowercase letters, numbers and underscores.</span>
+              <span className="text-caption text-subtle">Lowercase letters, numbers and underscores.</span>
             </label>
             <div className="grid grid-cols-2 gap-3">
               <label className="flex flex-col gap-1.5">
-                <span className="text-[14px] font-medium text-ink">Category</span>
+                <span className="text-body font-medium text-ink">Category</span>
                 <Dropdown value={editing.category} onChange={(e) => setEditing({ ...editing, category: e.target.value as Template["category"] })}>
                   <option>Utility</option>
                   <option>Marketing</option>
                 </Dropdown>
               </label>
               <label className="flex flex-col gap-1.5">
-                <span className="text-[14px] font-medium text-ink">Language</span>
+                <span className="text-body font-medium text-ink">Language</span>
                 <Dropdown value={editing.language} onChange={(e) => setEditing({ ...editing, language: e.target.value })}>
                   <option>English</option>
                   <option>Hindi</option>
@@ -123,9 +123,9 @@ export function Templates() {
               </label>
             </div>
             <label className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">Message</span>
+              <span className="text-body font-medium text-ink">Message</span>
               <TextArea rows={4} value={editing.body} onChange={(e) => setEditing({ ...editing, body: e.target.value })} placeholder="Hi {{1}}, a reminder of your visit at {{2}} tomorrow." />
-              <span className="text-[12.5px] text-subtle">Use {"{{1}}"}, {"{{2}}"} for details that change, like the name or time.</span>
+              <span className="text-caption text-subtle">Use {"{{1}}"}, {"{{2}}"} for details that change, like the name or time.</span>
             </label>
             <div className="flex flex-wrap gap-2">
               <RowButton icon="plus" onClick={() => setEditing({ ...editing, body: `${editing.body}{{${vars.length + 1}}}` })}>
@@ -138,7 +138,7 @@ export function Templates() {
               )}
             </div>
             <div className="flex flex-col gap-1.5">
-              <span className="text-[14px] font-medium text-ink">Preview</span>
+              <span className="text-body font-medium text-ink">Preview</span>
               <Preview body={editing.body} />
             </div>
           </div>

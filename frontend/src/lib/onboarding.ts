@@ -1,9 +1,10 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { ChannelId, CountryId, Tone } from "@/content/onboarding";
-import { countries, gating, planRank } from "@/content/onboarding";
-import type { Billing, Currency, PlanId } from "@/content/pricing";
+import type { ChannelId, Tone } from "@/content/onboarding";
+import { gating, planRank } from "@/content/onboarding";
+import type { Billing, PlanId } from "@/content/pricing";
+import { applyCountry, currencyForRegion, detectLocale, formatMoney as formatMoneyLocale, getLocaleState, type Currency } from "@/lib/locale";
 
 // The business's sign-up and setup answers. Until the backend exists they
 // live in this browser (localStorage) so onboarding can resume where it was
@@ -25,7 +26,7 @@ export type OnboardingState = {
   business: {
     name: string;
     about: string;
-    country: CountryId;
+    country: string;
     languages: string[];
     locations: "one" | "more";
     team: string;
@@ -54,7 +55,7 @@ export type OnboardingState = {
 export const initialState: OnboardingState = {
   step: 0,
   onboardedAt: null,
-  business: { name: "", about: "", country: "IN", languages: ["English"], locations: "one", team: "2–5" },
+  business: { name: "", about: "", country: "US", languages: ["English"], locations: "one", team: "2–5" },
   plan: null,
   billing: "monthly",
   assistant: {
@@ -119,12 +120,17 @@ export function useOnboarding() {
   useEffect(() => {
     const saved = read();
     if (saved) setState(saved);
+    else {
+      const region = detectLocale().region;
+      setState((s) => ({ ...s, business: { ...s.business, country: region } }));
+    }
     setReady(true);
   }, []);
 
   const update = useCallback((fn: (s: OnboardingState) => OnboardingState) => {
     setState((prev) => {
       const next = fn(prev);
+      if (next.business.country !== prev.business.country) applyCountry(next.business.country);
       write(next);
       return next;
     });
@@ -134,11 +140,11 @@ export function useOnboarding() {
 }
 
 export function currencyFor(state: OnboardingState): Currency {
-  return countries.find((c) => c.id === state.business.country)?.currency ?? "USD";
+  return currencyForRegion(state.business.country);
 }
 
 export function formatMoney(amount: number, currency: Currency) {
-  return `${currency === "INR" ? "₹" : "$"}${amount.toLocaleString(currency === "INR" ? "en-IN" : "en-US")}`;
+  return formatMoneyLocale(amount, currency, getLocaleState().locale);
 }
 
 /** Whether a feature for `minPlan` is available on `plan`. Always true while plan limits are switched off. */

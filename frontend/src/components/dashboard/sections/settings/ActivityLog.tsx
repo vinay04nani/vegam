@@ -36,7 +36,7 @@ export function ActivityLog() {
     >
       {shown.map((e) => (
         <Row key={e.what} label={e.what} description={`${e.who} · ${e.kind}`}>
-          <span className="text-[13px] text-subtle">{e.when}</span>
+          <span className="text-label text-subtle">{e.when}</span>
         </Row>
       ))}
     </Group>

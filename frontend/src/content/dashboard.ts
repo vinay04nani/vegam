@@ -1,19 +1,20 @@
+import { regionalView } from "@/lib/regional";
 // Sample data for the dashboard demo. Shown with a "Sample data" label until
 // the backend supplies the business's real numbers.
 // TODO(backend): replace with live data.
 
-export const sampleToday = [
+export const sampleToday = regionalView([
   { label: "Enquiries", value: "14", note: "All replied" },
   { label: "Bookings", value: "6", note: "2 after closing time" },
   { label: "Missed calls", value: "2", note: "Both followed up" },
   { label: "Avg. reply", value: "6s", note: "Day and night" },
-];
+]);
 
-export const sampleNeedsYou = [
+export const sampleNeedsYou = regionalView([
   { who: "Customer · +91 98•• ••• 210", text: "Asked about a refund for last week’s visit", tag: "Handed over", channel: "WhatsApp" },
   { who: "Caller · +91 90•• ••• 044", text: "Wants a callback about a large group booking", tag: "Callback", channel: "Phone" },
   { who: "Question your assistant didn’t know", text: "“Do you open on public holidays?”", tag: "Answer once", channel: "Assistant" },
-];
+]);
 
 // ---------- Inbox ----------
 
@@ -32,7 +33,7 @@ export type ThreadMessage = {
 export type ThreadOwner = "ai" | "team" | "needs";
 export type Thread = { id: string; who: string; channel: InboxChannel; time: string; owner: ThreadOwner; unread?: boolean; messages: ThreadMessage[] };
 
-export const sampleThreads: Thread[] = [
+const sampleThreadsRaw: Thread[] = [
   {
     id: "t1",
     who: "P. Sharma",
@@ -112,21 +113,22 @@ export const sampleThreads: Thread[] = [
 ];
 
 /** Saved replies the team inserts by typing "/" in the inbox. */
-export const sampleQuickReplies = [
+export const sampleQuickReplies = regionalView([
   { id: "hours", title: "Opening hours", text: "We’re open Monday to Saturday, 10 AM to 7 PM." },
   { id: "book", title: "Booking link", text: "You can pick a time that suits you here: vegam.example/book" },
   { id: "location", title: "Directions", text: "We’re next to the main entrance, with free parking. Here’s the map: vegam.example/map" },
   { id: "refund", title: "Refund received", text: "Thanks for letting us know. I’ve passed this to the manager and we’ll reply within one working day." },
   { id: "thanks", title: "Thank you", text: "Thank you! See you soon." },
-];
+]);
 
 const ownerLabel: Record<ThreadOwner, string> = { ai: "AI", team: "Team", needs: "Needs you" };
 
 /** The first few threads, shown on Home. */
-export const sampleConversations = sampleThreads
+export const sampleThreads = regionalView(sampleThreadsRaw);
+export const sampleConversations = regionalView(sampleThreadsRaw
   .filter((t) => t.owner !== "needs")
   .slice(0, 4)
-  .map((t) => ({ who: t.who, last: t.messages[t.messages.length - 1].text, channel: t.channel, time: t.time, by: ownerLabel[t.owner] }));
+  .map((t) => ({ who: t.who, last: t.messages[t.messages.length - 1].text, channel: t.channel, time: t.time, by: ownerLabel[t.owner] })));
 
 // ---------- Calendar ----------
 
@@ -157,7 +159,7 @@ const bk = (id: string, day: number, start: string, minutes: number, service: nu
   note,
 });
 
-export const sampleBookings: Booking[] = [
+const sampleBookingsRaw: Booking[] = [
   bk("b1", -3, "11:00", 60, 1, "M. Iyer", "+91 98•• ••• 334", "WhatsApp"),
   bk("b2", -2, "10:30", 30, 0, "K. Shah", "+91 90•• ••• 871", "Booking link"),
   bk("b3", -2, "16:00", 60, 1, "R. Das", "+91 97•• ••• 205", "Phone"),
@@ -196,7 +198,8 @@ export const serviceColors: [string, string, string][] = [
 ];
 
 /** Today's bookings, shown on Home. */
-export const sampleUpcoming = sampleBookings.filter((b) => b.day === 0).map((b) => ({ time: b.start, name: sampleServiceNames[b.service], who: b.who }));
+export const sampleBookings = regionalView(sampleBookingsRaw);
+export const sampleUpcoming = regionalView(sampleBookingsRaw.filter((b) => b.day === 0).map((b) => ({ time: b.start, name: sampleServiceNames[b.service], who: b.who })));
 
 // ---------- Leads ----------
 
@@ -239,7 +242,7 @@ const enquiry = (at: string, text: string): LeadActivity => ({ at, kind: "enquir
 const ai = (at: string, text: string): LeadActivity => ({ at, kind: "ai", text });
 const fu = (at: string, text: string): LeadActivity => ({ at, kind: "followup", text });
 
-export const sampleLeads: Lead[] = [
+export const sampleLeads: Lead[] = regionalView([
   {
     id: "l1", name: "R. Varma", phone: "+91 98•• ••• 552", source: "Ad form", score: 92, stage: "qualified", owner: "R. Kumar",
     interest: "Group booking for 6 people next month", summary: "Ready to book a group visit; wants a price for 6 and a weekend date.",
@@ -312,30 +315,30 @@ export const sampleLeads: Lead[] = [
     createdAt: "Today, 7:55 AM", createdMins: 305, lastActivity: "Today", lastMins: 300, followUps: 0, next: "Follow-up tomorrow",
     activity: [enquiry("Today, 7:55 AM", "Ad form: “Open on weekends?”"), ai("Today, 7:56 AM", "Shared Saturday hours and slots")],
   },
-];
+]);
 
 // ---------- Reports ----------
 
 /** Pilot week 1 (before Vegam) against the latest week. Lower is better for reply time. */
-export const sampleBaseline = [
+export const sampleBaseline = regionalView([
   { label: "Average first reply", before: "2 h 10 min", after: "6 sec", beforeValue: 130, afterValue: 0.1, unit: "min", better: "lower" as const },
   { label: "Missed calls followed up", before: "20%", after: "100%", beforeValue: 20, afterValue: 100, unit: "%", better: "higher" as const },
   { label: "Bookings per week", before: "18", after: "27", beforeValue: 18, afterValue: 27, unit: "", better: "higher" as const },
   { label: "Enquiries answered after hours", before: "0", after: "31", beforeValue: 0, afterValue: 31, unit: "", better: "higher" as const },
-];
+]);
 
-export const sampleWeekWon = [
+export const sampleWeekWon = regionalView([
   { value: "9", label: "bookings from chats after closing time" },
   { value: "6", label: "missed calls turned into bookings" },
   { value: "4", label: "customers brought back by follow-ups" },
-];
+]);
 
-export const sampleMorningReports = [
+export const sampleMorningReports = regionalView([
   { day: "Today", enquiries: 14, bookings: 6, missed: 2, needs: "1 customer asked about a refund" },
   { day: "Yesterday", enquiries: 11, bookings: 4, missed: 1, needs: "Nothing" },
   { day: "2 days ago", enquiries: 17, bookings: 7, missed: 3, needs: "2 questions your assistant didn’t know" },
   { day: "3 days ago", enquiries: 9, bookings: 3, missed: 0, needs: "Nothing" },
-];
+]);
 
 // ---------- Calls ----------
 
@@ -343,7 +346,7 @@ export type CallOutcome = "Booked" | "Callback" | "Transferred" | "Info" | "NoAn
 /** `direction` "out" is the AI calling a new lead who enquired (Pro). */
 export type Call = { id: string; time: string; caller: string; duration: string; outcome: CallOutcome; summary: string; transcript: { from: "ai" | "caller"; text: string }[]; direction?: "in" | "out"; lead?: string };
 
-export const sampleCalls: Call[] = [
+export const sampleCalls: Call[] = regionalView([
   {
     id: "c1",
     time: "Today, 11:05 AM",
@@ -493,24 +496,24 @@ export const sampleCalls: Call[] = [
       { from: "caller", text: "Not yet, I’ll message you." },
     ],
   },
-];
+]);
 
 // ---------- Campaigns ----------
 
 export type CampaignType = "Broadcast" | "Win-back" | "Rebooking";
 export type Campaign = { id: string; name: string; type: CampaignType; audience: number; sent: number; replies: number; bookings: number; status: "Sent" | "Scheduled" | "Running" | "Draft" };
 
-export const sampleCampaigns: Campaign[] = [
+export const sampleCampaigns: Campaign[] = regionalView([
   { id: "m1", name: "Festive opening hours", type: "Broadcast", audience: 412, sent: 412, replies: 37, bookings: 12, status: "Sent" },
   { id: "m2", name: "We miss you", type: "Win-back", audience: 86, sent: 86, replies: 14, bookings: 6, status: "Sent" },
   { id: "m3", name: "Time for your next visit", type: "Rebooking", audience: 58, sent: 23, replies: 9, bookings: 5, status: "Running" },
   { id: "m4", name: "New evening slots", type: "Broadcast", audience: 412, sent: 0, replies: 0, bookings: 0, status: "Scheduled" },
-];
+]);
 
 // ---------- Settings ----------
 
-export const sampleTeam = [
+export const sampleTeam = regionalView([
   { name: "You", role: "Owner", contact: "owner@example.com" },
   { name: "R. Kumar", role: "Manager", contact: "+91 90•• ••• 120" },
   { name: "S. Das", role: "Front desk", contact: "+91 81•• ••• 455" },
-];
+]);

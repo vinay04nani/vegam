@@ -130,14 +130,14 @@ Metrics ──► Dashboard + daily owner report
 
 ## Architecture
 
-Multi-tenant SaaS: every business is an **organization**, and all data is scoped by `org_id` with row-level security.
+Planned multi-tenant SaaS, not built yet: every business would be an **organization**, with data scoped by `org_id` and row-level security. Tenant isolation is not implemented.
 
 | Layer | Choice |
 |---|---|
 | Language | TypeScript (strict) everywhere |
 | Monorepo | pnpm workspaces + Turborepo |
 | Web app + landing page | Next.js (App Router), React, Tailwind CSS, shadcn/ui |
-| Database, auth, storage | Supabase (Postgres) with row-level security |
+| Database, auth, storage | Planned: Supabase (Postgres) with row-level security. Not built. |
 | ORM / migrations | Drizzle ORM |
 | Background jobs | pg-boss (Postgres-backed queue) in a worker service |
 | LLM | Anthropic Claude API (models set by env var) |

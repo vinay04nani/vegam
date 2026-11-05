@@ -37,12 +37,12 @@ export function HelpPanel({ onOpen, isPro = false }: { onOpen: (view: string) =>
     <>
       <label className="relative block">
         <span className="sr-only">Search help articles</span>
-        <Icon name="search" size={16} className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-subtle" />
+        <Icon name="search" size={16} className="pointer-events-none absolute top-1/2 start-3.5 -translate-y-1/2 text-subtle" />
         <input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search help, e.g. “forward calls”"
-          className="h-11 w-full rounded-[10px] border border-line-strong bg-white pr-3 pl-10 text-[15px] text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-3 focus:ring-indigo/10"
+          className="h-11 w-full rounded-md border border-line-strong bg-surface pe-3 ps-10 text-body text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-3 focus:ring-indigo/10"
         />
       </label>
       <div role="group" aria-label="Topics" className="mt-3 flex flex-wrap gap-1.5">
@@ -52,7 +52,7 @@ export function HelpPanel({ onOpen, isPro = false }: { onOpen: (view: string) =>
             type="button"
             aria-pressed={topic === t.id}
             onClick={() => setTopic(topic === t.id ? null : t.id)}
-            className={`h-8 cursor-pointer rounded-full px-3 text-[13px] font-medium transition ${topic === t.id ? "bg-ink text-white" : "bg-panel text-ink-soft hover:text-ink"}`}
+            className={`h-8 cursor-pointer rounded-full px-3 text-label font-medium transition ${topic === t.id ? "bg-brand-fill text-white" : "bg-panel text-ink-soft hover:text-ink"}`}
           >
             {t.id}
           </button>
@@ -66,10 +66,10 @@ export function HelpPanel({ onOpen, isPro = false }: { onOpen: (view: string) =>
             const open = openId === a.id;
             return (
               <div key={a.id}>
-                <button type="button" aria-expanded={open} onClick={() => setOpenId(open ? null : a.id)} className="flex w-full cursor-pointer items-center gap-3 py-3.5 text-left">
+                <button type="button" aria-expanded={open} onClick={() => setOpenId(open ? null : a.id)} className="flex w-full cursor-pointer items-center gap-3 py-3.5 text-start">
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[14.5px] text-ink">{a.title}</span>
-                    <span className="block text-[13px] text-subtle">
+                    <span className="block text-body text-ink">{a.title}</span>
+                    <span className="block text-label text-subtle">
                       {a.topic} · {a.minutes} min read
                     </span>
                   </span>
@@ -77,12 +77,12 @@ export function HelpPanel({ onOpen, isPro = false }: { onOpen: (view: string) =>
                 </button>
                 {open && (
                   <div className="flex flex-col gap-3 pb-4">
-                    <p className="m-0 text-[14px] leading-relaxed text-ink-soft">{a.body}</p>
+                    <p className="m-0 text-body leading-relaxed text-ink-soft">{a.body}</p>
                     {a.steps && (
                       <ol className="m-0 flex list-none flex-col gap-2 p-0">
                         {a.steps.map((s, i) => (
-                          <li key={s} className="flex gap-2.5 text-[14px] leading-snug text-ink">
-                            <span className="flex h-5 w-5 flex-none items-center justify-center rounded-full bg-panel text-[11.5px] font-semibold text-ink">{i + 1}</span>
+                          <li key={s} className="flex gap-2.5 text-body leading-snug text-ink">
+                            <span className="flex h-5 w-5 flex-none items-center justify-center rounded-full bg-panel text-caption font-semibold text-ink">{i + 1}</span>
                             {s}
                           </li>
                         ))}
@@ -131,7 +131,7 @@ export function HelpPanel({ onOpen, isPro = false }: { onOpen: (view: string) =>
                 <BrandLogo brand="whatsapp" size={28} />
                 <span className="flex flex-col">
                   WhatsApp
-                  <span className="text-[13px] text-subtle">Usually replies within an hour</span>
+                  <span className="text-label text-subtle">Usually replies within an hour</span>
                 </span>
               </span>
             }
@@ -165,7 +165,7 @@ export function HelpPanel({ onOpen, isPro = false }: { onOpen: (view: string) =>
         <Group title="What’s new">
           {whatsNew.map((n) => (
             <Row key={n.title} label={n.title} description={n.body}>
-              <span className="text-[13px] text-subtle">{n.date}</span>
+              <span className="text-label text-subtle">{n.date}</span>
             </Row>
           ))}
         </Group>

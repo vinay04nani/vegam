@@ -38,21 +38,21 @@ export function Navbar() {
           solid ? "py-3" : "py-5"
         }`}
       >
-        <a href={withBase("/#top")} aria-label="Vegam home" className="text-[34px] leading-none font-extrabold tracking-[-0.045em] text-ink">
+        <a href={withBase("/#top")} aria-label="Vegam home" className="text-h1 leading-none font-extrabold tracking-[-0.045em] text-ink">
           vegam
         </a>
 
-        <div className="hidden items-center gap-9 text-[17px] font-medium md:flex">
+        <div className="hidden items-center gap-9 text-body-lg font-medium md:flex">
           {navLinks.map((l) => (
             <a key={l.href} href={l.href} className="group relative text-ink">
               {l.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-ink transition-all duration-300 group-hover:w-full" />
+              <span className="absolute -bottom-1 start-0 h-px w-0 bg-brand-fill transition-all duration-300 group-hover:w-full" />
             </a>
           ))}
         </div>
 
         <div className="hidden items-center gap-2.5 md:flex">
-          <a href={links.login} className="px-3 text-[16px] font-semibold text-ink hover:underline hover:underline-offset-4">
+          <a href={links.login} className="px-3 text-body-lg font-semibold text-ink hover:underline hover:underline-offset-4">
             Log in
           </a>
           <ButtonLink href={links.contact} variant="light" size="md">
@@ -65,7 +65,7 @@ export function Navbar() {
 
         <button
           type="button"
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-white text-ink shadow-[0_1px_2px_rgb(30_31_43/0.08)] md:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-full bg-surface text-ink shadow-1 md:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}

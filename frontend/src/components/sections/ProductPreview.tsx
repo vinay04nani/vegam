@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { Bubble, Chip, Phone } from "@/components/phone/Phone";
-import { VegamMark } from "@/components/ui/Kolam";
+import { Mark } from "@/components/ui/Mark";
 import { Reveal } from "@/components/ui/Reveal";
 
 // Two phone screens that show the product at a glance: what a customer sees
@@ -17,7 +17,7 @@ function CustomerChat() {
       time="9:41"
       title={business}
       status="AI assistant · replies instantly"
-      avatar={<span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-indigo text-[15px] font-bold text-white">N</span>}
+      avatar={<span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-indigo text-body font-bold text-white">N</span>}
     >
       <Chip>Today</Chip>
       <Bubble from="me" time="9:41 PM">
@@ -30,18 +30,18 @@ function CustomerChat() {
         Yes, 6:30 works
       </Bubble>
       <Bubble from="them" time="9:42 PM">
-        <span className="mb-1.5 flex items-center gap-2 rounded-[10px] bg-[#F1F7F2] px-2.5 py-2">
+        <span className="mb-1.5 flex items-center gap-2 rounded-md bg-success-subtle px-2.5 py-2">
           <span className="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-success text-white">
             <Icon name="check" size={16} strokeWidth={2.6} className="[&_circle]:hidden" />
           </span>
           <span className="flex flex-col leading-tight">
-            <strong className="text-[14px] font-semibold">Booked</strong>
-            <span className="text-[12.5px] text-subtle">Tomorrow · 6:30 PM</span>
+            <strong className="text-body font-semibold">Booked</strong>
+            <span className="text-caption text-subtle">Tomorrow · 6:30 PM</span>
           </span>
         </span>
         You’re all set. I’ll send a reminder tomorrow morning. Reply here any time to change it.
       </Bubble>
-      <span className="mt-auto flex items-center gap-2 self-center rounded-full bg-white/90 px-3 py-1 text-[11.5px] text-subtle">
+      <span className="mt-auto flex items-center gap-2 self-center rounded-full bg-surface/90 px-3 py-1 text-caption text-subtle">
         <Icon name="sun" size={12} />
         Booked after hours, no staff needed
       </span>
@@ -52,10 +52,10 @@ function CustomerChat() {
 function Stat({ value, label, note }: { value: string; label: string; note: string }) {
   return (
     <div className="flex items-baseline gap-2.5 border-t border-line py-1.5 first:border-t-0">
-      <span className="w-6 text-right text-[17px] font-bold text-ink">{value}</span>
+      <span className="w-6 text-end text-body-lg font-bold text-ink">{value}</span>
       <span className="flex flex-col leading-tight">
         <span className="font-semibold text-ink">{label}</span>
-        <span className="text-[12.5px] text-subtle">{note}</span>
+        <span className="text-caption text-subtle">{note}</span>
       </span>
     </div>
   );
@@ -68,14 +68,14 @@ function MorningReport() {
       title="Vegam"
       status={`Your assistant at ${business}`}
       avatar={
-        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink text-accent">
-          <VegamMark size={22} strokeWidth={9} />
+        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-fill text-accent">
+          <Mark size={20} />
         </span>
       }
     >
       <Bubble from="them" time="8:00 AM">
         <strong className="font-semibold">Good morning. Here’s yesterday:</strong>
-        <span className="mt-1.5 block rounded-[10px] bg-panel px-2.5 py-1">
+        <span className="mt-1.5 block rounded-md bg-panel px-2.5 py-1">
           <Stat value="14" label="Enquiries" note="All replied within seconds" />
           <Stat value="6" label="New bookings" note="2 made after closing time" />
           <Stat value="2" label="Missed calls" note="Both sent a WhatsApp" />
@@ -96,8 +96,8 @@ function MorningReport() {
 
 function Label({ step, children }: { step: string; children: ReactNode }) {
   return (
-    <p className="m-0 flex items-center gap-2.5 text-[15px] font-semibold text-ink">
-      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-ink text-[12px] text-white">{step}</span>
+    <p className="m-0 flex items-center gap-2.5 text-body font-semibold text-ink">
+      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-fill text-caption text-white">{step}</span>
       {children}
     </p>
   );
@@ -116,7 +116,7 @@ export function ProductPreview() {
           <MorningReport />
         </Reveal>
       </div>
-      <p className="m-0 -mt-8 px-4 text-center text-[14px] text-subtle md:mt-0">
+      <p className="m-0 -mt-8 px-4 text-center text-body text-subtle md:mt-0">
         Sample conversation. Your assistant uses your own name, hours and services.
       </p>
     </section>

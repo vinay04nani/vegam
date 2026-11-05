@@ -21,9 +21,9 @@ const tabs: { id: Tab; label: string }[] = [
 ];
 
 const tile: Record<AppNotification["group"], string> = {
-  "Needs you": "bg-[#FFF1E6] text-[#C2560F]",
-  Bookings: "bg-[#E8F3EA] text-success",
-  System: "bg-[#EAF2FF] text-[#2F6FDB]",
+  "Needs you": "bg-warning-subtle text-signal-ink",
+  Bookings: "bg-success-subtle text-success",
+  System: "bg-info-subtle text-info",
 };
 
 export function NotificationBell({ onOpen, variant = "icon" }: { onOpen: (view: string) => void; variant?: "icon" | "sidebar" }) {
@@ -59,10 +59,10 @@ export function NotificationBell({ onOpen, variant = "icon" }: { onOpen: (view: 
         title="Notifications"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className={`relative inline-flex h-10 w-10 flex-none cursor-pointer items-center justify-center text-ink transition ${variant === "sidebar" ? "rounded-[12px]" : "rounded-full"} ${open ? "bg-white shadow-[0_1px_3px_rgb(30_31_43/0.12)]" : "hover:bg-white"}`}
+        className={`relative inline-flex h-10 w-10 flex-none cursor-pointer items-center justify-center text-ink transition ${variant === "sidebar" ? "rounded-lg" : "rounded-full"} ${open ? "bg-surface shadow-1" : "hover:bg-surface"}`}
       >
         <Icon name="bell" size={20} />
-        {unread > 0 && <span aria-hidden="true" className="absolute top-2 right-2 h-2.5 w-2.5 rounded-full border-2 border-[#F4F4F8] bg-[#E5484D]" />}
+        {unread > 0 && <span aria-hidden="true" className="absolute top-2 end-2 h-2.5 w-2.5 rounded-full border-2 border-surface-muted bg-danger" />}
       </button>
 
       {open &&
@@ -72,10 +72,10 @@ export function NotificationBell({ onOpen, variant = "icon" }: { onOpen: (view: 
             role="dialog"
             aria-label="Notifications"
             tabIndex={-1}
-            className={`fixed z-40 flex flex-col overflow-hidden bg-white outline-none motion-reduce:animate-none ${
+            className={`fixed z-40 flex flex-col overflow-hidden bg-surface outline-none motion-reduce:animate-none ${
               variant === "sidebar"
-                ? "top-3 bottom-3 left-[260px] w-[460px] animate-slide-in-left rounded-[24px] border border-line shadow-[0_24px_60px_rgb(30_31_43/0.16)]"
-                : "inset-x-2 top-16 bottom-2 animate-slide-in rounded-[20px] border border-line shadow-[0_24px_60px_rgb(30_31_43/0.18)] sm:right-3 sm:left-auto sm:w-[440px]"
+                ? "top-3 bottom-3 start-[260px] w-[460px] animate-slide-in-left rounded-xl border border-line shadow-2"
+                : "inset-x-2 top-16 bottom-2 animate-slide-in rounded-xl border border-line shadow-2 sm:end-3 sm:start-auto sm:w-[440px]"
             }`}
           >
             <div className="flex items-center gap-6 border-b border-line px-6">
@@ -89,11 +89,11 @@ export function NotificationBell({ onOpen, variant = "icon" }: { onOpen: (view: 
                       role="tab"
                       aria-selected={tab === t.id}
                       onClick={() => setTab(t.id)}
-                      className={`relative flex-none cursor-pointer py-4 text-[15px] whitespace-nowrap transition ${tab === t.id ? "font-semibold text-ink" : "text-subtle hover:text-ink"}`}
+                      className={`relative flex-none cursor-pointer py-4 text-body whitespace-nowrap transition ${tab === t.id ? "font-semibold text-ink" : "text-subtle hover:text-ink"}`}
                     >
                       {t.label}
-                      {n > 0 && <span className="ml-1.5 text-[12.5px] text-subtle">{n}</span>}
-                      {tab === t.id && <span aria-hidden="true" className="absolute bottom-0 left-0 h-[3px] w-6 rounded-full bg-ink" />}
+                      {n > 0 && <span className="ms-1.5 text-caption text-subtle">{n}</span>}
+                      {tab === t.id && <span aria-hidden="true" className="absolute bottom-0 start-0 h-[3px] w-6 rounded-full bg-brand-fill" />}
                     </button>
                   );
                 })}
@@ -102,7 +102,7 @@ export function NotificationBell({ onOpen, variant = "icon" }: { onOpen: (view: 
                 type="button"
                 disabled={!unread}
                 onClick={() => setItems((xs) => xs.map((x) => ({ ...x, unread: false })))}
-                className="flex-none cursor-pointer text-[14.5px] text-subtle hover:text-ink disabled:cursor-default disabled:opacity-50 disabled:hover:text-subtle"
+                className="flex-none cursor-pointer text-body text-subtle hover:text-ink disabled:cursor-default disabled:opacity-50 disabled:hover:text-subtle"
               >
                 Read all
               </button>
@@ -111,11 +111,11 @@ export function NotificationBell({ onOpen, variant = "icon" }: { onOpen: (view: 
             <ul className="m-0 flex-1 list-none overflow-y-auto p-0">
               {list.length === 0 && (
                 <li className="flex flex-col items-center gap-2 px-6 py-20 text-center">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-[14px] bg-panel text-muted">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-panel text-muted">
                     <Icon name="bell" size={22} />
                   </span>
-                  <p className="m-0 text-[15px] font-semibold text-ink">Nothing here yet</p>
-                  <p className="m-0 text-[13.5px] text-subtle">Handovers, bookings and updates will show up here.</p>
+                  <p className="m-0 text-body font-semibold text-ink">Nothing here yet</p>
+                  <p className="m-0 text-label text-subtle">Handovers, bookings and updates will show up here.</p>
                 </li>
               )}
               {list.map((n) => (
@@ -129,21 +129,21 @@ export function NotificationBell({ onOpen, variant = "icon" }: { onOpen: (view: 
                         setOpen(false);
                       }
                     }}
-                    className="flex w-full cursor-pointer gap-4 px-6 py-5 text-left transition hover:bg-[#FAFAFC]"
+                    className="flex w-full cursor-pointer gap-4 px-6 py-5 text-start transition hover:bg-surface-muted"
                   >
-                    <span className={`flex h-11 w-11 flex-none items-center justify-center rounded-[12px] ${tile[n.group]}`}>
+                    <span className={`flex h-11 w-11 flex-none items-center justify-center rounded-lg ${tile[n.group]}`}>
                       <Icon name={n.icon} size={20} />
                     </span>
                     <span className="flex min-w-0 flex-1 flex-col gap-1.5">
                       <span className="flex items-start gap-2">
-                        <span className="flex-1 text-[16px] leading-snug font-semibold text-ink">
+                        <span className="flex-1 text-body-lg leading-snug font-semibold text-ink">
                           {n.title}
                           {n.unread && <span className="sr-only"> (unread)</span>}
                         </span>
-                        {n.unread && <span aria-hidden="true" className="mt-2 h-2 w-2 flex-none rounded-full bg-[#E5484D]" />}
+                        {n.unread && <span aria-hidden="true" className="mt-2 h-2 w-2 flex-none rounded-full bg-danger" />}
                       </span>
-                      <span className="text-[14.5px] leading-relaxed text-ink-soft">{n.body}</span>
-                      <span className="text-[13px] text-subtle">{n.time}</span>
+                      <span className="text-body leading-relaxed text-ink-soft">{n.body}</span>
+                      <span className="text-label text-subtle">{n.time}</span>
                     </span>
                   </button>
                 </li>

@@ -5,8 +5,10 @@
 // passed on at cost and are not included.
 
 
+import type { Currency } from "@/lib/locale";
+
+export type { Currency };
 export type PlanId = "starter" | "growth" | "pro";
-export type Currency = "INR" | "USD";
 export type Billing = "monthly" | "annual";
 
 export type Plan = {
@@ -14,12 +16,12 @@ export type Plan = {
   name: string;
   promise: string;
   bestFor: string;
-  /** Loops in the plan's kolam tier mark. */
+  /** Kept so older call sites compile. The cards no longer draw a tier mark. */
   dots: number;
   popular?: boolean;
   /** Leave undefined to show `priceNote` instead. */
   price?: Record<Currency, Record<Billing, number>>;
-  /** Show the price as a starting point ("From ₹19,999"). */
+  /** Show the price as a starting point ("From $399"). */
   from?: boolean;
   priceNote: string;
   /** Button on the plan card; it starts sign-up with this plan selected. */
@@ -35,7 +37,16 @@ export const plans: Plan[] = [
     name: "Starter",
     promise: "Never miss a message",
     bestFor: "A single location losing customers to slow replies and missed calls",
-    price: { INR: { monthly: 2999, annual: 2499 }, USD: { monthly: 49, annual: 41 } },
+    price: {
+      USD: { monthly: 49, annual: 41 },
+      EUR: { monthly: 45, annual: 38 },
+      GBP: { monthly: 39, annual: 33 },
+      INR: { monthly: 2999, annual: 2499 },
+      AUD: { monthly: 75, annual: 63 },
+      CAD: { monthly: 69, annual: 58 },
+      SGD: { monthly: 65, annual: 54 },
+      AED: { monthly: 179, annual: 149 },
+    },
     priceNote: "WhatsApp fees passed on at cost.",
     cta: "Start free pilot",
     highlights: [
@@ -54,7 +65,16 @@ export const plans: Plan[] = [
     promise: "Every channel and every call",
     bestFor: "A busy business with steady calls and social media enquiries",
     popular: true,
-    price: { INR: { monthly: 7999, annual: 6666 }, USD: { monthly: 149, annual: 124 } },
+    price: {
+      USD: { monthly: 149, annual: 124 },
+      EUR: { monthly: 139, annual: 116 },
+      GBP: { monthly: 119, annual: 99 },
+      INR: { monthly: 7999, annual: 6666 },
+      AUD: { monthly: 229, annual: 191 },
+      CAD: { monthly: 199, annual: 166 },
+      SGD: { monthly: 199, annual: 166 },
+      AED: { monthly: 549, annual: 458 },
+    },
     priceNote: "WhatsApp fees passed on at cost.",
     cta: "Start free pilot",
     highlights: [
@@ -72,7 +92,16 @@ export const plans: Plan[] = [
     name: "Pro",
     promise: "Grow and bring customers back",
     bestFor: "Multi-location businesses and teams that sell actively",
-    price: { INR: { monthly: 19999, annual: 16666 }, USD: { monthly: 399, annual: 333 } },
+    price: {
+      USD: { monthly: 399, annual: 333 },
+      EUR: { monthly: 369, annual: 308 },
+      GBP: { monthly: 319, annual: 266 },
+      INR: { monthly: 19999, annual: 16666 },
+      AUD: { monthly: 599, annual: 499 },
+      CAD: { monthly: 529, annual: 441 },
+      SGD: { monthly: 529, annual: 441 },
+      AED: { monthly: 1469, annual: 1224 },
+    },
     from: true,
     priceNote: "Final price depends on locations and usage.",
     cta: "Start free pilot",
@@ -95,9 +124,16 @@ export const planLimits: Record<PlanId, { conversations: number; minutes: number
 };
 
 /** Charged when a month goes over its allowance; nothing stops working. */
-export const overage = { INR: { conversation: 1.5, minute: 6 }, USD: { conversation: 0.02, minute: 0.08 } };
-
-export const currencySymbol: Record<Currency, string> = { INR: "₹", USD: "$" };
+export const overage: Record<Currency, { conversation: number; minute: number }> = {
+  USD: { conversation: 0.02, minute: 0.08 },
+  EUR: { conversation: 0.02, minute: 0.07 },
+  GBP: { conversation: 0.02, minute: 0.06 },
+  INR: { conversation: 1.5, minute: 6 },
+  AUD: { conversation: 0.03, minute: 0.12 },
+  CAD: { conversation: 0.03, minute: 0.11 },
+  SGD: { conversation: 0.03, minute: 0.11 },
+  AED: { conversation: 0.08, minute: 0.3 },
+};
 
 // ---------- Plan picker ----------
 
@@ -211,7 +247,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "How does the 30-day pilot work?",
-    a: "In week 1 we set you up and measure today's baseline: replies, missed calls and bookings. In weeks 2–4 Vegam runs your front desk and you see the difference in your morning report. On day 30 you choose a plan or stop, and your data is yours to export.",
+    a: "In week 1 we set you up and measure today's baseline: replies, missed calls and bookings. In weeks 2–4 Vegam runs your front desk and you see the difference in your morning report. On day 30 you choose a plan or stop. Export of your data is planned and is not available yet.",
   },
   {
     q: "What counts as an AI conversation?",
@@ -227,7 +263,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "Are taxes included?",
-    a: "Prices in rupees are shown before 18% GST, which is added to your invoice. Prices in dollars are for customers outside India.",
+    a: "Prices exclude tax. VAT, GST or sales tax is added on your invoice, based on where your business is based.",
   },
   {
     q: "Can I switch plans later?",
@@ -239,7 +275,7 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "What happens if I go over my allowance?",
-    a: "Nothing stops working. Extra AI conversations are ₹1.5 ($0.02) each and extra voice minutes ₹6 ($0.08) each, and we'll tell you before you reach your limit.",
+    a: "Nothing stops working. Extra AI conversations and voice minutes are billed in your currency, and we'll tell you before you reach your limit.",
   },
   {
     q: "Will customers know they're talking to an AI?",
@@ -251,10 +287,10 @@ export const faqs: { q: string; a: string }[] = [
   },
   {
     q: "Is my customers' data safe?",
-    a: "Data is encrypted, separated per business and never sold or used to train general AI models. You can export or delete it at any time.",
+    a: "We do not sell personal data, and we do not plan to use it to train general AI models. Encryption, separation of each business's data, and export or deletion are planned. None of them is in place yet, and this site does not store customer data.",
   },
   {
     q: "Can I cancel?",
-    a: "Yes. There's no lock-in on monthly plans. You can export your contacts and conversations before you leave.",
+    a: "Yes. There's no lock-in on monthly plans. Export of contacts and conversations before you leave is planned and is not available yet.",
   },
 ];

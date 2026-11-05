@@ -35,7 +35,7 @@ function EventBlock({ item, place, wide, serviceName, onSelect }: { item: CalIte
   // Sharing a narrow week column: tighter padding and just the start time.
   const tight = place.narrow && !wide;
   const style = { top: place.top, height: place.height, left: place.left, width: place.width, zIndex: place.z };
-  const base = "absolute overflow-hidden rounded-[8px] border border-white text-left transition hover:z-30! hover:shadow-[0_6px_18px_rgb(30_31_43/0.16)] focus-visible:z-30! focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-indigo";
+  const base = "absolute overflow-hidden rounded-md border border-white text-start transition hover:z-30! hover:shadow-1 focus-visible:z-30! focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-indigo";
 
   if (item.kind === "block") {
     return (
@@ -46,11 +46,11 @@ function EventBlock({ item, place, wide, serviceName, onSelect }: { item: CalIte
         className={`${base} cursor-pointer bg-[repeating-linear-gradient(135deg,#F1F2F6_0,#F1F2F6_5px,#E6E7EE_5px,#E6E7EE_10px)] px-2 text-muted ${compact ? "flex items-center" : "py-1.5"}`}
         style={style}
       >
-        <span className="flex items-center gap-1 text-[12px] font-semibold">
+        <span className="flex items-center gap-1 text-caption font-semibold">
           <Icon name="lock" size={11} className="flex-none" />
           <span className="truncate">{item.reason || "Blocked"}</span>
         </span>
-        {!compact && <span className="block truncate text-[11.5px]">{range}</span>}
+        {!compact && <span className="block truncate text-caption">{range}</span>}
       </button>
     );
   }
@@ -63,31 +63,31 @@ function EventBlock({ item, place, wide, serviceName, onSelect }: { item: CalIte
       onClick={() => onSelect(item)}
       title={`${item.who} · ${serviceName(item.service)} · ${range}${pending ? " · waiting to confirm" : ""}`}
       aria-label={`${item.who}, ${serviceName(item.service)}, ${range}${pending ? ", waiting to confirm" : ""}`}
-      className={`${base} cursor-pointer ${tight ? "pr-1 pl-2" : "pr-2 pl-3"} ${compact ? "flex items-center" : "flex flex-col py-1.5"}`}
+      className={`${base} cursor-pointer ${tight ? "pe-1 ps-2" : "pe-2 ps-3"} ${compact ? "flex items-center" : "flex flex-col py-1.5"}`}
       style={{ ...style, background: tint, color: text, boxShadow: pending ? `inset 0 0 0 1px ${accent}` : undefined }}
     >
-      <span aria-hidden="true" className="absolute inset-y-0 left-0 w-[3px]" style={{ background: accent }} />
+      <span aria-hidden="true" className="absolute inset-y-0 start-0 w-[3px]" style={{ background: accent }} />
       {compact ? (
-        <span className="flex min-w-0 items-center gap-1 text-[12px] leading-none">
+        <span className="flex min-w-0 items-center gap-1 text-caption leading-none">
           {pending && <Icon name="clock" size={11} className="flex-none" />}
-          <span className={`truncate font-semibold ${tight ? "text-[11.5px]" : ""}`}>{item.who}</span>
+          <span className={`truncate font-semibold ${tight ? "text-caption" : ""}`}>{item.who}</span>
           {wide && <span className="flex-none opacity-80">· {fmtMin(start)}</span>}
         </span>
       ) : (
         <>
           <span className="flex min-w-0 items-center gap-1.5">
             {pending && <Icon name="clock" size={12} className="flex-none" />}
-            <span className={`truncate leading-tight font-semibold ${tight ? "text-[11.5px]" : "text-[12.5px]"}`}>{item.who}</span>
+            <span className={`truncate leading-tight font-semibold ${tight ? "text-caption" : "text-caption"}`}>{item.who}</span>
             {wide && (
-              <span className="ml-auto flex flex-none items-center gap-2">
+              <span className="ms-auto flex flex-none items-center gap-2">
                 <Icon name={sourceIcon[item.channel] ?? "message"} size={13} className="opacity-70" />
                 <Badge tone={pending ? "warning" : "success"}>{pending ? "Waiting" : "Confirmed"}</Badge>
               </span>
             )}
           </span>
-          <span className="truncate text-[11.5px] leading-snug opacity-80">{tight ? fmtMin(start) : range}</span>
-          {place.height >= 72 && !tight && <span className="truncate text-[11.5px] leading-snug opacity-80">{serviceName(item.service)}</span>}
-          {wide && place.height >= 96 && <span className="truncate text-[11.5px] leading-snug opacity-70">{item.phone}</span>}
+          <span className="truncate text-caption leading-snug opacity-80">{tight ? fmtMin(start) : range}</span>
+          {place.height >= 72 && !tight && <span className="truncate text-caption leading-snug opacity-80">{serviceName(item.service)}</span>}
+          {wide && place.height >= 96 && <span className="truncate text-caption leading-snug opacity-70">{item.phone}</span>}
         </>
       )}
     </button>
@@ -162,10 +162,10 @@ export function TimeGrid({ today, days, itemsFor, open, close, serviceName, onSe
   const nowMin = now ? now.getHours() * 60 + now.getMinutes() : -1;
   const showNow = days.includes(0) && nowMin >= startMin && nowMin <= endH * 60;
   const cols = `60px repeat(${days.length}, minmax(0, 1fr))`;
-  const colTint = (d: number) => (d === 0 ? "bg-[#F7F8FF]" : weekday(addDays(today, d)) >= 5 ? "bg-[#FCFCFD]" : "bg-white");
+  const colTint = (d: number) => (d === 0 ? "bg-brand-subtle" : weekday(addDays(today, d)) >= 5 ? "bg-surface-muted" : "bg-surface");
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-[18px] border border-line bg-white shadow-[0_1px_2px_rgb(30_31_43/0.03)]">
+    <div className="flex flex-col overflow-hidden rounded-xl border border-line bg-surface shadow-1">
       {/* Day headers */}
       <div className="grid border-b border-line" style={{ gridTemplateColumns: cols }}>
         <span />
@@ -179,11 +179,11 @@ export function TimeGrid({ today, days, itemsFor, open, close, serviceName, onSe
               type="button"
               onClick={() => onDayClick?.(d)}
               disabled={!onDayClick}
-              className={`flex flex-col items-center gap-0.5 border-l border-line py-2.5 enabled:cursor-pointer enabled:hover:bg-[#F7F7FA] ${colTint(d)} ${wide ? "items-start px-4" : ""}`}
+              className={`flex flex-col items-center gap-0.5 border-s border-line py-2.5 enabled:cursor-pointer enabled:hover:bg-surface-muted ${colTint(d)} ${wide ? "items-start px-4" : ""}`}
             >
-              <span className={`text-[12px] font-semibold tracking-[0.08em] uppercase ${isToday ? "text-indigo" : "text-subtle"}`}>{fmtDate(date, { weekday: wide ? "long" : "short" })}</span>
-              <span className={`flex h-9 w-9 items-center justify-center rounded-full text-[20px] leading-none font-semibold ${isToday ? "bg-ink text-white" : "text-ink"}`}>{date.getDate()}</span>
-              <span className="text-[11.5px] text-subtle">{n ? `${n} booking${n === 1 ? "" : "s"}` : "No bookings"}</span>
+              <span className={`text-caption font-semibold tracking-[0.08em] uppercase ${isToday ? "text-indigo" : "text-subtle"}`}>{fmtDate(date, { weekday: wide ? "long" : "short" })}</span>
+              <span className={`flex h-9 w-9 items-center justify-center rounded-full text-h3 leading-none font-semibold ${isToday ? "bg-brand-fill text-white" : "text-ink"}`}>{date.getDate()}</span>
+              <span className="text-caption text-subtle">{n ? `${n} booking${n === 1 ? "" : "s"}` : "No bookings"}</span>
             </button>
           );
         })}
@@ -194,12 +194,12 @@ export function TimeGrid({ today, days, itemsFor, open, close, serviceName, onSe
           {/* Hour labels */}
           <div className="relative">
             {hours.map((h, i) => (
-              <span key={h} hidden={showNow && Math.abs(nowMin - h * 60) < 14} className={`absolute right-2.5 text-[11.5px] font-medium text-subtle ${i === 0 ? "top-1" : "-translate-y-1/2"}`} style={i === 0 ? undefined : { top: pos(h * 60) }}>
+              <span key={h} hidden={showNow && Math.abs(nowMin - h * 60) < 14} className={`absolute end-2.5 text-caption font-medium text-subtle ${i === 0 ? "top-1" : "-translate-y-1/2"}`} style={i === 0 ? undefined : { top: pos(h * 60) }}>
                 {fmtMin(h * 60, false)}
               </span>
             ))}
             {showNow && (
-              <span className="absolute right-1 z-40 -translate-y-1/2 rounded-full bg-[#D0302F] px-1.5 py-0.5 text-[10.5px] leading-none font-semibold whitespace-nowrap text-white" style={{ top: pos(nowMin) }}>
+              <span className="absolute end-1 z-40 -translate-y-1/2 rounded-full bg-danger px-1.5 py-0.5 text-caption leading-none font-semibold whitespace-nowrap text-white" style={{ top: pos(nowMin) }}>
                 {fmtMin(nowMin).replace(" AM", "am").replace(" PM", "pm")}
               </span>
             )}
@@ -209,7 +209,7 @@ export function TimeGrid({ today, days, itemsFor, open, close, serviceName, onSe
             const items = itemsFor(d);
             const places = placeAll(items, pos);
             return (
-              <div key={d} className={`relative border-l border-line ${colTint(d)}`}>
+              <div key={d} className={`relative border-s border-line ${colTint(d)}`}>
                 {/* Hour and half-hour lines */}
                 {hours.map((h) => (
                   <div key={h} aria-hidden="true">
@@ -222,8 +222,8 @@ export function TimeGrid({ today, days, itemsFor, open, close, serviceName, onSe
                 ))}
                 {d === 0 && showNow && (
                   <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 z-40 flex items-center opacity-90" style={{ top: pos(nowMin) - 1 }}>
-                    <span className="-ml-[5px] h-2.5 w-2.5 flex-none rounded-full bg-[#D0302F]" />
-                    <span className="h-[2px] flex-1 bg-[#D0302F]" />
+                    <span className="-ms-[5px] h-2.5 w-2.5 flex-none rounded-full bg-danger" />
+                    <span className="h-[2px] flex-1 bg-danger" />
                   </div>
                 )}
               </div>
@@ -242,10 +242,10 @@ export function MonthGrid({ today, anchor, itemsFor, serviceName, onSelect, onDa
   const gridStart = addDays(first, -weekday(first));
   const cells = Array.from({ length: 42 }, (_, i) => addDays(gridStart, i));
   return (
-    <div className="overflow-hidden rounded-[18px] border border-line bg-white">
-      <div className="grid grid-cols-7 border-b border-line bg-[#FAFAFC]">
+    <div className="overflow-hidden rounded-xl border border-line bg-surface">
+      <div className="grid grid-cols-7 border-b border-line bg-surface-muted">
         {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
-          <span key={d} className="py-2.5 text-center text-[11.5px] font-semibold tracking-[0.08em] text-subtle uppercase">
+          <span key={d} className="py-2.5 text-center text-caption font-semibold tracking-[0.08em] text-subtle uppercase">
             {d}
           </span>
         ))}
@@ -256,12 +256,12 @@ export function MonthGrid({ today, anchor, itemsFor, serviceName, onSelect, onDa
           const inMonth = date.getMonth() === first.getMonth();
           const items = itemsFor(off).sort((x, y) => toMin(x.start) - toMin(y.start));
           return (
-            <div key={i} className={`flex min-h-[112px] flex-col gap-1 border-b border-line p-1.5 ${i % 7 ? "border-l" : ""} ${inMonth ? "bg-white" : "bg-[#FAFAFC]"}`}>
+            <div key={i} className={`flex min-h-[112px] flex-col gap-1 border-b border-line p-1.5 ${i % 7 ? "border-s" : ""} ${inMonth ? "bg-surface" : "bg-surface-muted"}`}>
               <button
                 type="button"
                 onClick={() => onDayClick(off)}
                 aria-label={`Open ${fmtDate(date, { weekday: "long", day: "numeric", month: "long" })}`}
-                className={`flex h-7 w-7 cursor-pointer items-center justify-center self-end rounded-full text-[13px] font-semibold hover:bg-panel ${off === 0 ? "bg-ink text-white hover:bg-ink" : inMonth ? "text-ink" : "text-faint"}`}
+                className={`flex h-7 w-7 cursor-pointer items-center justify-center self-end rounded-full text-label font-semibold hover:bg-panel ${off === 0 ? "bg-brand-fill text-white hover:bg-brand-fill" : inMonth ? "text-ink" : "text-faint"}`}
               >
                 {date.getDate()}
               </button>
@@ -273,7 +273,7 @@ export function MonthGrid({ today, anchor, itemsFor, serviceName, onSelect, onDa
                     type="button"
                     onClick={() => onSelect(it)}
                     aria-label={`${it.kind === "booking" ? `${it.who}, ${serviceName(it.service)}` : it.reason || "Blocked"}, ${fmtMin(toMin(it.start))}`}
-                    className="flex cursor-pointer items-center gap-1.5 rounded-[6px] px-1.5 py-0.5 text-left text-[12px] text-ink hover:bg-panel"
+                    className="flex cursor-pointer items-center gap-1.5 rounded-sm px-1.5 py-0.5 text-start text-caption text-ink hover:bg-panel"
                   >
                     <span className="h-2 w-2 flex-none rounded-full" style={{ background: accent }} />
                     <span className="flex-none text-subtle tabular-nums">{fmtMin(toMin(it.start)).replace(" AM", "am").replace(" PM", "pm")}</span>
@@ -282,7 +282,7 @@ export function MonthGrid({ today, anchor, itemsFor, serviceName, onSelect, onDa
                 );
               })}
               {items.length > 3 && (
-                <button type="button" onClick={() => onDayClick(off)} className="cursor-pointer px-1.5 text-left text-[12px] font-semibold text-indigo hover:underline">
+                <button type="button" onClick={() => onDayClick(off)} className="cursor-pointer px-1.5 text-start text-caption font-semibold text-indigo hover:underline">
                   +{items.length - 3} more
                 </button>
               )}
@@ -299,17 +299,17 @@ export function Agenda({ today, from, days, itemsFor, serviceName, onSelect }: {
   const list = Array.from({ length: days }, (_, i) => from + i).map((d) => ({ d, items: itemsFor(d).sort((x, y) => toMin(x.start) - toMin(y.start)) }));
   const withItems = list.filter((x) => x.items.length);
   return (
-    <div className="overflow-hidden rounded-[18px] border border-line bg-white">
-      {withItems.length === 0 && <p className="m-0 p-8 text-center text-[15px] text-subtle">No bookings in these days.</p>}
+    <div className="overflow-hidden rounded-xl border border-line bg-surface">
+      {withItems.length === 0 && <p className="m-0 p-8 text-center text-body text-subtle">No bookings in these days.</p>}
       {withItems.map(({ d, items }) => {
         const date = addDays(today, d);
         return (
           <section key={d} aria-label={fmtDate(date, { weekday: "long", day: "numeric", month: "long" })}>
-            <h3 className="sticky top-0 z-10 m-0 flex items-center gap-3 border-b border-line bg-[#FAFAFC]/95 px-4 py-2.5 backdrop-blur">
-              <span className={`flex h-9 w-9 items-center justify-center rounded-full text-[15px] font-semibold ${d === 0 ? "bg-ink text-white" : "bg-white text-ink ring-1 ring-line"}`}>{date.getDate()}</span>
+            <h3 className="sticky top-0 z-10 m-0 flex items-center gap-3 border-b border-line bg-surface-muted/95 px-4 py-2.5 backdrop-blur">
+              <span className={`flex h-9 w-9 items-center justify-center rounded-full text-body font-semibold ${d === 0 ? "bg-brand-fill text-white" : "bg-surface text-ink ring-1 ring-line"}`}>{date.getDate()}</span>
               <span className="flex flex-col leading-tight">
-                <span className="text-[14.5px] font-semibold text-ink">{d === 0 ? "Today" : d === 1 ? "Tomorrow" : fmtDate(date, { weekday: "long" })}</span>
-                <span className="text-[12.5px] font-normal text-subtle">
+                <span className="text-body font-semibold text-ink">{d === 0 ? "Today" : d === 1 ? "Tomorrow" : fmtDate(date, { weekday: "long" })}</span>
+                <span className="text-caption font-normal text-subtle">
                   {fmtDate(date, { day: "numeric", month: "long" })} · {items.filter((i) => i.kind === "booking").length} booked
                 </span>
               </span>
@@ -320,15 +320,15 @@ export function Agenda({ today, from, days, itemsFor, serviceName, onSelect }: {
                 const accent = it.kind === "booking" ? colorOf(it.service)[0] : "#B9BAC4";
                 return (
                   <li key={it.id} className="border-b border-line last:border-b-0">
-                    <button type="button" onClick={() => onSelect(it)} className="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-left hover:bg-[#FAFAFC]">
-                      <span className="w-[72px] flex-none text-[13px] leading-tight text-ink tabular-nums">
+                    <button type="button" onClick={() => onSelect(it)} className="flex w-full cursor-pointer items-center gap-3 px-4 py-3 text-start hover:bg-surface-muted">
+                      <span className="w-[72px] flex-none text-label leading-tight text-ink tabular-nums">
                         <span className="block font-semibold">{fmtMin(s)}</span>
                         <span className="text-subtle">{it.minutes} min</span>
                       </span>
                       <span className="h-10 w-1 flex-none rounded-full" style={{ background: accent }} />
                       <span className="flex min-w-0 flex-1 flex-col">
-                        <span className="truncate text-[14.5px] font-semibold text-ink">{it.kind === "booking" ? it.who : it.reason || "Blocked"}</span>
-                        <span className="truncate text-[13px] text-subtle">{it.kind === "booking" ? serviceName(it.service) : "No bookings"}</span>
+                        <span className="truncate text-body font-semibold text-ink">{it.kind === "booking" ? it.who : it.reason || "Blocked"}</span>
+                        <span className="truncate text-label text-subtle">{it.kind === "booking" ? serviceName(it.service) : "No bookings"}</span>
                       </span>
                       {it.kind === "booking" && it.status === "pending" && <Badge tone="warning">Waiting</Badge>}
                     </button>

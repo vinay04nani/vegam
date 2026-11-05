@@ -15,13 +15,13 @@ export function MiniMonth({ today, selected, onSelect, busyDays }: { today: Date
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
-        <p className="m-0 text-[14.5px] font-semibold text-ink">{fmtDate(month, { month: "long", year: "numeric" })}</p>
+        <p className="m-0 text-body font-semibold text-ink">{fmtDate(month, { month: "long", year: "numeric" })}</p>
         <div className="flex gap-1">
           <IconButton icon="chevron-left" label="Previous month" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() - 1, 1))} className="h-8 w-8" />
           <IconButton icon="chevron-right" label="Next month" onClick={() => setMonth(new Date(month.getFullYear(), month.getMonth() + 1, 1))} className="h-8 w-8" />
         </div>
       </div>
-      <div className="grid grid-cols-7 text-center text-[11.5px] font-semibold text-subtle" aria-hidden="true">
+      <div className="grid grid-cols-7 text-center text-caption font-semibold text-subtle" aria-hidden="true">
         {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
           <span key={i} className="py-1">
             {d}
@@ -41,12 +41,12 @@ export function MiniMonth({ today, selected, onSelect, busyDays }: { today: Date
               onClick={() => onSelect(off)}
               aria-label={fmtDate(d, { weekday: "long", day: "numeric", month: "long" })}
               aria-pressed={isSel}
-              className={`relative mx-auto flex h-8 w-8 cursor-pointer flex-col items-center justify-center rounded-full text-[13px] transition ${
-                isSel ? "bg-ink font-semibold text-white" : isToday ? "font-semibold text-ink ring-1 ring-ink" : inMonth ? "text-ink hover:bg-panel" : "text-faint hover:bg-panel"
+              className={`relative mx-auto flex h-8 w-8 cursor-pointer flex-col items-center justify-center rounded-full text-label transition ${
+                isSel ? "bg-brand-fill font-semibold text-white" : isToday ? "font-semibold text-ink ring-1 ring-ink" : inMonth ? "text-ink hover:bg-panel" : "text-faint hover:bg-panel"
               }`}
             >
               {d.getDate()}
-              {busyDays.has(off) && <span className={`absolute bottom-1 h-1 w-1 rounded-full ${isSel ? "bg-white" : "bg-orange"}`} />}
+              {busyDays.has(off) && <span className={`absolute bottom-1 h-1 w-1 rounded-full ${isSel ? "bg-surface" : "bg-orange"}`} />}
             </button>
           );
         })}

@@ -1,3 +1,5 @@
+import { getLocaleState } from "@/lib/locale";
+
 // Date helpers for the calendar. Bookings store `day` as days from today, so
 // every date here is converted to and from that offset.
 
@@ -15,14 +17,19 @@ export const toMin = (t: string) => {
   return h * 60 + (m || 0);
 };
 export const toTime = (min: number) => `${String(Math.floor(min / 60)).padStart(2, "0")}:${String(min % 60).padStart(2, "0")}`;
-/** 9:30 AM style. */
+/** Locale time, e.g. 9:30 AM or 21:30. */
 export const fmtMin = (min: number, withMinutes = true) => {
   const h = Math.floor(min / 60) % 24;
   const m = min % 60;
-  return `${((h + 11) % 12) + 1}${withMinutes && m ? `:${String(m).padStart(2, "0")}` : ""} ${h < 12 ? "AM" : "PM"}`;
+  const date = new Date(2024, 0, 1, h, m);
+  return new Intl.DateTimeFormat(getLocaleState().locale, {
+    hour: "numeric",
+    minute: withMinutes && m ? "2-digit" : undefined,
+  }).format(date);
 };
 
-export const fmtDate = (d: Date, opts: Intl.DateTimeFormatOptions) => d.toLocaleDateString("en-GB", opts);
+export const fmtDate = (d: Date, opts: Intl.DateTimeFormatOptions) =>
+  new Intl.DateTimeFormat(getLocaleState().locale, { timeZone: getLocaleState().timeZone, ...opts }).format(d);
 
 /** Lays out overlapping events side by side: returns each item's column and the column count of its cluster. */
 export function layoutColumns<T extends { id: string; start: string; minutes: number }>(items: T[]) {

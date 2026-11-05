@@ -1,5 +1,7 @@
 "use client";
 
+import { formatNumber } from "@/lib/locale";
+
 import { useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 
 // Small SVG/HTML charts for the Reports page, following the data-viz method:
@@ -16,7 +18,7 @@ export const quiet = "#B9BBC7";
 /** Blue sequential ramp, light → dark, for magnitude (heatmap). */
 export const blueRamp = ["#edf4fd", "#cde2fb", "#9ec5f4", "#6da7ec", "#3987e5", "#256abf", "#184f95", "#104281"];
 
-const ink = { primary: "#1E1F2B", secondary: "#5D5F6E", muted: "#8A8C99", grid: "#ECEDF2" };
+const ink = { primary: "var(--v-text)", secondary: "var(--v-text-2)", muted: "var(--v-text-3)", grid: "var(--v-border)" };
 
 /** Compact numbers for axes: 950, 1.2K, 3.4L, 1.1Cr (Indian grouping). */
 export function compact(v: number) {
@@ -72,7 +74,7 @@ function useKeyboardIndex(n: number, setHover: (fn: (h: number | null) => number
 function Tip({ x, y, children, width }: { x: number; y: number; children: ReactNode; width: number }) {
   const left = Math.min(Math.max(x, 84), width - 84);
   return (
-    <div role="tooltip" className="pointer-events-none absolute z-10 flex -translate-x-1/2 -translate-y-full flex-col gap-0.5 rounded-[10px] bg-ink px-3 py-2 text-[12.5px] whitespace-nowrap text-white shadow-[0_8px_20px_rgb(30_31_43/0.25)]" style={{ left, top: y - 8 }}>
+    <div role="tooltip" className="pointer-events-none absolute z-10 flex -translate-x-1/2 -translate-y-full flex-col gap-0.5 rounded-md bg-brand-fill px-3 py-2 text-caption whitespace-nowrap text-white shadow-1" style={{ left, top: y - 8 }}>
       {children}
     </div>
   );
@@ -83,7 +85,7 @@ function TipRow({ color, label, value, dim }: { color: string; label: string; va
     <span className={`flex items-center gap-2 ${dim ? "text-white/70" : ""}`}>
       <span className="h-2 w-2 flex-none rounded-full" style={{ background: color }} />
       <span className="flex-1">{label}</span>
-      <span className="pl-3 font-semibold tabular-nums">{value}</span>
+      <span className="ps-3 font-semibold tabular-nums">{value}</span>
     </span>
   );
 }
@@ -154,7 +156,7 @@ export function LineChart({
             setHover(Math.max(0, Math.min(n - 1, i)));
           }}
           onPointerLeave={() => setHover(null)}
-          className="block touch-pan-y rounded-[8px] outline-none focus-visible:ring-2 focus-visible:ring-indigo"
+          className="block touch-pan-y rounded-md outline-none focus-visible:ring-2 focus-visible:ring-indigo"
         >
           {ticks.map((t) => (
             <g key={t}>
@@ -177,12 +179,12 @@ export function LineChart({
           {[...data].reverse().map((s) => (
             <polyline key={s.id} points={s.values.map((v, i) => `${x(i)},${y(v)}`).join(" ")} fill="none" stroke={s.color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
           ))}
-          {hover === null && main && <circle cx={x(n - 1)} cy={y(main.values[n - 1])} r="4" fill={main.color} stroke="#fff" strokeWidth="2" />}
+          {hover === null && main && <circle cx={x(n - 1)} cy={y(main.values[n - 1])} r="4" fill={main.color} stroke="var(--v-surface)" strokeWidth="2" />}
           {hover !== null && (
             <g>
               <line x1={x(hover)} x2={x(hover)} y1={pad.t} y2={pad.t + ih} stroke={ink.secondary} strokeWidth="1" />
               {data.map((s) => (
-                <circle key={s.id} cx={x(hover)} cy={y(s.values[hover])} r="4.5" fill={s.color} stroke="#fff" strokeWidth="2" />
+                <circle key={s.id} cx={x(hover)} cy={y(s.values[hover])} r="4.5" fill={s.color} stroke="var(--v-surface)" strokeWidth="2" />
               ))}
             </g>
           )}
@@ -246,7 +248,7 @@ export function ColumnChart({
   return (
     <div ref={ref} className="relative w-full">
       {width > 0 && (
-        <svg width={width} height={height} role="img" aria-label={`${label}. Use the arrow keys to read each column.`} {...keys} onPointerLeave={() => setHover(null)} className="block touch-pan-y rounded-[8px] outline-none focus-visible:ring-2 focus-visible:ring-indigo">
+        <svg width={width} height={height} role="img" aria-label={`${label}. Use the arrow keys to read each column.`} {...keys} onPointerLeave={() => setHover(null)} className="block touch-pan-y rounded-md outline-none focus-visible:ring-2 focus-visible:ring-indigo">
           {ticks.map((t) => (
             <g key={t}>
               <line x1={pad.l} x2={width - pad.r} y1={pad.t + ih - h(t)} y2={pad.t + ih - h(t)} stroke={ink.grid} strokeWidth="1" />
@@ -281,7 +283,7 @@ export function ColumnChart({
               </g>
             );
           })}
-          <line x1={pad.l} x2={width - pad.r} y1={pad.t + ih} y2={pad.t + ih} stroke="#D9DAE3" strokeWidth="1" />
+          <line x1={pad.l} x2={width - pad.r} y1={pad.t + ih} y2={pad.t + ih} stroke="var(--v-border)" strokeWidth="1" />
         </svg>
       )}
       {hover !== null && width > 0 && (
@@ -304,10 +306,10 @@ export function ColumnChart({
 /** Legend for charts with 2+ series. */
 export function Legend({ items }: { items: { label: string; color: string; value?: string; line?: boolean }[] }) {
   return (
-    <ul className="m-0 flex list-none flex-wrap gap-x-4 gap-y-1 p-0 text-[13px] text-ink-soft">
+    <ul className="m-0 flex list-none flex-wrap gap-x-4 gap-y-1 p-0 text-label text-ink-soft">
       {items.map((it) => (
         <li key={it.label} className="flex items-center gap-1.5">
-          <span aria-hidden="true" className={it.line ? "h-[2px] w-3.5 rounded-full" : "h-2.5 w-2.5 rounded-[3px]"} style={{ background: it.color }} />
+          <span aria-hidden="true" className={it.line ? "h-[2px] w-3.5 rounded-full" : "h-2.5 w-2.5 rounded-sm"} style={{ background: it.color }} />
           {it.label}
           {it.value && <span className="font-semibold text-ink tabular-nums">{it.value}</span>}
         </li>
@@ -337,21 +339,21 @@ export function BarList({
       {rows.map((r, i) => (
         <li
           key={r.label}
-          className="grid items-center gap-3 text-[13.5px]"
+          className="grid items-center gap-3 text-label"
           style={{ gridTemplateColumns: `minmax(0,${labelWidth}px) minmax(0,1fr) auto` }}
           onMouseEnter={() => setHover(i)}
           onMouseLeave={() => setHover(null)}
         >
           <span className="truncate text-ink-soft">{r.label}</span>
           <span className="relative h-5">
-            <span className="absolute inset-y-0 left-0 rounded-r-[4px] transition-opacity" style={{ width: `${Math.max(1.5, (r.value / max) * 100)}%`, background: color, opacity: hover === null || hover === i ? 1 : 0.45 }} />
+            <span className="absolute inset-y-0 start-0 rounded-e-[4px] transition-opacity" style={{ width: `${Math.max(1.5, (r.value / max) * 100)}%`, background: color, opacity: hover === null || hover === i ? 1 : 0.45 }} />
             {hover === i && note && (
-              <span role="tooltip" className="absolute -top-8 left-0 z-10 rounded-[8px] bg-ink px-2 py-1 text-[12px] whitespace-nowrap text-white">
+              <span role="tooltip" className="absolute -top-8 start-0 z-10 rounded-md bg-brand-fill px-2 py-1 text-caption whitespace-nowrap text-white">
                 {note(r, i)}
               </span>
             )}
           </span>
-          <span className="min-w-12 text-right font-semibold text-ink tabular-nums">{format(r.value)}</span>
+          <span className="min-w-12 text-end font-semibold text-ink tabular-nums">{format(r.value)}</span>
         </li>
       ))}
     </ul>
@@ -370,7 +372,7 @@ export function SplitBar({ parts }: { parts: { label: string; share: number; col
             onMouseEnter={() => setHover(i)}
             onMouseLeave={() => setHover(null)}
             title={`${p.label}: ${Math.round(p.share * 100)}%`}
-            className={`h-full transition-opacity ${i === 0 ? "rounded-l-[6px]" : ""} ${i === parts.length - 1 ? "rounded-r-[6px]" : ""}`}
+            className={`h-full transition-opacity ${i === 0 ? "rounded-s-[6px]" : ""} ${i === parts.length - 1 ? "rounded-e-[6px]" : ""}`}
             style={{ width: `${p.share * 100}%`, background: p.color, opacity: hover === null || hover === i ? 1 : 0.45 }}
           />
         ))}
@@ -381,7 +383,7 @@ export function SplitBar({ parts }: { parts: { label: string; share: number; col
 }
 
 /** A conversion funnel: each step's bar against the first, with what moved on and what dropped off between steps. */
-export function Funnel({ steps, format = (v: number) => v.toLocaleString("en-IN") }: { steps: { label: string; value: number; hint?: string }[]; format?: (v: number) => string }) {
+export function Funnel({ steps, format = (v: number) => formatNumber(v) }: { steps: { label: string; value: number; hint?: string }[]; format?: (v: number) => string }) {
   const first = Math.max(1, steps[0]?.value ?? 1);
   return (
     <ol className="m-0 flex list-none flex-col p-0">
@@ -391,7 +393,7 @@ export function Funnel({ steps, format = (v: number) => v.toLocaleString("en-IN"
         return (
           <li key={s.label} className="flex flex-col">
             {prev && (
-              <span className="flex items-center gap-2 py-1.5 pl-3 text-[12.5px] text-subtle">
+              <span className="flex items-center gap-2 py-1.5 ps-3 text-caption text-subtle">
                 <svg width="10" height="14" viewBox="0 0 10 14" aria-hidden="true" className="flex-none text-line-strong">
                   <path d="M5 0v12M1 8l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -401,18 +403,18 @@ export function Funnel({ steps, format = (v: number) => v.toLocaleString("en-IN"
               </span>
             )}
             <div className="flex flex-col gap-1.5">
-              <span className="flex items-baseline justify-between gap-3 text-[13.5px]">
+              <span className="flex items-baseline justify-between gap-3 text-label">
                 <span className="min-w-0 truncate font-medium text-ink">
                   {s.label}
                   {s.hint && <span className="font-normal text-subtle"> · {s.hint}</span>}
                 </span>
                 <span className="flex-none text-ink-soft">
                   <span className="font-semibold text-ink tabular-nums">{format(s.value)}</span>
-                  <span className="ml-2 inline-block w-10 text-right text-subtle tabular-nums">{Math.round((s.value / first) * 100)}%</span>
+                  <span className="ms-2 inline-block w-10 text-end text-subtle tabular-nums">{Math.round((s.value / first) * 100)}%</span>
                 </span>
               </span>
-              <span className="block h-5 rounded-[6px] bg-[#edf4fd]">
-                <span className="block h-full rounded-[6px]" style={{ width: `${Math.max(1.5, (s.value / first) * 100)}%`, background: series.blue }} />
+              <span className="block h-5 rounded-sm bg-info-subtle">
+                <span className="block h-full rounded-sm" style={{ width: `${Math.max(1.5, (s.value / first) * 100)}%`, background: series.blue }} />
               </span>
             </div>
           </li>
@@ -431,7 +433,7 @@ export function Heatmap({ rows, cols, values }: { rows: string[]; cols: string[]
   return (
     <div className="flex flex-col gap-3">
       <div className="relative overflow-x-auto">
-        <table className="w-full min-w-[420px] border-separate border-spacing-[3px] text-[11px]" aria-label="Enquiries by day and hour">
+        <table className="w-full min-w-[420px] border-separate border-spacing-[3px] text-caption" aria-label="Enquiries by day and hour">
           <thead>
             <tr>
               <th scope="col" className="w-9">
@@ -447,7 +449,7 @@ export function Heatmap({ rows, cols, values }: { rows: string[]; cols: string[]
           <tbody>
             {rows.map((r, ri) => (
               <tr key={r}>
-                <th scope="row" className="pr-1 text-left font-normal text-muted">
+                <th scope="row" className="pe-1 text-start font-normal text-muted">
                   {r}
                 </th>
                 {values[ri].map((v, ci) => (
@@ -455,14 +457,14 @@ export function Heatmap({ rows, cols, values }: { rows: string[]; cols: string[]
                     key={ci}
                     onMouseEnter={() => setHover({ r: ri, c: ci })}
                     onMouseLeave={() => setHover(null)}
-                    className={`relative h-7 rounded-[4px] ${hover?.r === ri && hover?.c === ci ? "ring-2 ring-ink" : ""}`}
+                    className={`relative h-7 rounded-sm ${hover?.r === ri && hover?.c === ci ? "ring-2 ring-ink" : ""}`}
                     style={{ background: shade(v) }}
                   >
                     <span className="sr-only">
                       {r} {cols[ci]}: {v} enquiries
                     </span>
                     {hover?.r === ri && hover?.c === ci && (
-                      <span role="tooltip" className="absolute bottom-full left-1/2 z-10 mb-1.5 -translate-x-1/2 rounded-[8px] bg-ink px-2 py-1 text-[12px] whitespace-nowrap text-white">
+                      <span role="tooltip" className="absolute bottom-full left-1/2 z-10 mb-1.5 -translate-x-1/2 rounded-md bg-brand-fill px-2 py-1 text-caption whitespace-nowrap text-white">
                         {r} {cols[ci]} · {v} enquiries
                       </span>
                     )}
@@ -473,11 +475,11 @@ export function Heatmap({ rows, cols, values }: { rows: string[]; cols: string[]
           </tbody>
         </table>
       </div>
-      <div className="flex items-center gap-2 text-[12px] text-muted">
+      <div className="flex items-center gap-2 text-caption text-muted">
         Fewer
         <span className="flex gap-[2px]">
           {blueRamp.map((c) => (
-            <span key={c} className="h-2.5 w-5 rounded-[2px]" style={{ background: c }} />
+            <span key={c} className="h-2.5 w-5 rounded-sm" style={{ background: c }} />
           ))}
         </span>
         More

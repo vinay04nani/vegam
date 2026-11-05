@@ -1,3 +1,4 @@
+import { regionalView } from "@/lib/regional";
 // Channels and apps in the settings dialog: what each service does,
 // what the business needs, the steps, and any approvals it waits on.
 // TODO(backend): each "Connect" starts the real OAuth or signup flow.
@@ -29,7 +30,7 @@ export type Integration = {
 
 export const integrationCategories: IntegrationCategory[] = ["Messaging", "Calls & SMS", "Calendars", "Payments", "Ads & reviews", "Business tools", "Developer"];
 
-export const integrations: Integration[] = [
+export const integrations: Integration[] = regionalView([
   {
     id: "whatsapp",
     name: "WhatsApp",
@@ -307,4 +308,4 @@ export const integrations: Integration[] = [
     needs: ["A developer, or someone comfortable with APIs"],
     steps: ["Create an API key in Settings → Developer.", "Add a webhook URL and choose events.", "Send a test event."],
   },
-];
+]);

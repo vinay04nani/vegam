@@ -1,50 +1,162 @@
 @import "tailwindcss";
 
-/* Vegam design tokens */
-@theme {
-  --font-sans: var(--font-figtree), system-ui, sans-serif;
-  --font-serif: var(--font-newsreader), Georgia, serif;
+/*
+  Vegam tokens. Components use these names (bg-surface, text-text, …).
+  Dark mode redefines the same variables on [data-theme=dark], so screens
+  do not need dark: classes. @theme inline keeps utilities pointing at the
+  variables instead of baking the light hex in.
+*/
+
+:root {
+  color-scheme: light;
+  --v-bg: #fbfbfd;
+  --v-surface: #ffffff;
+  --v-surface-muted: #f5f6fa;
+  --v-border: #e6e8f0;
+  --v-border-strong: #d5d8e3;
+  --v-text: #14151f;
+  --v-text-2: #4a4c5c;
+  --v-text-3: #6b6e80;
+  --v-brand: #3d35d9;
+  --v-brand-hover: #2e27b8;
+  --v-brand-fill: #3d35d9;
+  --v-brand-subtle: #eeefff;
+  --v-brand-deep: #1510ad;
+  --v-signal: #ffb020;
+  --v-signal-ink: #c2410c;
+  --v-success: #15803d;
+  --v-success-subtle: #dcfce7;
+  --v-warning: #c2410c;
+  --v-warning-subtle: #ffedd5;
+  --v-danger: #b42318;
+  --v-danger-subtle: #fee2e2;
+  --v-info: #1d4ed8;
+  --v-info-subtle: #dbeafe;
+  --v-shadow-1: 0 1px 2px rgb(20 21 31 / 0.06);
+  --v-shadow-2: 0 8px 24px rgb(20 21 31 / 0.08);
+  --v-shadow-3: 0 24px 60px rgb(20 21 31 / 0.16);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --v-bg: #0b0c14;
+  --v-surface: #12131c;
+  --v-surface-muted: #1a1b27;
+  --v-border: #262837;
+  --v-border-strong: #34364a;
+  --v-text: #ecedf5;
+  --v-text-2: #a3a6ba;
+  --v-text-3: #8f92a8;
+  --v-brand: #8b87ff;
+  --v-brand-hover: #a29eff;
+  --v-brand-fill: #5b54f5;
+  --v-brand-subtle: #1e1c4a;
+  --v-brand-deep: #8b87ff;
+  --v-signal: #ffc14d;
+  --v-signal-ink: #fb923c;
+  --v-success: #4ade80;
+  --v-success-subtle: #052e16;
+  --v-warning: #fb923c;
+  --v-warning-subtle: #431407;
+  --v-danger: #f87171;
+  --v-danger-subtle: #450a0a;
+  --v-info: #93c5fd;
+  --v-info-subtle: #172554;
+  --v-shadow-1: 0 1px 2px rgb(0 0 0 / 0.45);
+  --v-shadow-2: 0 8px 24px rgb(0 0 0 / 0.5);
+  --v-shadow-3: 0 24px 60px rgb(0 0 0 / 0.6);
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme inline {
+  --font-sans: var(--font-inter), var(--font-noto-arabic), var(--font-noto-devanagari), var(--font-noto-thai), "Noto Sans Arabic", "Noto Sans Devanagari", "Noto Sans JP", "Noto Sans KR", "Noto Sans SC", "Noto Sans Thai", "Hiragino Sans", "Yu Gothic", "PingFang SC", "Malgun Gothic", "Microsoft YaHei", system-ui, sans-serif;
+  --font-serif: var(--font-newsreader), "Noto Serif", "Noto Naskh Arabic", "Noto Serif Devanagari", Georgia, "Times New Roman", serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
 
-  --color-page: #fbfbfd;
-  --color-ink: #1e1f2b;
-  --color-ink-soft: #3a3c4a;
-  --color-muted: #4a4c5c;
-  --color-subtle: #5d5f6e;
-  --color-faint: #6b6d7c;
-  --color-line: #ecedf2;
-  --color-line-strong: #e4e6f0;
-  --color-panel: #f6f6f9;
-  --color-button: #23243a;
+  --color-bg: var(--v-bg);
+  --color-surface: var(--v-surface);
+  --color-surface-muted: var(--v-surface-muted);
+  --color-border: var(--v-border);
+  --color-border-strong: var(--v-border-strong);
+  --color-text: var(--v-text);
+  --color-text-2: var(--v-text-2);
+  --color-text-3: var(--v-text-3);
+  --color-brand: var(--v-brand);
+  --color-brand-hover: var(--v-brand-hover);
+  --color-brand-fill: var(--v-brand-fill);
+  --color-brand-subtle: var(--v-brand-subtle);
+  --color-brand-deep: var(--v-brand-deep);
+  --color-signal: var(--v-signal);
+  --color-signal-ink: var(--v-signal-ink);
+  --color-success: var(--v-success);
+  --color-success-subtle: var(--v-success-subtle);
+  --color-warning: var(--v-warning);
+  --color-warning-subtle: var(--v-warning-subtle);
+  --color-danger: var(--v-danger);
+  --color-danger-subtle: var(--v-danger-subtle);
+  --color-info: var(--v-info);
+  --color-info-subtle: var(--v-info-subtle);
 
-  --color-brand: #1510ad;
-  --color-brand-deep: #0e0b3d;
-  --color-indigo: #4a47e0;
-  --color-periwinkle: #6e77e6;
-  --color-periwinkle-soft: #eef0ff;
-  --color-periwinkle-line: #c9cef6;
-  --color-accent: #ffb020;
-  --color-orange: #ee7a2e;
+  /* Previous names, mapped so existing classes follow the same theme. */
+  --color-page: var(--v-bg);
+  --color-ink: var(--v-text);
+  --color-ink-soft: var(--v-text-2);
+  --color-muted: var(--v-text-2);
+  --color-subtle: var(--v-text-3);
+  --color-faint: var(--v-text-3);
+  --color-line: var(--v-border);
+  --color-line-strong: var(--v-border-strong);
+  --color-panel: var(--v-surface-muted);
+  --color-button: var(--v-brand-fill);
+  --color-indigo: var(--v-brand);
+  --color-periwinkle: var(--v-brand);
+  --color-periwinkle-soft: var(--v-brand-subtle);
+  --color-periwinkle-line: var(--v-border-strong);
+  --color-accent: var(--v-signal);
+  --color-orange: var(--v-signal-ink);
 
-  --color-success: #2e7d32;
-  --color-warning: #b4500a;
-  --color-danger: #c41010;
+  /* 4px grid is Tailwind's default. Sections use 96 desktop / 64 mobile. */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
 
-  --radius-card: 22px;
+  --shadow-1: var(--v-shadow-1);
+  --shadow-2: var(--v-shadow-2);
+  --shadow-3: var(--v-shadow-3);
+
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1rem;
+  --text-label: 0.8125rem;
+  --text-label--line-height: 1.125rem;
+  --text-body: 0.875rem;
+  --text-body--line-height: 1.375rem;
+  --text-body-lg: 1rem;
+  --text-body-lg--line-height: 1.625rem;
+  --text-h3: 1.125rem;
+  --text-h3--line-height: 1.625rem;
+  --text-h2: 1.375rem;
+  --text-h2--line-height: 1.75rem;
+  --text-h1: 1.875rem;
+  --text-h1--line-height: 2.25rem;
+  --text-display: clamp(2rem, 4vw, 2.75rem);
+  --text-display--line-height: 1.14;
+  --text-display--letter-spacing: -0.02em;
+  --text-display-xl: clamp(2.25rem, 6vw, 3.75rem);
+  --text-display-xl--line-height: 1.07;
+  --text-display-xl--letter-spacing: -0.02em;
+
+  --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --default-transition-duration: 200ms;
+  --default-transition-timing-function: cubic-bezier(0.2, 0.7, 0.2, 1);
 
   --animate-marquee: marquee 36s linear infinite;
-  --animate-orn-l: orn-l 3.2s ease-in-out infinite;
-  --animate-orn-r: orn-r 3.2s ease-in-out infinite;
-  --animate-orn-c: orn-c 3.2s ease-in-out infinite;
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-glow: glow 3.2s ease-in-out infinite;
-  --animate-slide-in: slide-in 0.2s ease-out;
-  --animate-slide-in-left: slide-in-left 0.2s ease-out;
+  --animate-live: live-pulse 2.4s ease-in-out infinite;
+  --animate-slide-in: slide-in 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  --animate-slide-in-left: slide-in-start 200ms cubic-bezier(0.2, 0.7, 0.2, 1);
 
-  @keyframes fade-in {
-    from { opacity: 0; transform: scale(0.985); }
-  }
-  @keyframes slide-in-left {
+  @keyframes slide-in-start {
     from { transform: translateX(-16px); opacity: 0; }
   }
   @keyframes slide-in {
@@ -53,26 +165,36 @@
   @keyframes marquee {
     to { transform: translateX(-50%); }
   }
-  @keyframes orn-l {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(7px); }
+  @keyframes live-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.45; }
   }
-  @keyframes orn-r {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(-7px); }
-  }
-  @keyframes orn-c {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.12); }
-  }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
-  @keyframes glow {
-    0%, 100% { box-shadow: 0 0 50px 10px rgb(255 176 32 / 0.4); }
-    50% { box-shadow: 0 0 80px 22px rgb(255 176 32 / 0.55); }
-  }
+}
+
+/* Chat mockups stay a light WhatsApp-style surface in both themes, so their text does not follow dark ink. */
+@utility light-surface {
+  color-scheme: light;
+  --v-bg: #fbfbfd;
+  --v-surface: #ffffff;
+  --v-surface-muted: #f5f6fa;
+  --v-border: #e6e8f0;
+  --v-border-strong: #d5d8e3;
+  --v-text: #14151f;
+  --v-text-2: #4a4c5c;
+  --v-text-3: #6b6e80;
+  --v-brand: #3d35d9;
+  --v-brand-fill: #3d35d9;
+  --v-brand-subtle: #eeefff;
+  --v-success: #15803d;
+  --v-success-subtle: #dcfce7;
+  --v-warning: #c2410c;
+  --v-warning-subtle: #ffedd5;
+  --v-danger: #b42318;
+  --v-danger-subtle: #fee2e2;
+  --v-info: #1d4ed8;
+  --v-info-subtle: #dbeafe;
+  --v-signal-ink: #c2410c;
+  color: var(--v-text);
 }
 
 @layer base {
@@ -80,93 +202,63 @@
     scroll-behavior: smooth;
   }
   body {
-    background: var(--color-page);
-    color: var(--color-ink);
+    background: var(--v-bg);
+    color: var(--v-text);
     font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.625;
     -webkit-font-smoothing: antialiased;
   }
   :focus-visible {
-    outline: 2px solid var(--color-indigo);
-    outline-offset: 3px;
+    outline: 2px solid var(--v-brand);
+    outline-offset: 2px;
   }
 }
 
-/* Signature backgrounds */
-/* Hero glow: a wide saffron band over periwinkle sides, fading to the page. */
+/* Indigo field with one amber sunrise point: the 8 AM report. */
 @utility bg-hero {
   background:
-    linear-gradient(to bottom, rgb(251 251 253 / 0.96) 0%, rgb(251 251 253 / 0.78) 4%, rgb(251 251 253 / 0.35) 9%, rgb(251 251 253 / 0) 14%),
-    radial-gradient(30% 34% at 0% 0%, #fbfbfd 0%, rgb(251 251 253 / 0.85) 30%, rgb(251 251 253 / 0) 100%),
-    radial-gradient(30% 34% at 100% 0%, #fbfbfd 0%, rgb(251 251 253 / 0.85) 30%, rgb(251 251 253 / 0) 100%),
-    linear-gradient(to bottom, rgb(251 251 253 / 0) 58%, #fbfbfd 94%),
-    radial-gradient(60% 32% at 50% 17%, #f7740f 0%, #f7740f 34%, rgb(247 116 15 / 0.8) 54%, rgb(249 146 72 / 0.36) 78%, rgb(249 146 72 / 0) 100%),
-    radial-gradient(30% 44% at 0% 52%, #a6b4f8 0%, rgb(166 180 248 / 0.7) 42%, rgb(166 180 248 / 0) 100%),
-    radial-gradient(30% 44% at 100% 52%, #a6b4f8 0%, rgb(166 180 248 / 0.7) 42%, rgb(166 180 248 / 0) 100%),
-    radial-gradient(62% 42% at 50% 56%, #c5cffa 0%, rgb(197 207 250 / 0.6) 45%, rgb(197 207 250 / 0) 100%),
-    #f3f4fc;
+    radial-gradient(22% 18% at 72% 12%, color-mix(in srgb, var(--v-signal) 42%, transparent), transparent 70%),
+    radial-gradient(80% 55% at 50% -8%, var(--v-brand-subtle), transparent 72%),
+    var(--v-bg);
 }
-/* Kolam dot grid (pulli): the dots a kolam is drawn around. */
-@utility bg-dots {
-  background-image: radial-gradient(circle at 1px 1px, rgb(30 31 43 / 0.16) 1.2px, transparent 1.6px);
-  background-size: 26px 26px;
+@utility bg-night {
+  background: linear-gradient(165deg, #1510ad 0%, #3d35d9 46%, #1b1c2e 100%);
 }
-@utility bg-dots-light {
-  background-image: radial-gradient(circle at 1px 1px, rgb(255 255 255 / 0.14) 1.2px, transparent 1.6px);
-  background-size: 26px 26px;
-}
-/* Fine film grain laid over the glow. */
-@utility bg-grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  mix-blend-mode: soft-light;
-}
-/* Dark call-to-action banner: night indigo rising to periwinkle. */
 @utility bg-banner {
-  background: linear-gradient(180deg, #1b1c2e 0%, #33375f 34%, #6370b8 70%, #93a3ea 100%);
+  background: linear-gradient(180deg, #1510ad 0%, #3d35d9 70%, #6e77e6 100%);
 }
 @utility bg-languages {
   background:
-    radial-gradient(55% 60% at 50% 50%, #ffffff 0%, rgb(255 255 255 / 0) 70%),
-    radial-gradient(60% 70% at 15% 15%, #f7c08e 0%, rgb(247 192 142 / 0) 70%),
-    radial-gradient(60% 70% at 90% 90%, #afb9f7 0%, rgb(175 185 247 / 0) 70%),
-    #f3f1f7;
+    radial-gradient(55% 60% at 50% 42%, var(--v-surface) 0%, transparent 68%),
+    radial-gradient(48% 40% at 18% 18%, color-mix(in srgb, var(--v-signal) 28%, transparent), transparent 70%),
+    radial-gradient(50% 46% at 88% 80%, var(--v-brand-subtle), transparent 72%),
+    var(--v-bg);
 }
-@utility text-giant {
-  background: linear-gradient(100deg, #ee7a2e 0%, #f2a65a 22%, #b9c2f7 55%, #6e77e6 80%, #1510ad 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
+@utility text-outline-mark {
   color: transparent;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px var(--v-text-3);
 }
 @utility mask-fade-x {
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
 }
 
-/* Milky-glass glyphs on art tiles */
-.frosted {
-  display: inline-flex;
-  color: rgb(255 255 255 / 0.88);
-  filter: drop-shadow(0 0 10px rgb(255 255 255 / 0.65)) drop-shadow(0 0 2px rgb(255 255 255 / 0.9))
-    drop-shadow(0 6px 14px rgb(30 31 43 / 0.12));
-}
-
-/* Scroll reveal */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: opacity 320ms cubic-bezier(0.2, 0.7, 0.2, 1), transform 320ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 .reveal.is-visible {
   opacity: 1;
   transform: none;
 }
 
-/* Chat bubbles entering */
 .bubble-in {
-  animation: bubble-in 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: bubble-in 200ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
 @keyframes bubble-in {
-  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: none; }
 }
 .typing-dot {
@@ -176,6 +268,35 @@
   0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
   30% { opacity: 1; transform: translateY(-3px); }
 }
+
+.legal-doc h2,
+.legal-doc h3,
+.legal-doc h4 {
+  margin: 1.6em 0 0.4em;
+  color: var(--v-text);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.legal-doc h2 { font-size: 1.375rem; line-height: 1.75rem; }
+.legal-doc h3 { font-size: 1.125rem; line-height: 1.625rem; }
+.legal-doc p,
+.legal-doc li { margin: 0.55em 0; }
+.legal-doc ul,
+.legal-doc ol { padding-inline-start: 1.25rem; }
+.legal-doc a { color: var(--v-brand); text-underline-offset: 3px; }
+.legal-doc a:hover { text-decoration: underline; }
+.legal-doc blockquote {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  border-inline-start: 3px solid var(--v-brand);
+  background: var(--v-brand-subtle);
+  color: var(--v-text-2);
+}
+.legal-doc code { font-family: var(--font-mono); font-size: 0.85em; }
+.legal-doc table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.875rem; line-height: 1.375rem; }
+.legal-doc th,
+.legal-doc td { border: 1px solid var(--v-border); padding: 0.5rem 0.65rem; text-align: start; vertical-align: top; }
+.legal-doc th { background: var(--v-surface-muted); color: var(--v-text); font-weight: 600; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

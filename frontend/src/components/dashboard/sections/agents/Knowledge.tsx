@@ -40,22 +40,22 @@ function Unanswered({ agentId, update }: { agentId?: AgentId; update: Update }) 
     <Panel
       title="Questions it couldn’t answer"
       description="It handed these to your team instead of guessing. Answer once and it knows next time."
-      action={<span className="text-[13px] text-subtle">{items.length ? `${items.length} to answer` : "All caught up"}</span>}
+      action={<span className="text-label text-subtle">{items.length ? `${items.length} to answer` : "All caught up"}</span>}
     >
       {items.length === 0 ? (
-        <p className="m-0 text-[14px] text-subtle">Nothing waiting.</p>
+        <p className="m-0 text-body text-subtle">Nothing waiting.</p>
       ) : (
         <ul className="m-0 flex list-none flex-col gap-4 p-0">
           {items.map((u) => (
             <li key={u.id} className="flex flex-col gap-2.5 border-t border-line pt-4 first:border-t-0 first:pt-0">
               <div className="flex flex-wrap items-start justify-between gap-2">
-                <p className="m-0 text-[15px] font-semibold text-ink">“{u.question}”</p>
-                <span className="text-[12.5px] text-subtle">
+                <p className="m-0 text-body font-semibold text-ink">“{u.question}”</p>
+                <span className="text-caption text-subtle">
                   Asked {u.asked}× · {u.channel} · {u.last}
                 </span>
               </div>
               {u.suggestion && (
-                <span className="flex items-center gap-1.5 text-[12.5px] text-subtle">
+                <span className="flex items-center gap-1.5 text-caption text-subtle">
                   <Icon name="sparkle" size={13} />
                   Suggested from how your team replied
                 </span>
@@ -84,21 +84,21 @@ function Sources({ picks, onPick }: { picks?: Record<string, boolean>; onPick?: 
       <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
         {sources.map((src) => (
           <li key={src.id} className="flex items-center gap-3 py-3 first:pt-0 last:pb-0">
-            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-[10px] border border-line bg-[#F6F6F8] text-ink">
+            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-md border border-line bg-surface-muted text-ink">
               <Icon name={src.icon} size={17} />
             </span>
             <span className="flex min-w-0 flex-1 flex-col">
-              <span className="text-[14px] font-medium text-ink">{src.name}</span>
-              <span className="truncate text-[12.5px] text-subtle">{src.detail}</span>
+              <span className="text-body font-medium text-ink">{src.name}</span>
+              <span className="truncate text-caption text-subtle">{src.detail}</span>
             </span>
             {picks && onPick ? (
               <Switch checked={picks[src.id] ?? true} onChange={(v) => onPick(src.id, v)} label={`Use ${src.name}`} />
             ) : src.id === "website" ? (
-              <button type="button" onClick={() => toast("Reading your website again (demo)", "info")} className="cursor-pointer text-[13px] font-semibold text-ink-soft hover:text-ink">
+              <button type="button" onClick={() => toast("Reading your website again (demo)", "info")} className="cursor-pointer text-label font-semibold text-ink-soft hover:text-ink">
                 Read again
               </button>
             ) : src.id === "files" ? (
-              <button type="button" onClick={() => toast("Choose a PDF or document (demo)", "info")} className="cursor-pointer text-[13px] font-semibold text-ink-soft hover:text-ink">
+              <button type="button" onClick={() => toast("Choose a PDF or document (demo)", "info")} className="cursor-pointer text-label font-semibold text-ink-soft hover:text-ink">
                 Add file
               </button>
             ) : null}

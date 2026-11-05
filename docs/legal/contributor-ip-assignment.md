@@ -30,11 +30,11 @@ The Owner has created and owns Vegam, an AI front desk software product, includi
 
 ## 4. Confidentiality
 
-4.1 The Contributor will keep confidential all non-public information about the Project and the Owner's business, including source code, product plans, pricing, customers and strategy ("Confidential Information").
+4.1 The public repository is not confidential. The Contributor will keep confidential non-public information about the Owner's business that is not in that repository, including unreleased plans, pricing not yet published, and customer information ("Confidential Information").
 
 4.2 The Contributor will use Confidential Information only to work on the Project for the Owner, and will not disclose it to anyone without the Owner's written consent.
 
-4.3 These duties continue for **[5] years** after this Agreement ends, and indefinitely for source code and trade secrets.
+4.3 These duties continue for **[5] years** after this Agreement ends, and indefinitely for non-public customer data.
 
 ## 5. No competing use
 

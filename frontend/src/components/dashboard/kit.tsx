@@ -20,7 +20,7 @@ export function SegmentedControl<T extends string>({
   size?: "sm" | "md";
 }) {
   return (
-    <div role="radiogroup" aria-label={label} className="inline-flex flex-none rounded-[12px] border border-line-strong bg-white p-1 shadow-[0_1px_2px_rgb(30_31_43/0.04)]">
+    <div role="radiogroup" aria-label={label} className="inline-flex flex-none rounded-lg border border-line-strong bg-surface p-1 shadow-1">
       {options.map((o) => (
         <button
           key={o.id}
@@ -28,8 +28,8 @@ export function SegmentedControl<T extends string>({
           role="radio"
           aria-checked={value === o.id}
           onClick={() => onChange(o.id)}
-          className={`inline-flex cursor-pointer items-center gap-1.5 rounded-[9px] font-semibold whitespace-nowrap transition ${size === "sm" ? "min-h-8 px-2.5 text-[13px]" : "min-h-9 px-3.5 text-[14px]"} ${
-            value === o.id ? "bg-ink text-white shadow-[0_1px_2px_rgb(30_31_43/0.2)]" : "text-ink-soft hover:bg-panel hover:text-ink"
+          className={`inline-flex cursor-pointer items-center gap-1.5 rounded-md font-semibold whitespace-nowrap transition ${size === "sm" ? "min-h-8 px-2.5 text-label" : "min-h-9 px-3.5 text-body"} ${
+            value === o.id ? "bg-brand-fill text-white shadow-1" : "text-ink-soft hover:bg-panel hover:text-ink"
           }`}
         >
           {o.icon && <Icon name={o.icon} size={15} />}
@@ -47,7 +47,7 @@ export function IconButton({ icon, label, onClick, className = "" }: { icon: Ico
       aria-label={label}
       title={label}
       onClick={onClick}
-      className={`inline-flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-[10px] border border-line-strong bg-white text-ink transition hover:bg-panel ${className}`}
+      className={`inline-flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-md border border-line-strong bg-surface text-ink transition hover:bg-panel ${className}`}
     >
       <Icon name={icon} size={17} />
     </button>
@@ -78,10 +78,10 @@ export function Button({
   className?: string;
 }) {
   const styles = {
-    primary: "bg-ink text-white hover:bg-[#2c2d3d] shadow-[0_1px_2px_rgb(30_31_43/0.2)]",
-    secondary: "border border-line-strong bg-white text-ink hover:bg-panel",
+    primary: "bg-brand-fill text-white hover:bg-brand-hover shadow-1",
+    secondary: "border border-line-strong bg-surface text-ink hover:bg-panel",
     ghost: "text-ink-soft hover:bg-panel hover:text-ink",
-    danger: "text-danger hover:bg-[#FDECEC]",
+    danger: "text-danger hover:bg-danger-subtle",
   }[variant];
   return (
     <button
@@ -90,7 +90,7 @@ export function Button({
       aria-label={ariaLabel}
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex min-h-9 flex-none cursor-pointer items-center justify-center gap-1.5 rounded-[10px] px-3.5 text-[14px] font-semibold whitespace-nowrap transition disabled:cursor-not-allowed disabled:opacity-50 ${styles} ${className}`}
+      className={`inline-flex min-h-9 flex-none cursor-pointer items-center justify-center gap-1.5 rounded-md px-3.5 text-body font-semibold whitespace-nowrap transition disabled:cursor-not-allowed disabled:opacity-50 ${styles} ${className}`}
     >
       {icon && <Icon name={icon} size={16} />}
       {children}
@@ -98,7 +98,7 @@ export function Button({
   );
 }
 
-const avatarTones = ["bg-[#E6E8FD] text-brand", "bg-[#FFEBD9] text-[#8A3B00]", "bg-[#E3F2E6] text-[#1F5F25]", "bg-[#F1E6FA] text-[#5B2C83]", "bg-[#E2F0F7] text-[#14506B]", "bg-[#FBE7EA] text-[#8A1F33]"];
+const avatarTones = ["bg-brand-subtle text-brand", "bg-warning-subtle text-signal-ink", "bg-success-subtle text-success", "bg-brand-subtle text-brand", "bg-info-subtle text-info", "bg-danger-subtle text-danger"];
 
 export function Avatar({ name, size = 32 }: { name: string; size?: number }) {
   const letters = name.replace(/[^A-Za-z ]/g, "").trim();
@@ -115,18 +115,18 @@ export type BadgeTone = "neutral" | "brand" | "success" | "warning" | "danger" |
 
 const badgeTones: Record<BadgeTone, string> = {
   neutral: "bg-panel text-muted ring-line",
-  brand: "bg-periwinkle-soft text-brand ring-[#D9DCFB]",
-  success: "bg-[#E8F3EA] text-success ring-[#CFE6D3]",
-  warning: "bg-[#FFF3E6] text-warning ring-[#FBDDBF]",
-  danger: "bg-[#FDECEC] text-danger ring-[#F7CFCF]",
-  hot: "bg-[#FFEDE0] text-[#9C3D00] ring-[#FAD1B3]",
-  warm: "bg-[#FFF6DB] text-[#7A5200] ring-[#F5E2A6]",
-  cold: "bg-[#EAF0FB] text-[#2F4F86] ring-[#D3DEF3]",
+  brand: "bg-brand-subtle text-brand ring-brand/20",
+  success: "bg-success-subtle text-success ring-success/25",
+  warning: "bg-warning-subtle text-warning ring-warning/25",
+  danger: "bg-danger-subtle text-danger ring-danger/25",
+  hot: "bg-warning-subtle text-signal-ink ring-warning/30",
+  warm: "bg-warning-subtle text-signal-ink ring-warning/20",
+  cold: "bg-info-subtle text-info ring-info/25",
 };
 
 export function Badge({ tone = "neutral", children, dot = false }: { tone?: BadgeTone; children: ReactNode; dot?: boolean }) {
   return (
-    <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[12px] font-semibold whitespace-nowrap ring-1 ring-inset ${badgeTones[tone]}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-caption font-semibold whitespace-nowrap ring-1 ring-inset ${badgeTones[tone]}`}>
       {dot && <span className="h-1.5 w-1.5 rounded-full bg-current" />}
       {children}
     </span>
@@ -135,13 +135,13 @@ export function Badge({ tone = "neutral", children, dot = false }: { tone?: Badg
 
 export function StatCard({ label, value, note, icon }: { label: string; value: ReactNode; note?: ReactNode; icon?: IconName }) {
   return (
-    <div className="flex flex-col gap-1.5 rounded-[18px] border border-line bg-white p-4 shadow-[0_1px_2px_rgb(30_31_43/0.03)]">
-      <span className="flex items-center justify-between gap-2 text-[13.5px] font-medium text-subtle">
+    <div className="flex flex-col gap-1.5 rounded-xl border border-line bg-surface p-4 shadow-1">
+      <span className="flex items-center justify-between gap-2 text-label font-medium text-subtle">
         {label}
         {icon && <Icon name={icon} size={16} className="text-faint" />}
       </span>
-      <span className="text-[28px] leading-none font-bold tracking-[-0.02em] text-ink">{value}</span>
-      {note && <span className="text-[12.5px] text-subtle">{note}</span>}
+      <span className="text-h1 leading-none font-bold tracking-[-0.02em] text-ink">{value}</span>
+      {note && <span className="text-caption text-subtle">{note}</span>}
     </div>
   );
 }
@@ -149,11 +149,11 @@ export function StatCard({ label, value, note, icon }: { label: string; value: R
 export function EmptyState({ icon, title, body }: { icon: IconName; title: string; body?: string }) {
   return (
     <div className="flex flex-col items-center gap-2 px-6 py-12 text-center">
-      <span className="flex h-12 w-12 items-center justify-center rounded-[14px] bg-panel text-muted">
+      <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-panel text-muted">
         <Icon name={icon} size={22} />
       </span>
-      <p className="m-0 text-[15.5px] font-semibold text-ink">{title}</p>
-      {body && <p className="m-0 max-w-[340px] text-[14px] text-subtle">{body}</p>}
+      <p className="m-0 text-body-lg font-semibold text-ink">{title}</p>
+      {body && <p className="m-0 max-w-[340px] text-body text-subtle">{body}</p>}
     </div>
   );
 }
@@ -183,17 +183,17 @@ export function Drawer({ open, onClose, title, children, footer }: { open: boole
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
-      <div className="absolute inset-0 bg-ink/35 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
       <div
         ref={panel}
         role="dialog"
         aria-modal="true"
         aria-label={title}
         tabIndex={-1}
-        className="relative flex h-full w-full flex-col bg-white shadow-[-20px_0_60px_rgb(30_31_43/0.18)] outline-none sm:max-w-[480px] sm:rounded-l-[24px]"
+        className="relative flex h-full w-full flex-col bg-surface shadow-2 outline-none sm:max-w-[480px] sm:rounded-s-[24px]"
       >
         <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3.5">
-          <h2 className="m-0 text-[16px] font-semibold text-ink">{title}</h2>
+          <h2 className="m-0 text-body-lg font-semibold text-ink">{title}</h2>
           <IconButton icon="close" label="Close" onClick={onClose} className="border-transparent" />
         </div>
         <div className="flex-1 overflow-y-auto px-5 py-5">{children}</div>
@@ -208,18 +208,18 @@ export function Modal({ open, onClose, title, children, footer, width = 520 }: {
   if (!open) return null;
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center p-0 sm:items-center sm:p-6">
-      <div className="absolute inset-0 bg-ink/35 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
+      <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" onClick={onClose} aria-hidden="true" />
       <div
         ref={panel}
         role="dialog"
         aria-modal="true"
         aria-label={title}
         tabIndex={-1}
-        className="relative flex max-h-[92svh] w-full flex-col rounded-t-[24px] bg-white shadow-[0_30px_80px_rgb(30_31_43/0.25)] outline-none sm:rounded-[24px]"
+        className="relative flex max-h-[92svh] w-full flex-col rounded-t-[24px] bg-surface shadow-2 outline-none sm:rounded-xl"
         style={{ maxWidth: width }}
       >
         <div className="flex items-center justify-between gap-3 border-b border-line px-5 py-3.5">
-          <h2 className="m-0 text-[16px] font-semibold text-ink">{title}</h2>
+          <h2 className="m-0 text-body-lg font-semibold text-ink">{title}</h2>
           <IconButton icon="close" label="Close" onClick={onClose} className="border-transparent" />
         </div>
         <div className="overflow-y-auto px-5 py-5">{children}</div>
@@ -243,7 +243,7 @@ export const sourceIcon: Record<string, IconName> = {
 
 export function SourceLabel({ source }: { source: string }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-[13.5px] whitespace-nowrap text-ink-soft">
+    <span className="inline-flex items-center gap-1.5 text-label whitespace-nowrap text-ink-soft">
       <Icon name={sourceIcon[source] ?? "message"} size={15} className="text-muted" />
       {source}
     </span>
@@ -308,12 +308,12 @@ export function Menu({
     <div ref={root} className={`relative ${className}`} onClick={(e) => e.stopPropagation()}>
       <button
         type="button"
-        aria-label={label}
+        aria-label={trigger ? undefined : label}
         title={label}
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className={triggerClassName ?? (trigger ? "inline-flex cursor-pointer items-center rounded-full transition hover:opacity-90" : "inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-[8px] text-muted transition hover:bg-panel hover:text-ink")}
+        className={triggerClassName ?? (trigger ? "inline-flex cursor-pointer items-center rounded-full transition hover:opacity-90" : "inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-muted transition hover:bg-panel hover:text-ink")}
       >
         {trigger ?? <Icon name={icon} size={16} />}
       </button>
@@ -323,13 +323,13 @@ export function Menu({
           role="menu"
           aria-label={label}
           onKeyDown={onKeyDown}
-          className={`absolute ${above ? "bottom-full mb-2" : trigger ? "top-11" : "top-8"} ${above ? "inset-x-0" : align === "right" ? "right-0" : "left-0"} z-50 flex min-w-[188px] flex-col rounded-[12px] border border-line bg-white p-1.5 shadow-[0_16px_40px_rgb(30_31_43/0.16)]`}
+          className={`absolute ${above ? "bottom-full mb-2" : trigger ? "top-11" : "top-8"} ${above ? "inset-x-0" : align === "right" ? "end-0" : "start-0"} z-50 flex min-w-[188px] flex-col rounded-lg border border-line bg-surface p-1.5 shadow-2`}
         >
           {items.map((it, i) =>
             it.divider ? (
               <span key={i} role="separator" className="my-1 h-px bg-line" />
             ) : it.heading ? (
-              <p key={i} className="m-0 px-2.5 pt-1.5 pb-1 text-[11.5px] font-semibold tracking-[0.08em] text-subtle uppercase">
+              <p key={i} className="m-0 px-2.5 pt-1.5 pb-1 text-caption font-semibold tracking-[0.08em] text-subtle uppercase">
                 {it.label}
               </p>
             ) : (
@@ -342,7 +342,7 @@ export function Menu({
                   it.onSelect?.();
                   setOpen(false);
                 }}
-                className={`flex min-h-9 cursor-pointer items-center gap-2.5 rounded-[8px] px-2.5 text-left text-[14px] outline-none hover:bg-panel focus:bg-panel disabled:cursor-default disabled:text-subtle disabled:hover:bg-transparent ${it.danger ? "text-danger" : "text-ink"}`}
+                className={`flex min-h-9 cursor-pointer items-center gap-2.5 rounded-md px-2.5 text-start text-body outline-none hover:bg-panel focus:bg-panel disabled:cursor-default disabled:text-subtle disabled:hover:bg-transparent ${it.danger ? "text-danger" : "text-ink"}`}
               >
                 <span className="w-4 flex-none">{it.icon ? <Icon name={it.icon} size={15} className={it.danger ? "" : "text-muted"} /> : it.checked && <Icon name="check" size={14} strokeWidth={2.6} className="[&_circle]:hidden" />}</span>
                 {it.label}
@@ -368,12 +368,12 @@ export function Tabs<T extends string>({ label, value, tabs, onChange }: { label
             role="tab"
             aria-selected={on}
             onClick={() => onChange(t.id)}
-            className={`relative -mb-px flex min-h-11 flex-none cursor-pointer items-center gap-1.5 border-b-2 px-3 text-[14.5px] font-semibold whitespace-nowrap transition ${
+            className={`relative -mb-px flex min-h-11 flex-none cursor-pointer items-center gap-1.5 border-b-2 px-3 text-body font-semibold whitespace-nowrap transition ${
               on ? "border-ink text-ink" : "border-transparent text-subtle hover:text-ink"
             }`}
           >
             {t.label}
-            {t.count !== undefined && <span className="rounded-full bg-panel px-1.5 text-[12px] text-muted">{t.count}</span>}
+            {t.count !== undefined && <span className="rounded-full bg-panel px-1.5 text-caption text-muted">{t.count}</span>}
           </button>
         );
       })}
@@ -386,13 +386,13 @@ export function Toggle({ checked, onChange, label, description, disabled }: { ch
   return (
     <label className={`flex items-start justify-between gap-4 ${disabled ? "opacity-60" : "cursor-pointer"}`}>
       <span className="flex min-w-0 flex-col">
-        <span className="text-[14.5px] font-medium text-ink">{label}</span>
-        {description && <span className="text-[13px] text-subtle">{description}</span>}
+        <span className="text-body font-medium text-ink">{label}</span>
+        {description && <span className="text-label text-subtle">{description}</span>}
       </span>
       <span className="relative mt-0.5 flex-none">
         <input type="checkbox" role="switch" checked={checked} disabled={disabled} onChange={(e) => onChange(e.target.checked)} className="peer sr-only" />
-        <span className="block h-6 w-10 rounded-full bg-line-strong transition peer-checked:bg-ink peer-focus-visible:ring-2 peer-focus-visible:ring-indigo peer-focus-visible:ring-offset-2" />
-        <span className="absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-[0_1px_3px_rgb(30_31_43/0.25)] transition peer-checked:translate-x-4" />
+        <span className="block h-6 w-10 rounded-full bg-line-strong transition peer-checked:bg-brand-fill peer-focus-visible:ring-2 peer-focus-visible:ring-indigo peer-focus-visible:ring-offset-2" />
+        <span className="absolute top-0.5 start-0.5 h-5 w-5 rounded-full bg-surface shadow-1 transition peer-checked:translate-x-4" />
       </span>
     </label>
   );
@@ -401,7 +401,7 @@ export function Toggle({ checked, onChange, label, description, disabled }: { ch
 /** A usage bar that turns amber at 80% and red at 100%. */
 export function Progress({ value, max, label }: { value: number; max: number; label: string }) {
   const pct = Math.min(100, Math.round((value / Math.max(1, max)) * 100));
-  const tone = pct >= 100 ? "bg-danger" : pct >= 80 ? "bg-[#D98A00]" : "bg-ink";
+  const tone = pct >= 100 ? "bg-danger" : pct >= 80 ? "bg-signal" : "bg-brand-fill";
   return (
     <span role="progressbar" aria-label={label} aria-valuenow={value} aria-valuemin={0} aria-valuemax={max} className="block h-2 w-full overflow-hidden rounded-full bg-panel">
       <span className={`block h-full rounded-full transition-[width] duration-500 ${tone}`} style={{ width: `${pct}%` }} />
@@ -410,11 +410,11 @@ export function Progress({ value, max, label }: { value: number; max: number; la
 }
 
 export function Skeleton({ className = "" }: { className?: string }) {
-  return <span aria-hidden="true" className={`block animate-pulse rounded-[10px] bg-panel ${className}`} />;
+  return <span aria-hidden="true" className={`block animate-pulse rounded-md bg-panel ${className}`} />;
 }
 
 export function Kbd({ children }: { children: ReactNode }) {
-  return <kbd className="rounded-[6px] border border-line-strong bg-white px-1.5 py-0.5 font-sans text-[11.5px] font-semibold text-muted shadow-[0_1px_0_#E4E6F0]">{children}</kbd>;
+  return <kbd className="rounded-sm border border-line-strong bg-surface px-1.5 py-0.5 font-sans text-caption font-semibold text-muted shadow-1">{children}</kbd>;
 }
 
 // ---------- Toasts ----------
@@ -433,9 +433,9 @@ export function ToastProvider({ children }: { children: ReactNode }) {
   return (
     <ToastContext.Provider value={push}>
       {children}
-      <div aria-live="polite" className="pointer-events-none fixed inset-x-0 top-16 z-[60] flex flex-col items-center gap-2 px-4 lg:top-auto lg:right-6 lg:bottom-6 lg:left-auto lg:items-end lg:px-0">
+      <div aria-live="polite" className="pointer-events-none fixed inset-x-0 top-16 z-[60] flex flex-col items-center gap-2 px-4 lg:top-auto lg:end-6 lg:bottom-6 lg:start-auto lg:items-end lg:px-0">
         {items.map((t) => (
-          <div key={t.id} role="status" className="pointer-events-auto flex items-center gap-2.5 rounded-[12px] bg-ink px-4 py-2.5 text-[14px] font-medium text-white shadow-[0_12px_32px_rgb(30_31_43/0.3)]">
+          <div key={t.id} role="status" className="pointer-events-auto flex items-center gap-2.5 rounded-lg bg-brand-fill px-4 py-2.5 text-body font-medium text-white shadow-2">
             <Icon name={t.tone === "success" ? "check" : "sparkle"} size={16} className={t.tone === "success" ? "text-[#7BD88F]" : "text-accent"} />
             {t.text}
           </div>

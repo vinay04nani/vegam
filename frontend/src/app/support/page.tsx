@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import { ComingSoon } from "@/components/pixel/ComingSoon";
+import { ComingSoon } from "@/components/ui/ComingSoon";
 
 export const metadata: Metadata = { title: "Technical support · Vegam" };
 
 export default function SupportPage() {
   return (
     <ComingSoon
-      scene="lighthouse"
       icon="headset"
-      label="Technical support"
-      body="A help centre with guides and answers is on its way. Until then, tell us what you need through the contact form."
+      label="Help center"
+      body="Guides for the product live in the app help center. For anything else, write to us from the contact form."
       contactTopic="support"
     />
   );

@@ -134,7 +134,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
         <Button onClick={() => setAnchor(0)}>Today</Button>
         <IconButton icon="chevron-left" label={`Previous ${unit}`} onClick={() => move(-1)} />
         <IconButton icon="chevron-right" label={`Next ${unit}`} onClick={() => move(1)} />
-        <h2 className="m-0 ml-1 min-w-0 flex-1 truncate text-[18px] font-semibold text-ink sm:text-[20px]" aria-live="polite">
+        <h2 className="m-0 ms-1 min-w-0 flex-1 truncate text-h3 font-semibold text-ink sm:text-h3" aria-live="polite">
           {rangeLabel}
         </h2>
         <div className="hidden md:block">
@@ -163,7 +163,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
               ]}
             />
           </div>
-          <Button icon="lock" onClick={() => setBlockDraft({ day: anchor, start: toTime(Math.min(close - 60, Math.max(open, 13 * 60))), minutes: 60, reason: "" })} className="ml-auto md:ml-0">
+          <Button icon="lock" onClick={() => setBlockDraft({ day: anchor, start: toTime(Math.min(close - 60, Math.max(open, 13 * 60))), minutes: 60, reason: "" })} className="ms-auto md:ms-0">
             <span className="sr-only sm:not-sr-only">Block time</span>
           </Button>
           <Button variant="primary" icon="plus" onClick={() => setDraft({ who: "", service: 0, day: Math.max(0, anchor), start: toTime(slots[0] ?? open) })}>
@@ -175,7 +175,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
       <div className="grid items-start gap-5 lg:grid-cols-[248px_minmax(0,1fr)]">
         {/* Sidebar */}
         <aside className="hidden flex-col gap-4 lg:flex">
-          <div className="rounded-[18px] border border-line bg-white p-4">
+          <div className="rounded-xl border border-line bg-surface p-4">
             <MiniMonth
               key={`${anchorDate.getFullYear()}-${anchorDate.getMonth()}`}
               today={today}
@@ -187,10 +187,10 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
               }}
             />
           </div>
-          <div className="flex flex-col gap-3 rounded-[18px] border border-line bg-white p-4">
+          <div className="flex flex-col gap-3 rounded-xl border border-line bg-surface p-4">
             <div className="flex flex-col gap-1.5">
-              <p className="m-0 text-[14.5px] font-semibold text-ink">Up next</p>
-              <p className="m-0 flex flex-wrap items-center gap-1.5 text-[12.5px] text-subtle">
+              <p className="m-0 text-body font-semibold text-ink">Up next</p>
+              <p className="m-0 flex flex-wrap items-center gap-1.5 text-caption text-subtle">
                 {todays.length} booking{todays.length === 1 ? "" : "s"} today
                 {todays.some((b) => b.status === "pending") && <Badge tone="warning">{todays.filter((b) => b.status === "pending").length} waiting</Badge>}
               </p>
@@ -202,20 +202,20 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                     <button
                       type="button"
                       onClick={() => setSelected({ kind: "booking", ...b })}
-                      className={`flex w-full cursor-pointer items-center gap-2.5 rounded-[12px] p-2 text-left transition hover:bg-panel ${i === 0 ? "bg-[#F7F8FF]" : ""}`}
+                      className={`flex w-full cursor-pointer items-center gap-2.5 rounded-lg p-2 text-start transition hover:bg-panel ${i === 0 ? "bg-brand-subtle" : ""}`}
                     >
-                      <span className="w-[60px] flex-none text-[12.5px] leading-tight font-semibold whitespace-nowrap text-ink tabular-nums">{fmtMin(toMin(b.start))}</span>
+                      <span className="w-[60px] flex-none text-caption leading-tight font-semibold whitespace-nowrap text-ink tabular-nums">{fmtMin(toMin(b.start))}</span>
                       <span className="h-8 w-[3px] flex-none rounded-full" style={{ background: serviceColors[b.service % serviceColors.length][0] }} />
                       <span className="flex min-w-0 flex-1 flex-col leading-tight">
-                        <span className="truncate text-[13.5px] font-semibold text-ink">{b.who}</span>
-                        <span className="truncate text-[12px] text-subtle">{i === 0 ? until(b) : serviceName(b.service)}</span>
+                        <span className="truncate text-label font-semibold text-ink">{b.who}</span>
+                        <span className="truncate text-caption text-subtle">{i === 0 ? until(b) : serviceName(b.service)}</span>
                       </span>
                     </button>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="m-0 text-[13.5px] text-subtle">
+              <p className="m-0 text-label text-subtle">
                 Nothing else today.
                 {tomorrowFirst && (
                   <>
@@ -226,37 +226,37 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
               </p>
             )}
           </div>
-          <div className="flex flex-col gap-2.5 rounded-[18px] border border-line bg-white p-4">
-            <p className="m-0 text-[14.5px] font-semibold text-ink">Services</p>
+          <div className="flex flex-col gap-2.5 rounded-xl border border-line bg-surface p-4">
+            <p className="m-0 text-body font-semibold text-ink">Services</p>
             {services.map((s, i) => {
               const [accent] = serviceColors[i % serviceColors.length];
               const on = !hidden.includes(i);
               return (
-                <label key={s.name} className="flex cursor-pointer items-center gap-2.5 text-[14px] text-ink">
+                <label key={s.name} className="flex cursor-pointer items-center gap-2.5 text-body text-ink">
                   <input type="checkbox" checked={on} onChange={() => setHidden((h) => (on ? [...h, i] : h.filter((x) => x !== i)))} className="sr-only" />
-                  <span className="flex h-[18px] w-[18px] flex-none items-center justify-center rounded-[5px] border-2 text-white" style={{ borderColor: accent, background: on ? accent : "white" }}>
+                  <span className="flex h-[18px] w-[18px] flex-none items-center justify-center rounded-sm border-2 text-white" style={{ borderColor: accent, background: on ? accent : "white" }}>
                     {on && <Icon name="check" size={12} strokeWidth={3} className="[&_circle]:hidden" />}
                   </span>
                   <span className="flex-1 truncate">{s.name}</span>
-                  <span className="text-[12.5px] text-subtle">{s.minutes} min</span>
+                  <span className="text-caption text-subtle">{s.minutes} min</span>
                 </label>
               );
             })}
-            <div className="mt-1 flex flex-col gap-2 border-t border-line pt-3 text-[12.5px] text-subtle">
+            <div className="mt-1 flex flex-col gap-2 border-t border-line pt-3 text-caption text-subtle">
               <span className="flex items-center gap-2">
-                <span className="relative h-4 w-6 overflow-hidden rounded-[4px] bg-[#EEF0FF]">
-                  <span className="absolute inset-y-0 left-0 w-[3px] bg-[#4A47E0]" />
+                <span className="relative h-4 w-6 overflow-hidden rounded-sm bg-brand-subtle">
+                  <span className="absolute inset-y-0 start-0 w-[3px] bg-[#4A47E0]" />
                 </span>
                 Confirmed
               </span>
               <span className="flex items-center gap-2">
-                <span className="relative flex h-4 w-6 items-center justify-center overflow-hidden rounded-[4px] bg-[#EEF0FF] text-[#1E1C6E] shadow-[inset_0_0_0_1px_#4A47E0]">
+                <span className="relative flex h-4 w-6 items-center justify-center overflow-hidden rounded-sm bg-brand-subtle text-brand shadow-[inset_0_0_0_1px_#4A47E0]">
                   <Icon name="clock" size={10} />
                 </span>
                 Waiting to confirm
               </span>
               <span className="flex items-center gap-2">
-                <span className="h-4 w-6 rounded-[4px] bg-[repeating-linear-gradient(135deg,#F1F2F6_0,#F1F2F6_3px,#E6E7EE_3px,#E6E7EE_6px)]" />
+                <span className="h-4 w-6 rounded-sm bg-[repeating-linear-gradient(135deg,#F1F2F6_0,#F1F2F6_3px,#E6E7EE_3px,#E6E7EE_6px)]" />
                 Blocked
               </span>
             </div>
@@ -278,10 +278,10 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                     role="tab"
                     aria-selected={sel}
                     onClick={() => setAnchor(d)}
-                    className={`flex min-w-[48px] flex-1 cursor-pointer flex-col items-center gap-0.5 rounded-[12px] py-2 text-[12px] ${sel ? "bg-ink text-white" : d === 0 ? "bg-white text-ink ring-1 ring-ink" : "bg-white text-ink ring-1 ring-line"}`}
+                    className={`flex min-w-[48px] flex-1 cursor-pointer flex-col items-center gap-0.5 rounded-lg py-2 text-caption ${sel ? "bg-brand-fill text-white" : d === 0 ? "bg-surface text-ink ring-1 ring-ink" : "bg-surface text-ink ring-1 ring-line"}`}
                   >
                     <span className={sel ? "text-white/75" : "text-subtle"}>{fmtDate(date, { weekday: "narrow" })}</span>
-                    <span className="text-[15px] font-semibold">{date.getDate()}</span>
+                    <span className="text-body font-semibold">{date.getDate()}</span>
                   </button>
                 );
               })}
@@ -312,13 +312,13 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
           selected?.kind === "booking" ? (
             confirmCancel ? (
               <>
-                <span className="mr-auto text-[14px] font-semibold text-danger">Cancel this booking?</span>
+                <span className="me-auto text-body font-semibold text-danger">Cancel this booking?</span>
                 <Button variant="ghost" onClick={() => setConfirmCancel(false)}>
                   Keep it
                 </Button>
                 <Button
                   variant="primary"
-                  className="bg-danger hover:bg-[#a30d0d]"
+                  className="bg-danger hover:bg-danger/80"
                   onClick={() => {
                     setBookings((bs) => bs.filter((b) => b.id !== selected.id));
                     setSelected(null);
@@ -330,7 +330,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
               </>
             ) : (
               <>
-                <Button variant="danger" onClick={() => setConfirmCancel(true)} className="mr-auto">
+                <Button variant="danger" onClick={() => setConfirmCancel(true)} className="me-auto">
                   Cancel
                 </Button>
                 <Button icon="message" onClick={() => onOpen("inbox")}>
@@ -361,25 +361,25 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
         {selected?.kind === "booking" && (
           <div className="flex flex-col gap-5">
             <div className="flex items-start gap-3">
-              <span className="mt-1.5 h-3 w-3 flex-none rounded-[4px]" style={{ background: serviceColors[selected.service % serviceColors.length][0] }} />
+              <span className="mt-1.5 h-3 w-3 flex-none rounded-sm" style={{ background: serviceColors[selected.service % serviceColors.length][0] }} />
               <div className="flex flex-col gap-0.5">
-                <p className="m-0 text-[18px] font-semibold text-ink">{serviceName(selected.service)}</p>
-                <p className="m-0 text-[14.5px] text-subtle">
+                <p className="m-0 text-h3 font-semibold text-ink">{serviceName(selected.service)}</p>
+                <p className="m-0 text-body text-subtle">
                   {fmtDate(addDays(today, selected.day), { weekday: "long", day: "numeric", month: "long" })} · {fmtMin(toMin(selected.start))} – {fmtMin(toMin(selected.start) + selected.minutes)}
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3 rounded-[14px] border border-line p-3">
+            <div className="flex items-center gap-3 rounded-lg border border-line p-3">
               <Avatar name={selected.who} size={40} />
               <div className="flex min-w-0 flex-1 flex-col">
-                <span className="text-[15px] font-semibold text-ink">{selected.who}</span>
-                <span className="text-[13.5px] text-subtle">{selected.phone}</span>
+                <span className="text-body font-semibold text-ink">{selected.who}</span>
+                <span className="text-label text-subtle">{selected.phone}</span>
               </div>
               <Badge tone={selected.status === "confirmed" ? "success" : "warning"} dot>
                 {selected.status === "confirmed" ? "Confirmed" : "Waiting"}
               </Badge>
             </div>
-            <dl className="m-0 grid grid-cols-2 gap-x-4 gap-y-3 text-[14px]">
+            <dl className="m-0 grid grid-cols-2 gap-x-4 gap-y-3 text-body">
               <div>
                 <dt className="text-subtle">Booked from</dt>
                 <dd className="m-0 mt-1">
@@ -404,19 +404,19 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                 setPaying({ who: selected.who, phone: selected.phone, item: serviceName(selected.service), amount: owned[selected.service]?.price ? Math.round(owned[selected.service].price * 0.25) : 300, purpose: "Deposit" });
                 setSelected(null);
               }}
-              className="flex cursor-pointer items-center gap-3 rounded-[12px] border border-dashed border-line-strong px-3 py-2.5 text-left transition hover:border-ink hover:bg-panel"
+              className="flex cursor-pointer items-center gap-3 rounded-lg border border-dashed border-line-strong px-3 py-2.5 text-start transition hover:border-ink hover:bg-panel"
             >
               <Icon name="wallet" size={17} className="flex-none text-muted" />
               <span className="flex min-w-0 flex-1 flex-col">
-                <span className="text-[14px] font-semibold text-ink">Request a deposit</span>
-                <span className="text-[12.5px] text-subtle">Send a Stripe payment link on WhatsApp</span>
+                <span className="text-body font-semibold text-ink">Request a deposit</span>
+                <span className="text-caption text-subtle">Send a Stripe payment link on WhatsApp</span>
               </span>
               <Icon name="chevron-right" size={16} className="text-muted" />
             </button>
           </div>
         )}
         {selected?.kind === "block" && (
-          <p className="m-0 text-[15px] text-ink">
+          <p className="m-0 text-body text-ink">
             {selected.reason || "Blocked"} · {fmtDate(addDays(today, selected.day), { weekday: "long", day: "numeric", month: "long" })}, {fmtMin(toMin(selected.start))} – {fmtMin(toMin(selected.start) + selected.minutes)}. No one can book this time.
           </p>
         )}
@@ -473,12 +473,12 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
               </Field>
             </div>
             {clash ? (
-              <p role="alert" className="m-0 flex items-center gap-2 rounded-[12px] bg-[#FDECEC] px-3.5 py-2.5 text-[14px] text-danger">
+              <p role="alert" className="m-0 flex items-center gap-2 rounded-lg bg-danger-subtle px-3.5 py-2.5 text-body text-danger">
                 <Icon name="clock" size={16} />
                 That time overlaps with {clash.kind === "booking" ? clash.who : "blocked time"} ({fmtMin(toMin(clash.start))}).
               </p>
             ) : (
-              <p className="m-0 text-[13.5px] text-subtle">
+              <p className="m-0 text-label text-subtle">
                 {fmtMin(toMin(draft.start))} – {fmtMin(toMin(draft.start) + draftMinutes)}. The customer gets a confirmation on WhatsApp and a reminder the day before.
               </p>
             )}
@@ -545,7 +545,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
             <Field label="Reason (optional)">
               <TextInput value={blockDraft.reason} onChange={(e) => setBlockDraft({ ...blockDraft, reason: e.target.value })} placeholder="e.g. Staff meeting" />
             </Field>
-            <p className="m-0 text-[13.5px] text-subtle">No one can book this time. Your assistant will offer other slots.</p>
+            <p className="m-0 text-label text-subtle">No one can book this time. Your assistant will offer other slots.</p>
           </div>
         )}
       </Modal>

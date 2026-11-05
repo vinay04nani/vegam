@@ -53,29 +53,19 @@ export function GlyphField({ className = "" }: { className?: string }) {
     const brightness = (cx: number, cy: number) => {
       // On small screens the panel is a short header behind text: no mark.
       if (width < 480) return 0;
-      // Rose curve r = R|cos 2(θ - 45°)|: four petals on the diagonals, like the Vegam mark.
       const ox = width * 0.5;
       const oy = height * 0.47;
-      const R = Math.min(width, height) * 0.34;
-      const dx = cx - ox;
-      const dy = cy - oy;
-      const r = Math.hypot(dx, dy);
-      const petal = R * Math.abs(Math.cos(2 * (Math.atan2(dy, dx) - Math.PI / 4)));
-      const edge = petal - r;
-      if (edge < 0) return 0;
-      const onLine = edge < CELL * 1.4 ? 1 : 0.55;
-      const dots = [45, 135, 225, 315].some((deg) => {
-        const a = (deg * Math.PI) / 180;
-        return Math.hypot(cx - (ox + R * 0.58 * Math.cos(a)), cy - (oy + R * 0.58 * Math.sin(a))) < CELL * 1.6;
-      });
-      return dots ? 1 : onLine;
+      const R = Math.min(width, height) * 0.28;
+      const r = Math.hypot(cx - ox, cy - oy);
+      if (r > R) return 0;
+      return r > R * 0.72 ? 1 : 0.45;
     };
 
     const glyph = (i: number, a: number, dx = 0, dy = 0) => {
       if (a <= 0.004) return;
       const x = (i % cols) * CELL + CELL / 2 + dx;
       const y = Math.floor(i / cols) * CELL + CELL / 2 + 1 + dy;
-      ctx.fillStyle = a > 0.5 ? `rgba(255, 186, 120, ${a})` : `rgba(238, 122, 46, ${a})`;
+      ctx.fillStyle = a > 0.5 ? `rgba(238, 239, 255, ${a})` : `rgba(139, 135, 255, ${a})`;
       ctx.fillText(chars[i], x, y);
     };
 

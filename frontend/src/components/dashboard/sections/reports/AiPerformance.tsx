@@ -47,10 +47,10 @@ export function AiPerformance({ m, compare, onOpen }: { m: Model; compare: boole
         <Panel title="Why chats were handed over" description="Share of handovers" table={{ columns: ["Reason", "Share"], rows: handoverReasons.map((r) => [r.reason, pct(r.share)]) }}>
           <BarList rows={handoverReasons.map((r) => ({ label: r.reason, value: Math.round(r.share * 100) }))} format={(v) => `${v}%`} note={(r) => `${r.label}: ${r.value}% of handovers`} />
         </Panel>
-        <Panel title="Most asked questions" action={<span className="text-[12.5px] text-subtle">Times asked</span>}>
+        <Panel title="Most asked questions" action={<span className="text-caption text-subtle">Times asked</span>}>
           <ul className="m-0 flex list-none flex-col divide-y divide-line p-0">
             {topQuestions.map((q) => (
-              <li key={q.q} className="flex items-center gap-3 py-2.5 text-[14px]">
+              <li key={q.q} className="flex items-center gap-3 py-2.5 text-body">
                 <span className="min-w-0 flex-1 truncate text-ink">{q.q}</span>
                 {q.answered ? (
                   <Badge tone="success">Answered</Badge>
@@ -59,7 +59,7 @@ export function AiPerformance({ m, compare, onOpen }: { m: Model; compare: boole
                     <Badge tone="warning">Answer it</Badge>
                   </button>
                 )}
-                <span className="w-10 text-right font-semibold text-ink tabular-nums">{Math.round(q.count * (m.range / 30) * m.scope)}</span>
+                <span className="w-10 text-end font-semibold text-ink tabular-nums">{Math.round(q.count * (m.range / 30) * m.scope)}</span>
               </li>
             ))}
           </ul>
@@ -72,9 +72,9 @@ export function AiPerformance({ m, compare, onOpen }: { m: Model; compare: boole
             const max = Math.max(b.beforeValue, b.afterValue, 0.01);
             return (
               <div key={b.label} className="flex flex-col gap-2">
-                <span className="flex items-center justify-between gap-2 text-[14px] font-medium text-ink">
+                <span className="flex items-center justify-between gap-2 text-body font-medium text-ink">
                   {b.label}
-                  <span className="text-[12px] font-normal text-subtle">{b.better === "lower" ? "Lower is better" : "Higher is better"}</span>
+                  <span className="text-caption font-normal text-subtle">{b.better === "lower" ? "Lower is better" : "Higher is better"}</span>
                 </span>
                 {(
                   [
@@ -82,12 +82,12 @@ export function AiPerformance({ m, compare, onOpen }: { m: Model; compare: boole
                     ["Now", b.afterValue, b.after, slots[0]],
                   ] as const
                 ).map(([label, v, text, color]) => (
-                  <div key={label} className="grid grid-cols-[52px_minmax(0,1fr)_80px] items-center gap-2 text-[13px]">
+                  <div key={label} className="grid grid-cols-[52px_minmax(0,1fr)_80px] items-center gap-2 text-label">
                     <span className="text-subtle">{label}</span>
                     <span className="h-3">
-                      <span className="block h-full rounded-r-[4px]" style={{ width: `${Math.max(1.5, (v / max) * 100)}%`, background: color }} />
+                      <span className="block h-full rounded-e-[4px]" style={{ width: `${Math.max(1.5, (v / max) * 100)}%`, background: color }} />
                     </span>
-                    <span className={`text-right tabular-nums ${label === "Now" ? "font-semibold text-ink" : "text-subtle"}`}>{text}</span>
+                    <span className={`text-end tabular-nums ${label === "Now" ? "font-semibold text-ink" : "text-subtle"}`}>{text}</span>
                   </div>
                 ))}
               </div>

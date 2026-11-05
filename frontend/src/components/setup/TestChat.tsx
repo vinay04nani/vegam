@@ -28,10 +28,10 @@ function Message({ m }: { m: DemoMessage }) {
   const mine = m.from === "customer";
   return (
     <div className={`flex max-w-[82%] flex-col gap-1 ${mine ? "self-end items-end" : "self-start"}`}>
-      <span className="px-1 text-[12px] font-medium text-subtle">{mine ? "Customer (you)" : "Assistant"}</span>
-      <div className={`rounded-[18px] px-4 py-2.5 text-[15px] leading-snug ${mine ? "rounded-tr-[6px] bg-ink text-white" : "rounded-tl-[6px] bg-panel text-ink"}`}>{lines(m.text)}</div>
+      <span className="px-1 text-caption font-medium text-subtle">{mine ? "Customer (you)" : "Assistant"}</span>
+      <div className={`rounded-xl px-4 py-2.5 text-body leading-snug ${mine ? "rounded-se-[6px] bg-brand-fill text-white" : "rounded-ss-[6px] bg-panel text-ink"}`}>{lines(m.text)}</div>
       {m.handover && (
-        <span className="inline-flex items-center gap-1 px-1 text-[12.5px] font-medium text-warning">
+        <span className="inline-flex items-center gap-1 px-1 text-caption font-medium text-warning">
           <Icon name="users" size={13} />
           Handed to your team
         </span>
@@ -72,15 +72,15 @@ export function TestChat({ state, suggestions, onSend }: { state: OnboardingStat
   const name = businessName(state);
 
   return (
-    <section aria-label="Test chat" className="flex flex-col overflow-hidden rounded-[22px] border border-line bg-white">
+    <section aria-label="Test chat" className="flex flex-col overflow-hidden rounded-xl border border-line bg-surface">
       <div className="flex items-center gap-3 border-b border-line px-5 py-3.5">
-        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-indigo text-[15px] font-bold text-white">{(name[0] ?? "Y").toUpperCase()}</span>
+        <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-indigo text-body font-bold text-white">{(name[0] ?? "Y").toUpperCase()}</span>
         <span className="flex min-w-0 flex-1 flex-col leading-tight">
-          <span className="truncate text-[15.5px] font-semibold text-ink">{name}</span>
-          <span className="text-[13px] text-subtle">{typing ? "typing…" : "Test chat · not sent to anyone"}</span>
+          <span className="truncate text-body-lg font-semibold text-ink">{name}</span>
+          <span className="text-label text-subtle">{typing ? "typing…" : "Test chat · not sent to anyone"}</span>
         </span>
         {messages.length > 0 && (
-          <button type="button" onClick={() => setMessages([])} className="cursor-pointer text-[14px] font-medium text-subtle hover:text-ink">
+          <button type="button" onClick={() => setMessages([])} className="cursor-pointer text-body font-medium text-subtle hover:text-ink">
             Clear
           </button>
         )}
@@ -91,7 +91,7 @@ export function TestChat({ state, suggestions, onSend }: { state: OnboardingStat
         {messages.map((m, i) => (
           <Message key={i} m={m} />
         ))}
-        {typing && <span className="self-start rounded-[18px] rounded-tl-[6px] bg-panel px-4 py-2.5 text-[15px] text-subtle">…</span>}
+        {typing && <span className="self-start rounded-xl rounded-ss-[6px] bg-panel px-4 py-2.5 text-body text-subtle">…</span>}
       </div>
 
       <div className="flex flex-col gap-3 border-t border-line px-5 py-4">
@@ -102,7 +102,7 @@ export function TestChat({ state, suggestions, onSend }: { state: OnboardingStat
               type="button"
               disabled={typing}
               onClick={() => sendText(q)}
-              className="min-h-9 cursor-pointer rounded-full border border-line-strong bg-white px-3.5 text-[13.5px] font-medium text-ink transition hover:border-subtle disabled:cursor-wait"
+              className="min-h-9 cursor-pointer rounded-full border border-line-strong bg-surface px-3.5 text-label font-medium text-ink transition hover:border-subtle disabled:cursor-wait"
             >
               {q}
             </button>
@@ -115,10 +115,10 @@ export function TestChat({ state, suggestions, onSend }: { state: OnboardingStat
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder="Type as a customer…"
-              className="min-h-12 w-full rounded-full border border-line-strong bg-white px-5 text-[15px] text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
+              className="min-h-12 w-full rounded-full border border-line-strong bg-surface px-5 text-body text-ink outline-none placeholder:text-faint focus:border-indigo focus:ring-4 focus:ring-indigo/10"
             />
           </label>
-          <button type="submit" aria-label="Send" className="flex h-12 w-12 flex-none cursor-pointer items-center justify-center rounded-full bg-ink text-white">
+          <button type="submit" aria-label="Send" className="flex h-12 w-12 flex-none cursor-pointer items-center justify-center rounded-full bg-brand-fill text-white">
             <Icon name="send" size={18} />
           </button>
         </form>

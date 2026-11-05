@@ -48,13 +48,13 @@ export function Team({ plan = "growth", onOpen }: { plan?: PlanId; onOpen: (view
                     {m.status === "Invited" ? m.contact : m.name}
                     {m.status === "Invited" && <Badge tone="warning">Invited</Badge>}
                   </span>
-                  <span className="truncate text-[13px] text-subtle">{m.status === "Invited" ? "Invitation sent" : m.contact}</span>
+                  <span className="truncate text-label text-subtle">{m.status === "Invited" ? "Invitation sent" : m.contact}</span>
                 </span>
               </span>
             }
           >
             {m.role === "Owner" ? (
-              <span className="w-40 px-3 text-[14px] text-subtle">Owner</span>
+              <span className="w-40 px-3 text-body text-subtle">Owner</span>
             ) : (
               <Dropdown
                 aria-label={`Role for ${m.name}`}
@@ -92,10 +92,10 @@ export function Team({ plan = "growth", onOpen }: { plan?: PlanId; onOpen: (view
 
       <Group title="Roles" description="What each role can do.">
         <div className="relative overflow-x-auto">
-          <table className="w-full min-w-[460px] border-collapse text-[14px]">
+          <table className="w-full min-w-[460px] border-collapse text-body">
             <thead>
-              <tr className="text-left text-[12.5px] text-subtle">
-                <th scope="col" className="py-3 pr-4 font-medium">
+              <tr className="text-start text-caption text-subtle">
+                <th scope="col" className="py-3 pe-4 font-medium">
                   <span className="sr-only">Permission</span>
                 </th>
                 {roles.map((r) => (
@@ -108,7 +108,7 @@ export function Team({ plan = "growth", onOpen }: { plan?: PlanId; onOpen: (view
             <tbody>
               {permissions.map((p) => (
                 <tr key={p.label} className="border-t border-line">
-                  <th scope="row" className="py-3 pr-4 text-left font-normal text-ink">
+                  <th scope="row" className="py-3 pe-4 text-start font-normal text-ink">
                     {p.label}
                   </th>
                   {roles.map((r) => (
@@ -150,12 +150,12 @@ export function Team({ plan = "growth", onOpen }: { plan?: PlanId; onOpen: (view
       >
         <div className="flex flex-col gap-4">
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Email or WhatsApp number</span>
+            <span className="text-body font-medium text-ink">Email or WhatsApp number</span>
             <Input value={invite.contact} onChange={(e) => setInvite((v) => ({ ...v, contact: e.target.value }))} placeholder="name@business.com or +91 98765 43210" autoFocus />
-            <span className="text-[12.5px] text-subtle">They get a link to join. It expires in 7 days.</span>
+            <span className="text-caption text-subtle">They get a link to join. It expires in 7 days.</span>
           </label>
           <label className="flex flex-col gap-1.5">
-            <span className="text-[14px] font-medium text-ink">Role</span>
+            <span className="text-body font-medium text-ink">Role</span>
             <Dropdown value={invite.role} onChange={(e) => setInvite((v) => ({ ...v, role: e.target.value as Role }))}>
               <option>Front desk</option>
               <option>Manager</option>

@@ -1,5 +1,7 @@
 "use client";
 
+import { formatFromInr } from "@/lib/locale";
+
 import { useState } from "react";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { downloadPdf } from "@/lib/pdf";
@@ -51,10 +53,10 @@ export function Payments({ india }: { india: boolean }) {
       </Group>
       <Group title="Payments received" description="Sample data. Money from deposits and payment links, straight to your bank.">
         {received.map((p) => {
-          const amount = india ? `₹${p.amount.toLocaleString("en-IN")}` : `$${p.usd}`;
+          const amount = formatFromInr(p.amount);
           return (
             <Row key={p.id} label={p.who} description={`${p.what} · ${p.when}`}>
-              <span className="w-20 text-right text-[14px] text-ink tabular-nums">{amount}</span>
+              <span className="w-20 text-end text-body text-ink tabular-nums">{amount}</span>
               <Badge tone={tone[p.status]}>{p.status}</Badge>
               <RowButton
                 icon="download"

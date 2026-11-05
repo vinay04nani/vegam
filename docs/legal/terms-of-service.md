@@ -75,7 +75,7 @@ These Terms of Service ("Terms") are an agreement between **[Vegam legal entity]
 
 7.4 We may suspend the Service immediately if your use breaches the Acceptable Use Policy, threatens the security or integrity of the Service, or risks suspension of shared Third-Party Channel accounts.
 
-7.5 After termination, you may export your Customer Data for [30] days. After that, we will delete it as described in the Data Processing Agreement, unless the law requires us to keep it.
+7.5 Export and deletion of Customer Data are planned and are not available yet. The intended rule, once they exist: after termination, you may export your Customer Data for [30] days, and after that we delete it as described in the Data Processing Agreement, unless the law requires us to keep it.
 
 ## 8. Customer Data and privacy
 

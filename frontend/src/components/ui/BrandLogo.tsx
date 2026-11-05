@@ -11,7 +11,7 @@ type Props = {
 
 /** A third-party brand mark on a white rounded tile, in the brand's own colour. */
 export function BrandLogo({ brand, size = 40, bare = false, className = "" }: Props) {
-  const tile = `inline-flex flex-none items-center justify-center ${bare ? "" : "border border-line bg-white shadow-[0_1px_2px_rgb(30_31_43/0.05)]"} ${className}`;
+  const tile = `inline-flex flex-none items-center justify-center ${bare ? "" : "border border-line bg-surface shadow-1"} ${className}`;
   if (typeof brand !== "string") {
     return (
       <span role="img" aria-label={brand.title} title={brand.title} className={tile} style={{ width: size, height: size, borderRadius: size * 0.28 }}>

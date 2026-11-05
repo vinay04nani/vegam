@@ -1,3 +1,4 @@
+import { regionalView } from "@/lib/regional";
 // Copy and options for onboarding (/onboarding/) and the dashboard (/app/),
 // including its setup guide. Until the backend exists, answers are kept in
 // the browser and the dashboard shows labelled sample data.
@@ -5,18 +6,7 @@
 import type { IconName } from "@/components/ui/Icon";
 import type { PlanId } from "./pricing";
 
-export const countries = [
-  { id: "IN", name: "India", currency: "INR", dial: "+91" },
-  { id: "US", name: "United States", currency: "USD", dial: "+1" },
-  { id: "GB", name: "United Kingdom", currency: "USD", dial: "+44" },
-  { id: "AE", name: "UAE", currency: "USD", dial: "+971" },
-  { id: "SG", name: "Singapore", currency: "USD", dial: "+65" },
-  { id: "AU", name: "Australia", currency: "USD", dial: "+61" },
-  { id: "CA", name: "Canada", currency: "USD", dial: "+1" },
-  { id: "OTHER", name: "Another country", currency: "USD", dial: "+" },
-] as const;
-
-export type CountryId = (typeof countries)[number]["id"];
+export type CountryId = string;
 
 export const toneOptions = [
   { id: "friendly", label: "Friendly", sample: "Hi! Happy to help." },
@@ -29,7 +19,7 @@ export type Tone = (typeof toneOptions)[number]["id"];
 export const languageNames = ["English", "Hindi", "Telugu", "Tamil", "Kannada", "Malayalam", "Marathi", "Bengali", "Arabic", "Spanish", "French"];
 
 /** What "Read my website" fills in during the demo. Neutral on purpose: Vegam never assumes an industry. */
-export const sampleImport = {
+export const sampleImport = regionalView({
   services: [
     { name: "First visit", minutes: 30, price: { INR: 500, USD: 15 } },
     { name: "Standard appointment", minutes: 60, price: { INR: 1200, USD: 40 } },
@@ -37,9 +27,9 @@ export const sampleImport = {
   ],
   faqs: [
     { q: "Is there parking?", a: "Yes, free parking is available next to the entrance." },
-    { q: "Can I pay by card or UPI?", a: "Yes. We accept cash, cards and UPI." },
+    { q: "Can I pay by card?", a: "Yes. We accept cards and the payment methods common where you are." },
   ],
-};
+});
 
 export type ChannelId = "whatsapp" | "missed" | "voice" | "social" | "website" | "ads";
 
@@ -118,7 +108,7 @@ export type ChecklistItem = {
   title: string;
   body: string;
   minPlan: PlanId;
-  priority: "Must" | "Should" | "Before day 25";
+  priority: "Required" | "Recommended" | "Before day 25";
   action: string;
   /** A dashboard page that does this task; without one the demo just marks it done. */
   view?: string;
@@ -130,7 +120,7 @@ export const checklist: ChecklistItem[] = [
     title: "WhatsApp approval",
     body: "Meta reviews your display name and business. We’re tracking it and will message you when it’s done; nothing for you to do unless they ask.",
     minPlan: "starter",
-    priority: "Must",
+    priority: "Required",
     action: "Check status",
   },
   {
@@ -138,7 +128,7 @@ export const checklist: ChecklistItem[] = [
     title: "Approve reminder messages",
     body: "Reminders and follow-ups sent after 24 hours use message templates that Meta approves. We’ve written them; review the wording.",
     minPlan: "starter",
-    priority: "Must",
+    priority: "Required",
     action: "Review templates",
   },
   {
@@ -146,7 +136,7 @@ export const checklist: ChecklistItem[] = [
     title: "Answer 3 new questions",
     body: "Customers asked things your assistant didn’t know. Answer once and it will know next time.",
     minPlan: "starter",
-    priority: "Must",
+    priority: "Required",
     action: "Answer questions",
   },
   {
@@ -154,7 +144,7 @@ export const checklist: ChecklistItem[] = [
     title: "Connect more channels",
     body: "Missed calls, your website, AI call answering, Instagram and Messenger: every place customers reach you, in one inbox.",
     minPlan: "starter",
-    priority: "Should",
+    priority: "Recommended",
     action: "Connect channels",
     view: "channels",
   },
@@ -163,7 +153,7 @@ export const checklist: ChecklistItem[] = [
     title: "Share your booking link",
     body: "Put the link and QR code on your Instagram bio, Google profile and website, and at your counter.",
     minPlan: "starter",
-    priority: "Should",
+    priority: "Recommended",
     action: "Get link and QR",
   },
   {
@@ -171,7 +161,7 @@ export const checklist: ChecklistItem[] = [
     title: "Invite your team",
     body: "Add staff to the inbox, and set when the assistant should hand chats to a person.",
     minPlan: "starter",
-    priority: "Should",
+    priority: "Recommended",
     action: "Invite people",
   },
   {
@@ -179,7 +169,7 @@ export const checklist: ChecklistItem[] = [
     title: "Import existing customers",
     body: "Bring in customers who agreed to hear from you, so reminders and reports include them.",
     minPlan: "starter",
-    priority: "Should",
+    priority: "Recommended",
     action: "Import contacts",
   },
   {
@@ -187,7 +177,7 @@ export const checklist: ChecklistItem[] = [
     title: "Connect your calendar",
     body: "Sync Google Calendar or Calendly so the assistant never double-books.",
     minPlan: "growth",
-    priority: "Should",
+    priority: "Recommended",
     action: "Connect calendar",
   },
   {
@@ -195,7 +185,7 @@ export const checklist: ChecklistItem[] = [
     title: "Add your other locations",
     body: "Each location gets its own hours, services and team, in one inbox.",
     minPlan: "pro",
-    priority: "Should",
+    priority: "Recommended",
     action: "Add locations",
   },
   {
@@ -203,7 +193,7 @@ export const checklist: ChecklistItem[] = [
     title: "Turn on payment links",
     body: "Send Stripe payment links for deposits and bills, with polite reminders until paid.",
     minPlan: "pro",
-    priority: "Should",
+    priority: "Recommended",
     action: "Set up payments",
   },
   {

@@ -68,8 +68,8 @@ export function CommandPalette({ open, onClose, onOpen }: { open: boolean; onClo
 
   let lastGroup = "";
   return (
-    <div className="fixed inset-0 z-[70] flex items-start justify-center bg-ink/35 p-4 pt-[12vh] backdrop-blur-[2px]" onClick={onClose}>
-      <div role="dialog" aria-modal="true" aria-label="Search" className="w-full max-w-[600px] overflow-hidden rounded-[18px] bg-white shadow-[0_30px_80px_rgb(30_31_43/0.3)]" onClick={(e) => e.stopPropagation()}>
+    <div className="fixed inset-0 z-[70] flex items-start justify-center bg-black/40 p-4 pt-[12vh] backdrop-blur-[2px]" onClick={onClose}>
+      <div role="dialog" aria-modal="true" aria-label="Search" className="w-full max-w-[600px] overflow-hidden rounded-xl bg-surface shadow-2" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center gap-3 border-b border-line px-4">
           <Icon name="search" size={18} className="text-subtle" />
           <input
@@ -92,38 +92,38 @@ export function CommandPalette({ open, onClose, onOpen }: { open: boolean; onClo
             placeholder="Search pages, people, bookings or actions…"
             aria-label="Search"
             aria-controls="palette-results"
-            aria-activedescendant={results[active] ? `pr-${results[active].id}` : undefined}
-            className="min-h-14 flex-1 bg-transparent text-[16px] text-ink outline-none placeholder:text-faint"
+            aria-activedescendant={results[active] ? `pe-${results[active].id}` : undefined}
+            className="min-h-14 flex-1 bg-transparent text-body-lg text-ink outline-none placeholder:text-faint"
           />
           <Kbd>Esc</Kbd>
         </div>
         <ul id="palette-results" role="listbox" className="m-0 max-h-[55vh] list-none overflow-y-auto p-2">
-          {results.length === 0 && <li className="p-6 text-center text-[14.5px] text-subtle">No results for “{q}”.</li>}
+          {results.length === 0 && <li className="p-6 text-center text-body text-subtle">No results for “{q}”.</li>}
           {results.map((r, i) => {
             const header = r.group !== lastGroup ? r.group : null;
             lastGroup = r.group;
             return (
               <li key={r.id} role="presentation">
-                {header && <p className="m-0 px-3 pt-2.5 pb-1 text-[11.5px] font-semibold tracking-[0.08em] text-subtle uppercase">{header}</p>}
+                {header && <p className="m-0 px-3 pt-2.5 pb-1 text-caption font-semibold tracking-[0.08em] text-subtle uppercase">{header}</p>}
                 <button
-                  id={`pr-${r.id}`}
+                  id={`pe-${r.id}`}
                   type="button"
                   role="option"
                   aria-selected={i === active}
                   onMouseEnter={() => setActive(i)}
                   onClick={() => choose(r)}
-                  className={`flex w-full cursor-pointer items-center gap-3 rounded-[10px] px-3 py-2.5 text-left ${i === active ? "bg-panel" : ""}`}
+                  className={`flex w-full cursor-pointer items-center gap-3 rounded-md px-3 py-2.5 text-start ${i === active ? "bg-panel" : ""}`}
                 >
                   <Icon name={r.icon} size={17} className="flex-none text-muted" />
-                  <span className="flex-none text-[14.5px] font-medium text-ink">{r.label}</span>
-                  {r.hint && <span className="truncate text-[13px] text-subtle">{r.hint}</span>}
-                  {i === active && <Icon name="chevron-right" size={16} className="ml-auto flex-none text-subtle" />}
+                  <span className="flex-none text-body font-medium text-ink">{r.label}</span>
+                  {r.hint && <span className="truncate text-label text-subtle">{r.hint}</span>}
+                  {i === active && <Icon name="chevron-right" size={16} className="ms-auto flex-none text-subtle" />}
                 </button>
               </li>
             );
           })}
         </ul>
-        <p className="m-0 flex items-center gap-3 border-t border-line bg-[#FAFAFC] px-4 py-2 text-[12px] text-subtle">
+        <p className="m-0 flex items-center gap-3 border-t border-line bg-surface-muted px-4 py-2 text-caption text-subtle">
           <span className="flex items-center gap-1">
             <Kbd>↑</Kbd>
             <Kbd>↓</Kbd> to move

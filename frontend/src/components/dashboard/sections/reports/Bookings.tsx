@@ -1,5 +1,8 @@
 "use client";
 
+import { formatNumber } from "@/lib/locale";
+
+import { formatFromInr } from "@/lib/locale";
 import { leadTimes, serviceMix } from "@/content/reports";
 import { BarList, ColumnChart, SplitBar, slots } from "./charts";
 import { change, type Model } from "./model";
@@ -26,7 +29,7 @@ export function Bookings({ m, compare }: { m: Model; compare: boolean }) {
       <KpiRow
         compare={compare}
         items={[
-          { id: "book", label: "Bookings", value: cur.bookings.toLocaleString("en-IN"), delta: change(cur.bookings, prev.bookings), trend: m.buckets.map((b) => b.bookings) },
+          { id: "book", label: "Bookings", value: formatNumber(cur.bookings), delta: change(cur.bookings, prev.bookings), trend: m.buckets.map((b) => b.bookings) },
           { id: "value", label: "Booking value", value: rupeesShort(cur.value), delta: change(cur.value, prev.value), trend: m.buckets.map((b) => b.value) },
           { id: "avg", label: "Average booking", value: rupees(avg), delta: change(avg, avgPrev), trend: m.buckets.map((b) => b.value / Math.max(1, b.bookings)) },
           { id: "noshow", label: "No-show rate", value: "4.1%", delta: -0.22, better: "down", trend: trend((i) => 6 - (i / m.buckets.length) * 2 + Math.sin(i * 1.3) * 0.3), hint: "reminders on" },
@@ -44,7 +47,7 @@ export function Bookings({ m, compare }: { m: Model; compare: boolean }) {
           labels={m.buckets.map((b) => b.label)}
           tipLabels={m.buckets.map((b) => b.tip)}
           format={rupees}
-          axisFormat={(v) => (v >= 1e5 ? `₹${v / 1e5}L` : v >= 1e3 ? `₹${v / 1e3}K` : `₹${v}`)}
+          axisFormat={(v) => formatFromInr(v, undefined, true)}
           data={[{ id: "value", label: "Booking value", color: slots[0], values: m.buckets.map((b) => b.value) }]}
         />
       </Panel>
@@ -56,13 +59,13 @@ export function Bookings({ m, compare }: { m: Model; compare: boolean }) {
           rows={services}
           columns={[
             { id: "name", label: "Service", value: (s) => s.name, className: "font-medium text-ink" },
-            { id: "bookings", label: "Bookings", align: "right", value: (s) => s.bookings, render: (s) => s.bookings.toLocaleString("en-IN") },
+            { id: "bookings", label: "Bookings", align: "right", value: (s) => s.bookings, render: (s) => formatNumber(s.bookings) },
             { id: "share", label: "Share of value", align: "right", value: (s) => s.value / totalValue, render: (s) => <ShareBar share={s.value / totalValue} /> },
             { id: "price", label: "Average price", align: "right", value: (s) => s.value / Math.max(1, s.bookings), render: (s) => rupees(s.value / Math.max(1, s.bookings)) },
             { id: "value", label: "Value", align: "right", value: (s) => s.value, render: (s) => rupees(s.value) },
             ...(compare ? [{ id: "change", label: "Change", align: "right" as const, value: (s: { change: number }) => s.change, render: (s: { change: number }) => <Delta value={s.change} size="sm" /> }] : []),
           ]}
-          footer={["Total", cur.bookings.toLocaleString("en-IN"), "100%", rupees(avg), rupees(totalValue), ...(compare ? [""] : [])]}
+          footer={["Total", formatNumber(cur.bookings), "100%", rupees(avg), rupees(totalValue), ...(compare ? [""] : [])]}
         />
       </Panel>
 

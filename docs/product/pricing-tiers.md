@@ -72,7 +72,7 @@ Every plan starts with a 30-day measured pilot. Meta's WhatsApp template fees ar
 | **Setup** | Done for the customer: WhatsApp connection, services and prices loaded, 50 test replies reviewed with the owner. |
 | **Billing** | Monthly or annual (to be decided). |
 | **Usage beyond allowance** | Extra voice minutes and WhatsApp marketing messages billed separately (rates to be decided). |
-| **Always included** | Honest AI (says it's an AI), human takeover anytime, STOP and opt-out handling, consent records, data export and deletion. |
+| **Always included** | Honest AI (says it's an AI), human takeover anytime, STOP and opt-out handling, consent records. Data export and deletion are planned and are not built yet. |
 | **Trial** | 30-day measured pilot: week 1 measures the baseline, weeks 2–4 show the difference in the morning report. |
 
 ---

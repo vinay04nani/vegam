@@ -54,31 +54,31 @@ function NavButton({ id, label, icon, compact = false, view, plan, onSelect, cou
     <button
       type="button"
       aria-current={active ? "page" : undefined}
-      aria-label={count ? `${label}, ${count} unread` : undefined}
       onClick={() => onSelect(id)}
       className={
         compact
-          ? `flex min-h-14 flex-1 cursor-pointer flex-col items-center justify-center gap-1 text-[11.5px] font-semibold ${active ? "text-ink" : "text-subtle"}`
-          : `flex min-h-10 w-full cursor-pointer items-center gap-3 rounded-[11px] px-3 text-[14.5px] font-medium transition ${active ? "bg-white text-ink shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : "text-ink-soft hover:bg-white/60"}`
+          ? `flex min-h-14 flex-1 cursor-pointer flex-col items-center justify-center gap-1 text-caption font-semibold ${active ? "text-ink" : "text-subtle"}`
+          : `flex min-h-10 w-full cursor-pointer items-center gap-3 rounded-md px-3 text-body font-medium transition ${active ? "bg-surface text-ink shadow-1" : "text-ink-soft hover:bg-surface/60"}`
       }
     >
       <span className="relative">
         <Icon name={icon} size={compact ? 22 : 18} />
         {!!count && compact && (
-          <span aria-hidden="true" className="absolute -top-1 -right-2 min-w-4 rounded-full bg-orange px-1 text-center text-[10.5px] leading-4 font-bold text-white">
+          <span aria-hidden="true" className="absolute -top-1 -end-2 min-w-4 rounded-full bg-orange px-1 text-center text-caption leading-4 font-bold text-white">
             {count}
           </span>
         )}
       </span>
       {label}
       {!!count && !compact && (
-        <span aria-hidden="true" className="ml-auto rounded-full bg-ink px-1.5 text-[11.5px] leading-5 font-bold text-white">
+        <span className="ms-auto rounded-full bg-brand-fill px-1.5 text-caption leading-5 font-bold text-white">
           {count}
+          <span className="sr-only"> unread</span>
         </span>
       )}
-      {locked && !compact && <Icon name="lock" size={14} className="ml-auto text-faint" />}
+      {locked && !compact && <Icon name="lock" size={14} className="ms-auto text-faint" />}
       {above && !compact && !count && (
-        <span aria-hidden="true" title="Part of a bigger plan" className="ml-auto rounded-full border border-line-strong px-1.5 text-[11px] leading-[18px] font-semibold text-subtle">
+        <span aria-hidden="true" title="Part of a bigger plan" className="ms-auto rounded-full border border-line-strong px-1.5 text-caption leading-[18px] font-semibold text-subtle">
           {plans.find((p) => p.id === minPlan)?.name}
         </span>
       )}
@@ -94,7 +94,7 @@ function LocationSwitcher({ onManage, full = false, onPick }: { onManage: () => 
       label={`Location: ${label}`}
       align="left"
       className={full ? "w-full" : ""}
-      triggerClassName="flex w-full cursor-pointer items-center gap-2 rounded-[9px] px-2 py-1.5 text-left text-[13.5px] font-medium text-ink-soft transition hover:bg-panel aria-expanded:bg-panel"
+      triggerClassName="flex w-full cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-start text-label font-medium text-ink-soft transition hover:bg-panel aria-expanded:bg-panel"
       trigger={
         <>
           <Icon name="store" size={15} className="flex-none text-muted" />
@@ -187,19 +187,19 @@ function DashboardShell() {
       above={sidebar}
       align={sidebar ? "left" : "right"}
       className={sidebar ? "w-full" : ""}
-      triggerClassName={sidebar ? "flex w-full cursor-pointer items-center gap-3 rounded-[12px] px-2.5 py-2 text-left transition hover:bg-white/60 aria-expanded:bg-white aria-expanded:shadow-[0_1px_3px_rgb(30_31_43/0.08)]" : undefined}
+      triggerClassName={sidebar ? "flex w-full cursor-pointer items-center gap-3 rounded-lg px-2.5 py-2 text-start transition hover:bg-surface/60 aria-expanded:bg-surface aria-expanded:shadow-1" : undefined}
       trigger={
         sidebar ? (
           <>
-            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-ink text-[14px] font-bold text-white">{userName[0]}</span>
+            <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-brand-fill text-body font-bold text-white">{userName[0]}</span>
             <span className="flex min-w-0 flex-1 flex-col leading-tight">
-              <span className="truncate text-[14.5px] font-semibold text-ink">{userName}</span>
-              <span className="truncate text-[12.5px] text-subtle">Owner · {name}</span>
+              <span className="truncate text-body font-semibold text-ink">{userName}</span>
+              <span className="truncate text-caption text-subtle">Owner · {name}</span>
             </span>
             <Icon name="chevron-down" size={16} className="flex-none rotate-180 text-muted" />
           </>
         ) : (
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-ink text-[13.5px] font-bold text-white">{userName[0]}</span>
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-fill text-label font-bold text-white">{userName[0]}</span>
         )
       }
       items={[
@@ -275,16 +275,16 @@ function DashboardShell() {
     <ToastProvider>
       <div className="min-h-svh bg-page">
         {/* Desktop sidebar */}
-        <aside className="fixed inset-y-0 left-0 z-20 hidden w-[248px] flex-col border-r border-line bg-[#F4F4F8] p-4 lg:flex">
-          <a href={links.home} className="px-3 pt-2 pb-5 text-[26px] leading-none font-extrabold tracking-[-0.045em] text-ink">
+        <aside className="fixed inset-y-0 start-0 z-20 hidden w-[248px] flex-col border-e border-line bg-surface-muted p-4 lg:flex">
+          <a href={links.home} className="px-3 pt-2 pb-5 text-h2 leading-none font-extrabold tracking-[-0.045em] text-ink">
             vegam
           </a>
-          <div className="mb-4 rounded-[14px] bg-white p-1.5 shadow-[0_1px_3px_rgb(30_31_43/0.06)]">
+          <div className="mb-4 rounded-lg bg-surface p-1.5 shadow-1">
             <div className="flex items-center gap-3 p-1.5">
-              <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-indigo text-[15px] font-bold text-white">{name[0]?.toUpperCase()}</span>
+              <span className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-indigo text-body font-bold text-white">{name[0]?.toUpperCase()}</span>
               <span className="flex min-w-0 flex-col leading-tight">
-                <span className="truncate text-[15px] font-semibold text-ink">{name}</span>
-                <span className="truncate text-[12.5px] text-subtle">{status}</span>
+                <span className="truncate text-body font-semibold text-ink">{name}</span>
+                <span className="truncate text-caption text-subtle">{status}</span>
               </span>
             </div>
             <div className="mt-1 border-t border-line pt-1">
@@ -292,7 +292,7 @@ function DashboardShell() {
             </div>
           </div>
           {onboarded && !state.plan && (
-            <button type="button" onClick={() => select("plan")} className="mb-4 flex min-h-10 cursor-pointer items-center justify-center gap-1.5 rounded-[12px] bg-ink text-[14.5px] font-semibold text-white">
+            <button type="button" onClick={() => select("plan")} className="mb-4 flex min-h-10 cursor-pointer items-center justify-center gap-1.5 rounded-lg bg-brand-fill text-body font-semibold text-white">
               Choose a plan
               <Icon name="chevron-right" size={16} />
             </button>
@@ -300,7 +300,7 @@ function DashboardShell() {
           <nav aria-label="Dashboard" className="-mx-1 flex flex-1 flex-col overflow-y-auto px-1 [scrollbar-width:thin]">
             {navGroups.map((g) => (
               <div key={g.id} className="flex flex-col gap-0.5">
-                {g.label && <p className="m-0 mt-4 mb-1 px-3 text-[11.5px] font-semibold tracking-[0.1em] text-subtle uppercase">{g.label}</p>}
+                {g.label && <p className="m-0 mt-4 mb-1 px-3 text-caption font-semibold tracking-[0.1em] text-subtle uppercase">{g.label}</p>}
                 {nav
                   .filter((n) => n.group === g.id)
                   .map((n) => (
@@ -317,7 +317,7 @@ function DashboardShell() {
 
         {/* Phone top bar: logo, notifications and the account menu. On desktop these live in the sidebar. */}
         <header className="sticky top-0 z-30 flex h-14 items-center justify-end gap-2 border-b border-line bg-page/90 px-4 backdrop-blur sm:px-8 lg:hidden">
-          <a href={links.home} className="mr-auto text-[22px] leading-none font-extrabold tracking-[-0.045em] text-ink">
+          <a href={links.home} className="me-auto text-h2 leading-none font-extrabold tracking-[-0.045em] text-ink">
             vegam
           </a>
           <NotificationBell onOpen={select} />
@@ -325,7 +325,7 @@ function DashboardShell() {
         </header>
 
         {/* The inbox is a full-height workspace; other pages sit in a centred column. */}
-        <main className={`transition-opacity lg:ml-[248px] ${view === "inbox" ? "pb-16 lg:p-6" : "px-4 pt-6 pb-28 sm:px-8 lg:pt-10 lg:pb-16"} ${ready ? "opacity-100" : "opacity-0"}`}>
+        <main className={`transition-opacity lg:ms-[248px] ${view === "inbox" ? "pb-16 lg:p-6" : "px-4 pt-6 pb-28 sm:px-8 lg:pt-10 lg:pb-16"} ${ready ? "opacity-100" : "opacity-0"}`}>
           <div className={view === "inbox" ? "" : "mx-auto max-w-[1180px]"}>
             {notice && <PlanNotice feature={notice.label} planName={plans.find((p) => p.id === notice.minPlan)!.name} currentName={plans.find((p) => p.id === plan)!.name} onPlans={() => select("settings:plans")} />}
             {page}
@@ -333,7 +333,7 @@ function DashboardShell() {
         </main>
 
         {/* Phone bottom tabs */}
-        <nav aria-label="Dashboard" className="fixed inset-x-0 bottom-0 z-20 flex border-t border-line bg-white/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
+        <nav aria-label="Dashboard" className="fixed inset-x-0 bottom-0 z-20 flex border-t border-line bg-surface/95 px-2 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
           {nav.slice(0, 4).map((n) => (
             <NavButton key={n.id} {...n} count={navCounts[n.id]} compact view={navView} plan={plan} onSelect={select} />
           ))}
@@ -341,16 +341,16 @@ function DashboardShell() {
             type="button"
             aria-expanded={more}
             onClick={() => setMore(!more)}
-            className={`flex min-h-14 flex-1 cursor-pointer flex-col items-center justify-center gap-1 text-[11.5px] font-semibold ${nav.slice(4).some((n) => n.id === navView) ? "text-ink" : "text-subtle"}`}
+            className={`flex min-h-14 flex-1 cursor-pointer flex-col items-center justify-center gap-1 text-caption font-semibold ${nav.slice(4).some((n) => n.id === navView) ? "text-ink" : "text-subtle"}`}
           >
             <Icon name="menu" size={22} />
             More
           </button>
         </nav>
         {more && (
-          <div className="fixed inset-0 z-10 bg-ink/30 lg:hidden" onClick={() => setMore(false)}>
-            <nav aria-label="More sections" className="absolute inset-x-3 bottom-20 flex flex-col gap-1 rounded-[20px] bg-[#F4F4F8] p-3 shadow-[0_20px_50px_rgb(30_31_43/0.25)]" onClick={(e) => e.stopPropagation()}>
-              <div className="mb-1 rounded-[12px] bg-white p-1">
+          <div className="fixed inset-0 z-10 bg-brand-fill/30 lg:hidden" onClick={() => setMore(false)}>
+            <nav aria-label="More sections" className="absolute inset-x-3 bottom-20 flex flex-col gap-1 rounded-xl bg-surface-muted p-3 shadow-2" onClick={(e) => e.stopPropagation()}>
+              <div className="mb-1 rounded-lg bg-surface p-1">
                 <LocationSwitcher onManage={() => select("settings:locations")} onPick={() => setMore(false)} full />
               </div>
               {nav.slice(4).map((n) => (

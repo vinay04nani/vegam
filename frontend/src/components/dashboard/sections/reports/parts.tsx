@@ -1,5 +1,7 @@
 "use client";
 
+import { formatFromInr, formatNumber } from "@/lib/locale";
+
 import { useState, type ReactNode } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { Sparkline, series } from "./charts";
@@ -10,9 +12,8 @@ import { Sparkline, series } from "./charts";
 
 export const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0);
 export const pct = (n: number, digits = 0) => `${(n * 100).toFixed(digits)}%`;
-export const rupees = (v: number) => `₹${Math.round(v).toLocaleString("en-IN")}`;
-/** Short money for tiles: ₹84,000 · ₹4.6L · ₹1.2Cr. */
-export const rupeesShort = (v: number) => (v >= 1e7 ? `₹${(v / 1e7).toFixed(1)}Cr` : v >= 1e5 ? `₹${(v / 1e5).toFixed(1)}L` : rupees(v));
+export const rupees = (v: number) => formatFromInr(v);
+export const rupeesShort = (v: number) => formatFromInr(v, undefined, true);
 export const seconds = (s: number) => (s < 60 ? `${Math.round(s * 10) / 10} sec` : s < 3600 ? `${Math.round(s / 60)} min` : `${Math.round(s / 360) / 10} h`);
 
 export type TableData = { columns: string[]; rows: (string | number)[][] };
@@ -21,11 +22,11 @@ export type TableData = { columns: string[]; rows: (string | number)[][] };
 export function Panel({ title, description, action, children, table, className = "" }: { title: string; description?: ReactNode; action?: ReactNode; children: ReactNode; table?: TableData; className?: string }) {
   const [asTable, setAsTable] = useState(false);
   return (
-    <section aria-label={title} className={`flex min-w-0 flex-col gap-4 rounded-[18px] border border-line bg-white p-5 ${className}`}>
+    <section aria-label={title} className={`flex min-w-0 flex-col gap-4 rounded-xl border border-line bg-surface p-5 ${className}`}>
       <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-2">
         <div className="min-w-0">
-          <h2 className="m-0 text-[15.5px] font-semibold text-ink">{title}</h2>
-          {description && <p className="m-0 mt-0.5 text-[13px] text-subtle">{description}</p>}
+          <h2 className="m-0 text-body-lg font-semibold text-ink">{title}</h2>
+          {description && <p className="m-0 mt-0.5 text-label text-subtle">{description}</p>}
         </div>
         <div className="flex items-center gap-3">
           {!asTable && action}
@@ -36,7 +37,7 @@ export function Panel({ title, description, action, children, table, className =
               onClick={() => setAsTable(!asTable)}
               title={asTable ? "Show chart" : "Show as table"}
               aria-label={`${title}: show as table`}
-              className={`inline-flex h-8 w-8 flex-none cursor-pointer items-center justify-center rounded-[8px] transition ${asTable ? "bg-ink text-white" : "text-muted hover:bg-panel hover:text-ink"}`}
+              className={`inline-flex h-8 w-8 flex-none cursor-pointer items-center justify-center rounded-md transition ${asTable ? "bg-brand-fill text-white" : "text-muted hover:bg-panel hover:text-ink"}`}
             >
               <Icon name="table" size={16} />
             </button>
@@ -50,12 +51,12 @@ export function Panel({ title, description, action, children, table, className =
 
 function PlainTable({ data }: { data: TableData }) {
   return (
-    <div className="relative max-h-[320px] overflow-auto rounded-[10px] border border-line">
-      <table className="w-full border-collapse text-[13.5px]">
-        <thead className="sticky top-0 bg-[#F7F7FA]">
+    <div className="relative max-h-[320px] overflow-auto rounded-md border border-line">
+      <table className="w-full border-collapse text-label">
+        <thead className="sticky top-0 bg-surface-muted">
           <tr>
             {data.columns.map((c, i) => (
-              <th key={c} scope="col" className={`px-3 py-2 font-medium whitespace-nowrap text-subtle ${i ? "text-right" : "text-left"}`}>
+              <th key={c} scope="col" className={`px-3 py-2 font-medium whitespace-nowrap text-subtle ${i ? "text-end" : "text-start"}`}>
                 {c}
               </th>
             ))}
@@ -65,7 +66,7 @@ function PlainTable({ data }: { data: TableData }) {
           {data.rows.map((r, ri) => (
             <tr key={ri} className="border-t border-line">
               {r.map((v, i) => (
-                <td key={i} className={`px-3 py-2 whitespace-nowrap ${i ? "text-right text-ink tabular-nums" : "text-ink-soft"}`}>
+                <td key={i} className={`px-3 py-2 whitespace-nowrap ${i ? "text-end text-ink tabular-nums" : "text-ink-soft"}`}>
                   {v}
                 </td>
               ))}
@@ -81,9 +82,9 @@ function PlainTable({ data }: { data: TableData }) {
 export function Delta({ value, better = "up", size = "md" }: { value: number; better?: "up" | "down"; size?: "sm" | "md" }) {
   const flat = Math.abs(value) < 0.005;
   const good = better === "up" ? value >= 0 : value <= 0;
-  const tone = flat ? "bg-panel text-muted" : good ? "bg-[#E8F3EA] text-success" : "bg-[#FDECEC] text-danger";
+  const tone = flat ? "bg-panel text-muted" : good ? "bg-success-subtle text-success" : "bg-danger-subtle text-danger";
   return (
-    <span className={`inline-flex flex-none items-center gap-0.5 rounded-full font-semibold tabular-nums ${tone} ${size === "sm" ? "px-1.5 py-px text-[11.5px]" : "px-2 py-0.5 text-[12px]"}`}>
+    <span className={`inline-flex flex-none items-center gap-0.5 rounded-full font-semibold tabular-nums ${tone} ${size === "sm" ? "px-1.5 py-px text-caption" : "px-2 py-0.5 text-caption"}`}>
       {!flat && <Icon name="chevron-down" size={12} strokeWidth={2.6} className={value >= 0 ? "rotate-180" : ""} />}
       {flat ? "No change" : `${Math.abs(value * 100).toFixed(Math.abs(value) < 0.1 ? 1 : 0)}%`}
       {!flat && <span className="sr-only">{good ? " better" : " worse"} than the previous period</span>}
@@ -103,27 +104,27 @@ export function KpiRow({ items, selected, onSelect, compare, vs = "vs previous p
         const body = (
           <>
             <span className="flex items-center justify-between gap-2">
-              <span className="truncate text-[13px] font-medium text-subtle">{k.label}</span>
+              <span className="truncate text-label font-medium text-subtle">{k.label}</span>
               {onSelect && <span aria-hidden="true" className={`h-2 w-2 flex-none rounded-full transition ${on ? "bg-[#2a78d6]" : "bg-transparent"}`} />}
             </span>
             <span className="flex items-end justify-between gap-2">
-              <span className="text-[22px] leading-none font-semibold tracking-[-0.02em] whitespace-nowrap text-ink sm:text-[26px]">{k.value}</span>
+              <span className="text-h2 leading-none font-semibold tracking-[-0.02em] whitespace-nowrap text-ink sm:text-h2">{k.value}</span>
               <Sparkline values={trend} width={64} height={24} className="hidden sm:block" color={on || !onSelect ? series.blue : "#9EA0AE"} />
             </span>
-            <span className="flex min-h-5 min-w-0 items-center gap-1.5 text-[12px] text-subtle">
+            <span className="flex min-h-5 min-w-0 items-center gap-1.5 text-caption text-subtle">
               {compare && k.delta !== undefined && <Delta value={k.delta} better={k.better} size="sm" />}
               <span className={`truncate ${compare && k.delta !== undefined ? "hidden sm:inline" : ""}`}>{compare && k.delta !== undefined ? vs : k.hint}</span>
             </span>
           </>
         );
-        const cls = `flex min-w-0 flex-col gap-2.5 rounded-[16px] border bg-white p-4 text-left transition`;
+        const cls = `flex min-w-0 flex-col gap-2.5 rounded-lg border bg-surface p-4 text-start transition`;
         return onSelect ? (
           <button
             key={k.id}
             type="button"
             aria-pressed={on}
             onClick={() => onSelect(k.id)}
-            className={`${cls} cursor-pointer ${on ? "border-ink shadow-[0_0_0_1px_#1E1F2B,0_6px_18px_rgb(30_31_43/0.08)]" : "border-line hover:border-line-strong hover:shadow-[0_4px_14px_rgb(30_31_43/0.06)]"}`}
+            className={`${cls} cursor-pointer ${on ? "border-ink shadow-1" : "border-line hover:border-line-strong hover:shadow-1"}`}
           >
             {body}
           </button>
@@ -153,21 +154,21 @@ export function DataTable<R>({ columns, rows, initialSort, label, footer }: { co
     : rows;
   return (
     <div className="relative -mx-5 overflow-x-auto">
-      <table className="w-full min-w-[560px] border-collapse text-[13.5px]" aria-label={label}>
+      <table className="w-full min-w-[560px] border-collapse text-label" aria-label={label}>
         <thead>
-          <tr className="border-y border-line bg-[#FAFAFC]">
+          <tr className="border-y border-line bg-surface-muted">
             {columns.map((c, i) => {
               const active = sort?.id === c.id;
               const right = c.align === "right";
               return (
-                <th key={c.id} scope="col" aria-sort={active ? (sort!.desc ? "descending" : "ascending") : undefined} className={`h-10 font-medium whitespace-nowrap text-subtle ${i === 0 ? "pl-5" : "pl-3"} ${i === columns.length - 1 ? "pr-5" : "pr-3"} ${right ? "text-right" : "text-left"}`}>
+                <th key={c.id} scope="col" aria-sort={active ? (sort!.desc ? "descending" : "ascending") : undefined} className={`h-10 font-medium whitespace-nowrap text-subtle ${i === 0 ? "ps-5" : "ps-3"} ${i === columns.length - 1 ? "pe-5" : "pe-3"} ${right ? "text-end" : "text-start"}`}>
                   {c.sortable === false ? (
                     c.label
                   ) : (
                     <button
                       type="button"
                       onClick={() => setSort({ id: c.id, desc: active ? !sort!.desc : true })}
-                      className={`inline-flex cursor-pointer items-center gap-1 rounded-[6px] hover:text-ink ${active ? "text-ink" : ""} ${right ? "flex-row-reverse" : ""}`}
+                      className={`inline-flex cursor-pointer items-center gap-1 rounded-sm hover:text-ink ${active ? "text-ink" : ""} ${right ? "flex-row-reverse" : ""}`}
                     >
                       {c.label}
                       <Icon name="chevron-down" size={13} className={`transition ${active ? "" : "opacity-0"} ${active && !sort!.desc ? "rotate-180" : ""}`} />
@@ -180,9 +181,9 @@ export function DataTable<R>({ columns, rows, initialSort, label, footer }: { co
         </thead>
         <tbody>
           {sorted.map((r, ri) => (
-            <tr key={ri} className="border-b border-line last:border-b-0 hover:bg-[#FAFAFC]">
+            <tr key={ri} className="border-b border-line last:border-b-0 hover:bg-surface-muted">
               {columns.map((c, i) => (
-                <td key={c.id} className={`h-12 ${i === 0 ? "pl-5" : "pl-3"} ${i === columns.length - 1 ? "pr-5" : "pr-3"} ${c.align === "right" ? "text-right tabular-nums" : ""} ${c.className ?? ""}`}>
+                <td key={c.id} className={`h-12 ${i === 0 ? "ps-5" : "ps-3"} ${i === columns.length - 1 ? "pe-5" : "pe-3"} ${c.align === "right" ? "text-end tabular-nums" : ""} ${c.className ?? ""}`}>
                   {c.render ? c.render(r) : c.value(r)}
                 </td>
               ))}
@@ -193,7 +194,7 @@ export function DataTable<R>({ columns, rows, initialSort, label, footer }: { co
           <tfoot>
             <tr className="border-t border-line-strong font-semibold text-ink">
               {footer.map((f, i) => (
-                <td key={i} className={`h-11 ${i === 0 ? "pl-5" : "pl-3"} ${i === footer.length - 1 ? "pr-5" : "pr-3"} ${columns[i]?.align === "right" ? "text-right tabular-nums" : ""}`}>
+                <td key={i} className={`h-11 ${i === 0 ? "ps-5" : "ps-3"} ${i === footer.length - 1 ? "pe-5" : "pe-3"} ${columns[i]?.align === "right" ? "text-end tabular-nums" : ""}`}>
                   {f}
                 </td>
               ))}
@@ -221,9 +222,9 @@ export function ShareBar({ share, color = series.blue }: { share: number; color?
 export function Figure({ label, value, hint }: { label: string; value: string; hint?: ReactNode }) {
   return (
     <div className="flex min-w-0 flex-col gap-0.5">
-      <span className="text-[12.5px] text-subtle">{label}</span>
-      <span className="text-[20px] font-semibold tracking-[-0.01em] text-ink">{value}</span>
-      {hint && <span className="text-[12px] text-subtle">{hint}</span>}
+      <span className="text-caption text-subtle">{label}</span>
+      <span className="text-h3 font-semibold tracking-[-0.01em] text-ink">{value}</span>
+      {hint && <span className="text-caption text-subtle">{hint}</span>}
     </div>
   );
 }

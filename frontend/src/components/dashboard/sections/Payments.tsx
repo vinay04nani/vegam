@@ -1,5 +1,7 @@
 "use client";
 
+import { formatFromInr } from "@/lib/locale";
+
 import { useState } from "react";
 import { daysAgo, isOverdue, linkUrl, reminderDays, remindersSent, type PaymentLink } from "@/content/payments";
 import { Icon } from "@/components/ui/Icon";
@@ -17,7 +19,7 @@ import { paymentStore, usePaymentLinks } from "./payments/store";
 
 type Filter = "all" | "unpaid" | "overdue" | "paid" | "refunded";
 
-const rupees = (v: number) => `₹${v.toLocaleString("en-IN")}`;
+const rupees = (v: number) => formatFromInr(v);
 
 function status(p: PaymentLink): { label: string; tone: BadgeTone } {
   if (isOverdue(p)) return { label: "Overdue", tone: "danger" };
@@ -34,9 +36,9 @@ function ReminderDots({ p }: { p: PaymentLink }) {
   const sent = remindersSent(p);
   const live = p.status === "unpaid";
   return (
-    <span className="flex items-center gap-1" aria-label={live ? `${sent} of ${reminderDays.length} reminders sent` : "No reminders needed"} title={live ? `Reminders on day ${reminderDays.join(", ")}` : undefined}>
+    <span role="img" className="flex items-center gap-1" aria-label={live ? `${sent} of ${reminderDays.length} reminders sent` : "No reminders needed"} title={live ? `Reminders on day ${reminderDays.join(", ")}` : undefined}>
       {reminderDays.map((d, i) => (
-        <span key={d} className={`h-2 w-2 rounded-full ${!live && sent <= i ? "bg-line" : i < sent ? "bg-ink" : "border border-line-strong bg-white"}`} />
+        <span key={d} className={`h-2 w-2 rounded-full ${!live && sent <= i ? "bg-line" : i < sent ? "bg-brand-fill" : "border border-line-strong bg-surface"}`} />
       ))}
     </span>
   );
@@ -123,7 +125,7 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <PageTitle title="Payments" body="Payment links for deposits and bills, what’s been paid and what’s still owed. Customers pay by UPI or card through Stripe." />
+        <PageTitle title="Payments" body="Payment links for deposits and bills, what’s been paid and what’s still owed. Customers pay by card, wallet or a local method through Stripe." />
         <div className="flex flex-wrap items-center gap-2">
           <SampleTag />
           <Button icon="sparkle" onClick={() => onOpen("agent:payments/setup")}>
@@ -145,15 +147,15 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
           { label: "Overdue", value: rupees(overdue.reduce((a, p) => a + p.amount, 0)), note: overdue.length ? `${overdue.length} past the due date` : "Nothing overdue", danger: overdue.length > 0 },
           { label: "Average time to pay", value: `${avgDays.toFixed(1)} days`, note: "From link to payment" },
         ].map((s) => (
-          <div key={s.label} className="flex min-w-0 flex-col gap-1.5 rounded-[16px] border border-line bg-white p-4">
-            <span className="text-[13px] font-medium text-subtle">{s.label}</span>
-            <span className={`text-[24px] leading-none font-semibold tracking-[-0.02em] ${s.danger ? "text-danger" : "text-ink"}`}>{s.value}</span>
-            <span className="truncate text-[12.5px] text-subtle">{s.note}</span>
+          <div key={s.label} className="flex min-w-0 flex-col gap-1.5 rounded-lg border border-line bg-surface p-4">
+            <span className="text-label font-medium text-subtle">{s.label}</span>
+            <span className={`text-h2 leading-none font-semibold tracking-[-0.02em] ${s.danger ? "text-danger" : "text-ink"}`}>{s.value}</span>
+            <span className="truncate text-caption text-subtle">{s.note}</span>
           </div>
         ))}
       </div>
 
-      <section aria-label="Payment links" className="flex min-w-0 flex-col rounded-[18px] border border-line bg-white">
+      <section aria-label="Payment links" className="flex min-w-0 flex-col rounded-xl border border-line bg-surface">
         <div className="flex flex-wrap items-end justify-between gap-3 px-5 pt-3">
           <Tabs
             label="Show"
@@ -169,12 +171,12 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
           />
           <label className="relative mb-2 w-full sm:w-60">
             <span className="sr-only">Search payments</span>
-            <Icon name="search" size={15} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-subtle" />
+            <Icon name="search" size={15} className="pointer-events-none absolute top-1/2 start-3 -translate-y-1/2 text-subtle" />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search customer or service"
-              className="h-9 w-full rounded-[10px] border border-line-strong bg-white pr-3 pl-9 text-[14px] text-ink outline-none placeholder:text-subtle focus:border-ink"
+              className="h-9 w-full rounded-md border border-line-strong bg-surface pe-3 ps-9 text-body text-ink outline-none placeholder:text-subtle focus:border-ink"
             />
           </label>
         </div>
@@ -185,16 +187,16 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
           </div>
         ) : (
           <div className="relative overflow-x-auto border-t border-line">
-            <table className="w-full min-w-[760px] border-collapse text-[14px]">
+            <table className="w-full min-w-[760px] border-collapse text-body">
               <thead>
-                <tr className="bg-[#FAFAFC] text-left text-[13px] text-subtle">
-                  <th scope="col" className="h-10 pl-5 font-medium">
+                <tr className="bg-surface-muted text-start text-label text-subtle">
+                  <th scope="col" className="h-10 ps-5 font-medium">
                     Customer
                   </th>
                   <th scope="col" className="font-medium">
                     For
                   </th>
-                  <th scope="col" className="pr-6 text-right font-medium">
+                  <th scope="col" className="pe-6 text-end font-medium">
                     Amount
                   </th>
                   <th scope="col" className="font-medium">
@@ -206,7 +208,7 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
                   <th scope="col" className="font-medium">
                     Reminders
                   </th>
-                  <th scope="col" className="pr-5">
+                  <th scope="col" className="pe-5">
                     <span className="sr-only">Actions</span>
                   </th>
                 </tr>
@@ -215,23 +217,23 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
                 {shown.map((p) => {
                   const s = status(p);
                   return (
-                    <tr key={p.id} onClick={() => setOpenId(p.id)} className="cursor-pointer border-t border-line hover:bg-[#FAFAFC]">
-                      <td className="h-14 pl-5">
+                    <tr key={p.id} onClick={() => setOpenId(p.id)} className="cursor-pointer border-t border-line hover:bg-surface-muted">
+                      <td className="h-14 ps-5">
                         <span className="flex items-center gap-2.5">
                           <Avatar name={p.who} size={30} />
                           <span className="flex min-w-0 flex-col leading-tight">
-                            <button type="button" onClick={() => setOpenId(p.id)} className="cursor-pointer text-left font-medium text-ink hover:underline">
+                            <button type="button" onClick={() => setOpenId(p.id)} className="cursor-pointer text-start font-medium text-ink hover:underline">
                               {p.who}
                             </button>
-                            <span className="text-[12.5px] text-subtle">{p.phone}</span>
+                            <span className="text-caption text-subtle">{p.phone}</span>
                           </span>
                         </span>
                       </td>
                       <td className="text-ink-soft">
                         <span className="block leading-tight text-ink">{p.purpose}</span>
-                        <span className="text-[12.5px] text-subtle">{p.item}</span>
+                        <span className="text-caption text-subtle">{p.item}</span>
                       </td>
-                      <td className="pr-6 text-right font-semibold text-ink tabular-nums">{rupees(p.amount)}</td>
+                      <td className="pe-6 text-end font-semibold text-ink tabular-nums">{rupees(p.amount)}</td>
                       <td>
                         <Badge tone={s.tone} dot>
                           {s.label}
@@ -239,13 +241,13 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
                       </td>
                       <td className="whitespace-nowrap text-ink-soft">
                         {daysAgo(p.sent)}
-                        {p.status === "paid" && <span className="block text-[12.5px] text-subtle">Paid {daysAgo(p.paid ?? 0).toLowerCase()}</span>}
-                        {p.status === "unpaid" && <span className="block text-[12.5px] text-subtle">{p.viewed ? "Opened" : "Not opened yet"}</span>}
+                        {p.status === "paid" && <span className="block text-caption text-subtle">Paid {daysAgo(p.paid ?? 0).toLowerCase()}</span>}
+                        {p.status === "unpaid" && <span className="block text-caption text-subtle">{p.viewed ? "Opened" : "Not opened yet"}</span>}
                       </td>
                       <td>
                         <ReminderDots p={p} />
                       </td>
-                      <td className="pr-5 text-right" onClick={(e) => e.stopPropagation()}>
+                      <td className="pe-5 text-end" onClick={(e) => e.stopPropagation()}>
                         <Menu label={`Actions for ${p.who}`} items={actions(p)} />
                       </td>
                     </tr>
@@ -289,12 +291,12 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
               <Badge tone={status(open).tone} dot>
                 {status(open).label}
               </Badge>
-              <span className="text-[34px] leading-none font-semibold tracking-[-0.02em] text-ink">{rupees(open.amount)}</span>
-              <span className="text-[14px] text-subtle">
+              <span className="text-h1 leading-none font-semibold tracking-[-0.02em] text-ink">{rupees(open.amount)}</span>
+              <span className="text-body text-subtle">
                 {open.purpose} for {open.item}
               </span>
             </div>
-            <dl className="m-0 grid grid-cols-[120px_minmax(0,1fr)] gap-y-2.5 text-[14px]">
+            <dl className="m-0 grid grid-cols-[120px_minmax(0,1fr)] gap-y-2.5 text-body">
               <dt className="text-subtle">Customer</dt>
               <dd className="m-0 text-ink">
                 {open.who} · {open.phone}
@@ -316,7 +318,7 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
               )}
             </dl>
             <div>
-              <h3 className="m-0 mb-3 text-[14px] font-semibold text-ink">Timeline</h3>
+              <h3 className="m-0 mb-3 text-body font-semibold text-ink">Timeline</h3>
               <ol className="m-0 flex list-none flex-col p-0">
                 {[
                   { text: "Link sent on WhatsApp", when: daysAgo(open.sent), done: true },
@@ -331,11 +333,11 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
                   ...(open.status === "cancelled" ? [{ text: "Link cancelled", when: "", done: true }] : []),
                 ].map((e, i, arr) => (
                   <li key={i} className="relative flex gap-3 pb-4 last:pb-0">
-                    {i < arr.length - 1 && <span aria-hidden="true" className="absolute top-4 left-[5px] h-full w-px bg-line" />}
-                    <span className={`relative mt-1 h-[11px] w-[11px] flex-none rounded-full ${e.done ? "bg-ink" : "border-2 border-line-strong bg-white"}`} />
-                    <span className="flex flex-1 items-baseline justify-between gap-3 text-[14px]">
+                    {i < arr.length - 1 && <span aria-hidden="true" className="absolute top-4 start-[5px] h-full w-px bg-line" />}
+                    <span className={`relative mt-1 h-[11px] w-[11px] flex-none rounded-full ${e.done ? "bg-brand-fill" : "border-2 border-line-strong bg-surface"}`} />
+                    <span className="flex flex-1 items-baseline justify-between gap-3 text-body">
                       <span className={e.done ? "text-ink" : "text-subtle"}>{e.text}</span>
-                      <span className="text-[12.5px] whitespace-nowrap text-subtle">{e.when}</span>
+                      <span className="text-caption whitespace-nowrap text-subtle">{e.when}</span>
                     </span>
                   </li>
                 ))}

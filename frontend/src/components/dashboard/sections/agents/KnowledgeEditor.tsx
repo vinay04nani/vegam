@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { sampleImport } from "@/content/onboarding";
+import { currencySymbol, localPrice } from "@/lib/locale";
 import { currencyFor, type Faq, type OnboardingState, type Service } from "@/lib/onboarding";
 import { Icon } from "@/components/ui/Icon";
 import { useToast } from "../../kit";
@@ -13,14 +14,14 @@ import { Group, Input, Row, RowButton, TextArea } from "../settings/parts";
 
 type Update = (fn: (s: OnboardingState) => OnboardingState) => void;
 
-const iconButton = "flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-danger";
+const iconButton = "flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-md text-muted hover:bg-panel hover:text-danger";
 
 export function KnowledgeEditor({ state, update, onOpen }: { state: OnboardingState; update: Update; onOpen: (view: string) => void }) {
   const toast = useToast();
   const [reading, setReading] = useState(false);
   const a = state.assistant;
   const currency = currencyFor(state);
-  const symbol = currency === "INR" ? "₹" : "$";
+  const symbol = currencySymbol(currency);
   const setA = (patch: Partial<OnboardingState["assistant"]>) => update((s) => ({ ...s, assistant: { ...s.assistant, ...patch } }));
   const setService = (i: number, patch: Partial<Service>) => setA({ services: a.services.map((x, j) => (j === i ? { ...x, ...patch } : x)) });
   const setFaq = (i: number, patch: Partial<Faq>) => setA({ faqs: a.faqs.map((x, j) => (j === i ? { ...x, ...patch } : x)) });
@@ -33,7 +34,7 @@ export function KnowledgeEditor({ state, update, onOpen }: { state: OnboardingSt
         ...s,
         assistant: {
           ...s.assistant,
-          services: s.assistant.services.length ? s.assistant.services : sampleImport.services.map((x) => ({ name: x.name, minutes: x.minutes, price: x.price[currency] })),
+          services: s.assistant.services.length ? s.assistant.services : sampleImport.services.map((x) => ({ name: x.name, minutes: x.minutes, price: localPrice(x.price.USD, x.price.INR, currency) })),
           faqs: s.assistant.faqs.length ? s.assistant.faqs : sampleImport.faqs,
         },
       }));
@@ -65,9 +66,9 @@ export function KnowledgeEditor({ state, update, onOpen }: { state: OnboardingSt
             </RowButton>
           }
         >
-          {a.services.length === 0 && <p className="m-0 py-4 text-[14px] text-subtle">No services yet. Read your website or add one.</p>}
+          {a.services.length === 0 && <p className="m-0 py-4 text-body text-subtle">No services yet. Read your website or add one.</p>}
           {a.services.length > 0 && (
-            <div className="hidden grid-cols-[minmax(0,1fr)_96px_120px_36px] gap-2 pt-3 text-[12.5px] text-subtle sm:grid">
+            <div className="hidden grid-cols-[minmax(0,1fr)_96px_120px_36px] gap-2 pt-3 text-caption text-subtle sm:grid">
               <span>Service</span>
               <span>Minutes</span>
               <span>Price</span>
@@ -83,8 +84,8 @@ export function KnowledgeEditor({ state, update, onOpen }: { state: OnboardingSt
               <span className="col-span-2 grid grid-cols-2 gap-2 sm:col-span-1 sm:contents">
                 <Input aria-label={`Service ${i + 1} minutes`} inputMode="numeric" value={sv.minutes || ""} onChange={(e) => setService(i, { minutes: Number(e.target.value.replace(/\D/g, "")) || 0 })} placeholder="30" />
                 <span className="relative block">
-                  <span className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-[14px] text-subtle">{symbol}</span>
-                  <Input aria-label={`Service ${i + 1} price`} inputMode="numeric" value={sv.price || ""} onChange={(e) => setService(i, { price: Number(e.target.value.replace(/\D/g, "")) || 0 })} placeholder="0" className="w-full pl-7" />
+                  <span className="pointer-events-none absolute top-1/2 start-3 -translate-y-1/2 text-body text-subtle">{symbol}</span>
+                  <Input aria-label={`Service ${i + 1} price`} inputMode="numeric" value={sv.price || ""} onChange={(e) => setService(i, { price: Number(e.target.value.replace(/\D/g, "")) || 0 })} placeholder="0" className="w-full ps-7" />
                 </span>
               </span>
             </div>
@@ -119,7 +120,7 @@ export function KnowledgeEditor({ state, update, onOpen }: { state: OnboardingSt
             </RowButton>
           }
         >
-          {a.faqs.length === 0 && <p className="m-0 py-4 text-[14px] text-subtle">No questions yet. Answers you save from unanswered questions appear here.</p>}
+          {a.faqs.length === 0 && <p className="m-0 py-4 text-body text-subtle">No questions yet. Answers you save from unanswered questions appear here.</p>}
           {a.faqs.map((f, i) => (
             <div key={i} className="flex flex-col gap-2 py-4">
               <span className="flex items-center gap-2">
@@ -128,12 +129,12 @@ export function KnowledgeEditor({ state, update, onOpen }: { state: OnboardingSt
                   <Icon name="trash" size={15} />
                 </button>
               </span>
-              <TextArea aria-label={`Answer ${i + 1}`} rows={2} value={f.a} onChange={(e) => setFaq(i, { a: e.target.value })} placeholder="The answer it should give" className="w-full sm:mr-11 sm:w-[calc(100%-44px)]" />
+              <TextArea aria-label={`Answer ${i + 1}`} rows={2} value={f.a} onChange={(e) => setFaq(i, { a: e.target.value })} placeholder="The answer it should give" className="w-full sm:me-11 sm:w-[calc(100%-44px)]" />
             </div>
           ))}
         </Group>
       </div>
-      <p className="m-0 mt-6 text-[12.5px] text-subtle">Changes are saved as you type.</p>
+      <p className="m-0 mt-6 text-caption text-subtle">Changes are saved as you type.</p>
     </div>
   );
 }
