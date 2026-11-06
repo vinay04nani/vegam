@@ -37,7 +37,7 @@ import { PlanNotice, pilotDay } from "./ui";
 /** Pages that belong to Home in the navigation. */
 const homeViews = ["home", "preview", "setup-assistant", "setup-whatsapp", "setup-test"];
 /** Pages reached from the user menu or other pages, highlighted under their parent in the navigation. */
-const parentOf: Record<string, string> = { assistant: "agents" };
+const parentOf: Record<string, string> = { assistant: "agents", "payments/quotes": "payments" };
 
 const userName = "Vinay";
 
@@ -263,6 +263,8 @@ function DashboardShell() {
         return <Reviews onOpen={select} />;
       case "payments":
         return <Payments onOpen={select} />;
+      case "payments/quotes":
+        return <Payments key="quotes" onOpen={select} initialView="quotes" />;
       case "reports":
         return <Reports onOpen={select} />;
       default:

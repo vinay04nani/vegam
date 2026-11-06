@@ -1,6 +1,7 @@
 "use client";
 
 import { PaymentLinkModal } from "./payments/PaymentLinkModal";
+import { QuoteModal } from "./payments/QuoteModal";
 import { locationOf } from "@/content/settings";
 import { useBranch } from "../branch";
 import { useMemo, useRef, useState, type KeyboardEvent } from "react";
@@ -99,7 +100,12 @@ function Message({ m, who }: { m: ThreadMessage; who: string }) {
     ) : m.kind === "voice" ? (
       <div className={`flex w-[300px] max-w-full flex-col gap-2 rounded-[16px] px-3 py-2.5 ${bubble}`}>
         <span className="flex items-center gap-2.5">
-          <button type="button" aria-label={`Play voice note, ${m.duration}`} onClick={() => toast("Playing voice note (demo)", "info")} className="flex h-8 w-8 flex-none cursor-pointer items-center justify-center rounded-full bg-ink text-white">
+          <button
+            type="button"
+            aria-label={`Play voice note, ${m.duration}`}
+            onClick={() => toast("Playing voice note (demo)", "info")}
+            className="flex h-8 w-8 flex-none cursor-pointer items-center justify-center rounded-full bg-ink text-white"
+          >
             <Icon name="play" size={13} />
           </button>
           <Waveform seed={m.text} />
@@ -165,6 +171,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
   const [contacts, setContacts] = useState<Contact[]>(sampleContacts);
   const [folder, setFolder] = useState<Folder>("open");
   const [paying, setPaying] = useState(false);
+  const [quoting, setQuoting] = useState(false);
   const { branch } = useBranch();
   const [openId, setOpenId] = useState<string | null>(null);
   const [mobileThread, setMobileThread] = useState(false);
@@ -296,11 +303,19 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
         ? { tone: "bg-periwinkle-soft/60 text-brand", icon: "sparkle" as IconName, text: "The AI assistant is answering this chat.", action: "Take over", onAction: takeOver }
         : open.owner === "needs"
           ? { tone: "bg-[#FFF3E6] text-warning", icon: "bell" as IconName, text: "The AI handed this chat to your team.", action: "Take over", onAction: takeOver }
-          : { tone: "bg-[#E8F3EA] text-success", icon: "users" as IconName, text: `${open.assignee && open.assignee !== "You" ? `${open.assignee} is` : "You’re"} handling this chat. The AI is paused.`, action: "Hand back to AI", onAction: handBack };
+          : {
+              tone: "bg-[#E8F3EA] text-success",
+              icon: "users" as IconName,
+              text: `${open.assignee && open.assignee !== "You" ? `${open.assignee} is` : "You’re"} handling this chat. The AI is paused.`,
+              action: "Hand back to AI",
+              onAction: handBack,
+            };
 
   return (
     <div className="flex h-[calc(100svh-56px-64px)] flex-col overflow-hidden bg-white lg:h-[calc(100svh-48px)] lg:rounded-[20px] lg:border lg:border-line lg:shadow-[0_1px_3px_rgb(30_31_43/0.04)]">
-      <div className={`grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] lg:grid-cols-[320px_minmax(0,1fr)] 2xl:grid-cols-[210px_320px_minmax(0,1fr)] ${panel ? "xl:grid-cols-[320px_minmax(0,1fr)_300px] 2xl:grid-cols-[210px_320px_minmax(0,1fr)_300px]" : ""}`}>
+      <div
+        className={`grid min-h-0 flex-1 grid-cols-[minmax(0,1fr)] lg:grid-cols-[320px_minmax(0,1fr)] 2xl:grid-cols-[210px_320px_minmax(0,1fr)] ${panel ? "xl:grid-cols-[320px_minmax(0,1fr)_300px] 2xl:grid-cols-[210px_320px_minmax(0,1fr)_300px]" : ""}`}
+      >
         {/* Folders (wide screens) */}
         <nav aria-label="Inbox folders" className="hidden min-h-0 flex-col gap-0.5 overflow-y-auto border-r border-line bg-[#F7F7FA] p-3 2xl:flex">
           <p className="m-0 px-2.5 pt-1 pb-2 text-[12px] font-semibold tracking-[0.06em] text-subtle uppercase">Inbox</p>
@@ -429,7 +444,12 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
           ) : (
             <>
               <header className="flex items-center gap-3 border-b border-line bg-white px-4 py-3">
-                <button type="button" onClick={() => setMobileThread(false)} aria-label="Back to conversations" className="-ml-1 flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-full text-ink hover:bg-panel lg:hidden">
+                <button
+                  type="button"
+                  onClick={() => setMobileThread(false)}
+                  aria-label="Back to conversations"
+                  className="-ml-1 flex h-9 w-9 flex-none cursor-pointer items-center justify-center rounded-full text-ink hover:bg-panel lg:hidden"
+                >
                   <Icon name="chevron-left" size={22} />
                 </button>
                 <button
@@ -506,6 +526,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                     { label: "Snooze until tomorrow", onSelect: () => snooze("Tomorrow morning") },
                     { label: "Customer details", onSelect: showDetails },
                     { label: "Request payment", onSelect: () => setPaying(true) },
+                    { label: "Send a quote", onSelect: () => setQuoting(true) },
                     { label: "Open in Contacts", onSelect: () => onOpen("contacts") },
                   ]}
                 />
@@ -584,7 +605,13 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                     />
                   </label>
                   <div className="flex items-center gap-1 px-2 pb-2">
-                    <button type="button" onClick={() => fileInput.current?.click()} aria-label="Attach a photo" title="Attach a photo" className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-ink">
+                    <button
+                      type="button"
+                      onClick={() => fileInput.current?.click()}
+                      aria-label="Attach a photo"
+                      title="Attach a photo"
+                      className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-[8px] text-muted hover:bg-panel hover:text-ink"
+                    >
                       <Icon name="image" size={17} />
                     </button>
                     <button
@@ -658,6 +685,7 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
       <Drawer open={details && !!contact} onClose={() => setDetails(false)} title="Customer details">
         {contact && <ContactDetails key={contact.id} contact={contact} actions={false} onOpen={onOpen} onChange={(c) => setContacts((cs) => (cs.some((x) => x.id === c.id) ? cs.map((x) => (x.id === c.id ? c : x)) : [c, ...cs]))} />}
       </Drawer>
+      {open && <QuoteModal open={quoting} onClose={() => setQuoting(false)} initial={{ who: contact?.name ?? open.who, phone: contact?.phone }} />}
       {open && <PaymentLinkModal open={paying} onClose={() => setPaying(false)} initial={{ who: contact?.name ?? open.who, phone: contact?.phone, item: "Standard appointment" }} />}
     </div>
   );

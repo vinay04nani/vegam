@@ -1,6 +1,7 @@
 "use client";
 
 import { PaymentLinkModal } from "./payments/PaymentLinkModal";
+import { QuoteModal } from "./payments/QuoteModal";
 import { useState } from "react";
 import { channelLabel, optInLabel, sampleTags, type Contact, type ContactChannel, type ContactEvent, type OptIn } from "@/content/contacts";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -37,7 +38,13 @@ export function lastVisitText(days: number | null) {
 export function ChannelMark({ channel, size = 22 }: { channel: ContactChannel; size?: number }) {
   if (channel === "whatsapp" || channel === "instagram" || channel === "messenger") return <BrandLogo brand={channel} size={size} />;
   return (
-    <span role="img" aria-label={channelLabel[channel]} title={channelLabel[channel]} className="inline-flex flex-none items-center justify-center border border-line bg-white text-muted" style={{ width: size, height: size, borderRadius: size * 0.28 }}>
+    <span
+      role="img"
+      aria-label={channelLabel[channel]}
+      title={channelLabel[channel]}
+      className="inline-flex flex-none items-center justify-center border border-line bg-white text-muted"
+      style={{ width: size, height: size, borderRadius: size * 0.28 }}
+    >
       <Icon name={channel === "website" ? "globe" : "phone"} size={size * 0.55} />
     </span>
   );
@@ -47,6 +54,7 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
   const toast = useToast();
   const [note, setNote] = useState("");
   const [paying, setPaying] = useState(false);
+  const [quoting, setQuoting] = useState(false);
   const [adding, setAdding] = useState(false);
   const c = contact;
   const log = (e: ContactEvent) => [e, ...c.timeline];
@@ -81,9 +89,13 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
           <Button icon="calendar" onClick={() => onOpen("calendar")}>
             Book a visit
           </Button>
-          <Button icon="wallet" onClick={() => setPaying(true)} className="col-span-2">
+          <Button icon="wallet" onClick={() => setPaying(true)}>
             Request payment
           </Button>
+          <Button icon="note" onClick={() => setQuoting(true)}>
+            Send a quote
+          </Button>
+          <QuoteModal open={quoting} onClose={() => setQuoting(false)} initial={{ who: c.name, phone: c.phone }} />
           <PaymentLinkModal open={paying} onClose={() => setPaying(false)} initial={{ who: c.name, phone: c.phone }} />
         </div>
       )}
@@ -137,7 +149,11 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
               </select>
             </label>
           ) : (
-            <button type="button" onClick={() => setAdding(true)} className="inline-flex min-h-7 cursor-pointer items-center gap-1 rounded-full border border-dashed border-line-strong px-3 text-[13px] font-semibold text-muted hover:text-ink">
+            <button
+              type="button"
+              onClick={() => setAdding(true)}
+              className="inline-flex min-h-7 cursor-pointer items-center gap-1 rounded-full border border-dashed border-line-strong px-3 text-[13px] font-semibold text-muted hover:text-ink"
+            >
               <Icon name="plus" size={13} />
               Add tag
             </button>

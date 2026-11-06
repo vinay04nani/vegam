@@ -56,7 +56,15 @@ export const sampleTemplates: Template[] = [
   { id: "t2", name: "booking_confirmed", category: "Utility", language: "English", status: "Approved", body: "Thanks {{1}}! You’re booked for {{2}}. We’ll send a reminder the day before." },
   { id: "t3", name: "missed_call_followup", category: "Utility", language: "English", status: "Approved", body: "Sorry we missed your call, {{1}}. You can book here: {{2}}, or reply CALL and we’ll ring you back." },
   { id: "t4", name: "review_request", category: "Marketing", language: "English", status: "In review", body: "Thanks for visiting, {{1}}! If you have a minute, a review helps us a lot: {{2}}" },
-  { id: "t5", name: "weekend_offer", category: "Marketing", language: "Hindi", status: "Rejected", body: "नमस्ते {{1}}! इस वीकेंड नए स्लॉट खुले हैं। बुक करें: {{2}}", note: "Meta asked for a clearer opt-out line. Add “Reply STOP to opt out” and resubmit." },
+  {
+    id: "t5",
+    name: "weekend_offer",
+    category: "Marketing",
+    language: "Hindi",
+    status: "Rejected",
+    body: "नमस्ते {{1}}! इस वीकेंड नए स्लॉट खुले हैं। बुक करें: {{2}}",
+    note: "Meta asked for a clearer opt-out line. Add “Reply STOP to opt out” and resubmit.",
+  },
 ];
 
 export const sampleApiKeys = [
@@ -76,3 +84,18 @@ export const notificationEvents = [
   { id: "report", label: "Morning report" },
   { id: "usage", label: "Usage and billing alerts" },
 ] as const;
+
+/** People customers can be booked with. `id` matches bookings' `staff`. */
+export type StaffMember = { id: string; name: string; role: string; color: string; days: string[]; from: string; to: string; bookable: boolean };
+
+export const staffMembers: StaffMember[] = [
+  { id: "you", name: "You", role: "Owner", color: "#4A47E0", days: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], from: "10:00", to: "19:00", bookable: true },
+  { id: "kumar", name: "R. Kumar", role: "Manager", color: "#0F8A6B", days: ["Mon", "Tue", "Wed", "Thu", "Fri"], from: "10:00", to: "18:00", bookable: true },
+  { id: "das", name: "S. Das", role: "Front desk", color: "#C2571B", days: ["Tue", "Wed", "Thu", "Fri", "Sat", "Sun"], from: "12:00", to: "20:00", bookable: true },
+];
+
+/** Who a sample booking is with, decided from its id so it never changes. */
+export function staffOf(id: string) {
+  const n = [...id].reduce((a, c) => a * 7 + c.charCodeAt(0), 3) % 3;
+  return staffMembers[n].id;
+}

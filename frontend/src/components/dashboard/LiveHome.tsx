@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { checklist, type ChecklistItem } from "@/content/onboarding";
-import { sampleConversations, sampleNeedsYou, sampleToday, sampleUpcoming } from "@/content/dashboard";
+import { sampleConversations, sampleToday, sampleUpcoming } from "@/content/dashboard";
+import { NeedsYou } from "./NeedsYou";
 import { plans, type PlanId } from "@/content/pricing";
 import { Icon } from "@/components/ui/Icon";
 import { VegamMark } from "@/components/ui/Kolam";
@@ -35,19 +36,12 @@ function GrowCard({ items, done, onDone, onOpen }: { items: ChecklistItem[]; don
           const isOpen = open === item.id;
           return (
             <li key={item.id} className="border-t border-line first:border-t-0">
-              <button
-                type="button"
-                aria-expanded={isOpen}
-                onClick={() => setOpen(isOpen ? null : item.id)}
-                className="flex w-full cursor-pointer items-center gap-3 py-3 text-left"
-              >
+              <button type="button" aria-expanded={isOpen} onClick={() => setOpen(isOpen ? null : item.id)} className="flex w-full cursor-pointer items-center gap-3 py-3 text-left">
                 <span className={`flex h-6 w-6 flex-none items-center justify-center rounded-full border-2 ${isDone ? "border-success bg-success text-white" : "border-line-strong"}`}>
                   {isDone && <Icon name="check" size={13} strokeWidth={2.8} className="[&_circle]:hidden" />}
                 </span>
                 <span className={`flex-1 text-[15px] font-medium ${isDone ? "text-subtle line-through" : "text-ink"}`}>{item.title}</span>
-                {!isDone && (
-                  <span className={`text-[12px] font-semibold whitespace-nowrap ${item.priority === "Must" ? "text-warning" : "text-muted"}`}>{item.priority}</span>
-                )}
+                {!isDone && <span className={`text-[12px] font-semibold whitespace-nowrap ${item.priority === "Must" ? "text-warning" : "text-muted"}`}>{item.priority}</span>}
                 <Icon name="chevron-down" size={16} className={`flex-none text-subtle transition ${isOpen ? "rotate-180" : ""}`} />
               </button>
               {isOpen && (
@@ -165,9 +159,7 @@ export function LiveHome({ state, update, plan, mode, welcome, onDismissWelcome,
       {/* Pilot progress */}
       <section className="flex flex-col gap-3 rounded-[22px] border border-line bg-white p-5" aria-label="Pilot progress">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <p className="m-0 text-[17px] font-semibold text-ink">
-            Pilot · day {day} of 30
-          </p>
+          <p className="m-0 text-[17px] font-semibold text-ink">Pilot · day {day} of 30</p>
           <p className="m-0 text-[14.5px] text-subtle">{day <= 7 ? "Week 1: measuring your baseline" : "Weeks 2–4: Vegam runs your front desk"}</p>
         </div>
         <div className="flex gap-1" aria-hidden="true">
@@ -175,28 +167,13 @@ export function LiveHome({ state, update, plan, mode, welcome, onDismissWelcome,
             <span key={i} className={`h-2 flex-1 rounded-full ${i < day ? (i < 7 ? "bg-periwinkle" : "bg-orange") : "bg-line"} ${i === 6 ? "mr-1.5" : ""}`} />
           ))}
         </div>
-        <p className="m-0 text-[14px] text-subtle">
-          {plans.find((p) => p.id === plan)?.name} plan, free until day 30. Add a payment method by day 25 to keep going.
-        </p>
+        <p className="m-0 text-[14px] text-subtle">{plans.find((p) => p.id === plan)?.name} plan, free until day 30. Add a payment method by day 25 to keep going.</p>
       </section>
 
       <div className="grid grid-cols-[minmax(0,1fr)] items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
         <div className="flex flex-col gap-5">
           <GrowCard items={items} done={state.checklistDone} onDone={markDone} onOpen={onOpen} />
-          <Card title="Needs you" extra={<SampleTag />}>
-            <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
-              {sampleNeedsYou.map((n) => (
-                <li key={n.text} className="flex items-start gap-3 rounded-[16px] bg-panel p-3.5">
-                  <span className="mt-1 h-2 w-2 flex-none rounded-full bg-orange" />
-                  <span className="flex min-w-0 flex-1 flex-col gap-0.5">
-                    <span className="text-[13px] text-subtle">{n.who}</span>
-                    <span className="text-[15px] text-ink">{n.text}</span>
-                  </span>
-                  <span className="rounded-full bg-white px-2.5 py-1 text-[12px] font-semibold whitespace-nowrap text-warning">{n.tag}</span>
-                </li>
-              ))}
-            </ul>
-          </Card>
+          <NeedsYou onOpen={onOpen} />
         </div>
 
         <div className="flex flex-col gap-5">

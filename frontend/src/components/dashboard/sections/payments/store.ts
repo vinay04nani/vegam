@@ -24,4 +24,9 @@ const subscribe = (fn: () => void) => {
   return () => listeners.delete(fn);
 };
 
-export const usePaymentLinks = () => useSyncExternalStore(subscribe, () => links, () => samplePayments);
+export const usePaymentLinks = () =>
+  useSyncExternalStore(
+    subscribe,
+    () => links,
+    () => samplePayments,
+  );

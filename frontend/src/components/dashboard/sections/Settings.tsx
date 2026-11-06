@@ -218,7 +218,7 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
             {section === "services" && <Services state={state} update={update} />}
             {section === "hours" && <Hours />}
             {section === "locations" && <Locations isPro={state.plan === "pro"} />}
-            {section === "booking" && <BookingPage name={state.business.name} />}
+            {section === "booking" && <BookingPage name={state.business.name} services={state.assistant.services} />}
             {section === "channels" && <Connectors state={state} update={update} />}
             {section === "whatsapp" && <WhatsAppProfile name={state.business.name} onOpen={onOpen} />}
             {section === "inbox" && <InboxRules />}

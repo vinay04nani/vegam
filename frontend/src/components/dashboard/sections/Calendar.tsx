@@ -1,26 +1,30 @@
 "use client";
 
 import { PaymentLinkModal, type PaymentDraft } from "./payments/PaymentLinkModal";
-import { locationOf } from "@/content/settings";
+import { locationOf, staffMembers, staffOf } from "@/content/settings";
 import { useBranch } from "../branch";
 import { useEffect, useMemo, useState } from "react";
-import { sampleBookings, sampleServiceNames, serviceColors, type Booking } from "@/content/dashboard";
+import { sampleBookings, sampleServiceNames, sampleWaitlist, serviceColors, type Booking, type WaitlistEntry } from "@/content/dashboard";
 import { Icon } from "@/components/ui/Icon";
 import { Field, Select, TextInput } from "@/components/setup/fields";
 import type { OnboardingState } from "@/lib/onboarding";
-import { Avatar, Badge, Button, IconButton, Modal, SegmentedControl, SourceLabel } from "../kit";
+import { Avatar, Badge, Button, Drawer, IconButton, Modal, SegmentedControl, SourceLabel, Toggle, useToast } from "../kit";
 import { PageTitle, SampleTag } from "../ui";
 import { Agenda, MonthGrid, TimeGrid, type Block, type CalItem } from "./CalendarGrid";
 import { MiniMonth } from "./MiniMonth";
 import { addDays, fmtDate, fmtMin, startOfDay, toMin, toTime, weekday } from "./calendarUtils";
 
 // Bookings on a week, day, month or agenda view, with a mini month, today's
-// summary, service filters, and dialogs to book, block time, reschedule and
-// cancel.
+// summary, team and service filters, a waitlist, and dialogs to book (with a
+// person or whoever is free), block time, reschedule, reassign and cancel.
 // Demo: changes are kept in this component only.
 
 type View = "day" | "week" | "month" | "agenda";
-type Draft = { id?: string; who: string; service: number; day: number; start: string };
+type Draft = { id?: string; who: string; service: number; day: number; start: string; /** A staff id, or "any" for whoever is free. */ staff: string };
+
+/** Who a booking is with. */
+const staffIdOf = (b: { id: string; staff?: string }) => b.staff ?? staffOf(b.id);
+const staffName = (id: string) => staffMembers.find((m) => m.id === id)?.name ?? "Anyone";
 
 const defaultMinutes = [30, 60, 20, 45];
 
@@ -38,6 +42,12 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
   const [confirmCancel, setConfirmCancel] = useState(false);
   const [draft, setDraft] = useState<Draft | null>(null);
   const [blockDraft, setBlockDraft] = useState<Omit<Block, "id"> | null>(null);
+  const [hiddenStaff, setHiddenStaff] = useState<string[]>([]);
+  const [waitlist, setWaitlist] = useState<WaitlistEntry[]>(sampleWaitlist);
+  const [waitOpen, setWaitOpen] = useState(false);
+  const [autoOffer, setAutoOffer] = useState(true);
+  const [waitDraft, setWaitDraft] = useState({ who: "", service: 0, wants: "" });
+  const toast = useToast();
 
   useEffect(() => {
     setToday(startOfDay(new Date()));
@@ -51,11 +61,12 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
   const serviceName = (i: number) => services[i]?.name ?? sampleServiceNames[i] ?? "Appointment";
 
   const itemsFor = useMemo(
-    () => (d: number): CalItem[] => [
-      ...bookings.filter((b) => b.day === d && !hidden.includes(b.service) && (branch === "all" || locationOf(b.id) === branch)).map((b) => ({ kind: "booking" as const, ...b })),
-      ...blocks.filter((b) => b.day === d).map((b) => ({ kind: "block" as const, ...b })),
-    ],
-    [bookings, blocks, hidden, branch],
+    () =>
+      (d: number): CalItem[] => [
+        ...bookings.filter((b) => b.day === d && !hidden.includes(b.service) && !hiddenStaff.includes(staffIdOf(b)) && (branch === "all" || locationOf(b.id) === branch)).map((b) => ({ kind: "booking" as const, ...b })),
+        ...blocks.filter((b) => b.day === d).map((b) => ({ kind: "block" as const, ...b })),
+      ],
+    [bookings, blocks, hidden, hiddenStaff, branch],
   );
   const busyDays = useMemo(() => new Set(bookings.map((b) => b.day)), [bookings]);
 
@@ -97,21 +108,23 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
   // ----- Booking dialog -----
   const draftService = draft ? services[draft.service] : undefined;
   const draftMinutes = draft?.id ? (bookings.find((b) => b.id === draft.id)?.minutes ?? draftService?.minutes ?? 30) : (draftService?.minutes ?? 30);
-  const clash = draft
-    ? itemsFor(draft.day)
-        .concat(bookings.filter((b) => b.day === draft.day && hidden.includes(b.service)).map((b) => ({ kind: "booking" as const, ...b })))
-        .find((it) => it.id !== draft.id && toMin(draft.start) < toMin(it.start) + it.minutes && toMin(it.start) < toMin(draft.start) + draftMinutes)
-    : undefined;
+  // Bookings only clash with the same person's bookings; blocked time stops everyone.
+  const dayItems: CalItem[] = draft
+    ? [...bookings.filter((b) => b.day === draft.day && b.id !== draft.id).map((b) => ({ kind: "booking" as const, ...b })), ...blocks.filter((b) => b.day === draft.day).map((b) => ({ kind: "block" as const, ...b }))]
+    : [];
+  const clashWith = (sid: string) => (draft ? dayItems.find((it) => toMin(draft.start) < toMin(it.start) + it.minutes && toMin(it.start) < toMin(draft.start) + draftMinutes && (it.kind === "block" || staffIdOf(it) === sid)) : undefined);
+  const freeStaff = draft ? (draft.staff === "any" ? staffMembers.filter((m) => m.bookable).find((m) => !clashWith(m.id))?.id : clashWith(draft.staff) ? undefined : draft.staff) : undefined;
+  const clash = draft && !freeStaff ? clashWith(draft.staff === "any" ? staffMembers[0].id : draft.staff) : undefined;
   const slots = Array.from({ length: Math.floor((close - open) / 30) }, (_, i) => open + i * 30).filter((m) => m + 15 <= close);
 
   const saveDraft = () => {
     if (!draft || !draft.who.trim() || clash) return;
     if (draft.id) {
-      setBookings((bs) => bs.map((b) => (b.id === draft.id ? { ...b, who: draft.who.trim(), service: draft.service, day: draft.day, start: draft.start } : b)));
+      setBookings((bs) => bs.map((b) => (b.id === draft.id ? { ...b, who: draft.who.trim(), service: draft.service, day: draft.day, start: draft.start, staff: freeStaff } : b)));
     } else {
       setBookings((bs) => [
         ...bs,
-        { id: `n${Date.now()}`, day: draft.day, start: draft.start, minutes: draftMinutes, service: draft.service, who: draft.who.trim(), phone: "Added by your team", channel: "Booking link", status: "confirmed" },
+        { id: `n${Date.now()}`, day: draft.day, start: draft.start, minutes: draftMinutes, service: draft.service, who: draft.who.trim(), phone: "Added by your team", channel: "Booking link", status: "confirmed", staff: freeStaff },
       ]);
     }
     setAnchor(draft.day);
@@ -150,7 +163,7 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
             ]}
           />
         </div>
-        <div className="flex w-full items-center gap-2 md:w-auto">
+        <div className="flex w-full flex-wrap items-center gap-2 md:w-auto">
           <div className="md:hidden">
             <SegmentedControl
               label="Calendar view"
@@ -163,10 +176,14 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
               ]}
             />
           </div>
+          <Button icon="users" onClick={() => setWaitOpen(true)} ariaLabel={`Waitlist, ${waitlist.length} waiting`}>
+            <span className="sr-only sm:not-sr-only">Waitlist</span>
+            <span className="rounded-full bg-panel px-1.5 text-[12px] text-muted">{waitlist.length}</span>
+          </Button>
           <Button icon="lock" onClick={() => setBlockDraft({ day: anchor, start: toTime(Math.min(close - 60, Math.max(open, 13 * 60))), minutes: 60, reason: "" })} className="ml-auto md:ml-0">
             <span className="sr-only sm:not-sr-only">Block time</span>
           </Button>
-          <Button variant="primary" icon="plus" onClick={() => setDraft({ who: "", service: 0, day: Math.max(0, anchor), start: toTime(slots[0] ?? open) })}>
+          <Button variant="primary" icon="plus" onClick={() => setDraft({ who: "", service: 0, day: Math.max(0, anchor), start: toTime(slots[0] ?? open), staff: "any" })}>
             New booking
           </Button>
         </div>
@@ -225,6 +242,23 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                 )}
               </p>
             )}
+          </div>
+          <div className="flex flex-col gap-2.5 rounded-[18px] border border-line bg-white p-4">
+            <p className="m-0 text-[14.5px] font-semibold text-ink">Team</p>
+            {staffMembers.map((m) => {
+              const on = !hiddenStaff.includes(m.id);
+              const count = todays.filter((b) => staffIdOf(b) === m.id).length;
+              return (
+                <label key={m.id} className="flex cursor-pointer items-center gap-2.5 text-[14px] text-ink">
+                  <input type="checkbox" checked={on} onChange={() => setHiddenStaff((h) => (on ? [...h, m.id] : h.filter((x) => x !== m.id)))} className="sr-only" />
+                  <span className="flex h-[18px] w-[18px] flex-none items-center justify-center rounded-full border-2 text-white" style={{ borderColor: m.color, background: on ? m.color : "white" }}>
+                    {on && <Icon name="check" size={11} strokeWidth={3} className="[&_circle]:hidden" />}
+                  </span>
+                  <span className="flex-1 truncate">{m.name}</span>
+                  <span className="text-[12.5px] text-subtle">{count} today</span>
+                </label>
+              );
+            })}
           </div>
           <div className="flex flex-col gap-2.5 rounded-[18px] border border-line bg-white p-4">
             <p className="m-0 text-[14.5px] font-semibold text-ink">Services</p>
@@ -289,11 +323,33 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
           )}
 
           {view === "week" && (
-            <TimeGrid today={today} days={weekDays} itemsFor={itemsFor} open={open} close={close} serviceName={serviceName} onSelect={setSelected} onDayClick={(d) => { setAnchor(d); setView("day"); }} />
+            <TimeGrid
+              today={today}
+              days={weekDays}
+              itemsFor={itemsFor}
+              open={open}
+              close={close}
+              serviceName={serviceName}
+              onSelect={setSelected}
+              onDayClick={(d) => {
+                setAnchor(d);
+                setView("day");
+              }}
+            />
           )}
           {view === "day" && <TimeGrid today={today} days={[anchor]} itemsFor={itemsFor} open={open} close={close} serviceName={serviceName} onSelect={setSelected} />}
           {view === "month" && (
-            <MonthGrid today={today} anchor={anchor} itemsFor={itemsFor} serviceName={serviceName} onSelect={setSelected} onDayClick={(d) => { setAnchor(d); setView("day"); }} />
+            <MonthGrid
+              today={today}
+              anchor={anchor}
+              itemsFor={itemsFor}
+              serviceName={serviceName}
+              onSelect={setSelected}
+              onDayClick={(d) => {
+                setAnchor(d);
+                setView("day");
+              }}
+            />
           )}
           {view === "agenda" && <Agenda today={today} from={anchor} days={14} itemsFor={itemsFor} serviceName={serviceName} onSelect={setSelected} />}
         </div>
@@ -321,6 +377,11 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                   className="bg-danger hover:bg-[#a30d0d]"
                   onClick={() => {
                     setBookings((bs) => bs.filter((b) => b.id !== selected.id));
+                    const next = waitlist.find((w) => !w.offered);
+                    if (autoOffer && next) {
+                      setWaitlist((all) => all.map((w) => (w.id === next.id ? { ...w, offered: true } : w)));
+                      toast(`Booking cancelled. The freed time was offered to ${next.who} from the waitlist`);
+                    }
                     setSelected(null);
                     setConfirmCancel(false);
                   }}
@@ -336,11 +397,15 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                 <Button icon="message" onClick={() => onOpen("inbox")}>
                   Message
                 </Button>
-                <Button variant="primary" icon="calendar" onClick={() => {
+                <Button
+                  variant="primary"
+                  icon="calendar"
+                  onClick={() => {
                     if (selected?.kind !== "booking") return;
-                    setDraft({ id: selected.id, who: selected.who, service: selected.service, day: selected.day, start: selected.start });
+                    setDraft({ id: selected.id, who: selected.who, service: selected.service, day: selected.day, start: selected.start, staff: staffIdOf(selected) });
                     setSelected(null);
-                  }}>
+                  }}
+                >
                   Reschedule
                 </Button>
               </>
@@ -386,6 +451,35 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                   <SourceLabel source={selected.channel} />
                 </dd>
               </div>
+              <div className="col-span-2">
+                <dt className="text-subtle">With</dt>
+                <dd className="m-0 mt-1">
+                  <select
+                    aria-label="Who this booking is with"
+                    value={staffIdOf(selected)}
+                    onChange={(e) => {
+                      const sid = e.target.value;
+                      const busy = bookings.find(
+                        (b) => b.id !== selected.id && b.day === selected.day && staffIdOf(b) === sid && toMin(selected.start) < toMin(b.start) + b.minutes && toMin(b.start) < toMin(selected.start) + selected.minutes,
+                      );
+                      if (busy) {
+                        toast(`${staffName(sid)} is busy then (${busy.who}). Pick someone else or move the time.`, "info");
+                        return;
+                      }
+                      setBookings((bs) => bs.map((b) => (b.id === selected.id ? { ...b, staff: sid } : b)));
+                      setSelected({ ...selected, staff: sid });
+                      toast(`Now with ${staffName(sid)}. ${selected.who} gets a WhatsApp about the change`);
+                    }}
+                    className="h-9 w-full cursor-pointer rounded-[10px] border border-line-strong bg-white px-3 text-[14px] text-ink"
+                  >
+                    {staffMembers.map((m) => (
+                      <option key={m.id} value={m.id}>
+                        {m.name} · {m.role}
+                      </option>
+                    ))}
+                  </select>
+                </dd>
+              </div>
               <div>
                 <dt className="text-subtle">Reminder</dt>
                 <dd className="m-0 mt-1 text-ink">{selected.day > 0 ? "Goes out the day before" : "Sent"}</dd>
@@ -417,7 +511,8 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
         )}
         {selected?.kind === "block" && (
           <p className="m-0 text-[15px] text-ink">
-            {selected.reason || "Blocked"} · {fmtDate(addDays(today, selected.day), { weekday: "long", day: "numeric", month: "long" })}, {fmtMin(toMin(selected.start))} – {fmtMin(toMin(selected.start) + selected.minutes)}. No one can book this time.
+            {selected.reason || "Blocked"} · {fmtDate(addDays(today, selected.day), { weekday: "long", day: "numeric", month: "long" })}, {fmtMin(toMin(selected.start))} – {fmtMin(toMin(selected.start) + selected.minutes)}. No one can book
+            this time.
           </p>
         )}
       </Modal>
@@ -452,6 +547,18 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                 ))}
               </Select>
             </Field>
+            <Field label="With">
+              <Select value={draft.staff} onChange={(e) => setDraft({ ...draft, staff: e.target.value })}>
+                <option value="any">Whoever is free</option>
+                {staffMembers
+                  .filter((m) => m.bookable)
+                  .map((m) => (
+                    <option key={m.id} value={m.id}>
+                      {m.name} · {m.role}
+                    </option>
+                  ))}
+              </Select>
+            </Field>
             <div className="grid gap-4 sm:grid-cols-2">
               <Field label="Day">
                 <Select value={draft.day} onChange={(e) => setDraft({ ...draft, day: Number(e.target.value) })}>
@@ -475,11 +582,11 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
             {clash ? (
               <p role="alert" className="m-0 flex items-center gap-2 rounded-[12px] bg-[#FDECEC] px-3.5 py-2.5 text-[14px] text-danger">
                 <Icon name="clock" size={16} />
-                That time overlaps with {clash.kind === "booking" ? clash.who : "blocked time"} ({fmtMin(toMin(clash.start))}).
+                {clash.kind === "booking" ? `${draft.staff === "any" ? "Everyone is" : `${staffName(draft.staff)} is`} busy then (${clash.who} at ${fmtMin(toMin(clash.start))}).` : `That time is blocked (${fmtMin(toMin(clash.start))}).`}
               </p>
             ) : (
               <p className="m-0 text-[13.5px] text-subtle">
-                {fmtMin(toMin(draft.start))} – {fmtMin(toMin(draft.start) + draftMinutes)}. The customer gets a confirmation on WhatsApp and a reminder the day before.
+                {fmtMin(toMin(draft.start))} – {fmtMin(toMin(draft.start) + draftMinutes)} with {freeStaff ? staffName(freeStaff) : "—"}. The customer gets a confirmation on WhatsApp and a reminder the day before.
               </p>
             )}
           </div>
@@ -549,6 +656,95 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
           </div>
         )}
       </Modal>
+      {/* Waitlist */}
+      <Drawer
+        open={waitOpen}
+        onClose={() => setWaitOpen(false)}
+        title={`Waitlist · ${waitlist.length}`}
+        footer={
+          <Button
+            variant="primary"
+            icon="plus"
+            disabled={waitDraft.who.trim().length < 2}
+            onClick={() => {
+              setWaitlist((all) => [...all, { id: `w${Date.now()}`, who: waitDraft.who.trim(), phone: "Added by your team", service: waitDraft.service, wants: waitDraft.wants.trim() || "Any time", added: "Just now" }]);
+              setWaitDraft({ who: "", service: 0, wants: "" });
+              toast("Added to the waitlist");
+            }}
+          >
+            Add to waitlist
+          </Button>
+        }
+      >
+        <div className="flex flex-col gap-5">
+          <Toggle checked={autoOffer} onChange={setAutoOffer} label="Offer freed times automatically" description="When someone cancels, the AI offers the time to the first person who wants it, on WhatsApp. The first to say yes gets it." />
+          {waitlist.length === 0 ? (
+            <p className="m-0 rounded-[12px] bg-panel px-4 py-6 text-center text-[14px] text-subtle">Nobody is waiting. When a day is full, the AI offers to add customers here.</p>
+          ) : (
+            <ul className="m-0 flex list-none flex-col divide-y divide-line rounded-[14px] border border-line p-0">
+              {waitlist.map((w) => (
+                <li key={w.id} className="flex flex-col gap-2.5 p-3.5">
+                  <span className="flex items-start gap-3">
+                    <Avatar name={w.who} size={34} />
+                    <span className="flex min-w-0 flex-1 flex-col">
+                      <span className="text-[14.5px] font-semibold text-ink">{w.who}</span>
+                      <span className="text-[13px] text-subtle">
+                        {serviceName(w.service)}
+                        {w.staff && ` · with ${staffName(w.staff)}`} · {w.wants}
+                      </span>
+                      <span className="text-[12px] text-faint">Added {w.added.toLowerCase()}</span>
+                    </span>
+                    {w.offered && <Badge tone="brand">Offered</Badge>}
+                  </span>
+                  <span className="flex flex-wrap gap-2 pl-[46px]">
+                    <Button
+                      onClick={() => {
+                        setWaitlist((all) => all.map((x) => (x.id === w.id ? { ...x, offered: true } : x)));
+                        toast(`Offered the next free time to ${w.who} on WhatsApp`);
+                      }}
+                      className="min-h-8 px-3 text-[13px]"
+                    >
+                      {w.offered ? "Offer again" : "Offer a time"}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      onClick={() => {
+                        setWaitOpen(false);
+                        setWaitlist((all) => all.filter((x) => x.id !== w.id));
+                        setDraft({ who: w.who, service: w.service, day: Math.max(1, anchor), start: toTime(slots[0] ?? open), staff: w.staff ?? "any" });
+                      }}
+                      className="min-h-8 px-3 text-[13px]"
+                    >
+                      Book now
+                    </Button>
+                    <Button variant="ghost" onClick={() => setWaitlist((all) => all.filter((x) => x.id !== w.id))} className="min-h-8 px-3 text-[13px]">
+                      Remove
+                    </Button>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="flex flex-col gap-3 border-t border-line pt-4">
+            <p className="m-0 text-[14.5px] font-semibold text-ink">Add someone</p>
+            <Field label="Customer">
+              <TextInput value={waitDraft.who} onChange={(e) => setWaitDraft({ ...waitDraft, who: e.target.value })} placeholder="Name or number" />
+            </Field>
+            <Field label="Service">
+              <Select value={waitDraft.service} onChange={(e) => setWaitDraft({ ...waitDraft, service: Number(e.target.value) })}>
+                {services.map((sv, i) => (
+                  <option key={sv.name} value={i}>
+                    {sv.name}
+                  </option>
+                ))}
+              </Select>
+            </Field>
+            <Field label="When they’d like">
+              <TextInput value={waitDraft.wants} onChange={(e) => setWaitDraft({ ...waitDraft, wants: e.target.value })} placeholder="e.g. Friday evening" />
+            </Field>
+          </div>
+        </div>
+      </Drawer>
       <PaymentLinkModal open={!!paying} onClose={() => setPaying(null)} initial={paying ?? undefined} business={state.business.name || undefined} />
     </div>
   );

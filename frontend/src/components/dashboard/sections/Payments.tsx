@@ -8,6 +8,9 @@ import { useBranch } from "../branch";
 import { Avatar, Badge, Button, Drawer, EmptyState, Menu, Tabs, useToast, type BadgeTone } from "../kit";
 import { PageTitle, SampleTag } from "../ui";
 import { PaymentLinkModal } from "./payments/PaymentLinkModal";
+import { QuoteModal } from "./payments/QuoteModal";
+import { Quotes } from "./payments/Quotes";
+import { useQuotes } from "./payments/quoteStore";
 import { paymentStore, usePaymentLinks } from "./payments/store";
 
 // Payments (Pro): Stripe payment links for deposits, full payments, balances
@@ -42,13 +45,16 @@ function ReminderDots({ p }: { p: PaymentLink }) {
   );
 }
 
-export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
+export function Payments({ onOpen, initialView = "links" }: { onOpen: (view: string) => void; initialView?: "links" | "quotes" }) {
   const toast = useToast();
   const all = usePaymentLinks();
   const { branch, label } = useBranch();
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
   const [creating, setCreating] = useState(false);
+  const [view, setView] = useState<"links" | "quotes">(initialView);
+  const [quoting, setQuoting] = useState(false);
+  const openQuotes = useQuotes().filter((q) => q.status === "sent" || q.status === "viewed").length;
   const [openId, setOpenId] = useState<string | null>(null);
 
   const links = all.filter((p) => branch === "all" || p.location === branch);
@@ -123,7 +129,7 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <PageTitle title="Payments" body="Payment links for deposits and bills, what’s been paid and what’s still owed. Customers pay by UPI or card through Stripe." />
+        <PageTitle title="Payments" body="Quotes, payment links for deposits and bills, what’s been paid and what’s still owed. Customers pay by UPI or card through Stripe." />
         <div className="flex flex-wrap items-center gap-2">
           <SampleTag />
           <Button icon="sparkle" onClick={() => onOpen("agent:payments/setup")}>
@@ -132,130 +138,145 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
           <Button icon="settings" onClick={() => onOpen("settings:payments")}>
             Settings
           </Button>
-          <Button variant="primary" icon="plus" onClick={() => setCreating(true)}>
-            Request payment
+          <Button variant="primary" icon="plus" onClick={() => (view === "quotes" ? setQuoting(true) : setCreating(true))}>
+            {view === "quotes" ? "New quote" : "Request payment"}
           </Button>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
-        {[
-          { label: "Collected", value: rupees(collected), note: `${links.filter((p) => p.status === "paid").length} payments · last 30 days` },
-          { label: "Waiting to be paid", value: rupees(unpaid.reduce((a, p) => a + p.amount, 0)), note: `${unpaid.length} open links` },
-          { label: "Overdue", value: rupees(overdue.reduce((a, p) => a + p.amount, 0)), note: overdue.length ? `${overdue.length} past the due date` : "Nothing overdue", danger: overdue.length > 0 },
-          { label: "Average time to pay", value: `${avgDays.toFixed(1)} days`, note: "From link to payment" },
-        ].map((s) => (
-          <div key={s.label} className="flex min-w-0 flex-col gap-1.5 rounded-[16px] border border-line bg-white p-4">
-            <span className="text-[13px] font-medium text-subtle">{s.label}</span>
-            <span className={`text-[24px] leading-none font-semibold tracking-[-0.02em] ${s.danger ? "text-danger" : "text-ink"}`}>{s.value}</span>
-            <span className="truncate text-[12.5px] text-subtle">{s.note}</span>
-          </div>
-        ))}
-      </div>
+      <Tabs
+        label="Payments"
+        value={view}
+        onChange={setView}
+        tabs={[
+          { id: "links", label: "Payment links" },
+          { id: "quotes", label: "Quotes", count: openQuotes || undefined },
+        ]}
+      />
 
-      <section aria-label="Payment links" className="flex min-w-0 flex-col rounded-[18px] border border-line bg-white">
-        <div className="flex flex-wrap items-end justify-between gap-3 px-5 pt-3">
-          <Tabs
-            label="Show"
-            value={filter}
-            onChange={setFilter}
-            tabs={[
-              { id: "all", label: "All", count: count("all") },
-              { id: "unpaid", label: "Unpaid", count: count("unpaid") },
-              { id: "overdue", label: "Overdue", count: count("overdue") },
-              { id: "paid", label: "Paid", count: count("paid") },
-              { id: "refunded", label: "Refunded", count: count("refunded") },
-            ]}
-          />
-          <label className="relative mb-2 w-full sm:w-60">
-            <span className="sr-only">Search payments</span>
-            <Icon name="search" size={15} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-subtle" />
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search customer or service"
-              className="h-9 w-full rounded-[10px] border border-line-strong bg-white pr-3 pl-9 text-[14px] text-ink outline-none placeholder:text-subtle focus:border-ink"
-            />
-          </label>
-        </div>
-
-        {shown.length === 0 ? (
-          <div className="border-t border-line p-8">
-            <EmptyState icon="wallet" title="No payments here" body={branch === "all" ? "Try another tab or search." : `Nothing for ${label} in this view.`} />
+      {view === "links" && (
+        <>
+          <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+            {[
+              { label: "Collected", value: rupees(collected), note: `${links.filter((p) => p.status === "paid").length} payments · last 30 days` },
+              { label: "Waiting to be paid", value: rupees(unpaid.reduce((a, p) => a + p.amount, 0)), note: `${unpaid.length} open links` },
+              { label: "Overdue", value: rupees(overdue.reduce((a, p) => a + p.amount, 0)), note: overdue.length ? `${overdue.length} past the due date` : "Nothing overdue", danger: overdue.length > 0 },
+              { label: "Average time to pay", value: `${avgDays.toFixed(1)} days`, note: "From link to payment" },
+            ].map((s) => (
+              <div key={s.label} className="flex min-w-0 flex-col gap-1.5 rounded-[16px] border border-line bg-white p-4">
+                <span className="text-[13px] font-medium text-subtle">{s.label}</span>
+                <span className={`text-[24px] leading-none font-semibold tracking-[-0.02em] ${s.danger ? "text-danger" : "text-ink"}`}>{s.value}</span>
+                <span className="truncate text-[12.5px] text-subtle">{s.note}</span>
+              </div>
+            ))}
           </div>
-        ) : (
-          <div className="relative overflow-x-auto border-t border-line">
-            <table className="w-full min-w-[760px] border-collapse text-[14px]">
-              <thead>
-                <tr className="bg-[#FAFAFC] text-left text-[13px] text-subtle">
-                  <th scope="col" className="h-10 pl-5 font-medium">
-                    Customer
-                  </th>
-                  <th scope="col" className="font-medium">
-                    For
-                  </th>
-                  <th scope="col" className="pr-6 text-right font-medium">
-                    Amount
-                  </th>
-                  <th scope="col" className="font-medium">
-                    Status
-                  </th>
-                  <th scope="col" className="font-medium">
-                    Sent
-                  </th>
-                  <th scope="col" className="font-medium">
-                    Reminders
-                  </th>
-                  <th scope="col" className="pr-5">
-                    <span className="sr-only">Actions</span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {shown.map((p) => {
-                  const s = status(p);
-                  return (
-                    <tr key={p.id} onClick={() => setOpenId(p.id)} className="cursor-pointer border-t border-line hover:bg-[#FAFAFC]">
-                      <td className="h-14 pl-5">
-                        <span className="flex items-center gap-2.5">
-                          <Avatar name={p.who} size={30} />
-                          <span className="flex min-w-0 flex-col leading-tight">
-                            <button type="button" onClick={() => setOpenId(p.id)} className="cursor-pointer text-left font-medium text-ink hover:underline">
-                              {p.who}
-                            </button>
-                            <span className="text-[12.5px] text-subtle">{p.phone}</span>
-                          </span>
-                        </span>
-                      </td>
-                      <td className="text-ink-soft">
-                        <span className="block leading-tight text-ink">{p.purpose}</span>
-                        <span className="text-[12.5px] text-subtle">{p.item}</span>
-                      </td>
-                      <td className="pr-6 text-right font-semibold text-ink tabular-nums">{rupees(p.amount)}</td>
-                      <td>
-                        <Badge tone={s.tone} dot>
-                          {s.label}
-                        </Badge>
-                      </td>
-                      <td className="whitespace-nowrap text-ink-soft">
-                        {daysAgo(p.sent)}
-                        {p.status === "paid" && <span className="block text-[12.5px] text-subtle">Paid {daysAgo(p.paid ?? 0).toLowerCase()}</span>}
-                        {p.status === "unpaid" && <span className="block text-[12.5px] text-subtle">{p.viewed ? "Opened" : "Not opened yet"}</span>}
-                      </td>
-                      <td>
-                        <ReminderDots p={p} />
-                      </td>
-                      <td className="pr-5 text-right" onClick={(e) => e.stopPropagation()}>
-                        <Menu label={`Actions for ${p.who}`} items={actions(p)} />
-                      </td>
+
+          <section aria-label="Payment links" className="flex min-w-0 flex-col rounded-[18px] border border-line bg-white">
+            <div className="flex flex-wrap items-end justify-between gap-3 px-5 pt-3">
+              <Tabs
+                label="Show"
+                value={filter}
+                onChange={setFilter}
+                tabs={[
+                  { id: "all", label: "All", count: count("all") },
+                  { id: "unpaid", label: "Unpaid", count: count("unpaid") },
+                  { id: "overdue", label: "Overdue", count: count("overdue") },
+                  { id: "paid", label: "Paid", count: count("paid") },
+                  { id: "refunded", label: "Refunded", count: count("refunded") },
+                ]}
+              />
+              <label className="relative mb-2 w-full sm:w-60">
+                <span className="sr-only">Search payments</span>
+                <Icon name="search" size={15} className="pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 text-subtle" />
+                <input
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder="Search customer or service"
+                  className="h-9 w-full rounded-[10px] border border-line-strong bg-white pr-3 pl-9 text-[14px] text-ink outline-none placeholder:text-subtle focus:border-ink"
+                />
+              </label>
+            </div>
+
+            {shown.length === 0 ? (
+              <div className="border-t border-line p-8">
+                <EmptyState icon="wallet" title="No payments here" body={branch === "all" ? "Try another tab or search." : `Nothing for ${label} in this view.`} />
+              </div>
+            ) : (
+              <div className="relative overflow-x-auto border-t border-line">
+                <table className="w-full min-w-[760px] border-collapse text-[14px]">
+                  <thead>
+                    <tr className="bg-[#FAFAFC] text-left text-[13px] text-subtle">
+                      <th scope="col" className="h-10 pl-5 font-medium">
+                        Customer
+                      </th>
+                      <th scope="col" className="font-medium">
+                        For
+                      </th>
+                      <th scope="col" className="pr-6 text-right font-medium">
+                        Amount
+                      </th>
+                      <th scope="col" className="font-medium">
+                        Status
+                      </th>
+                      <th scope="col" className="font-medium">
+                        Sent
+                      </th>
+                      <th scope="col" className="font-medium">
+                        Reminders
+                      </th>
+                      <th scope="col" className="pr-5">
+                        <span className="sr-only">Actions</span>
+                      </th>
                     </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </section>
+                  </thead>
+                  <tbody>
+                    {shown.map((p) => {
+                      const s = status(p);
+                      return (
+                        <tr key={p.id} onClick={() => setOpenId(p.id)} className="cursor-pointer border-t border-line hover:bg-[#FAFAFC]">
+                          <td className="h-14 pl-5">
+                            <span className="flex items-center gap-2.5">
+                              <Avatar name={p.who} size={30} />
+                              <span className="flex min-w-0 flex-col leading-tight">
+                                <button type="button" onClick={() => setOpenId(p.id)} className="cursor-pointer text-left font-medium text-ink hover:underline">
+                                  {p.who}
+                                </button>
+                                <span className="text-[12.5px] text-subtle">{p.phone}</span>
+                              </span>
+                            </span>
+                          </td>
+                          <td className="text-ink-soft">
+                            <span className="block leading-tight text-ink">{p.purpose}</span>
+                            <span className="text-[12.5px] text-subtle">{p.item}</span>
+                          </td>
+                          <td className="pr-6 text-right font-semibold text-ink tabular-nums">{rupees(p.amount)}</td>
+                          <td>
+                            <Badge tone={s.tone} dot>
+                              {s.label}
+                            </Badge>
+                          </td>
+                          <td className="whitespace-nowrap text-ink-soft">
+                            {daysAgo(p.sent)}
+                            {p.status === "paid" && <span className="block text-[12.5px] text-subtle">Paid {daysAgo(p.paid ?? 0).toLowerCase()}</span>}
+                            {p.status === "unpaid" && <span className="block text-[12.5px] text-subtle">{p.viewed ? "Opened" : "Not opened yet"}</span>}
+                          </td>
+                          <td>
+                            <ReminderDots p={p} />
+                          </td>
+                          <td className="pr-5 text-right" onClick={(e) => e.stopPropagation()}>
+                            <Menu label={`Actions for ${p.who}`} items={actions(p)} />
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
+        </>
+      )}
+      {view === "quotes" && <Quotes onOpen={onOpen} onNew={() => setQuoting(true)} />}
 
       <Drawer
         open={!!open}
@@ -346,6 +367,7 @@ export function Payments({ onOpen }: { onOpen: (view: string) => void }) {
       </Drawer>
 
       <PaymentLinkModal open={creating} onClose={() => setCreating(false)} />
+      <QuoteModal open={quoting} onClose={() => setQuoting(false)} />
     </div>
   );
 }

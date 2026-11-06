@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { sampleTeam } from "@/content/dashboard";
-import { permissions, roles, type Role } from "@/content/settings";
+import { permissions, roles, staffMembers, type Role, type StaffMember } from "@/content/settings";
 import { planLimits, plans, type PlanId } from "@/content/pricing";
 import { Icon } from "@/components/ui/Icon";
 import { Avatar, Badge, Button, Menu, Modal, Progress, useToast } from "../../kit";
-import { Dropdown, Group, Input, Row, RowButton } from "./parts";
+import { Dropdown, Group, Input, Row, RowButton, Switch } from "./parts";
 
 // Team members, invitations and what each role can do.
 // Demo: invites are not sent.
@@ -18,6 +18,15 @@ export function Team({ plan = "growth", onOpen }: { plan?: PlanId; onOpen: (view
   const [team, setTeam] = useState<Member[]>(sampleTeam.map((m) => ({ ...m, role: m.role as Role, status: "Active" })));
   const [inviting, setInviting] = useState(false);
   const [invite, setInvite] = useState({ contact: "", role: "Front desk" as Role });
+  const [staff, setStaff] = useState<StaffMember[]>(staffMembers);
+  const [pick, setPick] = useState(true);
+  const [editing, setEditing] = useState<StaffMember | null>(null);
+  const week = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const fmt = (t: string) => {
+    const [h, m] = t.split(":").map(Number);
+    return `${((h + 11) % 12) + 1}${m ? `:${String(m).padStart(2, "0")}` : ""} ${h < 12 ? "AM" : "PM"}`;
+  };
+  const daysText = (d: string[]) => (d.length === 7 ? "Every day" : week.filter((x) => d.includes(x)).join(", "));
 
   const seats = planLimits[plan].seats;
   const full = team.length >= seats;
@@ -26,7 +35,10 @@ export function Team({ plan = "growth", onOpen }: { plan?: PlanId; onOpen: (view
   return (
     <>
       <Group title="Seats">
-        <Row label={seats === Infinity ? `${team.length} people · unlimited seats` : `${team.length} of ${seats} seats used`} description={seats === Infinity ? `${planName} includes unlimited seats.` : full ? `${planName} includes ${seats} seats. Remove someone or move to a bigger plan to invite more.` : `${planName} includes ${seats} seats.`}>
+        <Row
+          label={seats === Infinity ? `${team.length} people · unlimited seats` : `${team.length} of ${seats} seats used`}
+          description={seats === Infinity ? `${planName} includes unlimited seats.` : full ? `${planName} includes ${seats} seats. Remove someone or move to a bigger plan to invite more.` : `${planName} includes ${seats} seats.`}
+        >
           {seats !== Infinity && (
             <span className="flex w-40 flex-col gap-1">
               <Progress value={team.length} max={seats} label="Seats used" />
@@ -36,7 +48,15 @@ export function Team({ plan = "growth", onOpen }: { plan?: PlanId; onOpen: (view
         </Row>
       </Group>
 
-      <Group title="Members" description="Everyone here sees the inbox and calendar and can take over any chat." action={<RowButton tone="primary" icon="plus" onClick={() => (full ? toast(`All ${seats} seats are in use. Upgrade or remove someone first.`, "info") : setInviting(true))}>Invite</RowButton>}>
+      <Group
+        title="Members"
+        description="Everyone here sees the inbox and calendar and can take over any chat."
+        action={
+          <RowButton tone="primary" icon="plus" onClick={() => (full ? toast(`All ${seats} seats are in use. Upgrade or remove someone first.`, "info") : setInviting(true))}>
+            Invite
+          </RowButton>
+        }
+      >
         {team.map((m, i) => (
           <Row
             key={`${m.contact}-${i}`}
@@ -89,6 +109,98 @@ export function Team({ plan = "growth", onOpen }: { plan?: PlanId; onOpen: (view
           </Row>
         ))}
       </Group>
+
+      <Group title="Bookings" description="Who customers can be booked with, and when each person works. The AI only offers times when that person is free.">
+        <Row label="Customers can choose who they see" description="The AI asks “Anyone in particular?” Otherwise it books whoever is free.">
+          <Switch checked={pick} onChange={setPick} label="Customers can choose who they see" />
+        </Row>
+        {staff.map((m) => (
+          <Row
+            key={m.id}
+            label={
+              <span className="flex items-center gap-3">
+                <span aria-hidden="true" className="h-2.5 w-2.5 flex-none rounded-full" style={{ background: m.color }} />
+                <span className="flex min-w-0 flex-col">
+                  {m.name}
+                  <span className="text-[13px] text-subtle">{m.bookable ? `${daysText(m.days)} · ${fmt(m.from)} – ${fmt(m.to)}` : "Not taking bookings"}</span>
+                </span>
+              </span>
+            }
+          >
+            <RowButton onClick={() => setEditing(m)} ariaLabel={`Working hours for ${m.name}`}>
+              Hours
+            </RowButton>
+            <Switch
+              checked={m.bookable}
+              onChange={(v) => {
+                setStaff((all) => all.map((x) => (x.id === m.id ? { ...x, bookable: v } : x)));
+                toast(v ? `${m.name} takes bookings again` : `${m.name} won’t be offered to customers`);
+              }}
+              label={`${m.name} takes bookings`}
+            />
+          </Row>
+        ))}
+      </Group>
+
+      <Modal
+        open={!!editing}
+        onClose={() => setEditing(null)}
+        title={editing ? `Working hours · ${editing.name}` : ""}
+        footer={
+          <>
+            <Button variant="ghost" onClick={() => setEditing(null)}>
+              Cancel
+            </Button>
+            <Button
+              variant="primary"
+              disabled={!editing?.days.length}
+              onClick={() => {
+                if (!editing) return;
+                setStaff((all) => all.map((x) => (x.id === editing.id ? editing : x)));
+                setEditing(null);
+                toast("Working hours saved");
+              }}
+            >
+              Save
+            </Button>
+          </>
+        }
+      >
+        {editing && (
+          <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-2">
+              <span className="text-[14px] font-medium text-ink">Days</span>
+              <div className="flex flex-wrap gap-2">
+                {week.map((d) => {
+                  const on = editing.days.includes(d);
+                  return (
+                    <button
+                      key={d}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => setEditing({ ...editing, days: on ? editing.days.filter((x) => x !== d) : [...editing.days, d] })}
+                      className={`min-h-9 min-w-12 cursor-pointer rounded-full border px-3 text-[13.5px] font-medium ${on ? "border-ink bg-ink text-white" : "border-line-strong bg-white text-ink"}`}
+                    >
+                      {d}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <label className="flex flex-col gap-1.5">
+                <span className="text-[14px] font-medium text-ink">From</span>
+                <Input type="time" value={editing.from} onChange={(e) => setEditing({ ...editing, from: e.target.value })} />
+              </label>
+              <label className="flex flex-col gap-1.5">
+                <span className="text-[14px] font-medium text-ink">Until</span>
+                <Input type="time" value={editing.to} onChange={(e) => setEditing({ ...editing, to: e.target.value })} />
+              </label>
+            </div>
+            <p className="m-0 text-[13px] text-subtle">Time off and holidays: block the time in the Calendar.</p>
+          </div>
+        )}
+      </Modal>
 
       <Group title="Roles" description="What each role can do.">
         <div className="relative overflow-x-auto">

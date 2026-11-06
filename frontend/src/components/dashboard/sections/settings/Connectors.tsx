@@ -1,5 +1,6 @@
 "use client";
 
+import { WebsiteWidget } from "./WebsiteWidget";
 import { useMemo, useState } from "react";
 import { integrationCategories, integrations, type Integration, type IntegrationCategory } from "@/content/integrations";
 import { plans } from "@/content/pricing";
@@ -19,8 +20,18 @@ type Status = ChannelStatus | "soon";
 type Props = { state: OnboardingState; update: (fn: (s: OnboardingState) => OnboardingState) => void };
 
 function StatusBadge({ s }: { s: Status }) {
-  if (s === "connected") return <Badge tone="success" dot>Connected</Badge>;
-  if (s === "pending") return <Badge tone="warning" dot>Waiting for approval</Badge>;
+  if (s === "connected")
+    return (
+      <Badge tone="success" dot>
+        Connected
+      </Badge>
+    );
+  if (s === "pending")
+    return (
+      <Badge tone="warning" dot>
+        Waiting for approval
+      </Badge>
+    );
   if (s === "soon") return <Badge>Coming soon</Badge>;
   return null;
 }
@@ -169,17 +180,17 @@ export function Connectors({ state, update }: Props) {
                     {st}
                   </div>
                 ))}
-                {open.id === "website" && (
-                  <div className="py-3">
-                    <Snippet text={`<script src="https://vegam.example/chat.js" data-business="your-id" async></script>`} />
-                  </div>
-                )}
                 {open.id === "missed" && (
                   <div className="py-3">
                     <Snippet text="**004*+918000000000#" />
                   </div>
                 )}
               </Group>
+              {open.id === "website" && (
+                <div className="mt-9">
+                  <WebsiteWidget name={state.business.name} />
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -191,7 +202,13 @@ export function Connectors({ state, update }: Props) {
   const row = (i: Integration) => {
     const s = statusOf(i);
     return (
-      <button key={i.id} type="button" onClick={() => setOpenId(i.id)} aria-label={`${i.name}${s === "off" ? "" : `, ${s === "pending" ? "waiting for approval" : s === "soon" ? "coming soon" : "connected"}`}`} className="-mx-2 flex w-[calc(100%+16px)] cursor-pointer items-center gap-3.5 rounded-[10px] px-2 py-3 text-left transition hover:bg-[#F7F7FA]">
+      <button
+        key={i.id}
+        type="button"
+        onClick={() => setOpenId(i.id)}
+        aria-label={`${i.name}${s === "off" ? "" : `, ${s === "pending" ? "waiting for approval" : s === "soon" ? "coming soon" : "connected"}`}`}
+        className="-mx-2 flex w-[calc(100%+16px)] cursor-pointer items-center gap-3.5 rounded-[10px] px-2 py-3 text-left transition hover:bg-[#F7F7FA]"
+      >
         <BrandLogo brand={i.brand} size={36} />
         <span className="flex min-w-0 flex-1 flex-col">
           <span className="flex items-center gap-2 text-[14.5px] text-ink">
@@ -200,11 +217,7 @@ export function Connectors({ state, update }: Props) {
           </span>
           <span className="truncate text-[13px] text-subtle">{i.value}</span>
         </span>
-        {s === "off" ? (
-          <span className="inline-flex h-8 flex-none items-center rounded-[8px] border border-line-strong bg-white px-3 text-[13.5px] font-medium text-ink">Connect</span>
-        ) : (
-          <StatusBadge s={s} />
-        )}
+        {s === "off" ? <span className="inline-flex h-8 flex-none items-center rounded-[8px] border border-line-strong bg-white px-3 text-[13.5px] font-medium text-ink">Connect</span> : <StatusBadge s={s} />}
         <Icon name="chevron-right" size={16} className="flex-none text-faint" />
       </button>
     );
