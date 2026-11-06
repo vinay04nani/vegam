@@ -111,13 +111,18 @@ export const sampleThreads: Thread[] = [
   },
 ];
 
-/** Saved replies the team inserts by typing "/" in the inbox. */
-export const sampleQuickReplies = [
-  { id: "hours", title: "Opening hours", text: "We’re open Monday to Saturday, 10 AM to 7 PM." },
-  { id: "book", title: "Booking link", text: "You can pick a time that suits you here: vegam.example/book" },
-  { id: "location", title: "Directions", text: "We’re next to the main entrance, with free parking. Here’s the map: vegam.example/map" },
-  { id: "refund", title: "Refund received", text: "Thanks for letting us know. I’ve passed this to the manager and we’ll reply within one working day." },
-  { id: "thanks", title: "Thank you", text: "Thank you! See you soon." },
+/** Saved replies the team inserts by typing "/" in the inbox. Managed in Settings → Saved replies. */
+export type SavedReply = { id: string; title: string; shortcut: string; folder: string; text: string; uses: number };
+
+export const replyFolders = ["Bookings", "Prices and payments", "Directions", "Complaints", "General"];
+
+export const sampleQuickReplies: SavedReply[] = [
+  { id: "hours", title: "Opening hours", shortcut: "hours", folder: "General", text: "We’re open Monday to Saturday, 10 AM to 7 PM.", uses: 48 },
+  { id: "book", title: "Booking link", shortcut: "book", folder: "Bookings", text: "Hi {name}, you can pick a time that suits you here: vegam.example/book", uses: 36 },
+  { id: "location", title: "Directions", shortcut: "map", folder: "Directions", text: "We’re next to the main entrance, with free parking. Here’s the map: vegam.example/map", uses: 22 },
+  { id: "deposit", title: "Deposit needed", shortcut: "deposit", folder: "Prices and payments", text: "To hold this time we take a small deposit. I’ll send you a secure payment link now.", uses: 14 },
+  { id: "refund", title: "Refund received", shortcut: "refund", folder: "Complaints", text: "Thanks for letting us know, {name}. I’ve passed this to the manager and we’ll reply within one working day.", uses: 9 },
+  { id: "thanks", title: "Thank you", shortcut: "thanks", folder: "General", text: "Thank you! See you soon.", uses: 61 },
 ];
 
 const ownerLabel: Record<ThreadOwner, string> = { ai: "AI", team: "Team", needs: "Needs you" };
@@ -144,7 +149,11 @@ export type Booking = {
   note?: string;
   /** The team member it's with (see staffMembers). Sample bookings get one from their id. */
   staff?: string;
+  /** What happened at the visit, once it's time. */
+  visit?: Visit;
 };
+
+export type Visit = "arrived" | "completed" | "noshow";
 
 const bk = (id: string, day: number, start: string, minutes: number, service: number, who: string, phone: string, channel: Booking["channel"], status: Booking["status"] = "confirmed", note?: string): Booking => ({
   id,
@@ -652,16 +661,39 @@ export const sampleCalls: Call[] = [
   },
 ];
 
+// ---------- Voicemail ----------
+
+/** Messages left when the AI is off, paused or the caller chose voicemail. Transcribed automatically. */
+export type Voicemail = { id: string; from: string; name?: string; when: string; duration: string; transcript: string; done?: boolean };
+
+export const sampleVoicemails: Voicemail[] = [
+  { id: "vm1", from: "+91 94•• ••• 772", when: "Today, 7:48 AM", duration: "0:34", transcript: "Hi, this is Lakshmi. I wanted to know if you have a slot this Saturday morning for two people. Please call me back, thanks." },
+  { id: "vm2", from: "+91 98•• ••• 334", name: "M. Iyer", when: "Yesterday, 9:12 PM", duration: "0:21", transcript: "Hello, Iyer here. I may be ten minutes late for my booking tomorrow. Just letting you know." },
+  { id: "vm3", from: "+91 70•• ••• 118", when: "2 days ago, 10:30 PM", duration: "0:48", transcript: "Hi, I bought a gift voucher for my mother and she wants to use it next week. Can someone tell me how she books with it?", done: true },
+];
+
 // ---------- Campaigns ----------
 
 export type CampaignType = "Broadcast" | "Win-back" | "Rebooking";
-export type Campaign = { id: string; name: string; type: CampaignType; audience: number; sent: number; replies: number; bookings: number; status: "Sent" | "Scheduled" | "Running" | "Draft" };
+export type Campaign = {
+  id: string;
+  name: string;
+  type: CampaignType;
+  audience: number;
+  sent: number;
+  replies: number;
+  bookings: number;
+  status: "Sent" | "Scheduled" | "Running" | "Draft";
+  /** Who it went to, in words. */ who?: string;
+  template?: string;
+  when?: string;
+};
 
 export const sampleCampaigns: Campaign[] = [
-  { id: "m1", name: "Festive opening hours", type: "Broadcast", audience: 412, sent: 412, replies: 37, bookings: 12, status: "Sent" },
-  { id: "m2", name: "We miss you", type: "Win-back", audience: 86, sent: 86, replies: 14, bookings: 6, status: "Sent" },
-  { id: "m3", name: "Time for your next visit", type: "Rebooking", audience: 58, sent: 23, replies: 9, bookings: 5, status: "Running" },
-  { id: "m4", name: "New evening slots", type: "Broadcast", audience: 412, sent: 0, replies: 0, bookings: 0, status: "Scheduled" },
+  { id: "m1", name: "Festive opening hours", type: "Broadcast", audience: 412, sent: 412, replies: 37, bookings: 12, status: "Sent", who: "Everyone who opted in", template: "weekend_offer", when: "Sent 24 Oct" },
+  { id: "m2", name: "We miss you", type: "Win-back", audience: 86, sent: 86, replies: 14, bookings: 6, status: "Sent", who: "Last visit more than 90 days ago", template: "review_request", when: "Sent 18 Oct" },
+  { id: "m3", name: "Time for your next visit", type: "Rebooking", audience: 58, sent: 23, replies: 9, bookings: 5, status: "Running", who: "Regulars due for a visit", template: "appointment_reminder", when: "Runs every day at 10 AM" },
+  { id: "m4", name: "New evening slots", type: "Broadcast", audience: 412, sent: 0, replies: 0, bookings: 0, status: "Scheduled", who: "Everyone who opted in", template: "weekend_offer", when: "Sat, 10:00 AM" },
 ];
 
 // ---------- Settings ----------

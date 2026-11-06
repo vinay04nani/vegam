@@ -12,6 +12,7 @@ import { BookingPage } from "./settings/BookingPage";
 import { ContactFields } from "./settings/ContactFields";
 import { Connectors } from "./settings/Connectors";
 import { InboxRules } from "./settings/InboxRules";
+import { SavedReplies } from "./settings/SavedReplies";
 import { Language } from "./settings/Language";
 import { Payments } from "./settings/Payments";
 import { Security } from "./settings/Security";
@@ -46,6 +47,7 @@ type SectionId =
   | "channels"
   | "whatsapp"
   | "inbox"
+  | "replies"
   | "templates"
   | "automations"
   | "notifications"
@@ -83,6 +85,7 @@ const groups: { title: string; items: { id: SectionId; label: string; icon: Icon
       { id: "channels", label: "Channels and apps", icon: "globe", keywords: "channels apps integrations connectors connect whatsapp instagram messenger calendar google stripe calls website" },
       { id: "whatsapp", label: "WhatsApp profile", icon: "message", keywords: "whatsapp business profile display name about quality rating limit meta" },
       { id: "inbox", label: "Inbox", icon: "inbox", keywords: "assignment round robin away message close chats rating signature" },
+      { id: "replies", label: "Saved replies", icon: "note", keywords: "saved replies quick replies canned responses shortcuts slash" },
       { id: "templates", label: "Templates", icon: "note", keywords: "whatsapp templates meta approval fees" },
       { id: "automations", label: "Automations", icon: "refresh", keywords: "reminders confirmation no-show review rebook missed call quiet hours" },
       { id: "notifications", label: "Notifications", icon: "bell", keywords: "alerts email whatsapp morning report weekly summary" },
@@ -158,7 +161,12 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
         tabIndex={-1}
         className="relative flex h-full w-full max-w-[1040px] animate-[fade-in_0.15s_ease-out] overflow-hidden bg-white shadow-[0_30px_80px_rgb(30_31_43/0.3)] outline-none motion-reduce:animate-none sm:h-[min(780px,calc(100svh-48px))] sm:rounded-[20px]"
       >
-        <button type="button" onClick={onClose} aria-label="Close settings" className="absolute top-3 right-3 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-[10px] text-muted hover:bg-panel hover:text-ink sm:top-4 sm:right-4">
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close settings"
+          className="absolute top-3 right-3 z-10 flex h-9 w-9 cursor-pointer items-center justify-center rounded-[10px] text-muted hover:bg-panel hover:text-ink sm:top-4 sm:right-4"
+        >
           <Icon name="close" size={18} />
         </button>
 
@@ -222,6 +230,7 @@ export function Settings({ state, update, onOpen, onClose, initial = "general" }
             {section === "channels" && <Connectors state={state} update={update} />}
             {section === "whatsapp" && <WhatsAppProfile name={state.business.name} onOpen={onOpen} />}
             {section === "inbox" && <InboxRules />}
+            {section === "replies" && <SavedReplies />}
             {section === "contacts" && <ContactFields />}
             {section === "payments" && <Payments india={state.business.country === "IN"} />}
             {section === "language" && <Language state={state} update={update} />}

@@ -2,10 +2,11 @@
 
 import { PaymentLinkModal } from "./payments/PaymentLinkModal";
 import { QuoteModal } from "./payments/QuoteModal";
+import { replyStore, useSavedReplies } from "./inbox/repliesStore";
 import { locationOf } from "@/content/settings";
 import { useBranch } from "../branch";
 import { useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { sampleQuickReplies, sampleTeam, sampleThreads, type InboxChannel, type Thread, type ThreadMessage, type ThreadOwner } from "@/content/dashboard";
+import { sampleTeam, sampleThreads, type InboxChannel, type Thread, type ThreadMessage, type ThreadOwner } from "@/content/dashboard";
 import { sampleContacts, type Contact, type ContactChannel } from "@/content/contacts";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { Avatar, Drawer, Menu, useToast } from "../kit";
@@ -209,9 +210,10 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
 
   // Saved replies: "/" at the start of the box, or the toolbar button.
   const slash = draft.startsWith("/") ? draft.slice(1).toLowerCase() : null;
-  const replies = useMemo(() => (slash !== null ? sampleQuickReplies.filter((r) => `${r.title} ${r.text}`.toLowerCase().includes(slash)) : showReplies ? sampleQuickReplies : []), [slash, showReplies]);
+  const savedReplies = useSavedReplies();
+  const replies = useMemo(() => (slash !== null ? savedReplies.filter((r) => `${r.shortcut} ${r.title} ${r.text}`.toLowerCase().includes(slash)) : showReplies ? savedReplies : []), [slash, showReplies, savedReplies]);
   const pick = (text: string) => {
-    setDraft(text);
+    setDraft(text.replace(/\{name\}/g, (contact?.name ?? "").split(/\s+/).find((w) => w.length > 2 && !w.endsWith(".")) ?? "there"));
     setPicker(0);
     setShowReplies(false);
     input.current?.focus();
@@ -236,7 +238,9 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
       }
       if (e.key === "Enter") {
         e.preventDefault();
-        pick(replies[Math.min(picker, replies.length - 1)].text);
+        const r = replies[Math.min(picker, replies.length - 1)];
+        replyStore.used(r.id);
+        pick(r.text);
         return;
       }
       if (e.key === "Escape") {
@@ -556,6 +560,9 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                     <div role="listbox" aria-label="Saved replies" className="absolute inset-x-0 bottom-full z-20 mb-2 overflow-hidden rounded-[14px] border border-line bg-white shadow-[0_16px_40px_rgb(30_31_43/0.16)]">
                       <p className="m-0 flex items-center justify-between border-b border-line px-3.5 py-2 text-[12px] font-semibold tracking-[0.04em] text-muted uppercase">
                         Saved replies
+                        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => onOpen("settings:replies")} className="cursor-pointer font-semibold tracking-normal text-ink-soft normal-case hover:text-ink">
+                          Manage
+                        </button>
                         <span className="font-normal tracking-normal normal-case">↑↓ to choose, Enter to insert</span>
                       </p>
                       {replies.map((r, i) => (
@@ -565,10 +572,16 @@ export function Inbox({ onOpen }: { onOpen: (view: string) => void }) {
                           role="option"
                           aria-selected={i === picker}
                           onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => pick(r.text)}
+                          onClick={() => {
+                            replyStore.used(r.id);
+                            pick(r.text);
+                          }}
                           className={`flex w-full cursor-pointer flex-col px-3.5 py-2 text-left ${i === picker ? "bg-periwinkle-soft/60" : "hover:bg-page"}`}
                         >
-                          <span className="text-[14px] font-semibold text-ink">{r.title}</span>
+                          <span className="flex items-baseline justify-between gap-2">
+                            <span className="text-[14px] font-semibold text-ink">{r.title}</span>
+                            <span className="font-mono text-[12px] text-subtle">/{r.shortcut}</span>
+                          </span>
                           <span className="truncate text-[13px] text-subtle">{r.text}</span>
                         </button>
                       ))}

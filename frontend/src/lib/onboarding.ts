@@ -10,7 +10,23 @@ import type { Billing, Currency, PlanId } from "@/content/pricing";
 // left and the dashboard can show the business's own name, plan and setup.
 // TODO(backend): save to the business record instead.
 
-export type Service = { name: string; minutes: number; price: number };
+export type AddOn = { name: string; price: number; minutes: number };
+export type Service = {
+  name: string;
+  minutes: number;
+  price: number;
+  /** Team members who do it (staff ids); empty or missing means anyone. */
+  staff?: string[];
+  /** Minutes kept free after each booking for cleaning up or notes. */
+  buffer?: number;
+  /** More than 1 makes it a group session with this many places. */
+  capacity?: number;
+  addOns?: AddOn[];
+  /** False: customers send a request and your team confirms. */
+  online?: boolean;
+  category?: string;
+  description?: string;
+};
 export type Faq = { q: string; a: string };
 export type ChannelStatus = "off" | "pending" | "connected";
 
@@ -150,8 +166,7 @@ export function isIncluded(minPlan: PlanId, plan: PlanId | null) {
 export const whatsappStarted = (s: OnboardingState) => s.channels.whatsapp !== "off";
 
 /** Everything the setup guide needs before the assistant can go live. */
-export const readyToGoLive = (s: OnboardingState) =>
-  s.plan !== null && s.setupDone.includes("assistant") && whatsappStarted(s) && s.setupDone.includes("test");
+export const readyToGoLive = (s: OnboardingState) => s.plan !== null && s.setupDone.includes("assistant") && whatsappStarted(s) && s.setupDone.includes("test");
 
 /** Reads ?plan= from the URL (set by the pricing page buttons). */
 export function planFromUrl(): PlanId | null {

@@ -4,7 +4,7 @@ import { PaymentLinkModal, type PaymentDraft } from "./payments/PaymentLinkModal
 import { locationOf, staffMembers, staffOf } from "@/content/settings";
 import { useBranch } from "../branch";
 import { useEffect, useMemo, useState } from "react";
-import { sampleBookings, sampleServiceNames, sampleWaitlist, serviceColors, type Booking, type WaitlistEntry } from "@/content/dashboard";
+import { sampleBookings, sampleServiceNames, sampleWaitlist, serviceColors, type Booking, type Visit, type WaitlistEntry } from "@/content/dashboard";
 import { Icon } from "@/components/ui/Icon";
 import { Field, Select, TextInput } from "@/components/setup/fields";
 import type { OnboardingState } from "@/lib/onboarding";
@@ -25,6 +25,7 @@ type Draft = { id?: string; who: string; service: number; day: number; start: st
 /** Who a booking is with. */
 const staffIdOf = (b: { id: string; staff?: string }) => b.staff ?? staffOf(b.id);
 const staffName = (id: string) => staffMembers.find((m) => m.id === id)?.name ?? "Anyone";
+const visitLabel: Record<Visit, string> = { arrived: "Arrived", completed: "Completed", noshow: "No-show" };
 
 const defaultMinutes = [30, 60, 20, 45];
 
@@ -33,7 +34,9 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
   const [today, setToday] = useState<Date | null>(null);
   const [view, setView] = useState<View>("week");
   const [anchor, setAnchor] = useState(0);
-  const [bookings, setBookings] = useState<Booking[]>(sampleBookings);
+  // Past sample visits already have an outcome; one was a no-show.
+  const [bookings, setBookings] = useState<Booking[]>(() => sampleBookings.map((b) => (b.day < 0 ? { ...b, visit: b.id === "b3" ? "noshow" : "completed" } : b)));
+  const [checkin, setCheckin] = useState(false);
   const [paying, setPaying] = useState<PaymentDraft | null>(null);
   const { branch } = useBranch();
   const [blocks, setBlocks] = useState<Block[]>([]);
@@ -133,6 +136,14 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
     setSelected(null);
   };
 
+  // Marking a visit triggers what depends on it: review requests after a
+  // completed visit, the no-show follow-up, and the numbers in Reports.
+  const setVisit = (b: Booking, v: Visit) => {
+    setBookings((bs) => bs.map((x) => (x.id === b.id ? { ...x, visit: v } : x)));
+    if (selected?.kind === "booking" && selected.id === b.id) setSelected({ ...selected, visit: v });
+    toast(v === "arrived" ? `${b.who} checked in` : v === "completed" ? `Visit completed. ${b.who} gets a review request in 2 hours` : `Marked as a no-show. ${b.who} gets a kind note offering a new time`);
+  };
+
   const dayOptions = Array.from({ length: 21 }, (_, i) => i - 3 + Math.max(0, anchor));
 
   return (
@@ -176,6 +187,9 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
               ]}
             />
           </div>
+          <Button icon="check" onClick={() => setCheckin(true)} ariaLabel="Today’s check-in">
+            <span className="sr-only sm:not-sr-only">Check-in</span>
+          </Button>
           <Button icon="users" onClick={() => setWaitOpen(true)} ariaLabel={`Waitlist, ${waitlist.length} waiting`}>
             <span className="sr-only sm:not-sr-only">Waitlist</span>
             <span className="rounded-full bg-panel px-1.5 text-[12px] text-muted">{waitlist.length}</span>
@@ -440,9 +454,15 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                 <span className="text-[15px] font-semibold text-ink">{selected.who}</span>
                 <span className="text-[13.5px] text-subtle">{selected.phone}</span>
               </div>
-              <Badge tone={selected.status === "confirmed" ? "success" : "warning"} dot>
-                {selected.status === "confirmed" ? "Confirmed" : "Waiting"}
-              </Badge>
+              {selected.visit ? (
+                <Badge tone={selected.visit === "noshow" ? "danger" : selected.visit === "completed" ? "neutral" : "brand"} dot>
+                  {visitLabel[selected.visit]}
+                </Badge>
+              ) : (
+                <Badge tone={selected.status === "confirmed" ? "success" : "warning"} dot>
+                  {selected.status === "confirmed" ? "Confirmed" : "Waiting"}
+                </Badge>
+              )}
             </div>
             <dl className="m-0 grid grid-cols-2 gap-x-4 gap-y-3 text-[14px]">
               <div>
@@ -491,6 +511,25 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
                 </div>
               )}
             </dl>
+            {selected.day <= 0 && (
+              <div className="flex flex-col gap-2">
+                <span className="text-[14px] text-subtle">{selected.day === 0 ? "How did the visit go?" : "What happened?"}</span>
+                <div role="group" aria-label="Visit outcome" className="grid grid-cols-3 gap-2">
+                  {(["arrived", "completed", "noshow"] as const).map((v) => (
+                    <button
+                      key={v}
+                      type="button"
+                      aria-pressed={selected.visit === v}
+                      onClick={() => setVisit(selected, v)}
+                      className={`inline-flex min-h-10 cursor-pointer items-center justify-center gap-1.5 rounded-[10px] border text-[13.5px] font-semibold transition ${selected.visit === v ? (v === "noshow" ? "border-danger bg-[#FDECEC] text-danger" : "border-ink bg-ink text-white") : "border-line-strong bg-white text-ink hover:bg-panel"}`}
+                    >
+                      <Icon name={v === "arrived" ? "users" : v === "completed" ? "check" : "close"} size={14} className="[&_circle]:hidden" />
+                      {visitLabel[v]}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             <button
               type="button"
               onClick={() => {
@@ -656,6 +695,62 @@ export function Calendar({ state, onOpen }: { state: OnboardingState; onOpen: (v
           </div>
         )}
       </Modal>
+      {/* Today's check-in */}
+      <Drawer open={checkin} onClose={() => setCheckin(false)} title={`Today · ${todays.length} bookings`}>
+        <div className="flex flex-col gap-4">
+          <p className="m-0 flex flex-wrap gap-x-3 gap-y-1 text-[13.5px] text-subtle">
+            <span>
+              <strong className="font-semibold text-ink">{todays.filter((b) => b.visit === "arrived").length}</strong> here now
+            </span>
+            <span>
+              <strong className="font-semibold text-ink">{todays.filter((b) => b.visit === "completed").length}</strong> completed
+            </span>
+            <span>
+              <strong className="font-semibold text-ink">{todays.filter((b) => b.visit === "noshow").length}</strong> no-show{todays.filter((b) => b.visit === "noshow").length === 1 ? "" : "s"}
+            </span>
+            <span>
+              <strong className="font-semibold text-ink">{todays.filter((b) => !b.visit).length}</strong> still to come
+            </span>
+          </p>
+          <ul className="m-0 flex list-none flex-col divide-y divide-line rounded-[14px] border border-line p-0">
+            {[...todays]
+              .sort((a, b) => toMin(a.start) - toMin(b.start))
+              .map((b) => (
+                <li key={b.id} className="flex flex-col gap-2.5 p-3.5">
+                  <span className="flex items-start gap-3">
+                    <span className="w-16 flex-none pt-0.5 text-[13px] font-semibold text-ink tabular-nums">{fmtMin(toMin(b.start))}</span>
+                    <span className="flex min-w-0 flex-1 flex-col">
+                      <span className="text-[14.5px] font-semibold text-ink">{b.who}</span>
+                      <span className="truncate text-[12.5px] text-subtle">
+                        {serviceName(b.service)} · with {staffName(staffIdOf(b))}
+                      </span>
+                    </span>
+                    {b.visit && (
+                      <Badge tone={b.visit === "noshow" ? "danger" : b.visit === "completed" ? "neutral" : "brand"} dot>
+                        {visitLabel[b.visit]}
+                      </Badge>
+                    )}
+                  </span>
+                  <span className="flex flex-wrap gap-2 pl-[76px]">
+                    {(["arrived", "completed", "noshow"] as const).map((v) => (
+                      <button
+                        key={v}
+                        type="button"
+                        aria-pressed={b.visit === v}
+                        onClick={() => setVisit(b, v)}
+                        className={`min-h-8 cursor-pointer rounded-[9px] border px-3 text-[13px] font-semibold ${b.visit === v ? (v === "noshow" ? "border-danger bg-[#FDECEC] text-danger" : "border-ink bg-ink text-white") : "border-line-strong bg-white text-ink hover:bg-panel"}`}
+                      >
+                        {visitLabel[v]}
+                      </button>
+                    ))}
+                  </span>
+                </li>
+              ))}
+          </ul>
+          <p className="m-0 text-[12.5px] text-subtle">Completed visits get a review request; no-shows get a kind note offering a new time. Both count in Reports.</p>
+        </div>
+      </Drawer>
+
       {/* Waitlist */}
       <Drawer
         open={waitOpen}

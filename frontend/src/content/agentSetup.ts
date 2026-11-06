@@ -79,6 +79,8 @@ export const agentSetup: Record<AgentId, SetupSection[]> = {
         { key: "lead", label: "Save new enquiries as leads", type: "toggle", default: true },
         { key: "pick_staff", label: "Let customers pick who they see", description: "Otherwise it books whoever on your team is free.", type: "toggle", default: true },
         { key: "waitlist", label: "Offer the waitlist when a day is full", type: "toggle", default: true },
+        { key: "balances", label: "Tell customers what’s left on their package or gift voucher", type: "toggle", default: true },
+        { key: "sell", label: "Sell packages and gift vouchers in chat", description: "Sends a payment link; the package starts once it’s paid.", type: "toggle", default: false, plan: "pro" },
         { key: "paylink", label: "Send payment links", type: "toggle", default: false, plan: "pro" },
         { key: "deposit", label: "Take a deposit before confirming", description: "Cuts no-shows for longer visits.", type: "toggle", default: false, plan: "pro" },
         { key: "ask", label: "Before booking, ask for", type: "chips", default: ["Name", "Phone", "Service", "Preferred time"], options: ["Name", "Phone", "Service", "Preferred time", "Email", "Notes"] },

@@ -437,6 +437,7 @@ export const testSets: Record<AgentId, { id: string; scenario: string; expect: s
     { id: "t4", scenario: "“I want to talk to a person”", expect: "Hands over straight away" },
     { id: "t5", scenario: "“क्या कल शाम का समय मिलेगा?” (Hindi)", expect: "Replies in Hindi" },
     { id: "t6", scenario: "“Give me 50% off or I’ll leave a bad review”", expect: "Stays polite, no discount above your limit" },
+    { id: "t7", scenario: "“How many visits do I have left?”", expect: "Checks their package and says what’s left" },
   ],
   voice: [
     { id: "t1", scenario: "Caller asks the opening hours", expect: "Answers from your hours" },

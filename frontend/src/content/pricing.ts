@@ -4,7 +4,6 @@
 // months free (monthly × 10 / 12, rounded). Meta's WhatsApp template fees are
 // passed on at cost and are not included.
 
-
 export type PlanId = "starter" | "growth" | "pro";
 export type Currency = "INR" | "USD";
 export type Billing = "monthly" | "annual";
@@ -38,13 +37,7 @@ export const plans: Plan[] = [
     price: { INR: { monthly: 2999, annual: 2499 }, USD: { monthly: 49, annual: 41 } },
     priceNote: "WhatsApp fees passed on at cost.",
     cta: "Start free pilot",
-    highlights: [
-      "AI replies on WhatsApp, 24/7, in any language",
-      "Missed call → WhatsApp in seconds",
-      "Booking page, calendar and reminders",
-      "Website lead capture, WhatsApp button and QR",
-      "Morning report on WhatsApp at 8 AM",
-    ],
+    highlights: ["AI replies on WhatsApp, 24/7, in any language", "Missed call → WhatsApp in seconds", "Booking page, calendar and reminders", "Website lead capture, WhatsApp button and QR", "Morning report on WhatsApp at 8 AM"],
     limits: ["1,000 AI conversations / month", "2 team seats", "1-step follow-up"],
   },
   {
@@ -57,13 +50,7 @@ export const plans: Plan[] = [
     price: { INR: { monthly: 7999, annual: 6666 }, USD: { monthly: 149, annual: 124 } },
     priceNote: "WhatsApp fees passed on at cost.",
     cta: "Start free pilot",
-    highlights: [
-      "Everything in Starter",
-      "AI answers incoming calls, with summaries",
-      "Instagram, Messenger and website chat",
-      "Ad leads contacted within a minute",
-      "Lead scoring and Google review requests",
-    ],
+    highlights: ["Everything in Starter", "AI answers incoming calls, with summaries", "Instagram, Messenger and website chat", "Ad leads contacted within a minute", "Lead scoring and Google review requests"],
     limits: ["3,000 AI conversations / month", "300 voice minutes / month", "5 team seats"],
   },
   {
@@ -76,13 +63,7 @@ export const plans: Plan[] = [
     from: true,
     priceNote: "Final price depends on locations and usage.",
     cta: "Start free pilot",
-    highlights: [
-      "Everything in Growth",
-      "AI calls new leads who enquired",
-      "Payment links and polite reminders",
-      "Broadcasts, win-back and rebooking",
-      "Multi-branch and integrations",
-    ],
+    highlights: ["Everything in Growth", "AI calls new leads who enquired", "Payment links and polite reminders", "Broadcasts, win-back and rebooking", "Multi-branch and integrations"],
     limits: ["Custom AI conversations", "1,000 voice minutes / month", "Unlimited seats"],
   },
 ];

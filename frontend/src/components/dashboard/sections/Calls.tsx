@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { sampleCalls, type Call, type CallOutcome } from "@/content/dashboard";
+import { sampleCalls, sampleVoicemails, type Call, type CallOutcome } from "@/content/dashboard";
+import { Voicemail } from "./calls/Voicemail";
 import { sampleContacts } from "@/content/contacts";
 import { sampleForwardingNumber } from "@/content/onboarding";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -496,7 +497,7 @@ function Routing({ onOpen }: { onOpen: (view: string) => void }) {
 
 export function Calls({ onOpen }: { onOpen: (view: string) => void }) {
   const toast = useToast();
-  const [tab, setTab] = useState<"log" | "routing">("log");
+  const [tab, setTab] = useState<"log" | "voicemail" | "routing">("log");
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
@@ -514,10 +515,11 @@ export function Calls({ onOpen }: { onOpen: (view: string) => void }) {
         onChange={setTab}
         tabs={[
           { id: "log", label: "Call log", count: sampleCalls.length },
+          { id: "voicemail", label: "Voicemail", count: sampleVoicemails.filter((v) => !v.done).length || undefined },
           { id: "routing", label: "Numbers & routing" },
         ]}
       />
-      {tab === "log" ? <CallLog onOpen={onOpen} /> : <Routing onOpen={onOpen} />}
+      {tab === "log" ? <CallLog onOpen={onOpen} /> : tab === "voicemail" ? <Voicemail onOpen={onOpen} /> : <Routing onOpen={onOpen} />}
     </div>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { PaymentLinkModal } from "./payments/PaymentLinkModal";
+import { packageStatus, samplePackages } from "@/content/packages";
 import { QuoteModal } from "./payments/QuoteModal";
 import { useState } from "react";
 import { channelLabel, optInLabel, sampleTags, type Contact, type ContactChannel, type ContactEvent, type OptIn } from "@/content/contacts";
@@ -114,6 +115,28 @@ export function ContactDetails({ contact, onChange, onOpen, actions = true }: { 
           <dd className={`m-0 text-[17px] font-bold ${c.noShows > 1 ? "text-warning" : "text-ink"}`}>{c.noShows}</dd>
         </div>
       </dl>
+
+      {samplePackages
+        .filter((p) => p.who === c.name)
+        .map((p) => {
+          const st = packageStatus(p);
+          return (
+            <div key={p.id} className="flex items-center gap-3 rounded-[14px] border border-line p-3">
+              <span className="flex h-9 w-9 flex-none items-center justify-center rounded-[10px] border border-line bg-[#F6F6F8] text-ink">
+                <Icon name="tag" size={16} />
+              </span>
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span className="text-[14px] font-semibold text-ink">{p.name}</span>
+                <span className="text-[12.5px] text-subtle">
+                  {p.kind === "package" ? `${Math.max(0, p.total - p.used)} of ${p.total} visits left` : p.total ? `${p.used} of ${p.total} visits this month` : `Unlimited · ${p.used} visits this month`} · {st}
+                </span>
+              </span>
+              <button type="button" onClick={() => onOpen("payments/packages")} className="cursor-pointer text-[13px] font-semibold text-ink-soft hover:text-ink">
+                Open
+              </button>
+            </div>
+          );
+        })}
 
       {/* Tags */}
       <section className="flex flex-col gap-2.5">

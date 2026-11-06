@@ -37,7 +37,7 @@ import { PlanNotice, pilotDay } from "./ui";
 /** Pages that belong to Home in the navigation. */
 const homeViews = ["home", "preview", "setup-assistant", "setup-whatsapp", "setup-test"];
 /** Pages reached from the user menu or other pages, highlighted under their parent in the navigation. */
-const parentOf: Record<string, string> = { assistant: "agents", "payments/quotes": "payments" };
+const parentOf: Record<string, string> = { assistant: "agents", "payments/quotes": "payments", "payments/packages": "payments" };
 
 const userName = "Vinay";
 
@@ -265,6 +265,8 @@ function DashboardShell() {
         return <Payments onOpen={select} />;
       case "payments/quotes":
         return <Payments key="quotes" onOpen={select} initialView="quotes" />;
+      case "payments/packages":
+        return <Payments key="packages" onOpen={select} initialView="packages" />;
       case "reports":
         return <Reports onOpen={select} />;
       default:
@@ -300,9 +302,11 @@ function DashboardShell() {
             </button>
           )}
           <nav aria-label="Dashboard" className="-mx-1 flex flex-1 flex-col gap-0.5 overflow-y-auto px-1 [scrollbar-width:thin]">
-            {navGroups.flatMap((g) => nav.filter((n) => n.group === g.id)).map((n) => (
-              <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
-            ))}
+            {navGroups
+              .flatMap((g) => nav.filter((n) => n.group === g.id))
+              .map((n) => (
+                <NavButton key={n.id} {...n} count={navCounts[n.id]} view={navView} plan={plan} onSelect={select} />
+              ))}
           </nav>
           <div className="mt-3 flex items-center gap-1 border-t border-line pt-3">
             <div className="min-w-0 flex-1">{accountMenu(true)}</div>

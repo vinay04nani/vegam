@@ -10,6 +10,7 @@ import { PageTitle, SampleTag } from "../ui";
 import { PaymentLinkModal } from "./payments/PaymentLinkModal";
 import { QuoteModal } from "./payments/QuoteModal";
 import { Quotes } from "./payments/Quotes";
+import { Packages, Vouchers } from "./payments/Packages";
 import { useQuotes } from "./payments/quoteStore";
 import { paymentStore, usePaymentLinks } from "./payments/store";
 
@@ -45,14 +46,17 @@ function ReminderDots({ p }: { p: PaymentLink }) {
   );
 }
 
-export function Payments({ onOpen, initialView = "links" }: { onOpen: (view: string) => void; initialView?: "links" | "quotes" }) {
+type PayView = "links" | "quotes" | "packages" | "vouchers";
+
+export function Payments({ onOpen, initialView = "links" }: { onOpen: (view: string) => void; initialView?: PayView }) {
   const toast = useToast();
   const all = usePaymentLinks();
   const { branch, label } = useBranch();
   const [filter, setFilter] = useState<Filter>("all");
   const [query, setQuery] = useState("");
   const [creating, setCreating] = useState(false);
-  const [view, setView] = useState<"links" | "quotes">(initialView);
+  const [view, setView] = useState<PayView>(initialView);
+  const [selling, setSelling] = useState(false);
   const [quoting, setQuoting] = useState(false);
   const openQuotes = useQuotes().filter((q) => q.status === "sent" || q.status === "viewed").length;
   const [openId, setOpenId] = useState<string | null>(null);
@@ -129,7 +133,7 @@ export function Payments({ onOpen, initialView = "links" }: { onOpen: (view: str
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-wrap items-end justify-between gap-4">
-        <PageTitle title="Payments" body="Quotes, payment links for deposits and bills, what’s been paid and what’s still owed. Customers pay by UPI or card through Stripe." />
+        <PageTitle title="Payments" body="Payment links, quotes, packages and gift vouchers: what’s been paid and what’s still owed. Customers pay by UPI or card through Stripe." />
         <div className="flex flex-wrap items-center gap-2">
           <SampleTag />
           <Button icon="sparkle" onClick={() => onOpen("agent:payments/setup")}>
@@ -138,8 +142,8 @@ export function Payments({ onOpen, initialView = "links" }: { onOpen: (view: str
           <Button icon="settings" onClick={() => onOpen("settings:payments")}>
             Settings
           </Button>
-          <Button variant="primary" icon="plus" onClick={() => (view === "quotes" ? setQuoting(true) : setCreating(true))}>
-            {view === "quotes" ? "New quote" : "Request payment"}
+          <Button variant="primary" icon="plus" onClick={() => (view === "quotes" ? setQuoting(true) : view === "links" ? setCreating(true) : setSelling(true))}>
+            {{ links: "Request payment", quotes: "New quote", packages: "Sell a package", vouchers: "Sell a voucher" }[view]}
           </Button>
         </div>
       </div>
@@ -151,6 +155,8 @@ export function Payments({ onOpen, initialView = "links" }: { onOpen: (view: str
         tabs={[
           { id: "links", label: "Payment links" },
           { id: "quotes", label: "Quotes", count: openQuotes || undefined },
+          { id: "packages", label: "Packages" },
+          { id: "vouchers", label: "Gift vouchers" },
         ]}
       />
 
@@ -277,6 +283,8 @@ export function Payments({ onOpen, initialView = "links" }: { onOpen: (view: str
         </>
       )}
       {view === "quotes" && <Quotes onOpen={onOpen} onNew={() => setQuoting(true)} />}
+      {view === "packages" && <Packages selling={selling} onSellDone={() => setSelling(false)} />}
+      {view === "vouchers" && <Vouchers selling={selling} onSellDone={() => setSelling(false)} />}
 
       <Drawer
         open={!!open}
