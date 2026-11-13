@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wireframe · Log in</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.wf{font-family:Inter,system-ui,sans-serif;color:#2E2E33;background:#FFFFFF;font-size:14px;line-height:1.45}
+.wf *{box-sizing:border-box}
+.wf-sec{position:relative;border-bottom:1px dashed #D6D6DC}
+.wf-tag{position:absolute;left:16px;top:14px;display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;background:rgba(59,108,246,.1);color:#3B6CF6;font-size:11.5px;font-weight:500;z-index:3}
+.wf-note{display:inline-flex;align-self:flex-start;width:fit-content;align-items:center;gap:6px;padding:3px 9px;border-radius:8px;background:rgba(59,108,246,.1);color:#3B6CF6;font-size:11.5px;font-weight:500}
+</style>
+</helmet>
+<div class="wf" style="display: grid; grid-template-columns: 1fr 1fr; height: 960px">
+      <div style="padding: 16px"><div style="position: relative; height: 100%; border-radius: 28px; background: #3A3A42; overflow: hidden; display: flex; align-items: flex-end; justify-content: center; padding: 40px">
+        <svg aria-hidden="true" width="100%" height="100%" preserveAspectRatio="none" viewBox="0 0 100 100" style="position: absolute; inset: 0"><line x1="0" y1="0" x2="100" y2="100" stroke="rgba(255,255,255,.08)" stroke-width=".3" vector-effect="non-scaling-stroke"></line><line x1="100" y1="0" x2="0" y2="100" stroke="rgba(255,255,255,.08)" stroke-width=".3" vector-effect="non-scaling-stroke"></line></svg>
+        <span class="wf-tag">Aurora landscape · level 1</span>
+        <div style="position: relative; width: 100%; max-width: 460px; padding: 26px; border-radius: 22px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25); color: #FFFFFF"><span class="wf-note" style="background: rgba(255,255,255,.18); color: #FFFFFF; margin-bottom: 12px">Glass card</span><div style="font-family: 'Inter Tight', sans-serif; font-weight: 400; letter-spacing: -0.03em; font-size: 28px; margin-top: 8px">Your front desk kept working.</div><div style="margin-top: 14px"><div style="display: flex; flex-direction: column; gap: 8px"><span style="display: block; width: 100%; height: 9px; border-radius: 4px; background: rgba(255,255,255,.3)"></span><span style="display: block; width: 100%; height: 9px; border-radius: 4px; background: rgba(255,255,255,.3)"></span><span style="display: block; width: 60%; height: 9px; border-radius: 4px; background: rgba(255,255,255,.3)"></span></div><div style="margin-top: 12px"><span class="wf-note" style="background: rgba(255,255,255,.18); color: #FFFFFF">Sample overnight stats</span></div></div></div></div></div>
+      <div style="position: relative; display: flex; flex-direction: column; padding: 34px 64px"><span class="wf-tag" style="left: 24px; top: 14px">Form side</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 18px"><span style="display: inline-flex; align-items: center; gap: 8px"><b style="font-family: 'Inter Tight', sans-serif; font-weight: 400; letter-spacing: -0.03em; font-size: 20px; font-weight: 500">vegham</b></span><span style="font-size: 13px; color: #8C8C94">← Back to site</span></div>
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; max-width: 440px; width: 100%; margin: 0 auto"><h2 style="margin: 0; font-family: 'Inter Tight', sans-serif; font-weight: 400; letter-spacing: -0.03em; font-size: 36px; line-height: 1.1; color: #2E2E33;  ">Log into your account</h2><div style="margin-top: 8px"><div style="display: flex; flex-direction: column; gap: 8px"><span style="display: block; width: 70%; height: 9px; border-radius: 4px; background: #E4E4E9"></span></div></div><div style="margin-top: 26px"><span style="display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 22px; border-radius: 999px; border: 1.5px solid #2E2E33; color: #2E2E33; background: #FFFFFF; font-size: 14px; font-weight: 500; width: 100%;">Continue with Google</span></div><div style="display: flex; align-items: center; gap: 12px; margin: 16px 0; font-size: 12px; color: #8C8C94"><span style="flex: 1; height: 1px; background: #D6D6DC"></span>or<span style="flex: 1; height: 1px; background: #D6D6DC"></span></div><div style="width: 100%"><span style="display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 6px">Phone number or email</span><span style="display: flex; align-items: center; height: 48px; padding: 0 14px; border-radius: 10px; border: 1.5px solid #D6D6DC; background: #FFFFFF; color: #8C8C94; font-size: 13px">+91</span></div><div style="margin-top: 16px"><span style="display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 22px; border-radius: 999px; background: #2E2E33; color: #FFFFFF; font-size: 14px; font-weight: 500; width: 100%;">Send me a code</span></div><div style="margin-top: 18px; text-align: center; font-size: 13.5px">New to Vegham? <u>Start free pilot</u></div><div style="margin-top: 16px"><span class="wf-note">✎ No passwords · one-time code by SMS/WhatsApp or email</span></div></div>
+        <div style="display: flex; justify-content: center; gap: 18px; font-size: 12px; color: #8C8C94"><span>Privacy</span><span>Terms</span><span>Help</span></div></div></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

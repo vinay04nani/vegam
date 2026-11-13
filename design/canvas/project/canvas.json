@@ -1,0 +1,823 @@
+{
+  "v": 3,
+  "attachments": {},
+  "boards": {
+    "AuthStates.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Log in · code states",
+      "w": 1440,
+      "x": 1440,
+      "y": 7758
+    },
+    "BookDemo.dc.html": {
+      "expand": "fill",
+      "h": 2650,
+      "title": "Book a demo",
+      "w": 1440,
+      "x": 12160,
+      "y": 5637
+    },
+    "BrandV2.dc.html": {
+      "expand": "fill",
+      "h": 1900,
+      "title": "Brand · Aurora (70/20/10)",
+      "w": 1440,
+      "x": -80,
+      "y": 5640
+    },
+    "Careers.dc.html": {
+      "expand": "fill",
+      "h": 3500,
+      "title": "Careers (coming soon)",
+      "w": 1440,
+      "x": 19760,
+      "y": 5637
+    },
+    "Company.dc.html": {
+      "expand": "fill",
+      "h": 5150,
+      "title": "Company",
+      "w": 1440,
+      "x": 10640,
+      "y": 5640
+    },
+    "Contact.dc.html": {
+      "expand": "fill",
+      "h": 2600,
+      "title": "Contact",
+      "w": 1440,
+      "x": 21280,
+      "y": 5637
+    },
+    "Help.dc.html": {
+      "expand": "fill",
+      "h": 3150,
+      "title": "Help centre",
+      "w": 1440,
+      "x": 15200,
+      "y": 5637
+    },
+    "HelpArticle.dc.html": {
+      "expand": "fill",
+      "h": 3150,
+      "title": "Help article",
+      "w": 1440,
+      "x": 22800,
+      "y": 5637
+    },
+    "Hero1.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Hero 1 · Split: text + product",
+      "w": 1440,
+      "x": 6080,
+      "y": 5640
+    },
+    "Hero2.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Hero 2 · Live activity feed",
+      "w": 1440,
+      "x": 7600,
+      "y": 5640
+    },
+    "Hero3.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Hero 3 · Dark, product rising",
+      "w": 1440,
+      "x": 9120,
+      "y": 5640
+    },
+    "HowItWorks.dc.html": {
+      "expand": "fill",
+      "h": 5450,
+      "title": "How it works",
+      "w": 1440,
+      "x": 7600,
+      "y": 5640
+    },
+    "LandingV2.dc.html": {
+      "expand": "fill",
+      "h": 9650,
+      "title": "Landing page v3 · voice agent, long memory, every channel",
+      "w": 1440,
+      "x": 4560,
+      "y": 5640
+    },
+    "Legal.dc.html": {
+      "expand": "fill",
+      "h": 2950,
+      "title": "Legal page (layout)",
+      "w": 1440,
+      "x": 16720,
+      "y": 5637
+    },
+    "Login.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Log in",
+      "w": 1440,
+      "x": 1440,
+      "y": 5640
+    },
+    "NotFound.dc.html": {
+      "expand": "fill",
+      "h": 950,
+      "title": "404",
+      "w": 1440,
+      "x": -80,
+      "y": 8997
+    },
+    "ObA.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Onboarding · Prototype: click Continue",
+      "w": 1440,
+      "x": -80,
+      "y": 10357
+    },
+    "ObA1.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Onboarding · 1 · Your business",
+      "w": 1440,
+      "x": 1440,
+      "y": 10357
+    },
+    "ObA2.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Onboarding · 2 · Teach Vegham",
+      "w": 1440,
+      "x": 2960,
+      "y": 10357
+    },
+    "ObA3.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Onboarding · 3 · Your assistant",
+      "w": 1440,
+      "x": -80,
+      "y": 11493
+    },
+    "ObA4.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Onboarding · 4 · Channels",
+      "w": 1440,
+      "x": 1440,
+      "y": 11493
+    },
+    "ObA5.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Onboarding · 5 · Test drive",
+      "w": 1440,
+      "x": -80,
+      "y": 12535
+    },
+    "ObA6.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Onboarding · 6 · Review",
+      "w": 1440,
+      "x": 1440,
+      "y": 12535
+    },
+    "ObA7.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Onboarding · You’re live",
+      "w": 1440,
+      "x": 2960,
+      "y": 12535
+    },
+    "ObAwa.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Onboarding · 4 · Connect WhatsApp (Meta sign-up)",
+      "w": 1440,
+      "x": 2960,
+      "y": 11493
+    },
+    "ObMobile.dc.html": {
+      "expand": "fill",
+      "h": 1720,
+      "title": "Onboarding on phones",
+      "w": 1440,
+      "x": 1440,
+      "y": 13577
+    },
+    "ObMotion.dc.html": {
+      "expand": "fill",
+      "h": 1180,
+      "title": "Onboarding motion",
+      "w": 1440,
+      "x": 2960,
+      "y": 13577
+    },
+    "ObStates.dc.html": {
+      "expand": "fill",
+      "h": 910,
+      "title": "Onboarding · when things go differently",
+      "w": 1440,
+      "x": -80,
+      "y": 13577
+    },
+    "Otp.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Log in · code screen",
+      "w": 1440,
+      "x": -80,
+      "y": 7758
+    },
+    "Piece-m8mf.dc.html": {
+      "frameless": true,
+      "h": 865,
+      "title": "Section",
+      "w": 1240,
+      "x": 9158,
+      "y": 6222
+    },
+    "Pricing.dc.html": {
+      "expand": "fill",
+      "h": 7450,
+      "title": "Pricing",
+      "w": 1440,
+      "x": 9120,
+      "y": 5640
+    },
+    "Product.dc.html": {
+      "expand": "fill",
+      "h": 8000,
+      "w": 1440,
+      "x": 6080,
+      "y": 5640
+    },
+    "Security.dc.html": {
+      "expand": "fill",
+      "h": 4850,
+      "title": "Security and privacy",
+      "w": 1440,
+      "x": 13680,
+      "y": 5637
+    },
+    "Signup.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Sign up",
+      "w": 1440,
+      "x": 2960,
+      "y": 5640
+    },
+    "SiteStates.dc.html": {
+      "expand": "fill",
+      "h": 1600,
+      "title": "Website states: mobile menu, cookies, forms",
+      "w": 1440,
+      "x": 24320,
+      "y": 5637
+    },
+    "Terms.dc.html": {
+      "expand": "fill",
+      "h": 3400,
+      "title": "Terms and conditions",
+      "w": 1440,
+      "x": 18240,
+      "y": 5637
+    },
+    "WfBookDemo.dc.html": {
+      "expand": "fill",
+      "h": 1045,
+      "title": "Wireframe · Book a demo",
+      "w": 1440,
+      "x": 7680,
+      "y": -3012
+    },
+    "WfCareers.dc.html": {
+      "expand": "fill",
+      "h": 1562,
+      "title": "Wireframe · Careers",
+      "w": 1440,
+      "x": 15280,
+      "y": -3012
+    },
+    "WfCompany.dc.html": {
+      "expand": "fill",
+      "h": 2144,
+      "title": "Wireframe · Company",
+      "w": 1440,
+      "x": 6160,
+      "y": -3012
+    },
+    "WfContact.dc.html": {
+      "expand": "fill",
+      "h": 1424,
+      "title": "Wireframe · Contact",
+      "w": 1440,
+      "x": 13760,
+      "y": -3012
+    },
+    "WfFlow.dc.html": {
+      "expand": "fill",
+      "h": 1260,
+      "title": "Wireframe · User flow",
+      "w": 1440,
+      "x": 80,
+      "y": -4612
+    },
+    "WfHelp.dc.html": {
+      "expand": "fill",
+      "h": 1803,
+      "title": "Wireframe · Help centre",
+      "w": 1440,
+      "x": 10720,
+      "y": -3012
+    },
+    "WfHelpArticle.dc.html": {
+      "expand": "fill",
+      "h": 1512,
+      "title": "Wireframe · Help article",
+      "w": 1440,
+      "x": 12240,
+      "y": -3012
+    },
+    "WfHowItWorks.dc.html": {
+      "expand": "fill",
+      "h": 3225,
+      "title": "Wireframe · How it works",
+      "w": 1440,
+      "x": 3120,
+      "y": -3012
+    },
+    "WfLanding.dc.html": {
+      "expand": "fill",
+      "h": 4612,
+      "title": "Wireframe · Landing",
+      "w": 1440,
+      "x": 80,
+      "y": -3012
+    },
+    "WfLogin.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Wireframe · Log in",
+      "w": 1440,
+      "x": 1600,
+      "y": 1988
+    },
+    "WfNotFound.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Wireframe · 404",
+      "w": 1440,
+      "x": 19840,
+      "y": -3012
+    },
+    "WfOb0.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Wireframe · Onboarding · Welcome",
+      "w": 1440,
+      "x": 80,
+      "y": 3288
+    },
+    "WfOb1.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Wireframe · Onboarding · 1 · Your business",
+      "w": 1440,
+      "x": 1600,
+      "y": 3288
+    },
+    "WfOb2.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Wireframe · Onboarding · 2 · Teach Vegham",
+      "w": 1440,
+      "x": 3120,
+      "y": 3288
+    },
+    "WfOb3.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Wireframe · Onboarding · 3 · Your assistant",
+      "w": 1440,
+      "x": 4640,
+      "y": 3288
+    },
+    "WfOb4.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Wireframe · Onboarding · 4 · Channels",
+      "w": 1440,
+      "x": 6160,
+      "y": 3288
+    },
+    "WfOb4wa.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Wireframe · Onboarding · 4 · Connect WhatsApp",
+      "w": 1440,
+      "x": 7680,
+      "y": 3288
+    },
+    "WfOb5.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Wireframe · Onboarding · 5 · Test drive",
+      "w": 1440,
+      "x": 9200,
+      "y": 3288
+    },
+    "WfOb6.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Wireframe · Onboarding · 6 · Review",
+      "w": 1440,
+      "x": 10720,
+      "y": 3288
+    },
+    "WfOb7.dc.html": {
+      "expand": "fill",
+      "h": 900,
+      "title": "Wireframe · Onboarding · You’re live",
+      "w": 1440,
+      "x": 12240,
+      "y": 3288
+    },
+    "WfOtp.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Wireframe · Code screen",
+      "w": 1440,
+      "x": 3120,
+      "y": 1988
+    },
+    "WfPricing.dc.html": {
+      "expand": "fill",
+      "h": 2932,
+      "title": "Wireframe · Pricing",
+      "w": 1440,
+      "x": 4640,
+      "y": -3012
+    },
+    "WfPrivacy.dc.html": {
+      "expand": "fill",
+      "h": 1716,
+      "title": "Wireframe · Privacy policy",
+      "w": 1440,
+      "x": 16800,
+      "y": -3012
+    },
+    "WfProduct.dc.html": {
+      "expand": "fill",
+      "h": 3996,
+      "title": "Wireframe · Product",
+      "w": 1440,
+      "x": 1600,
+      "y": -3012
+    },
+    "WfSecurity.dc.html": {
+      "expand": "fill",
+      "h": 2693,
+      "title": "Wireframe · Security",
+      "w": 1440,
+      "x": 9200,
+      "y": -3012
+    },
+    "WfSignup.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "Wireframe · Sign up",
+      "w": 1440,
+      "x": 80,
+      "y": 1988
+    },
+    "WfTerms.dc.html": {
+      "expand": "fill",
+      "h": 2031,
+      "title": "Wireframe · Terms",
+      "w": 1440,
+      "x": 18320,
+      "y": -3012
+    },
+    "AppSetup1.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Setup 1/4 · your business (first thing after sign-up, press Play)",
+      "w": 1440,
+      "x": 80,
+      "y": 17600,
+      "is_interactive": true
+    },
+    "AppSetup2.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Setup 2/4 · pick a voice",
+      "w": 1440,
+      "x": 1600,
+      "y": 17600,
+      "is_interactive": true
+    },
+    "AppSetup3.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Setup 3/4 · test call",
+      "w": 1440,
+      "x": 3120,
+      "y": 17600,
+      "is_interactive": true
+    },
+    "AppSetup4.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Setup 4/4 · go live",
+      "w": 1440,
+      "x": 4640,
+      "y": 17600,
+      "is_interactive": true
+    },
+    "AppWelcome.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Home · first login",
+      "w": 1440,
+      "x": 80,
+      "y": 18780,
+      "is_interactive": true
+    },
+    "AppHome.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Home",
+      "w": 1440,
+      "x": 1600,
+      "y": 18780,
+      "is_interactive": true
+    },
+    "AppMenu.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Profile menu",
+      "w": 1440,
+      "x": 3120,
+      "y": 18780,
+      "is_interactive": true
+    },
+    "AppSettings.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Settings pop-up",
+      "w": 1440,
+      "x": 4640,
+      "y": 18780,
+      "is_interactive": true
+    },
+    "AppConversations.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Conversations · a returning caller",
+      "w": 1440,
+      "x": 80,
+      "y": 19960,
+      "is_interactive": true
+    },
+    "AppConversationChat.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Conversations · WhatsApp hand-over",
+      "w": 1440,
+      "x": 1600,
+      "y": 19960,
+      "is_interactive": true
+    },
+    "AppPeople.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · People",
+      "w": 1440,
+      "x": 3120,
+      "y": 19960,
+      "is_interactive": true
+    },
+    "AppPerson.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · People · one person’s memory",
+      "w": 1440,
+      "x": 4640,
+      "y": 19960,
+      "is_interactive": true
+    },
+    "AppFollowups.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Follow-ups",
+      "w": 1440,
+      "x": 80,
+      "y": 21140,
+      "is_interactive": true
+    },
+    "AppInsights.dc.html": {
+      "expand": "fill",
+      "h": 2560,
+      "title": "App · Insights (full analytics)",
+      "w": 1440,
+      "x": 6160,
+      "y": 17600,
+      "is_interactive": true
+    },
+    "AppAgent.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Your agent · live preview",
+      "w": 1440,
+      "x": 3120,
+      "y": 21140,
+      "is_interactive": true
+    },
+    "AppAgentLanguages.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Your agent · languages",
+      "w": 1440,
+      "x": 4640,
+      "y": 21140,
+      "is_interactive": true
+    },
+    "AppAgentMemory.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Your agent · memory",
+      "w": 1440,
+      "x": 80,
+      "y": 22320,
+      "is_interactive": true
+    },
+    "AppAgentKnowledge.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Your agent · knowledge",
+      "w": 1440,
+      "x": 1600,
+      "y": 22320,
+      "is_interactive": true
+    },
+    "AppAgentTest.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "title": "App · Your agent · test call",
+      "w": 1440,
+      "x": 3120,
+      "y": 22320,
+      "is_interactive": true
+    }
+  },
+  "createdOnFiles": {
+    "at": "2026-11-06T07:10:00Z",
+    "v": 1
+  },
+  "designSystems": [],
+  "launch": {
+    "view": "canvas"
+  },
+  "noteOrder": [
+    "wfTitle",
+    "wfWeb",
+    "wfAuth",
+    "wfOb",
+    "app"
+  ],
+  "notes": {
+    "wfAuth": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Wireframes · sign up and log in",
+      "w": 240,
+      "x": 80,
+      "y": 1688
+    },
+    "wfOb": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Wireframes · onboarding",
+      "w": 240,
+      "x": 80,
+      "y": 2988
+    },
+    "wfTitle": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Wireframes · website, account and onboarding",
+      "w": 240,
+      "x": 80,
+      "y": -4912
+    },
+    "wfWeb": {
+      "kind": "title1",
+      "maxW": 8000,
+      "text": "Wireframes · website pages",
+      "w": 240,
+      "x": 80,
+      "y": -3312
+    },
+    "app": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "App · after sign-up and log in: calls, WhatsApp and memory",
+      "w": 240,
+      "x": 80,
+      "y": 17300
+    }
+  },
+  "order": [
+    "BrandV2.dc.html",
+    "LandingV2.dc.html",
+    "Hero1.dc.html",
+    "Hero2.dc.html",
+    "Hero3.dc.html",
+    "Piece-m8mf.dc.html",
+    "Product.dc.html",
+    "HowItWorks.dc.html",
+    "Pricing.dc.html",
+    "Company.dc.html",
+    "Login.dc.html",
+    "Signup.dc.html",
+    "BookDemo.dc.html",
+    "Security.dc.html",
+    "Help.dc.html",
+    "Legal.dc.html",
+    "NotFound.dc.html",
+    "Otp.dc.html",
+    "AuthStates.dc.html",
+    "Terms.dc.html",
+    "Careers.dc.html",
+    "Contact.dc.html",
+    "HelpArticle.dc.html",
+    "SiteStates.dc.html",
+    "ObMobile.dc.html",
+    "ObMotion.dc.html",
+    "ObA.dc.html",
+    "ObA1.dc.html",
+    "ObA2.dc.html",
+    "ObA3.dc.html",
+    "ObA4.dc.html",
+    "ObA5.dc.html",
+    "ObA6.dc.html",
+    "ObA7.dc.html",
+    "ObAwa.dc.html",
+    "ObStates.dc.html",
+    "WfFlow.dc.html",
+    "WfLanding.dc.html",
+    "WfProduct.dc.html",
+    "WfHowItWorks.dc.html",
+    "WfPricing.dc.html",
+    "WfCompany.dc.html",
+    "WfBookDemo.dc.html",
+    "WfSecurity.dc.html",
+    "WfHelp.dc.html",
+    "WfHelpArticle.dc.html",
+    "WfContact.dc.html",
+    "WfCareers.dc.html",
+    "WfPrivacy.dc.html",
+    "WfTerms.dc.html",
+    "WfNotFound.dc.html",
+    "WfSignup.dc.html",
+    "WfLogin.dc.html",
+    "WfOtp.dc.html",
+    "WfOb0.dc.html",
+    "WfOb1.dc.html",
+    "WfOb2.dc.html",
+    "WfOb3.dc.html",
+    "WfOb4.dc.html",
+    "WfOb4wa.dc.html",
+    "WfOb5.dc.html",
+    "WfOb6.dc.html",
+    "WfOb7.dc.html",
+    "AppSetup1.dc.html",
+    "AppSetup2.dc.html",
+    "AppSetup3.dc.html",
+    "AppSetup4.dc.html",
+    "AppWelcome.dc.html",
+    "AppHome.dc.html",
+    "AppMenu.dc.html",
+    "AppSettings.dc.html",
+    "AppConversations.dc.html",
+    "AppConversationChat.dc.html",
+    "AppPeople.dc.html",
+    "AppPerson.dc.html",
+    "AppFollowups.dc.html",
+    "AppInsights.dc.html",
+    "AppAgent.dc.html",
+    "AppAgentLanguages.dc.html",
+    "AppAgentMemory.dc.html",
+    "AppAgentKnowledge.dc.html",
+    "AppAgentTest.dc.html"
+  ],
+  "pages": [],
+  "title": "Vegham UI directions"
+}

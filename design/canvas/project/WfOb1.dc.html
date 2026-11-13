@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wireframe · Onboarding 1</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Inter+Tight:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.wf{font-family:Inter,system-ui,sans-serif;color:#2E2E33;background:#FFFFFF;font-size:14px;line-height:1.45}
+.wf *{box-sizing:border-box}
+.wf-sec{position:relative;border-bottom:1px dashed #D6D6DC}
+.wf-tag{position:absolute;left:16px;top:14px;display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;background:rgba(59,108,246,.1);color:#3B6CF6;font-size:11.5px;font-weight:500;z-index:3}
+.wf-note{display:inline-flex;align-self:flex-start;width:fit-content;align-items:center;gap:6px;padding:3px 9px;border-radius:8px;background:rgba(59,108,246,.1);color:#3B6CF6;font-size:11.5px;font-weight:500}
+</style>
+</helmet>
+<div class="wf" style="position: relative; height: 900px; background: #F5F5F7; overflow: hidden">
+      <div style="position: absolute; left: 40px; right: 40px; top: 0; height: 72px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #D6D6DC">
+        <span style=""><span style="display: inline-flex; align-items: center; gap: 8px"><b style="font-family: 'Inter Tight', sans-serif; font-weight: 400; letter-spacing: -0.03em; font-size: 20px; font-weight: 500">vegham</b></span></span><span style="display: inline-flex; align-items: center; justify-content: center; height: 34px; padding: 0 22px; border-radius: 999px; border: 1.5px solid #2E2E33; color: #2E2E33; background: #FFFFFF; font-size: 14px; font-weight: 500; ">Save and finish later</span>
+        <span style="position: absolute; left: 0; bottom: -2px; height: 2px; width: 16.7%; background: #3B6CF6"></span></div>
+      <span class="wf-tag" style="top: 80px; left: 40px">Top bar · logo · save for later · progress line (16.7%)</span>
+      <div style="position: absolute; left: 96px; top: 136px; width: 560px">
+        <span class="wf-tag" style="position: relative; left: 0; top: 0; margin-bottom: 10px">Questions · slide sideways between steps</span>
+        <span style="display: block; margin-top: 8px; font-size: 12.5px; color: #8C8C94">Step 1/6 · about a minute</span>
+        <div style="margin-top: 8px"><h2 style="margin: 0; font-family: 'Inter Tight', sans-serif; font-weight: 400; letter-spacing: -0.03em; font-size: 38px; line-height: 1.1; color: #2E2E33;  ">Tell us about your business.</h2></div><div style="margin-top: 10px"><div style="display: flex; flex-direction: column; gap: 8px"><span style="display: block; width: 70%; height: 9px; border-radius: 4px; background: #E4E4E9"></span></div></div>
+        <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 12px"><div style="display: grid; grid-template-columns: 44px 1.3fr 1fr; gap: 10px; align-items: end"><span style="width: 44px; height: 44px; border-radius: 10px; border: 1.5px dashed #D6D6DC"></span><div style="width: 100%"><span style="display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 6px">Business name</span><span style="display: flex; align-items: center; height: 44px; padding: 0 14px; border-radius: 10px; border: 1.5px solid #D6D6DC; background: #FFFFFF; color: #8C8C94; font-size: 13px"></span></div><div style="width: 100%"><span style="display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 6px">Country · time zone</span><span style="display: flex; align-items: center; height: 44px; padding: 0 14px; border-radius: 10px; border: 1.5px solid #D6D6DC; background: #FFFFFF; color: #8C8C94; font-size: 13px"></span></div></div><div style="width: 100%"><span style="display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 6px">What do you offer?</span><span style="display: flex; align-items: center; height: 44px; padding: 0 14px; border-radius: 10px; border: 1.5px solid #D6D6DC; background: #FFFFFF; color: #8C8C94; font-size: 13px"></span></div><div style="display: grid; grid-template-columns: 1.3fr 1fr; gap: 10px"><div style="width: 100%"><span style="display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 6px">Address</span><span style="display: flex; align-items: center; height: 44px; padding: 0 14px; border-radius: 10px; border: 1.5px solid #D6D6DC; background: #FFFFFF; color: #8C8C94; font-size: 13px"></span></div><div style="width: 100%"><span style="display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 6px">Business phone</span><span style="display: flex; align-items: center; height: 44px; padding: 0 14px; border-radius: 10px; border: 1.5px solid #D6D6DC; background: #FFFFFF; color: #8C8C94; font-size: 13px"></span></div></div><div><span style="display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 6px">Opening hours</span><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="padding: 6px 12px; border-radius: 999px; font-size: 12.5px; background: #2E2E33; color: #FFFFFF">Mon–Sat 10–8</span><span style="padding: 6px 12px; border-radius: 999px; font-size: 12.5px; border: 1.5px solid #D6D6DC">Every day 9–9</span><span style="padding: 6px 12px; border-radius: 999px; font-size: 12.5px; border: 1.5px solid #D6D6DC">Custom → day editor</span></div></div><div><span style="display: block; font-size: 12.5px; font-weight: 500; margin-bottom: 6px">Locations</span><div style="display: flex; flex-wrap: wrap; gap: 6px"><span style="padding: 6px 12px; border-radius: 999px; font-size: 12.5px; background: #2E2E33; color: #FFFFFF">Just this one</span><span style="padding: 6px 12px; border-radius: 999px; font-size: 12.5px; border: 1.5px solid #D6D6DC">Two or more → list + add</span></div></div><span class="wf-note">✎ Every answer updates the card instantly</span></div></div>
+      <div style="position: absolute; left: 96px; top: 790px; display: flex; gap: 10px; align-items: center"><span style="display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 22px; border-radius: 999px; border: 1.5px solid #2E2E33; color: #2E2E33; background: #FFFFFF; font-size: 14px; font-weight: 500; ">← Back</span><span style="display: inline-flex; align-items: center; justify-content: center; height: 44px; padding: 0 22px; border-radius: 999px; background: #2E2E33; color: #FFFFFF; font-size: 14px; font-weight: 500; ">Continue →</span></div>
+      <span class="wf-tag" style="top: 760px; left: 96px">Back · Continue · always in the same place</span>
+      <div style="position: absolute; left: 820px; top: 150px; width: 420px">
+        <span class="wf-tag" style="position: relative; left: 0; top: 0; display: inline-flex; margin-bottom: 10px">The living card · one object that grows</span><div style="padding: 18px; border-radius: 24px; background: #FFFFFF; border: 1px solid #2E2E33; "><div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; margin-top: 6px; border-radius: 10px; background: #F1F1F4; outline: 2px solid #3B6CF6"><span style="font-size: 12.5px; color: #2E2E33">Logo · name · open now</span><span class='wf-note' style='padding: 1px 7px'>new</span></div><div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; margin-top: 6px; border-radius: 10px; background: #F1F1F4; outline: 2px solid #3B6CF6"><span style="font-size: 12.5px; color: #2E2E33">Address · phone · locations</span><span class='wf-note' style='padding: 1px 7px'>new</span></div><div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; margin-top: 6px; border-radius: 10px; background: #F1F1F4; outline: 2px solid #3B6CF6"><span style="font-size: 12.5px; color: #2E2E33">Hours strip (7 days)</span><span class='wf-note' style='padding: 1px 7px'>new</span></div><div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 12px; margin-top: 6px; border-radius: 10px; background: #F1F1F4; "><span style="font-size: 12.5px; color: #2E2E33">Booking link · since</span></div></div></div>
+      </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
