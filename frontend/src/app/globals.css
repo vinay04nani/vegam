@@ -21,3 +21,9 @@ section[id],
 footer[id] {
   scroll-margin-top: 88px;
 }
+
+/* The header turns into a floating pill on scroll. Keep its top margin inside the sticky header
+   (it would otherwise collapse out of it), so the pill sits clear of the top of the window. */
+header:has(> .vg-hdr-in) {
+  display: flow-root;
+}

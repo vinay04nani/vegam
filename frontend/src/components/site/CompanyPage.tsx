@@ -10,48 +10,50 @@ export default function CompanyPage() {
         <InnerHeader />
         <section style={{ background: "linear-gradient(180deg, #F7F7F8 0%, #FFFFFF 100%)", borderBottom: "1px solid #EFEFEF" }}>
           <div style={{ position: "relative", maxWidth: "1200px", margin: "0 auto", padding: "88px 32px 72px", textAlign: "center" }} data-s="s11">
-            <span className="vg-hero" style={{ animationDelay: ".05s", display: "inline-block", padding: "10px 28px", borderTop: "1px solid #E2E2E6", borderBottom: "1px solid #E2E2E6", fontSize: "15px", color: "#3D3D3D" }}>
-              {"Company"}
-            </span>
-            <h1 className="vg-hero" style={{ animationDelay: ".15s", margin: "26px auto 0", maxWidth: "940px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "64px", lineHeight: "1.05", letterSpacing: "-0.045em", color: "#141414" }}>
-              {"We’re building the voice agent"}
-              <br />
-              <span style={{ color: "#8A8A8A" }}>
-                {"every business deserves."}
+            <div className="vg-heroout">
+              <span className="vg-hero" style={{ animationDelay: ".05s", display: "inline-block", padding: "10px 28px", borderTop: "1px solid #E2E2E6", borderBottom: "1px solid #E2E2E6", fontSize: "15px", color: "#3D3D3D" }}>
+                {"Company"}
               </span>
-            </h1>
-            <p className="vg-hero" style={{ animationDelay: ".3s", margin: "20px auto 0", maxWidth: "620px", fontSize: "18.5px", color: "#3D3D3D" }}>
-              {"One that picks up every call and message, speaks the customer’s language, and remembers each person it talks to."}
-            </p>
-            <div className="vg-hero" style={{ animationDelay: ".42s", margin: "40px auto 0", maxWidth: "640px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "14px 28px", padding: "22px 32px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", textAlign: "left" }}>
-              <span style={{ flex: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "52px", lineHeight: "1.1", letterSpacing: "-0.03em", color: "transparent", background: "linear-gradient(100deg, #10B981 0%, #0EA5A4 25%, #3B6CF6 55%, #7C3AED 80%, #DB2777 100%)", WebkitBackgroundClip: "text", backgroundClip: "text" }} data-s="s4">
-                {"वेग"}
-              </span>
-              <p style={{ flex: "1 1 320px", margin: "0", fontSize: "16px", color: "#5C5C5C" }}>
-                <b style={{ fontWeight: "600", color: "#141414" }}>
-                  {"Vegham"}
-                </b>
-                {" comes from "}
-                <i>
-                  {"vegam"}
-                </i>
-                {", the Sanskrit word for speed. It’s our promise: every customer answered in seconds."}
+              <h1 className="vg-hero" style={{ animationDelay: ".15s", margin: "26px auto 0", maxWidth: "940px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "64px", lineHeight: "1.05", letterSpacing: "-0.045em", color: "#141414" }}>
+                {"We’re building the voice agent"}
+                <br />
+                <span style={{ color: "#8A8A8A" }}>
+                  {"every business deserves."}
+                </span>
+              </h1>
+              <p className="vg-hero" style={{ animationDelay: ".3s", margin: "20px auto 0", maxWidth: "620px", fontSize: "18.5px", color: "#3D3D3D" }}>
+                {"One that picks up every call and message, speaks the customer’s language, and remembers each person it talks to."}
               </p>
+              <div className="vg-hero" style={{ animationDelay: ".42s", margin: "40px auto 0", maxWidth: "640px", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "14px 28px", padding: "22px 32px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", textAlign: "left" }}>
+                <span style={{ flex: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "52px", lineHeight: "1.1", letterSpacing: "-0.03em", color: "transparent", background: "linear-gradient(100deg, #10B981 0%, #0EA5A4 25%, #3B6CF6 55%, #7C3AED 80%, #DB2777 100%)", WebkitBackgroundClip: "text", backgroundClip: "text" }} data-s="s4">
+                  {"वेग"}
+                </span>
+                <p style={{ flex: "1 1 320px", margin: "0", fontSize: "16px", color: "#5C5C5C" }}>
+                  <b style={{ fontWeight: "600", color: "#141414" }}>
+                    {"Vegham"}
+                  </b>
+                  {" comes from "}
+                  <i>
+                    {"vegam"}
+                  </i>
+                  {", the Sanskrit word for speed. It’s our promise: every customer answered in seconds."}
+                </p>
+              </div>
             </div>
           </div>
         </section>
         <section>
           <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap", gap: "40px 72px" }} data-s="s10 s11">
-            <div style={{ flex: "1 1 320px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+            <div className="vg-par" style={{ flex: "1 1 320px" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Why we exist"}
               </span>
             </div>
             <div style={{ flex: "2 1 560px", fontSize: "21px", lineHeight: "1.6", color: "#2B2B2B" }}>
-              <p style={{ margin: "0" }}>
+              <p className="vg-rv" style={{ margin: "0" }}>
                 {"Most businesses don’t lose customers because of their service. They lose them in the first few minutes: a WhatsApp that sits unread, a call nobody could pick up, a follow-up nobody had time to send."}
               </p>
-              <p style={{ margin: "22px 0 0", color: "#5C5C5C" }}>
+              <p className="vg-rv" style={{ margin: "22px 0 0", color: "#5C5C5C" }}>
                 {"Big companies solve this with call centres and large teams. Vegham gives every business the same: an AI voice agent that answers in seconds, remembers every customer and follows up, in the language the customer speaks."}
               </p>
             </div>
@@ -140,7 +142,7 @@ export default function CompanyPage() {
         <section>
           <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px" }} data-s="s10 s11">
             <div>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"What we believe"}
               </span>
               <h2 style={{ margin: "14px 0 0", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", letterSpacing: "-0.04em", fontSize: "48px", lineHeight: "1.08" }} data-s="s3">
@@ -158,8 +160,8 @@ export default function CompanyPage() {
                 </span>
               </h2>
             </div>
-            <div style={{ marginTop: "44px", display: "flex", flexWrap: "wrap", gap: "16px" }}>
-              <div className="vg-lift" style={{ flex: "1 1 260px", background: "#F6F6F8", borderRadius: "28px", padding: "28px", minHeight: "220px" }}>
+            <div className="vg-par" style={{ marginTop: "44px", display: "flex", flexWrap: "wrap", gap: "16px" }}>
+              <div className="vg-lift vg-rv" style={{ flex: "1 1 260px", background: "#F6F6F8", borderRadius: "28px", padding: "28px", minHeight: "220px" }}>
                 <span style={{ display: "inline-flex", width: "36px", height: "36px", borderRadius: "12px", background: "#FFFFFF", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "600", color: "#16182A" }}>
                   {"01"}
                 </span>
@@ -170,7 +172,7 @@ export default function CompanyPage() {
                   {"A message left unanswered is a person left waiting. We build so nobody has to wait."}
                 </p>
               </div>
-              <div className="vg-lift" style={{ flex: "1 1 260px", background: "#F6F6F8", borderRadius: "28px", padding: "28px", minHeight: "220px" }}>
+              <div className="vg-lift vg-rv" style={{ flex: "1 1 260px", background: "#F6F6F8", borderRadius: "28px", padding: "28px", minHeight: "220px" }}>
                 <span style={{ display: "inline-flex", width: "36px", height: "36px", borderRadius: "12px", background: "#FFFFFF", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "600", color: "#16182A" }}>
                   {"02"}
                 </span>
@@ -181,7 +183,7 @@ export default function CompanyPage() {
                   {"Made for how people really talk: in many languages, on WhatsApp, on the phone."}
                 </p>
               </div>
-              <div className="vg-lift" style={{ flex: "1 1 260px", background: "#F6F6F8", borderRadius: "28px", padding: "28px", minHeight: "220px" }}>
+              <div className="vg-lift vg-rv" style={{ flex: "1 1 260px", background: "#F6F6F8", borderRadius: "28px", padding: "28px", minHeight: "220px" }}>
                 <span style={{ display: "inline-flex", width: "36px", height: "36px", borderRadius: "12px", background: "#FFFFFF", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "600", color: "#16182A" }}>
                   {"03"}
                 </span>
@@ -192,7 +194,7 @@ export default function CompanyPage() {
                   {"The AI handles the routine. You decide what it says and when it hands over."}
                 </p>
               </div>
-              <div className="vg-lift" style={{ flex: "1 1 260px", background: "#F6F6F8", borderRadius: "28px", padding: "28px", minHeight: "220px" }}>
+              <div className="vg-lift vg-rv" style={{ flex: "1 1 260px", background: "#F6F6F8", borderRadius: "28px", padding: "28px", minHeight: "220px" }}>
                 <span style={{ display: "inline-flex", width: "36px", height: "36px", borderRadius: "12px", background: "#FFFFFF", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "600", color: "#16182A" }}>
                   {"04"}
                 </span>
@@ -208,8 +210,8 @@ export default function CompanyPage() {
         </section>
         <section>
           <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap", gap: "16px" }} data-s="s10 s11">
-            <div style={{ flex: "1 1 360px", border: "1px solid #ECECF0", borderRadius: "20px", padding: "32px", display: "flex", flexDirection: "column", gap: "10px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+            <div className="vg-rv" style={{ flex: "1 1 360px", border: "1px solid #ECECF0", borderRadius: "20px", padding: "32px", display: "flex", flexDirection: "column", gap: "10px" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Talk to us"}
               </span>
               <h3 style={{ margin: "4px 0 0", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", letterSpacing: "-0.04em", fontSize: "30px" }}>
@@ -225,8 +227,8 @@ export default function CompanyPage() {
                 {"Contact us"}
               </Link>
             </div>
-            <div style={{ flex: "1 1 360px", border: "1px solid #ECECF0", borderRadius: "20px", padding: "32px", display: "flex", flexDirection: "column", gap: "10px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+            <div className="vg-rv" style={{ flex: "1 1 360px", border: "1px solid #ECECF0", borderRadius: "20px", padding: "32px", display: "flex", flexDirection: "column", gap: "10px" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Careers"}
               </span>
               <h3 style={{ margin: "4px 0 0", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", letterSpacing: "-0.04em", fontSize: "30px" }}>
@@ -239,8 +241,8 @@ export default function CompanyPage() {
                 {"See open roles"}
               </Link>
             </div>
-            <div style={{ flex: "1 1 360px", border: "1px solid #ECECF0", borderRadius: "20px", padding: "32px", display: "flex", flexDirection: "column", gap: "10px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+            <div className="vg-rv" style={{ flex: "1 1 360px", border: "1px solid #ECECF0", borderRadius: "20px", padding: "32px", display: "flex", flexDirection: "column", gap: "10px" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Registered office"}
               </span>
               <h3 style={{ margin: "4px 0 0", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", letterSpacing: "-0.04em", fontSize: "30px" }}>
