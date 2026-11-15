@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
-import { AuthForm } from "@/components/auth/AuthForm";
-import { AuthShell } from "@/components/auth/AuthShell";
+import SignupPage from "@/components/site/SignupPage";
 
-export const metadata: Metadata = { title: "Create your account · Vegam" };
+export const metadata: Metadata = { title: "Create your account · Vegham" };
 
-export default function SignupPage() {
-  return (
-    <AuthShell>
-      <AuthForm mode="signup" />
-    </AuthShell>
-  );
+export default function Page() {
+  return <SignupPage />;
 }

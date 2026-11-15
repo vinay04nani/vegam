@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
-import { AuthForm } from "@/components/auth/AuthForm";
-import { AuthShell } from "@/components/auth/AuthShell";
+import LoginPage from "@/components/site/LoginPage";
 
-export const metadata: Metadata = { title: "Log in · Vegam" };
+export const metadata: Metadata = { title: "Log in · Vegham" };
 
-export default function LoginPage() {
-  return (
-    <AuthShell>
-      <AuthForm mode="login" />
-    </AuthShell>
-  );
+export default function Page() {
+  return <LoginPage />;
 }

@@ -1,31 +1,33 @@
-import { Features } from "@/components/sections/Features";
-import { FinalCta } from "@/components/sections/FinalCta";
-import { Footer } from "@/components/sections/Footer";
-import { Hero } from "@/components/sections/Hero";
-import { Languages } from "@/components/sections/Languages";
-import { Navbar } from "@/components/sections/Navbar";
-import { Plans } from "@/components/sections/Plans";
-import { Trust } from "@/components/sections/Trust";
+// Ported from design board LandingV2 by design/tools/port.py. Sample data is inline.
+import type { CSSProperties } from "react";
+import SiteHeader from "@/components/site/SiteHeader";
+import SiteFooter from "@/components/site/SiteFooter";
+import Hero from "@/components/site/landing/Hero";
+import Channels from "@/components/site/landing/Channels";
+import Memory from "@/components/site/landing/Memory";
+import Features from "@/components/site/landing/Features";
+import Anywhere from "@/components/site/landing/Anywhere";
+import HowItWorks from "@/components/site/landing/HowItWorks";
+import Control from "@/components/site/landing/Control";
+import Pricing from "@/components/site/landing/Pricing";
+import Faq from "@/components/site/landing/Faq";
+import Cta from "@/components/site/landing/Cta";
 
-export default function Home() {
+export default function LandingPage() {
   return (
-    <>
-      <a
-        href="#main"
-        className="sr-only z-[60] rounded-full bg-white px-4 py-2 focus:not-sr-only focus:fixed focus:top-3 focus:left-3"
-      >
-        Skip to content
-      </a>
-      <Navbar />
-      <main id="main" className="text-lg leading-[1.55]">
-        <Hero />
-        <Features />
-        <Languages />
-        <Trust />
-        <Plans />
-        <FinalCta />
-      </main>
-      <Footer />
-    </>
+      <div style={{ fontFamily: "var(--font-inter), system-ui, sans-serif", color: "#1F1F1F", background: "#FFFFFF", fontSize: "16px", lineHeight: "1.6", timelineScope: "--vg-sec-product, --vg-sec-how, --vg-sec-pricing" } as CSSProperties}>
+      <SiteHeader />
+      <Hero />
+      <Channels />
+      <Memory />
+      <Features />
+      <Anywhere />
+      <HowItWorks />
+      <Control />
+      <Pricing />
+      <Faq />
+      <Cta />
+      <SiteFooter />
+      </div>
   );
 }

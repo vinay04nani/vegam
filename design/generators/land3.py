@@ -107,21 +107,21 @@ def mem_row(icon, t, s):
 
 def hero_mock():
     nav = ''.join('<span style="padding: 7px 10px; border-radius: 12px; %s">%s</span>' % ('background: #F1F1F4; color: #16182A; font-weight: 500' if on else '', n) for n, on in [('Home', 0), ('Conversations', 1), ('People', 0), ('Follow-ups', 0), ('Insights', 0), ('Your agent', 0)])
-    side = '<div style="width: 190px; flex: none; background: #FAFAFB; border-right: 1px solid #EDEDF0; padding: 18px 12px; display: flex; flex-direction: column; gap: 4px; color: #5C5C5C"><span style="padding: 0 10px 14px; %s; font-weight: 600; font-size: 20px; letter-spacing: -0.045em; color: transparent; background: %s; -webkit-background-clip: text; background-clip: text">vegham</span>%s</div>' % (TIGHT, AUR, nav)
+    side = '<div class="vg-mock-side" style="width: 190px; flex: none; background: #FAFAFB; border-right: 1px solid #EDEDF0; padding: 18px 12px; display: flex; flex-direction: column; gap: 4px; color: #5C5C5C"><span style="padding: 0 10px 14px; %s; font-weight: 600; font-size: 20px; letter-spacing: -0.045em; color: transparent; background: %s; -webkit-background-clip: text; background-clip: text">vegham</span>%s</div>' % (TIGHT, AUR, nav)
     head = '<span style="display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid #F0F0F3"><span style="display: inline-flex; align-items: center; gap: 10px"><span style="width: 32px; height: 32px; border-radius: 50%%; background: #F1F1F4; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 13px">R</span><span><b style="font-weight: 600">Rohan Mehta</b><span style="display: block; font-size: 12px; color: #8A8A8A">Phone call · 0:38</span></span></span>%s</span>' % chip('<span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981"></span>Returning caller', True)
     talk = (bub('Hi Rohan, good to hear from you again. Still looking at weekend sessions?', True)
             + bub('Yes! You remembered. Is Saturday morning open?')
             + bub('Saturday 10 AM is free. Shall I hold it and send the details on WhatsApp, like last time?', True))
     foot = '<span style="margin-top: auto; display: flex; align-items: center; gap: 12px; padding-top: 12px; border-top: 1px solid #F0F0F3; font-size: 12.5px; color: #8A8A8A">%s<span>Vegham is on the call</span></span>' % wave(22, G, 22)
     mid = '<div style="flex: 1; min-width: 0; padding: 18px 22px; display: flex; flex-direction: column; gap: 10px; background: #FFFFFF">%s%s%s</div>' % (head, talk, foot)
-    mem = ('<div style="width: 300px; flex: none; border-left: 1px solid #EDEDF0; padding: 18px 20px; background: #FCFCFD"><span style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px"><b style="font-weight: 600; font-size: 13.5px">What Vegham remembers</b><span style="font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #A3A3A3">Sample</span></span>'
+    mem = ('<div class="vg-mock-mem" style="width: 300px; flex: none; border-left: 1px solid #EDEDF0; padding: 18px 20px; background: #FCFCFD"><span style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 10px"><b style="font-weight: 600; font-size: 13.5px">What Vegham remembers</b><span style="font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: #A3A3A3">Sample</span></span>'
            + mem_row(I_CLOCK, 'First called in May', '6 months ago · phone')
            + mem_row(I_USER, 'Prefers Saturday mornings', 'Said so twice')
            + mem_row(I_GLOBE, 'Speaks Hindi and English', 'Switches between both')
            + mem_row(I_CHAT, 'Likes details on WhatsApp', 'Same number as his calls')
            + mem_row(I_MEM, 'Asked about weekend sessions', 'Left unfinished in July')
            + '</div>')
-    return '<div style="display: flex; text-align: left; color: #1F1F1F; font-size: 14px; line-height: 1.45; height: 100%%">%s%s%s</div>' % (side, mid, mem)
+    return '<div class="vg-mock" style="display: flex; text-align: left; color: #1F1F1F; font-size: 14px; line-height: 1.45; height: 100%%">%s%s%s</div>' % (side, mid, mem)
 
 
 def hero():
@@ -134,7 +134,7 @@ def hero():
         '<p class="vg-hero" style="animation-delay: .3s; margin: 24px auto 0; max-width: 640px; font-size: 19px; color: #C9CCDD">Vegham is an AI voice agent that answers your calls and messages, speaks your customers’ language, and remembers every person it talks to, even months later.</p>'
         '<div class="vg-hero" style="animation-delay: .42s; margin-top: 32px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px"><a href="Signup.dc.html" style="%s">Start free</a>%s</div>'
         '<div class="vg-hero" style="animation-delay: .54s; margin-top: 22px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; font-size: 14px; color: #A9AECB">%s%s%s</div>'
-        '<div class="vg-hero" style="animation-delay: .7s; position: relative; margin: 64px auto 0; max-width: 1100px; height: 372px; border-radius: 20px 20px 0 0; overflow: hidden; background: #FFFFFF; border: 1px solid rgba(255,255,255,.2); border-bottom: 0; box-shadow: 0 -30px 90px -30px rgba(45,227,160,.35), 0 -10px 40px -20px rgba(0,0,0,.6)">%s</div>'
+        '<div class="vg-hero vg-mockframe" style="animation-delay: .7s; position: relative; margin: 64px auto 0; max-width: 1100px; height: 372px; border-radius: 20px 20px 0 0; overflow: hidden; background: #FFFFFF; border: 1px solid rgba(255,255,255,.2); border-bottom: 0; box-shadow: 0 -30px 90px -30px rgba(45,227,160,.35), 0 -10px 40px -20px rgba(0,0,0,.6)">%s</div>'
         '</div>') % (TIGHT, BTN_W, play, tick('Calls and chat, day and night'), tick('Remembers people for months'), tick('Live in minutes'), hero_mock())
 
 
@@ -307,6 +307,13 @@ def footer(f):
     return f
 
 
+RESPONSIVE = '''
+@media (max-width: 1000px){.vg-g3,.vg-g4{grid-template-columns:repeat(2,minmax(0,1fr))!important}.vg-mock-side{display:none!important}}
+@media (max-width: 760px){.vg-pad{padding:72px 20px!important}.vg-mockframe{height:auto!important}.vg-mock{flex-direction:column;height:auto!important}.vg-mock-mem{width:auto!important;border-left:0!important;border-top:1px solid #EDEDF0}}
+@media (max-width: 640px){.vg-g3,.vg-g4{grid-template-columns:minmax(0,1fr)!important}.vg-g3>*,.vg-g4>*{grid-column:auto!important;min-height:0!important}}
+'''
+
+
 def build(src):
     s = open(src).read()
     hs = s.index('<section style="position: relative; overflow: hidden; min-height: 1080px">')
@@ -318,6 +325,9 @@ def build(src):
                  ('Start your free pilot', 'Start free')]:
         head = head.replace(a, b)
     body = hero() + '</section>' + channels() + memory() + bento() + global_() + how() + control() + pricing() + faq() + cta()
+    body = re.sub(r'<div style="([^"]*grid-template-columns: repeat\((3|4), minmax\(0, 1fr\)\)[^"]*)"', r'<div class="vg-g\2" style="\1"', body)
+    body = re.sub(r'<div style="((?:position: relative; )?max-width: 1200px; margin: 0 auto; padding: 1\d\dpx 32px[^"]*)"', r'<div class="vg-pad" style="\1"', body)
+    head = head.replace('</style>', RESPONSIVE + '</style>', 1)
     tail = s[fe:]
     tail = re.sub(r'"height":\d+', '"height":9650', tail)
     return head + body + '\n  ' + footer(s[fs:fe]) + tail

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Dashboard } from "@/components/dashboard/Dashboard";
+import Home from "@/components/app/pages/Home";
 
-export const metadata: Metadata = { title: "Home · Vegam", robots: { index: false } };
+export const metadata: Metadata = { title: "Home · Vegham" };
 
-export default function AppPage() {
-  return <Dashboard />;
+export default function Page() {
+  return <Home />;
 }

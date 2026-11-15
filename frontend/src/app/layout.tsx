@@ -1,40 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Figtree, JetBrains_Mono, Newsreader } from "next/font/google";
+import { Inter, Inter_Tight } from "next/font/google";
 import { withBase } from "@/lib/paths";
 import "./globals.css";
 
-const figtree = Figtree({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-figtree",
-});
-
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  weight: ["300", "400", "500"],
-  variable: "--font-newsreader",
-});
-
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["500"],
-  variable: "--font-jetbrains",
-});
+const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-inter" });
+const interTight = Inter_Tight({ subsets: ["latin"], weight: ["300", "400", "500", "600"], variable: "--font-tight" });
 
 export const metadata: Metadata = {
-  title: "Vegam · Every customer, answered in seconds",
+  title: "Vegham · Never miss a customer again",
   description:
-    "Vegam is the AI front desk for every business. It replies on WhatsApp, Instagram and your website, answers calls and books appointments, day and night.",
+    "Vegham is an AI voice agent that answers your calls and messages, speaks your customers' language, and remembers every person it talks to.",
   icons: { icon: withBase("/icon.svg") },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#fbfbfd",
-};
+export const viewport: Viewport = { themeColor: "#03050e" };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${figtree.variable} ${newsreader.variable} ${jetbrains.variable}`}>
+    <html lang="en" className={`${inter.variable} ${interTight.variable}`}>
       <body>{children}</body>
     </html>
   );
