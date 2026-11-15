@@ -8,7 +8,7 @@ export default function SiteHeader() {
       <div aria-hidden="true" className="vg-bar" style={{ position: "fixed", left: "0", top: "0", zIndex: "50", width: "100%", height: "2px", background: "#16182A", transform: "scaleX(0)", transformOrigin: "left" }}>
       </div>
       <header style={{ position: "sticky", top: "0", zIndex: "40", padding: "0 16px", marginBottom: "-78px" }}>
-        <div className="vg-hdr-in" style={{ maxWidth: "1200px", margin: "0 auto", padding: "18px 32px", border: "1px solid transparent", boxSizing: "border-box", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px 24px" }} data-s="s11">
+        <div className="vg-hdr-in vg-hdr-dark" style={{ maxWidth: "1200px", margin: "0 auto", padding: "18px 32px", border: "1px solid transparent", boxSizing: "border-box", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px 24px" }} data-s="s11">
           <span style={{ flex: "1 1 0", fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "24px", letterSpacing: "-0.045em", color: "transparent", WebkitBackgroundClip: "text", backgroundClip: "text", backgroundImage: "linear-gradient(100deg, #FFFFFF 80%, #DB2777 100%)", WebkitTextFillColor: "transparent" }}>
             <Link href="/" aria-label="Vegham home page" style={{ color: "inherit", textDecoration: "none" }}>
               {"vegham"}

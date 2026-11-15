@@ -6,7 +6,7 @@ export default function NotFoundPage() {
     <>
       <div style={{ fontFamily: "var(--font-inter), system-ui, sans-serif", color: "#1F1F1F", background: "#FFFFFF", fontSize: "16px", lineHeight: "1.6" }}>
         <header style={{ position: "sticky", top: "0", zIndex: "40", padding: "0 16px", marginBottom: "-78px" }}>
-          <div className="vg-hdr-in" style={{ maxWidth: "1200px", margin: "0 auto", padding: "18px 32px", border: "1px solid transparent", boxSizing: "border-box", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px 24px" }} data-s="s11">
+          <div className="vg-hdr-in vg-hdr-dark" style={{ maxWidth: "1200px", margin: "0 auto", padding: "18px 32px", border: "1px solid transparent", boxSizing: "border-box", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px 24px" }} data-s="s11">
             <span style={{ flex: "1 1 0", fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "24px", letterSpacing: "-0.045em", color: "#FFFFFF" }}>
               <Link href="/" aria-label="Vegham home page" style={{ color: "inherit", textDecoration: "none" }}>
                 {"vegham"}

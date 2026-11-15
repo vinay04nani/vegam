@@ -108,6 +108,7 @@ class Kids(HTMLParser):
 
 
 AUTH = ('Login', 'Otp', 'Signup')
+DARK_HEADER = set()
 
 
 def logo_links(html, board):
@@ -128,6 +129,8 @@ def logo_links(html, board):
 
 def prep(html, board=''):
     html = logo_links(html, board)
+    if board in DARK_HEADER:
+        html = html.replace('class="vg-hdr-in"', 'class="vg-hdr-in vg-hdr-dark"')
     for a, b in SWAPS:
         html = html.replace(a, b)
     for text, route in TEXT_LINKS.items():
@@ -168,10 +171,17 @@ def build_css(boards):
     for b in boards:
         for block in re.findall(r'<style>(.*?)</style>', read(b), flags=re.S):
             for rule in css_rules(block):
+                # Pages with a dark hero turn the header into a dark pill on scroll; the others use a light pill.
+                # Both boards call the animation "vg-pill", so the dark one gets its own name here.
+                if rule.startswith('@keyframes vg-pill{') and 'rgba(10,12,22' in rule:
+                    DARK_HEADER.add(b)
+                    rule = rule.replace('@keyframes vg-pill{', '@keyframes vg-pill-dark{', 1)
                 if rule not in seen:
                     seen.add(rule)
                     out.append(rule)
     css = '\n'.join(out)
+    css += '\n.vg-hdr-in.vg-hdr-dark{animation-name:vg-pill-dark}'
+    css += '\na:focus-visible,button:focus-visible,input:focus-visible,label:focus-visible,summary:focus-visible{outline-color:#10B981}'
 
     def key(m):
         pat = m.group(1)

@@ -117,7 +117,7 @@ a{color:inherit}
 @keyframes vg-screen{0%{opacity:0;transform:translateY(24px) scale(.98)}10%,90%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-24px) scale(.98)}}
 @keyframes vg-tick{from{transform:scaleY(0)}to{transform:scaleY(1)}}
 @keyframes vg-stackout{to{transform:scale(.9) translateY(-12px);filter:brightness(.55)}}
-@keyframes vg-pill{to{max-width:900px;margin-top:12px;padding:8px 10px 8px 24px;background:rgba(10,12,22,.78);border-color:rgba(255,255,255,.12);box-shadow:0 16px 40px -18px rgba(3,5,14,.6);border-radius:999px;-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}}
+@keyframes vg-pill-dark{to{max-width:900px;margin-top:12px;padding:8px 10px 8px 24px;background:rgba(10,12,22,.78);border-color:rgba(255,255,255,.12);box-shadow:0 16px 40px -18px rgba(3,5,14,.6);border-radius:999px;-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}}
 @keyframes vg-navon{0%,100%{opacity:0;transform:scaleX(.3)}12%,88%{opacity:1;transform:none}}
 @supports (animation-timeline: view()){
   .vg-line-in{animation:vg-linein linear both;animation-timeline:view();animation-range:entry 10% cover 28%}
@@ -537,4 +537,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,label:focus-visible,sum
 .bar span{display:block;height:100%;border-radius:4px}
 .app{--bg:#FFFFFF;--side:#F9F9FA;--soft:#EFEFF2;--soft2:#F4F4F6;--line:#ECECF0;--text:#16171D;--mut:#6E6F78;--mut2:#9A9BA3;--ink:#16182A;--inkfg:#FFFFFF;--card:#FFFFFF;--pop:#FFFFFF;--shadow:0 24px 60px -24px rgba(22,24,42,.28), 0 0 0 1px rgba(22,24,42,.06);--scrim:rgba(18,20,31,.28);--good:#1F9D6B;--goodbg:#E8F6EF;--warn:#B4500A;--warnbg:#FFF1E5;--acc:#3B6CF6;background:var(--bg);color:var(--text);transition:background .25s,color .25s}
 .mem{display:inline-flex;align-items:center;gap:6px;height:24px;padding:0 9px;border-radius:999px;font-size:12px;font-weight:500;background:transparent;color:#7C3AED;white-space:nowrap}
+.vg-hdr-in.vg-hdr-dark{animation-name:vg-pill-dark}
+a:focus-visible,button:focus-visible,input:focus-visible,label:focus-visible,summary:focus-visible{outline-color:#10B981}
 .app main [data-s~="scroll"]{overflow-y:auto!important;min-height:0}
