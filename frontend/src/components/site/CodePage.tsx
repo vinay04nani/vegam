@@ -648,7 +648,9 @@ export default function CodePage() {
           <div style={{ flex: "1 1 560px", minWidth: "0", display: "flex", alignItems: "center", justifyContent: "center", padding: "48px 24px" }}>
             <div style={{ width: "100%", maxWidth: "380px", textAlign: "center" }}>
               <span style={{ display: "inline-block", fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "34px", lineHeight: "1.1", letterSpacing: "-0.045em", color: "transparent", WebkitBackgroundClip: "text", backgroundClip: "text", backgroundImage: "linear-gradient(100deg, #10B981 0%, #7C3AED 80%, #DB2777 100%)", WebkitTextFillColor: "transparent" }}>
-                {"vegham"}
+                <Link href="/" aria-label="Vegham home page" style={{ color: "inherit", textDecoration: "none" }}>
+                  {"vegham"}
+                </Link>
               </span>
               <h1 style={{ margin: "22px 0 0", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", letterSpacing: "-0.04em", fontSize: "30px", color: "#141414" }}>
                 {"Enter your code"}

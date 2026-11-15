@@ -107,7 +107,27 @@ class Kids(HTMLParser):
         return self.html[node['start']:node['open_end']]
 
 
-def prep(html):
+AUTH = ('Login', 'Otp', 'Signup')
+
+
+def logo_links(html, board):
+    """Make the "vegham" wordmark a link: to the landing page on the website, to Home inside the app."""
+    def wrap(m):
+        attrs, style = m.group(1), m.group(2)
+        size = re.search(r'font-size: (\d+)px', style)
+        size = size.group(1) if size else ''
+        if size in ('24', '26') or (size == '34' and board in AUTH):
+            route, label = '/', 'Vegham home page'
+        elif size == '22' and board.startswith('App'):
+            route, label = ('/app/', 'Home') if 'class="lbl"' in attrs else ('/', 'Vegham home page')
+        else:
+            return m.group(0)
+        return '<span%s><a href="@%s" aria-label="%s" style="color: inherit; text-decoration: none">vegham</a></span>' % (attrs, route, label)
+    return re.sub(r'<span((?:(?!>)[^"]|"[^"]*")*?style="([^"]*)"[^>]*)>vegham</span>', wrap, html)
+
+
+def prep(html, board=''):
+    html = logo_links(html, board)
     for a, b in SWAPS:
         html = html.replace(a, b)
     for text, route in TEXT_LINKS.items():
@@ -219,7 +239,7 @@ LANDING_SECTIONS = [('Hero', None), ('Channels', 'channels'), ('Memory', 'memory
 
 
 def port_landing(keys):
-    html = prep(body_of(read('LandingV2')))
+    html = prep(body_of(read('LandingV2')), 'LandingV2')
     k = Kids(html)
     root = k.nodes[0]
     kids = root['kids']
@@ -258,7 +278,7 @@ def dedupe(html, tag, piece):
 
 
 def port_single(board, name, rel, route, title, keys, shared=None, edit=None):
-    html = prep(body_of(read(board)))
+    html = prep(body_of(read(board)), board)
     if edit:
         html = edit(html)
     extra = []
@@ -279,7 +299,7 @@ def port_single(board, name, rel, route, title, keys, shared=None, edit=None):
 
 def inner_header(keys):
     """The light header and mobile menu shared by every page except the landing page."""
-    html = prep(body_of(read('Contact')))
+    html = prep(body_of(read('Contact')), 'Contact')
     k = Kids(html)
     kids = k.nodes[0]['kids']
     first = [n for n in kids if n['tag'] in ('section', 'main')][0]
@@ -306,7 +326,7 @@ def nav_hook(name, attrs):
 
 
 def port_shell(keys):
-    html = prep(body_of(read('AppHome')))
+    html = prep(body_of(read('AppHome')), 'AppHome')
     k = Kids(html)
     app = k.nodes[0]['kids'][0]
     assert app['attrs'].get('class') == 'app'
@@ -341,7 +361,7 @@ APP_PAGES = [
 
 
 def port_app_page(board, name, route, title, keys):
-    html = prep(body_of(read(board)))
+    html = prep(body_of(read(board)), board)
     k = Kids(html)
     app = k.nodes[0]['kids'][0]
     main = [n for n in app['kids'] if n['tag'] == 'main'][0]
@@ -359,7 +379,7 @@ SETUP = [('AppSetup1', 'SetupBusiness', '/setup/'), ('AppSetup2', 'SetupVoice', 
 
 
 def port_setup(board, name, route, keys):
-    html = prep(body_of(read(board)))
+    html = prep(body_of(read(board)), board)
     k = Kids(html)
     app = k.nodes[0]['kids'][0]
     found = []

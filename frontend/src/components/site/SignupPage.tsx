@@ -648,7 +648,9 @@ export default function SignupPage() {
           <div style={{ flex: "1 1 560px", minWidth: "0", display: "flex", alignItems: "center", justifyContent: "center", padding: "48px 24px", boxSizing: "border-box" }}>
             <div style={{ width: "100%", maxWidth: "330px", textAlign: "center" }}>
               <span style={{ display: "inline-block", fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "34px", lineHeight: "1.1", letterSpacing: "-0.045em", color: "transparent", background: "linear-gradient(100deg, #10B981 0%, #0EA5A4 25%, #3B6CF6 55%, #7C3AED 80%, #DB2777 100%)", WebkitBackgroundClip: "text", backgroundClip: "text" }}>
-                {"vegham"}
+                <Link href="/" aria-label="Vegham home page" style={{ color: "inherit", textDecoration: "none" }}>
+                  {"vegham"}
+                </Link>
               </span>
               <h1 style={{ margin: "22px 0 0", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", letterSpacing: "-0.03em", fontSize: "30px", color: "#141414" }}>
                 {"Create your account"}

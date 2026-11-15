@@ -19,7 +19,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
         <aside className="side" aria-label="App" style={{ flex: "none", height: "100%", display: "flex", flexDirection: "column", padding: "12px 10px", gap: "6px", overflow: "hidden" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 4px 6px 8px", minHeight: "40px" }} data-s="s2">
             <span className="lbl" style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "22px", letterSpacing: "-0.045em", color: "transparent", background: "linear-gradient(100deg, #10B981 0%, #0EA5A4 25%, #10B981 55%, #10B981 80%, #DB2777 100%)", WebkitBackgroundClip: "text", backgroundClip: "text" }}>
-              {"vegham"}
+              <Link href="/app/" aria-label="Home" style={{ color: "inherit", textDecoration: "none" }}>
+                {"vegham"}
+              </Link>
             </span>
             <label htmlFor="a-col" className="ibtn" title="Collapse sidebar" aria-label="Collapse sidebar">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">

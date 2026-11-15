@@ -8,7 +8,9 @@ export default function SiteFooter() {
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-start", gap: "40px 64px", paddingBottom: "56px", borderBottom: "1px solid #EDEDF0" }}>
             <div style={{ flex: "1 1 320px", maxWidth: "380px" }}>
               <span style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "26px", letterSpacing: "-0.045em", color: "transparent", background: "linear-gradient(100deg, #10B981 0%, #0EA5A4 25%, #3B6CF6 55%, #7C3AED 80%, #DB2777 100%)", WebkitBackgroundClip: "text", backgroundClip: "text" }}>
-                {"vegham"}
+                <Link href="/" aria-label="Vegham home page" style={{ color: "inherit", textDecoration: "none" }}>
+                  {"vegham"}
+                </Link>
               </span>
               <p style={{ margin: "14px 0 0", fontSize: "15px", lineHeight: "1.6", color: "#5C5C5C" }}>
                 {"The AI voice agent that answers your calls and messages, and remembers every person it talks to."}

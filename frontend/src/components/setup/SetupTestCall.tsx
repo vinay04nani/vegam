@@ -7,7 +7,9 @@ export default function SetupTestCall() {
         <div style={{ position: "relative", flex: "1", minHeight: "100dvh", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
           <div style={{ height: "64px", flex: "none", display: "flex", alignItems: "center", padding: "0 32px", borderBottom: "1px solid var(--line)" }}>
             <span style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "22px", letterSpacing: "-0.045em", background: "linear-gradient(90deg, #10B981, #0EA5A4, #3B6CF6, #7C3AED, #DB2777)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
-              {"vegham"}
+              <Link href="/" aria-label="Vegham home page" style={{ color: "inherit", textDecoration: "none" }}>
+                {"vegham"}
+              </Link>
             </span>
             <span style={{ flex: "1" }}>
             </span>
