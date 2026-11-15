@@ -27,7 +27,7 @@ ROUTES = {
     'AppConversations': '/app/conversations/', 'AppConversationChat': '/app/conversations/chat/',
     'AppPeople': '/app/people/', 'AppPerson': '/app/people/rohan-mehra/', 'AppFollowups': '/app/follow-ups/',
     'AppInsights': '/app/insights/', 'AppAgent': '/app/agent/', 'AppAgentLanguages': '/app/agent/languages/',
-    'AppAgentMemory': '/app/agent/memory/', 'AppAgentKnowledge': '/app/agent/knowledge/', 'AppAgentTest': '/app/agent/test-call/',
+    'AppAgentMemory': '/app/agent/memory/', 'AppChannels': '/app/agent/channels/', 'AppAgentKnowledge': '/app/agent/knowledge/', 'AppAgentTest': '/app/agent/test-call/',
 }
 LINKS = {k + '.dc.html': v for k, v in ROUTES.items()}
 
@@ -336,7 +336,7 @@ APP_PAGES = [
     ('AppFollowups', 'Followups', '/app/follow-ups/', 'Follow-ups'), ('AppInsights', 'Insights', '/app/insights/', 'Insights'),
     ('AppAgent', 'Agent', '/app/agent/', 'Your agent'), ('AppAgentLanguages', 'AgentLanguages', '/app/agent/languages/', 'Languages'),
     ('AppAgentMemory', 'AgentMemory', '/app/agent/memory/', 'Memory'), ('AppAgentKnowledge', 'AgentKnowledge', '/app/agent/knowledge/', 'Knowledge'),
-    ('AppAgentTest', 'AgentTest', '/app/agent/test-call/', 'Test call'),
+    ('AppChannels', 'Channels', '/app/agent/channels/', 'Channels'), ('AppAgentTest', 'AgentTest', '/app/agent/test-call/', 'Test call'),
 ]
 
 

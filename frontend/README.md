@@ -91,4 +91,4 @@ The app shell keeps the boards' mechanism for menus, the settings pop-up, the th
 | `/app/conversations/`, `/app/conversations/chat/` | A call, a WhatsApp hand-over |
 | `/app/people/`, `/app/people/rohan-mehra/` | People, one person's memory |
 | `/app/follow-ups/`, `/app/insights/` | Follow-ups, Insights |
-| `/app/agent/` + `languages/`, `memory/`, `knowledge/`, `test-call/` | Your agent |
+| `/app/agent/` + `languages/`, `memory/`, `knowledge/`, `channels/`, `test-call/` | Your agent |

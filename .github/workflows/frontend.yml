@@ -38,7 +38,7 @@ jobs:
         run: |
           docker run -d --name web -p 8080:8080 vegam-frontend
           for i in $(seq 1 20); do curl -fs http://localhost:8080/healthz && break; sleep 1; done
-          for path in / /product/ /how-it-works/ /pricing/ /company/ /security/ /help/ /privacy/ /terms/ /careers/ /book-demo/ /contact/ /login/ /login/code/ /signup/ /setup/ /app/ /app/conversations/ /app/people/ /app/insights/ /app/agent/; do
+          for path in / /product/ /how-it-works/ /pricing/ /company/ /security/ /help/ /privacy/ /terms/ /careers/ /book-demo/ /contact/ /login/ /login/code/ /signup/ /setup/ /app/ /app/conversations/ /app/people/ /app/insights/ /app/agent/ /app/agent/channels/; do
             code=$(curl -s -o /dev/null -w "%{http_code}" "http://localhost:8080$path")
             echo "$path -> $code"; test "$code" = 200
           done

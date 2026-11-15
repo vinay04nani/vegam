@@ -580,6 +580,15 @@
       "w": 1440,
       "x": 18320,
       "y": -3012
+    },
+    "AppChannels.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Your agent · channels",
+      "w": 1440,
+      "x": 1600,
+      "y": 21140
     }
   },
   "createdOnFiles": {
@@ -601,7 +610,7 @@
     "app": {
       "kind": "title1",
       "maxW": 6000,
-      "text": "App · after sign-up and log in: calls, WhatsApp and memory",
+      "text": "App · after sign-up and log in: calls, chats, channels and memory",
       "w": 240,
       "x": 80,
       "y": 17300
@@ -709,6 +718,7 @@
     "AppAgentLanguages.dc.html",
     "AppAgentMemory.dc.html",
     "AppAgentKnowledge.dc.html",
+    "AppChannels.dc.html",
     "AppAgentTest.dc.html"
   ],
   "pages": [],

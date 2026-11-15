@@ -162,6 +162,19 @@ export default function AppShell({ children }: { children: ReactNode }) {
                 {"Knowledge"}
               </span>
             </NavLink>
+            <NavLink href="/app/agent/channels/" className="nv" title="Channels">
+              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 3v4M15 3v4">
+                </path>
+                <path d="M7 7h10v4a5 5 0 0 1-10 0z">
+                </path>
+                <path d="M12 16v5">
+                </path>
+              </svg>
+              <span className="lbl">
+                {"Channels"}
+              </span>
+            </NavLink>
             <NavLink href="/app/agent/test-call/" className="nv" title="Test call">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 3h6M10 3v6L4 19a1.5 1.5 0 0 0 1.3 2h13.4a1.5 1.5 0 0 0 1.3-2L14 9V3">
