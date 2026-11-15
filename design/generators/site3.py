@@ -20,12 +20,12 @@ def hero_btns():
 
 
 def bullets(items):
-    return '<div style="margin-top: 28px; display: flex; flex-direction: column; gap: 14px">' + ''.join(f'<span style="display: flex; gap: 12px; font-size: 16px; color: #3D3D3D"><span style="flex: none; margin-top: 3px; color: {G}">{ic(L.I_CHECK, 17, "currentColor", 2.2)}</span>{t}</span>' for t in items) + '</div>'
+    return '<div style="margin-top: 28px; display: flex; flex-direction: column; gap: 14px">' + ''.join(f'<span class="vg-rv" style="display: flex; gap: 12px; font-size: 16px; color: #3D3D3D"><span style="flex: none; margin-top: 3px; color: {G}">{ic(L.I_CHECK, 17, "currentColor", 2.2)}</span>{t}</span>' for t in items) + '</div>'
 
 
 def row(tag, a, b, text, items, visual, flip=False, bg='#FFFFFF', anchor=''):
     txt = f'<div style="flex: 1 1 420px; min-width: 0; max-width: 520px">{eyebrow(tag)}{h2(a, b, size=44)}{lead(text, mw=480)}{bullets(items)}</div>'
-    vis = f'<div style="flex: 1 1 480px; min-width: 0">{visual}</div>'
+    vis = f'<div class="vg-rv" style="flex: 1 1 480px; min-width: 0">{visual}</div>'
     idattr = f' id="{anchor}"' if anchor else ''
     return f'<section{idattr} style="background: {bg}"><div class="vg-pad" style="max-width: 1200px; margin: 0 auto; padding: 104px 32px; display: flex; flex-wrap: wrap{"-reverse" if flip else ""}; flex-direction: {"row-reverse" if flip else "row"}; align-items: center; justify-content: space-between; gap: 48px 72px">{txt}{vis}</div></section>'
 
@@ -141,8 +141,8 @@ def step(n, a, b, text, items, vis, flip, bg):
 
 def howitworks():
     after = [(L.I_MIC, 'It answers', 'Every call and message gets a reply in seconds, in the customer’s language.'), (L.I_MEM, 'It remembers', 'Each conversation adds to what it knows about that person, for next time.'), (L.I_CHART, 'You see everything', 'Summaries, hand-overs and follow-ups are waiting for you in one place.')]
-    cards = ''.join(f'<div style="padding: 28px; border-radius: 24px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px)"><span style="color: #3DD68C">{ic(i, 22)}</span><b style="display: block; margin-top: 28px; {TIGHT}; font-weight: 400; font-size: 24px; letter-spacing: -0.03em">{t}</b><span style="display: block; margin-top: 10px; font-size: 15px; color: #B4B8CC">{d}</span></div>' for i, t, d in after)
-    live = (f'<section style="padding: 0 16px 112px; background: #FFFFFF"><div style="position: relative; overflow: hidden; max-width: 1408px; margin: 0 auto; border-radius: 32px; background: #12141F; color: #FFFFFF">{aurora(.7)}<div class="vg-pad" style="position: relative; max-width: 1200px; margin: 0 auto; padding: 104px 32px; box-sizing: border-box">'
+    cards = ''.join(f'<div class="vg-rv" style="padding: 28px; border-radius: 24px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px)"><span style="color: #3DD68C">{ic(i, 22)}</span><b style="display: block; margin-top: 28px; {TIGHT}; font-weight: 400; font-size: 24px; letter-spacing: -0.03em">{t}</b><span style="display: block; margin-top: 10px; font-size: 15px; color: #B4B8CC">{d}</span></div>' for i, t, d in after)
+    live = (f'<section style="padding: 0 16px 112px; background: #FFFFFF"><div class="vg-zoomc" style="position: relative; overflow: hidden; max-width: 1408px; margin: 0 auto; border-radius: 32px; background: #12141F; color: #FFFFFF">{aurora(.7)}<div class="vg-pad" style="position: relative; max-width: 1200px; margin: 0 auto; padding: 104px 32px; box-sizing: border-box">'
             f'{eyebrow("Once you are live", True)}{h2("From then on,", "it runs itself.", True)}<div class="vg-g3" style="margin-top: 56px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">{cards}</div></div></div></section>')
     qs = [('How long does set-up take?', 'Most people finish in about ten minutes. Connecting WhatsApp or a phone number can take a little longer, depending on your provider.', True),
           ('Do I need a new phone number?', 'No. You can forward calls from the number customers already know, or share the link and use no number at all.', False),
@@ -156,7 +156,7 @@ def howitworks():
 
 
 def faq_block(qs, title=('Good to', 'know')):
-    items = ''.join(f'<details{" open" if o else ""} style="border-top: 1px solid #E8E8EC; padding: 22px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 20px; cursor: pointer; list-style: none; {TIGHT}; font-size: 20px; letter-spacing: -0.02em">{q}<span aria-hidden="true" style="flex: none; width: 32px; height: 32px; border-radius: 50%; border: 1px solid #E2E2E6; display: inline-flex; align-items: center; justify-content: center; color: #5C5C5C">+</span></summary><p style="margin: 12px 0 0; max-width: 620px; font-size: 16px; color: #5C5C5C">{a}</p></details>' for q, a, o in qs)
+    items = ''.join(f'<details{" open" if o else ""} class="vg-rv" style="border-top: 1px solid #E8E8EC; padding: 22px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 20px; cursor: pointer; list-style: none; {TIGHT}; font-size: 20px; letter-spacing: -0.02em">{q}<span aria-hidden="true" style="flex: none; width: 32px; height: 32px; border-radius: 50%; border: 1px solid #E2E2E6; display: inline-flex; align-items: center; justify-content: center; color: #5C5C5C">+</span></summary><p style="margin: 12px 0 0; max-width: 620px; font-size: 16px; color: #5C5C5C">{a}</p></details>' for q, a, o in qs)
     return f'<section style="background: #FFFFFF"><div class="vg-pad" style="max-width: 1200px; margin: 0 auto; padding: 0 32px 112px; display: flex; flex-wrap: wrap; gap: 40px 72px"><div style="flex: 1 1 300px">{h2(title[0], title[1], size=44)}<p style="margin: 20px 0 0; font-size: 15.5px; color: #5C5C5C">Something else? <a href="Contact.dc.html" style="color: #141414">Talk to us</a>.</p></div><div style="flex: 2 1 560px; min-width: 0; border-bottom: 1px solid #E8E8EC">{items}</div></div></section>'
 
 
@@ -166,7 +166,7 @@ def plan(n, p, d, pts, dark=False, cta_text='Start free'):
     li = ''.join(f'<span style="display: flex; gap: 10px; font-size: 14.5px; color: {mut}"><span style="flex: none; margin-top: 2px; color: {"#3DD68C" if dark else G}">{ic(L.I_CHECK, 15, "currentColor", 2.2)}</span>{t}</span>' for t in pts)
     badge = '<span style="padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,.12); font-size: 12px">Most chosen</span>' if dark else ''
     btn = f'<a href="{"BookDemo.dc.html" if cta_text != "Start free" else "Signup.dc.html"}" style="margin-top: 24px; display: flex; align-items: center; justify-content: center; height: 48px; border-radius: 999px; background: {"#FFFFFF" if dark else "#16182A"}; color: {"#12141F" if dark else "#FFFFFF"}; text-decoration: none; font-weight: 500">{cta_text}</a>'
-    return (f'<div style="padding: 32px; border-radius: 24px; background: {"#16182A" if dark else "#FFFFFF"}; border: 1px solid {bd}; color: {fg}; text-align: left"><span style="display: flex; justify-content: space-between; align-items: center; font-size: 17px; font-weight: 500">{n}{badge}</span>'
+    return (f'<div class="vg-rv" style="padding: 32px; border-radius: 24px; background: {"#16182A" if dark else "#FFFFFF"}; border: 1px solid {bd}; color: {fg}; text-align: left"><span style="display: flex; justify-content: space-between; align-items: center; font-size: 17px; font-weight: 500">{n}{badge}</span>'
             f'<span style="display: block; margin-top: 20px; {TIGHT}; font-size: 46px; letter-spacing: -0.04em; line-height: 1.1">{p}<span style="font-family: Inter, sans-serif; font-size: 14px; letter-spacing: 0; color: {mut}"> / month</span></span><span style="display: block; margin-top: 8px; font-size: 15px; color: {mut}">{d}</span>{btn}'
             f'<span style="display: flex; flex-direction: column; gap: 11px; margin-top: 24px; padding-top: 24px; border-top: 1px solid {"rgba(255,255,255,.12)" if dark else "#F0F0F3"}">{li}</span></div>')
 
@@ -197,7 +197,7 @@ def pricing():
     notes = [(L.I_CLOCK, 'Free for 30 days', 'Try any plan in full. No charge until the 30 days are over, and you can cancel before then.'),
              (L.I_PHONE, 'Call and WhatsApp charges at cost', 'Phone minutes and WhatsApp’s own message fees are passed on with no mark-up, and shown separately on your bill.'),
              (L.I_SHIELD, 'Pay by card', 'Payments are handled by Stripe. We never see or store your card number.')]
-    cols = ''.join(f'<div style="padding: 32px 0 0; border-top: 1px solid #E2E2E6"><span style="color: {G}">{ic(i, 22)}</span><b style="display: block; margin-top: 18px; {TIGHT}; font-weight: 500; font-size: 22px; letter-spacing: -0.025em">{t}</b><span style="display: block; margin-top: 8px; font-size: 15.5px; color: #5C5C5C">{d}</span></div>' for i, t, d in notes)
+    cols = ''.join(f'<div class="vg-rv" style="padding: 32px 0 0; border-top: 1px solid #E2E2E6"><span style="color: {G}">{ic(i, 22)}</span><b style="display: block; margin-top: 18px; {TIGHT}; font-weight: 500; font-size: 22px; letter-spacing: -0.025em">{t}</b><span style="display: block; margin-top: 8px; font-size: 15.5px; color: #5C5C5C">{d}</span></div>' for i, t, d in notes)
     fine = f'<section style="background: #F7F7F8"><div class="vg-pad" style="max-width: 1200px; margin: 0 auto; padding: 104px 32px">{eyebrow("How billing works")}{h2("No surprises", "on your bill.", size=44)}<div class="vg-g3" style="margin-top: 56px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px">{cols}</div></div></section>'
     qs = [('What happens after the 30 free days?', 'You choose a plan and add a card. If you do nothing, your agent pauses and nothing is charged.', True),
           ('Can I change plan later?', 'Yes, at any time. Moving up takes effect straight away; moving down takes effect from your next bill.', False),
@@ -214,7 +214,7 @@ def build(name, title, body, height):
     fe = c.index('</footer>') + len('</footer>')
     foot = land[land.index('<footer style="border-top: 1px solid #EDEDF0'):land.index('</footer>') + len('</footer>')]
     head = re.sub(r'<title>.*?</title>', f'<title>{title}</title>', c[:hs], count=1)
-    if '.vg-g3' not in head:
+    if '.vg-heroout' not in head:
         head = head.replace('</style>', L.RESPONSIVE + '</style>', 1)
     body = re.sub(r'<div style="([^"]*grid-template-columns: repeat\((3|4), minmax\(0, 1fr\)\)[^"]*)"', r'<div class="vg-g\2" style="\1"', body)
     tail = re.sub(r'"height":\d+', f'"height":{height}', c[fe:])

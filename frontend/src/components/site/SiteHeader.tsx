@@ -43,7 +43,7 @@ export default function SiteHeader() {
             </Link>
           </div>
           <label htmlFor="vg-menu" className="vg-mbtn" aria-label="Open menu" style={{ width: "40px", height: "40px", borderRadius: "12px", border: "1px solid rgba(255,255,255,.22)", alignItems: "center", justifyContent: "center", cursor: "pointer", flex: "none" }} data-s="s2">
-            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round">
+            <svg className="vg-sky" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round">
               <path d="M4 7h16M4 12h16M4 17h16">
               </path>
             </svg>

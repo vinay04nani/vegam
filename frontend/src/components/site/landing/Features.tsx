@@ -6,22 +6,27 @@ export default function Features() {
       <section id="product" style={{ viewTimelineName: "--vg-sec-product", background: "linear-gradient(180deg, #FFFFFF 0%, #F7F7F8 100%)" } as CSSProperties}>
         <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "120px 32px 112px" }} data-s="s11">
           <div style={{ textAlign: "center" }}>
-            <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+            <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
               {"What Vegham does"}
             </span>
             <h2 style={{ margin: "16px auto 0", maxWidth: "820px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "52px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s4">
-              {"A voice agent that listens,"}
-              <br />
-              <span style={{ color: "#8A8A8A" }}>
-                {"understands and remembers."}
+              <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                <span className="vg-line-in" style={{ display: "block" }}>
+                  {"A voice agent that listens,"}
+                </span>
+              </span>
+              <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                  {"understands and remembers."}
+                </span>
               </span>
             </h2>
-            <p style={{ margin: "20px auto 0", maxWidth: "600px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+            <p className="vg-rv" style={{ margin: "20px auto 0", maxWidth: "600px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
               {"Everything a good receptionist does on a call or in a chat, at any hour, for every customer at once."}
             </p>
           </div>
           <div className="vg-g3" style={{ marginTop: "56px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px" }}>
-            <div className="vg-lift" style={{ gridColumn: "span 2", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 2", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -157,7 +162,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -212,7 +217,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -258,7 +263,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -302,7 +307,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -343,7 +348,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -405,7 +410,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift" style={{ gridColumn: "span 2", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 2", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

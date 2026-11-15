@@ -4,7 +4,7 @@
 export default function Memory() {
   return (
       <section id="memory" style={{ padding: "0 16px" }}>
-        <div style={{ position: "relative", overflow: "hidden", maxWidth: "1408px", margin: "0 auto", borderRadius: "32px", background: "#12141F", color: "#FFFFFF" }}>
+        <div className="vg-zoomc" style={{ position: "relative", overflow: "hidden", maxWidth: "1408px", margin: "0 auto", borderRadius: "32px", background: "#12141F", color: "#FFFFFF" }}>
           <div aria-hidden="true" style={{ position: "absolute", inset: "0", overflow: "hidden", pointerEvents: "none", borderRadius: "inherit", opacity: "0.85" }}>
             <div className="vg-aur1" style={{ position: "absolute", left: "-15%", top: "-45%", width: "130%", height: "95%", filter: "blur(60px)", opacity: ".9", background: "radial-gradient(ellipse 30% 42% at 22% 55%, rgba(61,214,140,0.61), transparent 70%), radial-gradient(ellipse 26% 38% at 48% 45%, rgba(45,212,191,0.50), transparent 70%), radial-gradient(ellipse 28% 46% at 76% 52%, rgba(124,92,255,0.55), transparent 70%)" }}>
             </div>
@@ -17,17 +17,22 @@ export default function Memory() {
           </div>
           <div className="vg-pad" style={{ position: "relative", maxWidth: "1200px", margin: "0 auto", padding: "112px 32px", boxSizing: "border-box", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "56px 72px" }} data-s="s9 s11">
             <div style={{ flex: "1 1 440px", minWidth: "0" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#A9AECB" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#A9AECB" }}>
                 {"Long memory"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "52px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#FFFFFF" }} data-s="s4">
-                {"It remembers every person."}
-                <br />
-                <span style={{ color: "#8C90A8" }}>
-                  {"Even six months later."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"It remembers every person."}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8C90A8" }}>
+                    {"Even six months later."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "500px", fontSize: "18px", color: "#C3C6DA" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "500px", fontSize: "18px", color: "#C3C6DA" }} data-s="s16">
                 {"Most assistants start from zero on every call. Vegham keeps the thread: who someone is, what they asked, and where you left off."}
               </p>
               <div style={{ marginTop: "36px", display: "flex", flexDirection: "column", gap: "20px", maxWidth: "480px" }}>
@@ -81,7 +86,7 @@ export default function Memory() {
                 </div>
               </div>
             </div>
-            <div style={{ flex: "1 1 460px", minWidth: "0" }}>
+            <div className="vg-par" style={{ flex: "1 1 460px", minWidth: "0" }}>
               <div style={{ position: "relative", padding: "32px", borderRadius: "24px", background: "rgba(18,20,31,.72)", border: "1px solid rgba(255,255,255,.12)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)" }}>
                 <div style={{ position: "relative" }}>
                   <span aria-hidden="true" style={{ position: "absolute", left: "17.5px", top: "18px", bottom: "60px", width: "1px", background: "linear-gradient(180deg, rgba(255,255,255,.16), #10B981)" }}>

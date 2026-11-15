@@ -8,14 +8,19 @@ export default function Pricing() {
         <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "112px 32px" }} data-s="s9 s11">
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: "24px" }}>
             <div>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Pricing"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "52px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s4">
-                {"Simple pricing."}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"Start free."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Simple pricing."}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"Start free."}
+                  </span>
                 </span>
               </h2>
             </div>
@@ -24,7 +29,7 @@ export default function Pricing() {
             </Link>
           </div>
           <div className="vg-g3" style={{ marginTop: "48px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px" }}>
-            <div style={{ padding: "28px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414" }}>
+            <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414" }}>
               <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "16px", fontWeight: "500" }}>
                 {"Starter"}
               </span>
@@ -67,7 +72,7 @@ export default function Pricing() {
                 </span>
               </span>
             </div>
-            <div style={{ padding: "28px", borderRadius: "24px", background: "#16182A", border: "1px solid transparent", color: "#FFFFFF" }}>
+            <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "#16182A", border: "1px solid transparent", color: "#FFFFFF" }}>
               <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "16px", fontWeight: "500" }}>
                 {"Growth"}
                 <span style={{ padding: "3px 10px", borderRadius: "999px", background: "rgba(255,255,255,.12)", fontSize: "12px" }} data-s="s1">
@@ -113,7 +118,7 @@ export default function Pricing() {
                 </span>
               </span>
             </div>
-            <div style={{ padding: "28px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414" }}>
+            <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414" }}>
               <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "16px", fontWeight: "500" }}>
                 {"Pro"}
               </span>

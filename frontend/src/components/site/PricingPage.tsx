@@ -28,7 +28,7 @@ export default function PricingPage() {
         <section style={{ background: "#FFFFFF" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "72px 32px 40px" }} data-s="s11">
             <div className="vg-g3" style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px", alignItems: "start" }}>
-              <div style={{ padding: "32px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414", textAlign: "left" }}>
+              <div className="vg-rv" style={{ padding: "32px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414", textAlign: "left" }}>
                 <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "17px", fontWeight: "500" }}>
                   {"Starter"}
                 </span>
@@ -92,7 +92,7 @@ export default function PricingPage() {
                   </span>
                 </span>
               </div>
-              <div style={{ padding: "32px", borderRadius: "24px", background: "#16182A", border: "1px solid transparent", color: "#FFFFFF", textAlign: "left" }}>
+              <div className="vg-rv" style={{ padding: "32px", borderRadius: "24px", background: "#16182A", border: "1px solid transparent", color: "#FFFFFF", textAlign: "left" }}>
                 <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "17px", fontWeight: "500" }}>
                   {"Growth"}
                   <span style={{ padding: "3px 10px", borderRadius: "999px", background: "rgba(255,255,255,.12)", fontSize: "12px" }} data-s="s1">
@@ -159,7 +159,7 @@ export default function PricingPage() {
                   </span>
                 </span>
               </div>
-              <div style={{ padding: "32px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414", textAlign: "left" }}>
+              <div className="vg-rv" style={{ padding: "32px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414", textAlign: "left" }}>
                 <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "17px", fontWeight: "500" }}>
                   {"Pro"}
                 </span>
@@ -231,14 +231,19 @@ export default function PricingPage() {
         </section>
         <section style={{ background: "#FFFFFF" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px" }} data-s="s10 s11">
-            <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+            <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
               {"Compare"}
             </span>
             <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-              {"Everything,"}
-              <br />
-              <span style={{ color: "#8A8A8A" }}>
-                {"side by side."}
+              <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                <span className="vg-line-in" style={{ display: "block" }}>
+                  {"Everything,"}
+                </span>
+              </span>
+              <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                  {"side by side."}
+                </span>
               </span>
             </h2>
             <div style={{ marginTop: "48px", overflowX: "auto" }}>
@@ -707,18 +712,23 @@ export default function PricingPage() {
         </section>
         <section style={{ background: "#F7F7F8" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px" }} data-s="s10 s11">
-            <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+            <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
               {"How billing works"}
             </span>
             <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-              {"No surprises"}
-              <br />
-              <span style={{ color: "#8A8A8A" }}>
-                {"on your bill."}
+              <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                <span className="vg-line-in" style={{ display: "block" }}>
+                  {"No surprises"}
+                </span>
+              </span>
+              <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                  {"on your bill."}
+                </span>
               </span>
             </h2>
             <div className="vg-g3" style={{ marginTop: "56px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "40px" }}>
-              <div style={{ padding: "32px 0 0", borderTop: "1px solid #E2E2E6" }}>
+              <div className="vg-rv" style={{ padding: "32px 0 0", borderTop: "1px solid #E2E2E6" }}>
                 <span style={{ color: "#10B981" }}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="12" cy="12" r="8.5">
@@ -734,7 +744,7 @@ export default function PricingPage() {
                   {"Try any plan in full. No charge until the 30 days are over, and you can cancel before then."}
                 </span>
               </div>
-              <div style={{ padding: "32px 0 0", borderTop: "1px solid #E2E2E6" }}>
+              <div className="vg-rv" style={{ padding: "32px 0 0", borderTop: "1px solid #E2E2E6" }}>
                 <span style={{ color: "#10B981" }}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2">
@@ -748,7 +758,7 @@ export default function PricingPage() {
                   {"Phone minutes and WhatsApp’s own message fees are passed on with no mark-up, and shown separately on your bill."}
                 </span>
               </div>
-              <div style={{ padding: "32px 0 0", borderTop: "1px solid #E2E2E6" }}>
+              <div className="vg-rv" style={{ padding: "32px 0 0", borderTop: "1px solid #E2E2E6" }}>
                 <span style={{ color: "#10B981" }}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M12 3.5l7 2.5v5.5c0 4.3-2.9 7.4-7 9-4.1-1.6-7-4.7-7-9V6z">
@@ -773,10 +783,15 @@ export default function PricingPage() {
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 32px 112px", display: "flex", flexWrap: "wrap", gap: "40px 72px" }} data-s="s11 s12">
             <div style={{ flex: "1 1 300px" }}>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Pricing"}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"questions"}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Pricing"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"questions"}
+                  </span>
                 </span>
               </h2>
               <p style={{ margin: "20px 0 0", fontSize: "15.5px", color: "#5C5C5C" }}>
@@ -788,7 +803,7 @@ export default function PricingPage() {
               </p>
             </div>
             <div style={{ flex: "2 1 560px", minWidth: "0", borderBottom: "1px solid #E8E8EC" }}>
-              <details open style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
+              <details open className="vg-rv" style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
                 <summary style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "20px", cursor: "pointer", listStyle: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "20px", letterSpacing: "-0.02em" }}>
                   {"What happens after the 30 free days?"}
                   <span aria-hidden="true" style={{ flex: "none", width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #E2E2E6", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#5C5C5C" }}>
@@ -799,7 +814,7 @@ export default function PricingPage() {
                   {"You choose a plan and add a card. If you do nothing, your agent pauses and nothing is charged."}
                 </p>
               </details>
-              <details style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
+              <details className="vg-rv" style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
                 <summary style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "20px", cursor: "pointer", listStyle: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "20px", letterSpacing: "-0.02em" }}>
                   {"Can I change plan later?"}
                   <span aria-hidden="true" style={{ flex: "none", width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #E2E2E6", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#5C5C5C" }}>
@@ -810,7 +825,7 @@ export default function PricingPage() {
                   {"Yes, at any time. Moving up takes effect straight away; moving down takes effect from your next bill."}
                 </p>
               </details>
-              <details style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
+              <details className="vg-rv" style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
                 <summary style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "20px", cursor: "pointer", listStyle: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "20px", letterSpacing: "-0.02em" }}>
                   {"What are the extra charges?"}
                   <span aria-hidden="true" style={{ flex: "none", width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #E2E2E6", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#5C5C5C" }}>
@@ -821,7 +836,7 @@ export default function PricingPage() {
                   {"Only what the phone company and WhatsApp charge for calls and messages. We pass those on at cost and show them separately."}
                 </p>
               </details>
-              <details style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
+              <details className="vg-rv" style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
                 <summary style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "20px", cursor: "pointer", listStyle: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "20px", letterSpacing: "-0.02em" }}>
                   {"Is memory included in every plan?"}
                   <span aria-hidden="true" style={{ flex: "none", width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #E2E2E6", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#5C5C5C" }}>
@@ -836,7 +851,7 @@ export default function PricingPage() {
           </div>
         </section>
         <section style={{ padding: "0 32px 112px", background: "#FFFFFF" }} data-s="s12">
-          <div style={{ position: "relative", overflow: "hidden", maxWidth: "1136px", margin: "0 auto", borderRadius: "28px", background: "#12141F", color: "#FFFFFF", padding: "96px 40px", textAlign: "center" }} data-s="s14">
+          <div className="vg-zoomc" style={{ position: "relative", overflow: "hidden", maxWidth: "1136px", margin: "0 auto", borderRadius: "28px", background: "#12141F", color: "#FFFFFF", padding: "96px 40px", textAlign: "center" }} data-s="s14">
             <div aria-hidden="true" style={{ position: "absolute", inset: "0", overflow: "hidden", pointerEvents: "none", borderRadius: "inherit", opacity: "1" }}>
               <div className="vg-aur1" style={{ position: "absolute", left: "-15%", top: "-45%", width: "130%", height: "95%", filter: "blur(60px)", opacity: ".9", background: "radial-gradient(ellipse 30% 42% at 22% 55%, rgba(61,214,140,0.61), transparent 70%), radial-gradient(ellipse 26% 38% at 48% 45%, rgba(45,212,191,0.50), transparent 70%), radial-gradient(ellipse 28% 46% at 76% 52%, rgba(124,92,255,0.55), transparent 70%)" }}>
               </div>

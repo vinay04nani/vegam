@@ -53,15 +53,15 @@ def tile(k, s=44):
 
 
 def eyebrow(t, dark=False):
-    return '<span style="font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: %s">%s</span>' % ('#A9AECB' if dark else '#6B6B6B', t)
+    return '<span class="vg-rv" style="display: inline-block; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: %s">%s</span>' % ('#A9AECB' if dark else '#6B6B6B', t)
 
 
 def h2(a, b, dark=False, size=52, align='left', mw=760):
-    return '<h2 style="margin: 16px %s 0; max-width: %dpx; %s; font-weight: 400; font-size: %dpx; line-height: 1.06; letter-spacing: -0.045em; color: %s">%s<br><span style="color: %s">%s</span></h2>' % ('auto' if align == 'center' else '0', mw, TIGHT, size, '#FFFFFF' if dark else '#141414', a, '#8C90A8' if dark else '#8A8A8A', b)
+    return '<h2 style="margin: 16px %s 0; max-width: %dpx; %s; font-weight: 400; font-size: %dpx; line-height: 1.06; letter-spacing: -0.045em; color: %s"><span class="vg-line" style="display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em"><span class="vg-line-in" style="display: block">%s</span></span><span class="vg-line" style="display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em"><span class="vg-line-in" style="display: block; color: %s">%s</span></span></h2>' % ('auto' if align == 'center' else '0', mw, TIGHT, size, '#FFFFFF' if dark else '#141414', a, '#8C90A8' if dark else '#8A8A8A', b)
 
 
 def lead(t, dark=False, align='left', mw=560):
-    return '<p style="margin: 20px %s 0; max-width: %dpx; font-size: 18px; color: %s">%s</p>' % ('auto' if align == 'center' else '0', mw, '#C3C6DA' if dark else '#5C5C5C', t)
+    return '<p class="vg-rv" style="margin: 20px %s 0; max-width: %dpx; font-size: 18px; color: %s">%s</p>' % ('auto' if align == 'center' else '0', mw, '#C3C6DA' if dark else '#5C5C5C', t)
 
 
 def chip(t, on=False):
@@ -128,13 +128,13 @@ def hero():
     tick = lambda t: '<span style="display: inline-flex; align-items: center; gap: 6px">%s%s</span>' % (ic(I_CHECK, 15, '#3DD68C', 2.2), t)
     play = '<a href="#" aria-label="Play a 42-second sample call" style="display: inline-flex; align-items: center; gap: 12px; height: 52px; padding: 0 20px 0 6px; border-radius: 999px; border: 1px solid rgba(255,255,255,.25); background: rgba(255,255,255,.06); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #FFFFFF; text-decoration: none; font-weight: 500"><span style="width: 40px; height: 40px; border-radius: 50%%; background: #FFFFFF; color: #12141F; display: inline-flex; align-items: center; justify-content: center">%s</span>Hear a sample call%s<span style="font-size: 13px; color: #C9CCDD; font-variant-numeric: tabular-nums">0:42</span></a>' % (ic(I_PLAY, 16), wave(12, '#FFFFFF', 22))
     return (
-        '<div style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 166px 32px 0; text-align: center">'
+        '<div style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 166px 32px 0; text-align: center"><div class="vg-heroout">'
         '<a href="#" class="vg-hero" style="animation-delay: .05s; display: inline-flex; align-items: center; gap: 10px; padding: 5px 14px 5px 5px; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; background: rgba(255,255,255,.06); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); text-decoration: none; font-size: 14px; color: #DDE0EE"><span style="padding: 3px 10px; border-radius: 999px; background: #FFFFFF; color: #12141F; font-size: 12px; font-weight: 500">New</span>An AI voice agent with a long memory →</a>'
         '<h1 class="vg-hero" style="animation-delay: .15s; margin: 28px auto 0; max-width: 1000px; %s; font-weight: 400; letter-spacing: -0.045em; font-size: 76px; line-height: 1.04; color: #FFFFFF; text-shadow: 0 2px 30px rgba(3,5,14,.5)">Never miss a customer.<br><span style="color: #A9AECB">Never forget one either.</span></h1>'
         '<p class="vg-hero" style="animation-delay: .3s; margin: 24px auto 0; max-width: 640px; font-size: 19px; color: #C9CCDD">Vegham is an AI voice agent that answers your calls and messages, speaks your customers’ language, and remembers every person it talks to, even months later.</p>'
         '<div class="vg-hero" style="animation-delay: .42s; margin-top: 32px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px"><a href="Signup.dc.html" style="%s">Start free</a>%s</div>'
         '<div class="vg-hero" style="animation-delay: .54s; margin-top: 22px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; font-size: 14px; color: #A9AECB">%s%s%s</div>'
-        '<div class="vg-hero vg-mockframe" style="animation-delay: .7s; position: relative; margin: 64px auto 0; max-width: 1100px; height: 372px; border-radius: 20px 20px 0 0; overflow: hidden; background: #FFFFFF; border: 1px solid rgba(255,255,255,.2); border-bottom: 0; box-shadow: 0 -30px 90px -30px rgba(45,227,160,.35), 0 -10px 40px -20px rgba(0,0,0,.6)">%s</div>'
+        '</div><div class="vg-mockin"><div class="vg-hero vg-mockframe" style="animation-delay: .7s; position: relative; margin: 64px auto 0; max-width: 1100px; height: 372px; border-radius: 20px 20px 0 0; overflow: hidden; background: #FFFFFF; border: 1px solid rgba(255,255,255,.2); border-bottom: 0; box-shadow: 0 -30px 90px -30px rgba(45,227,160,.35), 0 -10px 40px -20px rgba(0,0,0,.6)">%s</div></div>'
         '</div>') % (TIGHT, BTN_W, play, tick('Calls and chat, day and night'), tick('Remembers people for months'), tick('Live in minutes'), hero_mock())
 
 
@@ -148,7 +148,7 @@ def channels():
         ('tg', 'Telegram', 'A Telegram assistant your customers can message any time.', ['Chat', 'Voice notes']),
         ('link', 'A link or your website', 'One link to talk or type from any browser. No app, no phone number.', ['Voice', 'Chat']),
     ]
-    cards = ''.join('<div class="vg-lift" style="%s; padding: 24px; display: flex; flex-direction: column; gap: 14px"><span style="display: flex; align-items: center; justify-content: space-between; gap: 12px">%s<span style="display: inline-flex; gap: 6px">%s</span></span><span><b style="display: block; %s; font-weight: 500; font-size: 20px; letter-spacing: -0.02em">%s</b><span style="display: block; margin-top: 4px; font-size: 14.5px; color: #5C5C5C">%s</span></span></div>' % (CARD, tile(k), ''.join(chip(c, c == 'Voice') for c in cs), TIGHT, n, d) for k, n, d, cs in items)
+    cards = ''.join('<div class="vg-lift vg-rv" style="%s; padding: 24px; display: flex; flex-direction: column; gap: 14px"><span style="display: flex; align-items: center; justify-content: space-between; gap: 12px">%s<span style="display: inline-flex; gap: 6px">%s</span></span><span><b style="display: block; %s; font-weight: 500; font-size: 20px; letter-spacing: -0.02em">%s</b><span style="display: block; margin-top: 4px; font-size: 14.5px; color: #5C5C5C">%s</span></span></div>' % (CARD, tile(k), ''.join(chip(c, c == 'Voice') for c in cs), TIGHT, n, d) for k, n, d, cs in items)
     return ('<section style="background: #FFFFFF"><div style="max-width: 1200px; margin: 0 auto; padding: 104px 32px 112px"><div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px"><div>%s%s</div>%s</div>'
             '<div style="margin-top: 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">%s</div>'
             '<p style="margin: 20px 0 0; font-size: 14px; color: #6B6B6B">Connect one channel or all of them. It is the same agent with the same memory everywhere.</p></div></section>') % (
@@ -172,15 +172,15 @@ def memory():
         pt('Who they are', 'Name, language and how they like to be contacted.'),
         pt('What they wanted', 'Questions, preferences and anything left unfinished.'),
         pt('One person, not five', 'A call and a WhatsApp from the same number are the same customer.'))
-    right = '<div style="flex: 1 1 460px; min-width: 0"><div style="position: relative; padding: 32px; border-radius: 24px; background: rgba(18,20,31,.72); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)">%s<div style="margin-top: 22px; text-align: right">%s</div></div></div>' % (tl, sample(True))
-    return ('<section style="padding: 0 16px"><div style="position: relative; overflow: hidden; max-width: 1408px; margin: 0 auto; border-radius: 32px; background: #12141F; color: #FFFFFF">%s'
+    right = '<div class="vg-par" style="flex: 1 1 460px; min-width: 0"><div style="position: relative; padding: 32px; border-radius: 24px; background: rgba(18,20,31,.72); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)">%s<div style="margin-top: 22px; text-align: right">%s</div></div></div>' % (tl, sample(True))
+    return ('<section style="padding: 0 16px"><div class="vg-zoomc" style="position: relative; overflow: hidden; max-width: 1408px; margin: 0 auto; border-radius: 32px; background: #12141F; color: #FFFFFF">%s'
             '<div style="position: relative; max-width: 1200px; margin: 0 auto; padding: 112px 32px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: 56px 72px">%s%s</div></div></section>') % (aurora(.85), left, right)
 
 
 # ---------- WHAT IT DOES (bento) ----------
 def bento():
     def card(span, icon, t, d, vis='', minh=300):
-        return '<div class="vg-lift" style="grid-column: span %d; %s; padding: 28px; min-height: %dpx; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; overflow: hidden"><span><span style="display: inline-flex; width: 40px; height: 40px; border-radius: 12px; background: #F5F5F7; align-items: center; justify-content: center; color: #16182A">%s</span><b style="display: block; margin-top: 18px; %s; font-weight: 500; font-size: 22px; letter-spacing: -0.025em">%s</b><span style="display: block; margin-top: 6px; max-width: 460px; font-size: 15px; color: #5C5C5C">%s</span></span>%s</div>' % (span, CARD, minh, ic(icon, 19), TIGHT, t, d, vis)
+        return '<div class="vg-lift vg-rv" style="grid-column: span %d; %s; padding: 28px; min-height: %dpx; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px; overflow: hidden"><span><span style="display: inline-flex; width: 40px; height: 40px; border-radius: 12px; background: #F5F5F7; align-items: center; justify-content: center; color: #16182A">%s</span><b style="display: block; margin-top: 18px; %s; font-weight: 500; font-size: 22px; letter-spacing: -0.025em">%s</b><span style="display: block; margin-top: 6px; max-width: 460px; font-size: 15px; color: #5C5C5C">%s</span></span>%s</div>' % (span, CARD, minh, ic(icon, 19), TIGHT, t, d, vis)
 
     v_voice = ('<div style="margin-top: auto; padding: 18px 20px; border-radius: 16px; background: #F7F7F8; display: flex; flex-wrap: wrap; align-items: center; gap: 16px 22px"><span style="display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: #5C5C5C"><span style="width: 8px; height: 8px; border-radius: 50%; background: #B9B9C2"></span>Caller</span>'
                + wave(20, '#B9B9C2', 26, False) + '<span style="display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: ' + GT + '; font-weight: 500"><span style="width: 8px; height: 8px; border-radius: 50%; background: #10B981"></span>Vegham</span>' + wave(26, G, 26)
@@ -222,7 +222,7 @@ def global_():
         pt(I_PHONE, 'Your own number', 'Keep the number customers already know and let Vegham pick up.'),
         pt(I_CLOCK, 'Every time zone', 'It answers at 3 AM the same way it answers at 3 PM.'))
     qr = '<span aria-hidden="true" style="width: 76px; height: 76px; flex: none; border-radius: 12px; border: 1px solid #ECECEF; background-color: #FFFFFF; background-image: linear-gradient(45deg, #16182A 25%, transparent 25%, transparent 75%, #16182A 75%), linear-gradient(45deg, #16182A 25%, transparent 25%, transparent 75%, #16182A 75%); background-size: 12px 12px; background-position: 6px 6px, 12px 12px; background-origin: content-box; background-clip: content-box; padding: 8px; box-sizing: border-box"></span>'
-    card = ('<div style="flex: 1 1 460px; min-width: 0; display: flex; justify-content: center"><div style="width: 100%; max-width: 460px; border-radius: 28px; background: #F7F7F8; border: 1px solid #ECECEF; padding: 14px">'
+    card = ('<div class="vg-par" style="flex: 1 1 460px; min-width: 0; display: flex; justify-content: center"><div style="width: 100%; max-width: 460px; border-radius: 28px; background: #F7F7F8; border: 1px solid #ECECEF; padding: 14px">'
             '<div style="display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 14px; border-radius: 999px; background: #FFFFFF; border: 1px solid #ECECEF; font-size: 13.5px; color: #5C5C5C"><span style="color: #8A8A8A">' + ic(I_LINK, 15) + '</span>vegham.ai/talk/your-business</div>'
             '<div style="margin-top: 12px; border-radius: 20px; background: #FFFFFF; border: 1px solid #ECECEF; padding: 36px 28px 28px; text-align: center">'
             '<span style="display: inline-flex; width: 64px; height: 64px; border-radius: 50%; background: #16182A; color: #FFFFFF; align-items: center; justify-content: center; ' + TIGHT + '; font-size: 24px">N</span>'
@@ -240,8 +240,8 @@ def how():
              ('02', 'Pick a voice', 'Choose how it sounds and which languages it speaks. Change it any time.'),
              ('03', 'Make a test call', 'Call it yourself and hear exactly what your customers will hear.'),
              ('04', 'Connect and go live', 'Add your phone number, WhatsApp or the link. It starts answering straight away.')]
-    cards = ''.join('<div style="padding: 28px; border-radius: 24px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px)"><span style="font-size: 13px; color: #3DD68C; font-variant-numeric: tabular-nums">%s</span><b style="display: block; margin-top: 40px; %s; font-weight: 400; font-size: 24px; line-height: 1.15; letter-spacing: -0.03em">%s</b><span style="display: block; margin-top: 10px; font-size: 15px; color: #B4B8CC">%s</span></div>' % (n, TIGHT, t, d) for n, t, d in steps)
-    return ('<section style="padding: 0 16px; view-timeline-name: --vg-sec-how"><div style="position: relative; overflow: hidden; max-width: 1408px; margin: 0 auto; border-radius: 32px; background: #12141F; color: #FFFFFF">%s<div style="position: relative; max-width: 1200px; margin: 0 auto; padding: 104px 32px; box-sizing: border-box">'
+    cards = ''.join('<div class="vg-rv" style="padding: 28px; border-radius: 24px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px)"><span style="font-size: 13px; color: #3DD68C; font-variant-numeric: tabular-nums">%s</span><b style="display: block; margin-top: 40px; %s; font-weight: 400; font-size: 24px; line-height: 1.15; letter-spacing: -0.03em">%s</b><span style="display: block; margin-top: 10px; font-size: 15px; color: #B4B8CC">%s</span></div>' % (n, TIGHT, t, d) for n, t, d in steps)
+    return ('<section style="padding: 0 16px; view-timeline-name: --vg-sec-how"><div class="vg-zoomc" style="position: relative; overflow: hidden; max-width: 1408px; margin: 0 auto; border-radius: 32px; background: #12141F; color: #FFFFFF">%s<div style="position: relative; max-width: 1200px; margin: 0 auto; padding: 104px 32px; box-sizing: border-box">'
             '<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px"><div>%s%s</div><a href="Signup.dc.html" style="%s">Start free</a></div>'
             '<div style="margin-top: 56px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">%s</div></div></div></section>') % (aurora(.7), eyebrow('How it works', True), h2('Live in minutes,', 'not weeks.', True), BTN_W, cards)
 
@@ -251,7 +251,7 @@ def control():
     items = [(I_MEM, 'You decide what it keeps', 'Choose how long memory lasts, switch off personal details, and delete a person the moment they ask.'),
              (I_SHIELD, 'It only says what you taught it', 'Answers come from your own information. When it does not know, it says so and passes the conversation to you.'),
              (I_HAND, 'Step in whenever you want', 'Read or listen to any conversation, take over a chat, or set the moments it should always hand over.')]
-    cols = ''.join('<div style="padding: 32px 0 0; border-top: 1px solid #E2E2E6"><span style="color: %s">%s</span><b style="display: block; margin-top: 18px; %s; font-weight: 500; font-size: 22px; letter-spacing: -0.025em">%s</b><span style="display: block; margin-top: 8px; font-size: 15.5px; color: #5C5C5C">%s</span></div>' % (G, ic(i, 22), TIGHT, t, d) for i, t, d in items)
+    cols = ''.join('<div class="vg-rv" style="padding: 32px 0 0; border-top: 1px solid #E2E2E6"><span style="color: %s">%s</span><b style="display: block; margin-top: 18px; %s; font-weight: 500; font-size: 22px; letter-spacing: -0.025em">%s</b><span style="display: block; margin-top: 8px; font-size: 15.5px; color: #5C5C5C">%s</span></div>' % (G, ic(i, 22), TIGHT, t, d) for i, t, d in items)
     return '<section style="background: #FFFFFF"><div style="max-width: 1200px; margin: 0 auto; padding: 120px 32px 112px">%s%s<div style="margin-top: 56px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px">%s</div></div></section>' % (eyebrow('You stay in charge'), h2('It works for you.', 'You set the rules.'), cols)
 
 
@@ -261,7 +261,7 @@ def pricing():
         fg, mut, bd = ('#FFFFFF', '#C3C6DA', 'transparent') if dark else ('#141414', '#5C5C5C', '#ECECEF')
         li = ''.join('<span style="display: flex; gap: 10px; font-size: 14.5px; color: %s"><span style="flex: none; margin-top: 2px; color: %s">%s</span>%s</span>' % (mut, '#3DD68C' if dark else G, ic(I_CHECK, 15, 'currentColor', 2.2), t) for t in pts)
         badge = '<span style="padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,.12); font-size: 12px">Most chosen</span>' if dark else ''
-        return '<div style="padding: 28px; border-radius: 24px; background: %s; border: 1px solid %s; color: %s"><span style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; font-weight: 500">%s%s</span><span style="display: block; margin-top: 18px; %s; font-size: 40px; letter-spacing: -0.04em; line-height: 1.1">%s<span style="font-family: Inter, sans-serif; font-size: 14px; letter-spacing: 0; color: %s"> / month</span></span><span style="display: block; margin-top: 8px; font-size: 14.5px; color: %s">%s</span><span style="display: flex; flex-direction: column; gap: 10px; margin-top: 22px; padding-top: 22px; border-top: 1px solid %s">%s</span></div>' % ('#16182A' if dark else '#FFFFFF', bd, fg, n, badge, TIGHT, p, mut, mut, d, 'rgba(255,255,255,.12)' if dark else '#F0F0F3', li)
+        return '<div class="vg-rv" style="padding: 28px; border-radius: 24px; background: %s; border: 1px solid %s; color: %s"><span style="display: flex; justify-content: space-between; align-items: center; font-size: 16px; font-weight: 500">%s%s</span><span style="display: block; margin-top: 18px; %s; font-size: 40px; letter-spacing: -0.04em; line-height: 1.1">%s<span style="font-family: Inter, sans-serif; font-size: 14px; letter-spacing: 0; color: %s"> / month</span></span><span style="display: block; margin-top: 8px; font-size: 14.5px; color: %s">%s</span><span style="display: flex; flex-direction: column; gap: 10px; margin-top: 22px; padding-top: 22px; border-top: 1px solid %s">%s</span></div>' % ('#16182A' if dark else '#FFFFFF', bd, fg, n, badge, TIGHT, p, mut, mut, d, 'rgba(255,255,255,.12)' if dark else '#F0F0F3', li)
     cards = (plan('Starter', '₹2,999', 'Chat on your channels, with memory', ['WhatsApp, Instagram and the link', 'Remembers every person', 'Hand-over to your team'])
              + plan('Growth', '₹7,999', 'Adds the voice agent on calls', ['Everything in Starter', 'Phone calls and voice on the link', 'Follow-ups and insights'], True)
              + plan('Pro', 'from ₹19,999', 'For larger teams and more numbers', ['Everything in Growth', 'More numbers and team seats', 'Priority support']))
@@ -277,13 +277,13 @@ def faq():
           ('What happens when it does not know the answer?', 'It says so, takes a message and hands the conversation to you with a summary. It does not make things up.', False),
           ('Can a customer ask to be forgotten?', 'Yes. You can delete one person’s memory in a click, and you choose how long memory is kept for everyone.', False),
           ('Will customers know they are talking to an AI?', 'Yes. Vegham introduces itself as your assistant and never pretends to be a person.', False)]
-    items = ''.join('<details%s style="border-top: 1px solid #E8E8EC; padding: 22px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 20px; cursor: pointer; list-style: none; %s; font-size: 20px; letter-spacing: -0.02em">%s<span aria-hidden="true" style="flex: none; width: 32px; height: 32px; border-radius: 50%%; border: 1px solid #E2E2E6; display: inline-flex; align-items: center; justify-content: center; color: #5C5C5C">+</span></summary><p style="margin: 12px 0 0; max-width: 620px; font-size: 16px; color: #5C5C5C">%s</p></details>' % (' open' if o else '', TIGHT, q, a) for q, a, o in qs)
+    items = ''.join('<details%s class="vg-rv" style="border-top: 1px solid #E8E8EC; padding: 22px 0"><summary style="display: flex; justify-content: space-between; align-items: center; gap: 20px; cursor: pointer; list-style: none; %s; font-size: 20px; letter-spacing: -0.02em">%s<span aria-hidden="true" style="flex: none; width: 32px; height: 32px; border-radius: 50%%; border: 1px solid #E2E2E6; display: inline-flex; align-items: center; justify-content: center; color: #5C5C5C">+</span></summary><p style="margin: 12px 0 0; max-width: 620px; font-size: 16px; color: #5C5C5C">%s</p></details>' % (' open' if o else '', TIGHT, q, a) for q, a, o in qs)
     return '<section style="background: #FFFFFF"><div style="max-width: 1200px; margin: 0 auto; padding: 112px 32px; display: flex; flex-wrap: wrap; gap: 40px 72px"><div style="flex: 1 1 300px">%s<p style="margin: 20px 0 0; font-size: 15.5px; color: #5C5C5C">Something else? <a href="Contact.dc.html" style="color: #141414">Talk to us</a>.</p></div><div style="flex: 2 1 560px; min-width: 0; border-bottom: 1px solid #E8E8EC">%s</div></div></section>' % (h2('Frequently asked', 'questions', size=44), items)
 
 
 # ---------- CTA ----------
 def cta():
-    return ('<section style="padding: 0 32px 112px; background: #FFFFFF"><div style="position: relative; overflow: hidden; max-width: 1136px; margin: 0 auto; border-radius: 28px; background: #12141F; color: #FFFFFF; padding: 96px 40px; text-align: center">%s'
+    return ('<section style="padding: 0 32px 112px; background: #FFFFFF"><div class="vg-zoomc" style="position: relative; overflow: hidden; max-width: 1136px; margin: 0 auto; border-radius: 28px; background: #12141F; color: #FFFFFF; padding: 96px 40px; text-align: center">%s'
             '<h2 style="position: relative; margin: 0; %s; font-weight: 400; font-size: 52px; line-height: 1.05; letter-spacing: -0.045em">Never miss a customer<br>again.</h2><p style="position: relative; margin: 16px 0 0; font-size: 18px; color: #C3C6DA">Set up your agent in minutes and make your first test call today.</p>'
             '<div style="position: relative; margin-top: 32px; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px"><a href="Signup.dc.html" style="%s">Start free</a><a href="BookDemo.dc.html" style="%s">Book a demo</a></div></div></section>') % (aurora(1), TIGHT, BTN_W, BTN_G)
 
@@ -308,6 +308,15 @@ def footer(f):
 
 
 RESPONSIVE = '''
+@keyframes vg-heroout{to{transform:translateY(-70px);opacity:.15}}
+@keyframes vg-mockin{from{transform:translateY(46px) scale(.955)}to{transform:none}}
+@keyframes vg-sky{to{transform:translateY(140px) scale(1.06)}}
+@supports (animation-timeline: view()){
+  .vg-heroout{animation:vg-heroout linear both;animation-timeline:scroll(root);animation-range:120px 760px}
+  .vg-mockin{transform-origin:50% 100%;animation:vg-mockin linear both;animation-timeline:scroll(root);animation-range:0px 420px}
+  .vg-sky{animation:vg-sky linear both;animation-timeline:scroll(root);animation-range:0px 1100px}
+}
+@media (prefers-reduced-motion: reduce){.vg-heroout,.vg-mockin,.vg-sky,.vg-rv,.vg-par,.vg-zoomc,.vg-line-in{animation:none!important}}
 @media (max-width: 1000px){.vg-g3,.vg-g4{grid-template-columns:repeat(2,minmax(0,1fr))!important}.vg-mock-side{display:none!important}}
 @media (max-width: 760px){.vg-pad{padding:72px 20px!important}.vg-mockframe{height:auto!important}.vg-mock{flex-direction:column;height:auto!important}.vg-mock-mem{width:auto!important;border-left:0!important;border-top:1px solid #EDEDF0}}
 @media (max-width: 640px){.vg-g3,.vg-g4{grid-template-columns:minmax(0,1fr)!important}.vg-g3>*,.vg-g4>*{grid-column:auto!important;min-height:0!important}}
@@ -328,6 +337,8 @@ def build(src):
     body = re.sub(r'<div style="([^"]*grid-template-columns: repeat\((3|4), minmax\(0, 1fr\)\)[^"]*)"', r'<div class="vg-g\2" style="\1"', body)
     body = re.sub(r'<div style="((?:position: relative; )?max-width: 1200px; margin: 0 auto; padding: 1\d\dpx 32px[^"]*)"', r'<div class="vg-pad" style="\1"', body)
     head = head.replace('</style>', RESPONSIVE + '</style>', 1)
+    sky = head.index('<svg', head.index('min-height: 1080px'))
+    head = head[:sky] + '<svg class="vg-sky"' + head[sky + 4:]
     tail = s[fe:]
     tail = re.sub(r'"height":\d+', '"height":9650', tail)
     return head + body + '\n  ' + footer(s[fs:fe]) + tail

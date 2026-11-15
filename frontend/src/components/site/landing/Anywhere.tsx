@@ -6,17 +6,22 @@ export default function Anywhere() {
       <section id="anywhere" style={{ background: "#FFFFFF" }}>
         <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "120px 32px", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "56px 72px" }} data-s="s11">
           <div style={{ flex: "1 1 440px", minWidth: "0" }}>
-            <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+            <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
               {"Works anywhere"}
             </span>
             <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "52px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s4">
-              {"Wherever your"}
-              <br />
-              <span style={{ color: "#8A8A8A" }}>
-                {"customers are."}
+              <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                <span className="vg-line-in" style={{ display: "block" }}>
+                  {"Wherever your"}
+                </span>
+              </span>
+              <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                  {"customers are."}
+                </span>
               </span>
             </h2>
-            <p style={{ margin: "20px 0 0", maxWidth: "500px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+            <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "500px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
               {"Your customers do not need an app, and you do not need a call centre. Share one link and anyone, in any country, can talk to your agent."}
             </p>
             <div style={{ marginTop: "36px", display: "flex", flexDirection: "column", gap: "22px", maxWidth: "480px" }}>
@@ -74,7 +79,7 @@ export default function Anywhere() {
               </div>
             </div>
           </div>
-          <div style={{ flex: "1 1 460px", minWidth: "0", display: "flex", justifyContent: "center" }}>
+          <div className="vg-par" style={{ flex: "1 1 460px", minWidth: "0", display: "flex", justifyContent: "center" }}>
             <div style={{ width: "100%", maxWidth: "460px", borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }} data-s="s24">
               <div style={{ display: "flex", alignItems: "center", gap: "10px", height: "40px", padding: "0 14px", borderRadius: "999px", background: "#FFFFFF", border: "1px solid #ECECEF", fontSize: "13.5px", color: "#5C5C5C" }} data-s="s1 s2">
                 <span style={{ color: "#8A8A8A" }}>

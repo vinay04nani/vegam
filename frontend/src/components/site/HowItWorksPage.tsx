@@ -36,21 +36,26 @@ export default function HowItWorksPage() {
         <section style={{ background: "#FFFFFF" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: "48px 72px" }} data-s="s10 s11">
             <div style={{ flex: "1 1 420px", minWidth: "0", maxWidth: "520px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Step 1 of 4"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Tell it about"}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"your business."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Tell it about"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"your business."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"Paste your website or type a few lines. Vegham reads it and learns your hours, prices and the questions people ask."}
               </p>
               <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -59,7 +64,7 @@ export default function HowItWorksPage() {
                   </span>
                   {"No website? Describe your business instead"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -68,7 +73,7 @@ export default function HowItWorksPage() {
                   </span>
                   {"Review everything it learned before it goes live"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -79,7 +84,7 @@ export default function HowItWorksPage() {
                 </span>
               </div>
             </div>
-            <div style={{ flex: "1 1 480px", minWidth: "0" }}>
+            <div className="vg-rv" style={{ flex: "1 1 480px", minWidth: "0" }}>
               <div style={{ borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }}>
                 <div style={{ borderRadius: "20px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "24px", fontSize: "14px", lineHeight: "1.45" }}>
                   <span style={{ display: "flex", alignItems: "center", gap: "10px", height: "46px", padding: "0 16px", borderRadius: "14px", border: "1px solid #E2E2E6", color: "#3D3D3D" }}>
@@ -169,21 +174,26 @@ export default function HowItWorksPage() {
         <section style={{ background: "#F7F7F8" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap-reverse", flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-between", gap: "48px 72px" }} data-s="s10 s11">
             <div style={{ flex: "1 1 420px", minWidth: "0", maxWidth: "520px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Step 2 of 4"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Pick a voice"}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"and languages."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Pick a voice"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"and languages."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"Press play to hear each voice say your own greeting, then choose the languages your customers speak."}
               </p>
               <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -192,7 +202,7 @@ export default function HowItWorksPage() {
                   </span>
                   {"Four voices to choose from"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -201,7 +211,7 @@ export default function HowItWorksPage() {
                   </span>
                   {"Switches language when a caller does"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -212,7 +222,7 @@ export default function HowItWorksPage() {
                 </span>
               </div>
             </div>
-            <div style={{ flex: "1 1 480px", minWidth: "0" }}>
+            <div className="vg-rv" style={{ flex: "1 1 480px", minWidth: "0" }}>
               <div style={{ borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }}>
                 <div style={{ borderRadius: "20px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "24px", fontSize: "14px", lineHeight: "1.45" }}>
                   <span style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "10px" }}>
@@ -314,21 +324,26 @@ export default function HowItWorksPage() {
         <section style={{ background: "#FFFFFF" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: "48px 72px" }} data-s="s10 s11">
             <div style={{ flex: "1 1 420px", minWidth: "0", maxWidth: "520px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Step 3 of 4"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Make a"}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"test call."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Make a"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"test call."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"Talk to it yourself before any customer does. Ask a price, switch language, try to book. Call twice and it will remember you."}
               </p>
               <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -337,7 +352,7 @@ export default function HowItWorksPage() {
                   </span>
                   {"Test in your browser or from your phone"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -346,7 +361,7 @@ export default function HowItWorksPage() {
                   </span>
                   {"See what it got right"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -357,7 +372,7 @@ export default function HowItWorksPage() {
                 </span>
               </div>
             </div>
-            <div style={{ flex: "1 1 480px", minWidth: "0" }}>
+            <div className="vg-rv" style={{ flex: "1 1 480px", minWidth: "0" }}>
               <div style={{ borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }}>
                 <div style={{ borderRadius: "20px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "24px", fontSize: "14px", lineHeight: "1.45" }}>
                   <span style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "12px", padding: "12px 0 20px" }}>
@@ -441,21 +456,26 @@ export default function HowItWorksPage() {
         <section style={{ background: "#F7F7F8" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap-reverse", flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-between", gap: "48px 72px" }} data-s="s10 s11">
             <div style={{ flex: "1 1 420px", minWidth: "0", maxWidth: "520px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Step 4 of 4"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Connect and"}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"go live."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Connect and"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"go live."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"Choose when Vegham should pick up, then connect the channels you use. You can start with one and add more later."}
               </p>
               <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -464,7 +484,7 @@ export default function HowItWorksPage() {
                   </span>
                   {"Forward your existing number"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -473,7 +493,7 @@ export default function HowItWorksPage() {
                   </span>
                   {"Add WhatsApp, Instagram, Messenger or Telegram"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -484,7 +504,7 @@ export default function HowItWorksPage() {
                 </span>
               </div>
             </div>
-            <div style={{ flex: "1 1 480px", minWidth: "0" }}>
+            <div className="vg-rv" style={{ flex: "1 1 480px", minWidth: "0" }}>
               <div style={{ borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }}>
                 <div style={{ borderRadius: "20px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "24px", fontSize: "14px", lineHeight: "1.45" }}>
                   <span style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
@@ -598,7 +618,7 @@ export default function HowItWorksPage() {
         <div style={{ padding: "112px 0 0", background: "#FFFFFF" }}>
         </div>
         <section style={{ padding: "0 16px 112px", background: "#FFFFFF" }}>
-          <div style={{ position: "relative", overflow: "hidden", maxWidth: "1408px", margin: "0 auto", borderRadius: "32px", background: "#12141F", color: "#FFFFFF" }}>
+          <div className="vg-zoomc" style={{ position: "relative", overflow: "hidden", maxWidth: "1408px", margin: "0 auto", borderRadius: "32px", background: "#12141F", color: "#FFFFFF" }}>
             <div aria-hidden="true" style={{ position: "absolute", inset: "0", overflow: "hidden", pointerEvents: "none", borderRadius: "inherit", opacity: "0.7" }}>
               <div className="vg-aur1" style={{ position: "absolute", left: "-15%", top: "-45%", width: "130%", height: "95%", filter: "blur(60px)", opacity: ".9", background: "radial-gradient(ellipse 30% 42% at 22% 55%, rgba(61,214,140,0.61), transparent 70%), radial-gradient(ellipse 26% 38% at 48% 45%, rgba(45,212,191,0.50), transparent 70%), radial-gradient(ellipse 28% 46% at 76% 52%, rgba(124,92,255,0.55), transparent 70%)" }}>
               </div>
@@ -610,18 +630,23 @@ export default function HowItWorksPage() {
               </div>
             </div>
             <div className="vg-pad" style={{ position: "relative", maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", boxSizing: "border-box" }} data-s="s10 s11">
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#A9AECB" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#A9AECB" }}>
                 {"Once you are live"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "52px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#FFFFFF" }} data-s="s4">
-                {"From then on,"}
-                <br />
-                <span style={{ color: "#8C90A8" }}>
-                  {"it runs itself."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"From then on,"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8C90A8" }}>
+                    {"it runs itself."}
+                  </span>
                 </span>
               </h2>
               <div className="vg-g3" style={{ marginTop: "56px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px" }}>
-                <div style={{ padding: "28px", borderRadius: "24px", background: "rgba(255,255,255,.05)", border: "1px solid rgba(255,255,255,.1)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
+                <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "rgba(255,255,255,.05)", border: "1px solid rgba(255,255,255,.1)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
                   <span style={{ color: "#3DD68C" }}>
                     <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <rect x="9" y="3.5" width="6" height="11" rx="3">
@@ -639,7 +664,7 @@ export default function HowItWorksPage() {
                     {"Every call and message gets a reply in seconds, in the customer’s language."}
                   </span>
                 </div>
-                <div style={{ padding: "28px", borderRadius: "24px", background: "rgba(255,255,255,.05)", border: "1px solid rgba(255,255,255,.1)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
+                <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "rgba(255,255,255,.05)", border: "1px solid rgba(255,255,255,.1)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
                   <span style={{ color: "#3DD68C" }}>
                     <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z">
@@ -655,7 +680,7 @@ export default function HowItWorksPage() {
                     {"Each conversation adds to what it knows about that person, for next time."}
                   </span>
                 </div>
-                <div style={{ padding: "28px", borderRadius: "24px", background: "rgba(255,255,255,.05)", border: "1px solid rgba(255,255,255,.1)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
+                <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "rgba(255,255,255,.05)", border: "1px solid rgba(255,255,255,.1)", backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)" }}>
                   <span style={{ color: "#3DD68C" }}>
                     <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 19V10">
@@ -681,10 +706,15 @@ export default function HowItWorksPage() {
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 32px 112px", display: "flex", flexWrap: "wrap", gap: "40px 72px" }} data-s="s11 s12">
             <div style={{ flex: "1 1 300px" }}>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Good to"}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"know"}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Good to"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"know"}
+                  </span>
                 </span>
               </h2>
               <p style={{ margin: "20px 0 0", fontSize: "15.5px", color: "#5C5C5C" }}>
@@ -696,7 +726,7 @@ export default function HowItWorksPage() {
               </p>
             </div>
             <div style={{ flex: "2 1 560px", minWidth: "0", borderBottom: "1px solid #E8E8EC" }}>
-              <details open style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
+              <details open className="vg-rv" style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
                 <summary style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "20px", cursor: "pointer", listStyle: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "20px", letterSpacing: "-0.02em" }}>
                   {"How long does set-up take?"}
                   <span aria-hidden="true" style={{ flex: "none", width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #E2E2E6", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#5C5C5C" }}>
@@ -707,7 +737,7 @@ export default function HowItWorksPage() {
                   {"Most people finish in about ten minutes. Connecting WhatsApp or a phone number can take a little longer, depending on your provider."}
                 </p>
               </details>
-              <details style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
+              <details className="vg-rv" style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
                 <summary style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "20px", cursor: "pointer", listStyle: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "20px", letterSpacing: "-0.02em" }}>
                   {"Do I need a new phone number?"}
                   <span aria-hidden="true" style={{ flex: "none", width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #E2E2E6", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#5C5C5C" }}>
@@ -718,7 +748,7 @@ export default function HowItWorksPage() {
                   {"No. You can forward calls from the number customers already know, or share the link and use no number at all."}
                 </p>
               </details>
-              <details style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
+              <details className="vg-rv" style={{ borderTop: "1px solid #E8E8EC", padding: "22px 0" }}>
                 <summary style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "20px", cursor: "pointer", listStyle: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "20px", letterSpacing: "-0.02em" }}>
                   {"Can I change things after going live?"}
                   <span aria-hidden="true" style={{ flex: "none", width: "32px", height: "32px", borderRadius: "50%", border: "1px solid #E2E2E6", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#5C5C5C" }}>
@@ -733,7 +763,7 @@ export default function HowItWorksPage() {
           </div>
         </section>
         <section style={{ padding: "0 32px 112px", background: "#FFFFFF" }} data-s="s12">
-          <div style={{ position: "relative", overflow: "hidden", maxWidth: "1136px", margin: "0 auto", borderRadius: "28px", background: "#12141F", color: "#FFFFFF", padding: "96px 40px", textAlign: "center" }} data-s="s14">
+          <div className="vg-zoomc" style={{ position: "relative", overflow: "hidden", maxWidth: "1136px", margin: "0 auto", borderRadius: "28px", background: "#12141F", color: "#FFFFFF", padding: "96px 40px", textAlign: "center" }} data-s="s14">
             <div aria-hidden="true" style={{ position: "absolute", inset: "0", overflow: "hidden", pointerEvents: "none", borderRadius: "inherit", opacity: "1" }}>
               <div className="vg-aur1" style={{ position: "absolute", left: "-15%", top: "-45%", width: "130%", height: "95%", filter: "blur(60px)", opacity: ".9", background: "radial-gradient(ellipse 30% 42% at 22% 55%, rgba(61,214,140,0.61), transparent 70%), radial-gradient(ellipse 26% 38% at 48% 45%, rgba(45,212,191,0.50), transparent 70%), radial-gradient(ellipse 28% 46% at 76% 52%, rgba(124,92,255,0.55), transparent 70%)" }}>
               </div>

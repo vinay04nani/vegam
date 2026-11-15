@@ -525,294 +525,298 @@ export default function Hero() {
         <div aria-hidden="true" style={{ position: "absolute", inset: "0", background: "linear-gradient(180deg, rgba(3,5,14,.55) 0%, rgba(3,5,14,.15) 35%, rgba(3,5,14,0) 55%, rgba(3,5,14,.75) 100%)" }}>
         </div>
         <div style={{ position: "relative", zIndex: "1", maxWidth: "1200px", margin: "0 auto", padding: "166px 32px 0", textAlign: "center" }} data-s="s11">
-          <a href="#" className="vg-hero" style={{ animationDelay: ".05s", display: "inline-flex", alignItems: "center", gap: "10px", padding: "5px 14px 5px 5px", border: "1px solid rgba(255,255,255,.16)", borderRadius: "999px", background: "rgba(255,255,255,.06)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)", textDecoration: "none", fontSize: "14px", color: "#DDE0EE" }} data-s="s1">
-            <span style={{ padding: "3px 10px", borderRadius: "999px", background: "#FFFFFF", color: "#12141F", fontSize: "12px", fontWeight: "500" }} data-s="s1">
-              {"New"}
-            </span>
-            {"An AI voice agent with a long memory →"}
-          </a>
-          <h1 className="vg-hero" style={{ animationDelay: ".15s", margin: "28px auto 0", maxWidth: "1000px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", letterSpacing: "-0.045em", fontSize: "76px", lineHeight: "1.04", color: "#FFFFFF", textShadow: "0 2px 30px rgba(3,5,14,.5)" }}>
-            {"Never miss a customer."}
-            <br />
-            <span style={{ color: "#A9AECB" }}>
-              {"Never forget one either."}
-            </span>
-          </h1>
-          <p className="vg-hero" style={{ animationDelay: ".3s", margin: "24px auto 0", maxWidth: "640px", fontSize: "19px", color: "#C9CCDD" }} data-s="s15">
-            {"Vegham is an AI voice agent that answers your calls and messages, speaks your customers’ language, and remembers every person it talks to, even months later."}
-          </p>
-          <div className="vg-hero" style={{ animationDelay: ".42s", marginTop: "32px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px" }}>
-            <Link href="/signup/" style={{ display: "inline-flex", alignItems: "center", height: "52px", padding: "0 26px", borderRadius: "999px", background: "#FFFFFF", color: "#12141F", textDecoration: "none", fontWeight: "500" }} data-s="s1">
-              {"Start free"}
-            </Link>
-            <a href="#" aria-label="Play a 42-second sample call" style={{ display: "inline-flex", alignItems: "center", gap: "12px", height: "52px", padding: "0 20px 0 6px", borderRadius: "999px", border: "1px solid rgba(255,255,255,.25)", background: "rgba(255,255,255,.06)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)", color: "#FFFFFF", textDecoration: "none", fontWeight: "500" }} data-s="s1">
-              <span style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#FFFFFF", color: "#12141F", display: "inline-flex", alignItems: "center", justifyContent: "center" }} data-s="s2">
-                <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M8 5.5v13l10-6.5z" fill="currentColor" stroke="none">
+          <div className="vg-heroout">
+            <a href="#" className="vg-hero" style={{ animationDelay: ".05s", display: "inline-flex", alignItems: "center", gap: "10px", padding: "5px 14px 5px 5px", border: "1px solid rgba(255,255,255,.16)", borderRadius: "999px", background: "rgba(255,255,255,.06)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)", textDecoration: "none", fontSize: "14px", color: "#DDE0EE" }} data-s="s1">
+              <span style={{ padding: "3px 10px", borderRadius: "999px", background: "#FFFFFF", color: "#12141F", fontSize: "12px", fontWeight: "500" }} data-s="s1">
+                {"New"}
+              </span>
+              {"An AI voice agent with a long memory →"}
+            </a>
+            <h1 className="vg-hero" style={{ animationDelay: ".15s", margin: "28px auto 0", maxWidth: "1000px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", letterSpacing: "-0.045em", fontSize: "76px", lineHeight: "1.04", color: "#FFFFFF", textShadow: "0 2px 30px rgba(3,5,14,.5)" }}>
+              {"Never miss a customer."}
+              <br />
+              <span style={{ color: "#A9AECB" }}>
+                {"Never forget one either."}
+              </span>
+            </h1>
+            <p className="vg-hero" style={{ animationDelay: ".3s", margin: "24px auto 0", maxWidth: "640px", fontSize: "19px", color: "#C9CCDD" }} data-s="s15">
+              {"Vegham is an AI voice agent that answers your calls and messages, speaks your customers’ language, and remembers every person it talks to, even months later."}
+            </p>
+            <div className="vg-hero" style={{ animationDelay: ".42s", marginTop: "32px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "12px" }}>
+              <Link href="/signup/" style={{ display: "inline-flex", alignItems: "center", height: "52px", padding: "0 26px", borderRadius: "999px", background: "#FFFFFF", color: "#12141F", textDecoration: "none", fontWeight: "500" }} data-s="s1">
+                {"Start free"}
+              </Link>
+              <a href="#" aria-label="Play a 42-second sample call" style={{ display: "inline-flex", alignItems: "center", gap: "12px", height: "52px", padding: "0 20px 0 6px", borderRadius: "999px", border: "1px solid rgba(255,255,255,.25)", background: "rgba(255,255,255,.06)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)", color: "#FFFFFF", textDecoration: "none", fontWeight: "500" }} data-s="s1">
+                <span style={{ width: "40px", height: "40px", borderRadius: "50%", background: "#FFFFFF", color: "#12141F", display: "inline-flex", alignItems: "center", justifyContent: "center" }} data-s="s2">
+                  <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M8 5.5v13l10-6.5z" fill="currentColor" stroke="none">
+                    </path>
+                  </svg>
+                </span>
+                {"Hear a sample call"}
+                <span aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: "3px", height: "22px" }}>
+                  <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.00s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "9px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.12s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "14px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.24s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "7px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.36s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "18px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.48s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "11px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.60s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "6px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.72s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "15px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.00s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "20px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.12s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "10px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.24s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.36s" }}>
+                  </span>
+                  <span className="vg-wave" style={{ width: "3px", height: "12px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.48s" }}>
+                  </span>
+                </span>
+                <span style={{ fontSize: "13px", color: "#C9CCDD", fontVariantNumeric: "tabular-nums" }}>
+                  {"0:42"}
+                </span>
+              </a>
+            </div>
+            <div className="vg-hero" style={{ animationDelay: ".54s", marginTop: "22px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px 24px", fontSize: "14px", color: "#A9AECB" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3DD68C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12.5l4.5 4.5L19 7.5">
                   </path>
                 </svg>
+                {"Calls and chat, day and night"}
               </span>
-              {"Hear a sample call"}
-              <span aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: "3px", height: "22px" }}>
-                <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.00s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "9px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.12s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "14px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.24s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "7px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.36s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "18px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.48s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "11px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.60s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "6px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.72s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "15px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.00s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "20px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.12s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "10px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.24s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.36s" }}>
-                </span>
-                <span className="vg-wave" style={{ width: "3px", height: "12px", borderRadius: "2px", background: "#FFFFFF", animationDelay: "0.48s" }}>
-                </span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3DD68C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12.5l4.5 4.5L19 7.5">
+                  </path>
+                </svg>
+                {"Remembers people for months"}
               </span>
-              <span style={{ fontSize: "13px", color: "#C9CCDD", fontVariantNumeric: "tabular-nums" }}>
-                {"0:42"}
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3DD68C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12.5l4.5 4.5L19 7.5">
+                  </path>
+                </svg>
+                {"Live in minutes"}
               </span>
-            </a>
+            </div>
           </div>
-          <div className="vg-hero" style={{ animationDelay: ".54s", marginTop: "22px", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "8px 24px", fontSize: "14px", color: "#A9AECB" }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-              <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3DD68C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12.5l4.5 4.5L19 7.5">
-                </path>
-              </svg>
-              {"Calls and chat, day and night"}
-            </span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-              <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3DD68C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12.5l4.5 4.5L19 7.5">
-                </path>
-              </svg>
-              {"Remembers people for months"}
-            </span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
-              <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3DD68C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12.5l4.5 4.5L19 7.5">
-                </path>
-              </svg>
-              {"Live in minutes"}
-            </span>
-          </div>
-          <div className="vg-hero vg-mockframe" style={{ animationDelay: ".7s", position: "relative", margin: "64px auto 0", maxWidth: "1100px", height: "372px", borderRadius: "20px 20px 0 0", overflow: "hidden", background: "#FFFFFF", border: "1px solid rgba(255,255,255,.2)", borderBottom: "0", boxShadow: "0 -30px 90px -30px rgba(45,227,160,.35), 0 -10px 40px -20px rgba(0,0,0,.6)" }}>
-            <div className="vg-mock" style={{ display: "flex", textAlign: "left", color: "#1F1F1F", fontSize: "14px", lineHeight: "1.45", height: "100%" }}>
-              <div className="vg-mock-side" style={{ width: "190px", flex: "none", background: "#FAFAFB", borderRight: "1px solid #EDEDF0", padding: "18px 12px", display: "flex", flexDirection: "column", gap: "4px", color: "#5C5C5C" }}>
-                <span style={{ padding: "0 10px 14px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "20px", letterSpacing: "-0.045em", color: "transparent", background: "linear-gradient(100deg, #10B981 0%, #0EA5A4 25%, #3B6CF6 55%, #7C3AED 80%, #DB2777 100%)", WebkitBackgroundClip: "text", backgroundClip: "text" }}>
-                  {"vegham"}
-                </span>
-                <span style={{ padding: "7px 10px", borderRadius: "12px" }}>
-                  {"Home"}
-                </span>
-                <span style={{ padding: "7px 10px", borderRadius: "12px", background: "#F1F1F4", color: "#16182A", fontWeight: "500" }}>
-                  {"Conversations"}
-                </span>
-                <span style={{ padding: "7px 10px", borderRadius: "12px" }}>
-                  {"People"}
-                </span>
-                <span style={{ padding: "7px 10px", borderRadius: "12px" }}>
-                  {"Follow-ups"}
-                </span>
-                <span style={{ padding: "7px 10px", borderRadius: "12px" }}>
-                  {"Insights"}
-                </span>
-                <span style={{ padding: "7px 10px", borderRadius: "12px" }}>
-                  {"Your agent"}
-                </span>
-              </div>
-              <div style={{ flex: "1", minWidth: "0", padding: "18px 22px", display: "flex", flexDirection: "column", gap: "10px", background: "#FFFFFF" }}>
-                <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", paddingBottom: "12px", borderBottom: "1px solid #F0F0F3" }}>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
-                    <span style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#F1F1F4", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: "600", fontSize: "13px" }}>
-                      {"R"}
+          <div className="vg-mockin">
+            <div className="vg-hero vg-mockframe" style={{ animationDelay: ".7s", position: "relative", margin: "64px auto 0", maxWidth: "1100px", height: "372px", borderRadius: "20px 20px 0 0", overflow: "hidden", background: "#FFFFFF", border: "1px solid rgba(255,255,255,.2)", borderBottom: "0", boxShadow: "0 -30px 90px -30px rgba(45,227,160,.35), 0 -10px 40px -20px rgba(0,0,0,.6)" }}>
+              <div className="vg-mock" style={{ display: "flex", textAlign: "left", color: "#1F1F1F", fontSize: "14px", lineHeight: "1.45", height: "100%" }}>
+                <div className="vg-mock-side" style={{ width: "190px", flex: "none", background: "#FAFAFB", borderRight: "1px solid #EDEDF0", padding: "18px 12px", display: "flex", flexDirection: "column", gap: "4px", color: "#5C5C5C" }}>
+                  <span style={{ padding: "0 10px 14px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "20px", letterSpacing: "-0.045em", color: "transparent", background: "linear-gradient(100deg, #10B981 0%, #0EA5A4 25%, #3B6CF6 55%, #7C3AED 80%, #DB2777 100%)", WebkitBackgroundClip: "text", backgroundClip: "text" }}>
+                    {"vegham"}
+                  </span>
+                  <span style={{ padding: "7px 10px", borderRadius: "12px" }}>
+                    {"Home"}
+                  </span>
+                  <span style={{ padding: "7px 10px", borderRadius: "12px", background: "#F1F1F4", color: "#16182A", fontWeight: "500" }}>
+                    {"Conversations"}
+                  </span>
+                  <span style={{ padding: "7px 10px", borderRadius: "12px" }}>
+                    {"People"}
+                  </span>
+                  <span style={{ padding: "7px 10px", borderRadius: "12px" }}>
+                    {"Follow-ups"}
+                  </span>
+                  <span style={{ padding: "7px 10px", borderRadius: "12px" }}>
+                    {"Insights"}
+                  </span>
+                  <span style={{ padding: "7px 10px", borderRadius: "12px" }}>
+                    {"Your agent"}
+                  </span>
+                </div>
+                <div style={{ flex: "1", minWidth: "0", padding: "18px 22px", display: "flex", flexDirection: "column", gap: "10px", background: "#FFFFFF" }}>
+                  <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", paddingBottom: "12px", borderBottom: "1px solid #F0F0F3" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ width: "32px", height: "32px", borderRadius: "50%", background: "#F1F1F4", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: "600", fontSize: "13px" }}>
+                        {"R"}
+                      </span>
+                      <span>
+                        <b style={{ fontWeight: "600" }}>
+                          {"Rohan Mehta"}
+                        </b>
+                        <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
+                          {"Phone call · 0:38"}
+                        </span>
+                      </span>
+                    </span>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", height: "26px", padding: "0 10px", borderRadius: "999px", border: "1px solid rgba(16,185,129,.45)", color: "#0B8F63", fontSize: "12.5px", fontWeight: "500", whiteSpace: "nowrap" }} data-s="s1">
+                      <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10B981" }}>
+                      </span>
+                      {"Returning caller"}
+                    </span>
+                  </span>
+                  <span style={{ alignSelf: "flex-start", maxWidth: "78%", background: "#16182A", color: "#FFFFFF", padding: "9px 13px", borderRadius: "16px 16px 16px 4px" }}>
+                    {"Hi Rohan, good to hear from you again. Still looking at weekend sessions?"}
+                  </span>
+                  <span style={{ alignSelf: "flex-end", maxWidth: "72%", background: "#F3F3F5", padding: "9px 13px", borderRadius: "16px 16px 4px 16px" }}>
+                    {"Yes! You remembered. Is Saturday morning open?"}
+                  </span>
+                  <span style={{ alignSelf: "flex-start", maxWidth: "78%", background: "#16182A", color: "#FFFFFF", padding: "9px 13px", borderRadius: "16px 16px 16px 4px" }}>
+                    {"Saturday 10 AM is free. Shall I hold it and send the details on WhatsApp, like last time?"}
+                  </span>
+                  <span style={{ marginTop: "auto", display: "flex", alignItems: "center", gap: "12px", paddingTop: "12px", borderTop: "1px solid #F0F0F3", fontSize: "12.5px", color: "#8A8A8A" }}>
+                    <span aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: "3px", height: "22px" }}>
+                      <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "9px", borderRadius: "2px", background: "#10B981", animationDelay: "0.12s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "14px", borderRadius: "2px", background: "#10B981", animationDelay: "0.24s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "7px", borderRadius: "2px", background: "#10B981", animationDelay: "0.36s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "18px", borderRadius: "2px", background: "#10B981", animationDelay: "0.48s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "11px", borderRadius: "2px", background: "#10B981", animationDelay: "0.60s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "6px", borderRadius: "2px", background: "#10B981", animationDelay: "0.72s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "15px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "20px", borderRadius: "2px", background: "#10B981", animationDelay: "0.12s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "10px", borderRadius: "2px", background: "#10B981", animationDelay: "0.24s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#10B981", animationDelay: "0.36s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "12px", borderRadius: "2px", background: "#10B981", animationDelay: "0.48s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "17px", borderRadius: "2px", background: "#10B981", animationDelay: "0.60s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "8px", borderRadius: "2px", background: "#10B981", animationDelay: "0.72s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "19px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "12px", borderRadius: "2px", background: "#10B981", animationDelay: "0.12s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "7px", borderRadius: "2px", background: "#10B981", animationDelay: "0.24s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "16px", borderRadius: "2px", background: "#10B981", animationDelay: "0.36s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "9px", borderRadius: "2px", background: "#10B981", animationDelay: "0.48s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#10B981", animationDelay: "0.60s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "13px", borderRadius: "2px", background: "#10B981", animationDelay: "0.72s" }}>
+                      </span>
+                      <span className="vg-wave" style={{ width: "3px", height: "18px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
+                      </span>
                     </span>
                     <span>
-                      <b style={{ fontWeight: "600" }}>
-                        {"Rohan Mehta"}
-                      </b>
+                      {"Vegham is on the call"}
+                    </span>
+                  </span>
+                </div>
+                <div className="vg-mock-mem" style={{ width: "300px", flex: "none", borderLeft: "1px solid #EDEDF0", padding: "18px 20px", background: "#FCFCFD" }}>
+                  <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "10px" }}>
+                    <b style={{ fontWeight: "600", fontSize: "13.5px" }}>
+                      {"What Vegham remembers"}
+                    </b>
+                    <span style={{ fontSize: "10.5px", letterSpacing: "0.1em", textTransform: "uppercase", color: "#A3A3A3" }}>
+                      {"Sample"}
+                    </span>
+                  </span>
+                  <span style={{ display: "flex", gap: "10px", padding: "10px 0", borderTop: "1px solid #F0F0F3" }}>
+                    <span style={{ flex: "none", marginTop: "1px", color: "#10B981" }}>
+                      <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="8.5">
+                        </circle>
+                        <path d="M12 7.5V12l3 2">
+                        </path>
+                      </svg>
+                    </span>
+                    <span style={{ minWidth: "0" }}>
+                      <span style={{ display: "block", fontSize: "13.5px", color: "#1F1F1F" }}>
+                        {"First called in May"}
+                      </span>
                       <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
-                        {"Phone call · 0:38"}
+                        {"6 months ago · phone"}
                       </span>
                     </span>
                   </span>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", height: "26px", padding: "0 10px", borderRadius: "999px", border: "1px solid rgba(16,185,129,.45)", color: "#0B8F63", fontSize: "12.5px", fontWeight: "500", whiteSpace: "nowrap" }} data-s="s1">
-                    <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#10B981" }}>
+                  <span style={{ display: "flex", gap: "10px", padding: "10px 0", borderTop: "1px solid #F0F0F3" }}>
+                    <span style={{ flex: "none", marginTop: "1px", color: "#10B981" }}>
+                      <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="8.5" r="3.5">
+                        </circle>
+                        <path d="M5 20a7 7 0 0 1 14 0">
+                        </path>
+                      </svg>
                     </span>
-                    {"Returning caller"}
-                  </span>
-                </span>
-                <span style={{ alignSelf: "flex-start", maxWidth: "78%", background: "#16182A", color: "#FFFFFF", padding: "9px 13px", borderRadius: "16px 16px 16px 4px" }}>
-                  {"Hi Rohan, good to hear from you again. Still looking at weekend sessions?"}
-                </span>
-                <span style={{ alignSelf: "flex-end", maxWidth: "72%", background: "#F3F3F5", padding: "9px 13px", borderRadius: "16px 16px 4px 16px" }}>
-                  {"Yes! You remembered. Is Saturday morning open?"}
-                </span>
-                <span style={{ alignSelf: "flex-start", maxWidth: "78%", background: "#16182A", color: "#FFFFFF", padding: "9px 13px", borderRadius: "16px 16px 16px 4px" }}>
-                  {"Saturday 10 AM is free. Shall I hold it and send the details on WhatsApp, like last time?"}
-                </span>
-                <span style={{ marginTop: "auto", display: "flex", alignItems: "center", gap: "12px", paddingTop: "12px", borderTop: "1px solid #F0F0F3", fontSize: "12.5px", color: "#8A8A8A" }}>
-                  <span aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: "3px", height: "22px" }}>
-                    <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "9px", borderRadius: "2px", background: "#10B981", animationDelay: "0.12s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "14px", borderRadius: "2px", background: "#10B981", animationDelay: "0.24s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "7px", borderRadius: "2px", background: "#10B981", animationDelay: "0.36s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "18px", borderRadius: "2px", background: "#10B981", animationDelay: "0.48s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "11px", borderRadius: "2px", background: "#10B981", animationDelay: "0.60s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "6px", borderRadius: "2px", background: "#10B981", animationDelay: "0.72s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "15px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "20px", borderRadius: "2px", background: "#10B981", animationDelay: "0.12s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "10px", borderRadius: "2px", background: "#10B981", animationDelay: "0.24s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#10B981", animationDelay: "0.36s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "12px", borderRadius: "2px", background: "#10B981", animationDelay: "0.48s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "17px", borderRadius: "2px", background: "#10B981", animationDelay: "0.60s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "8px", borderRadius: "2px", background: "#10B981", animationDelay: "0.72s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "19px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "12px", borderRadius: "2px", background: "#10B981", animationDelay: "0.12s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "7px", borderRadius: "2px", background: "#10B981", animationDelay: "0.24s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "16px", borderRadius: "2px", background: "#10B981", animationDelay: "0.36s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "9px", borderRadius: "2px", background: "#10B981", animationDelay: "0.48s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#10B981", animationDelay: "0.60s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "13px", borderRadius: "2px", background: "#10B981", animationDelay: "0.72s" }}>
-                    </span>
-                    <span className="vg-wave" style={{ width: "3px", height: "18px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
+                    <span style={{ minWidth: "0" }}>
+                      <span style={{ display: "block", fontSize: "13.5px", color: "#1F1F1F" }}>
+                        {"Prefers Saturday mornings"}
+                      </span>
+                      <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
+                        {"Said so twice"}
+                      </span>
                     </span>
                   </span>
-                  <span>
-                    {"Vegham is on the call"}
-                  </span>
-                </span>
-              </div>
-              <div className="vg-mock-mem" style={{ width: "300px", flex: "none", borderLeft: "1px solid #EDEDF0", padding: "18px 20px", background: "#FCFCFD" }}>
-                <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "10px" }}>
-                  <b style={{ fontWeight: "600", fontSize: "13.5px" }}>
-                    {"What Vegham remembers"}
-                  </b>
-                  <span style={{ fontSize: "10.5px", letterSpacing: "0.1em", textTransform: "uppercase", color: "#A3A3A3" }}>
-                    {"Sample"}
-                  </span>
-                </span>
-                <span style={{ display: "flex", gap: "10px", padding: "10px 0", borderTop: "1px solid #F0F0F3" }}>
-                  <span style={{ flex: "none", marginTop: "1px", color: "#10B981" }}>
-                    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="8.5">
-                      </circle>
-                      <path d="M12 7.5V12l3 2">
-                      </path>
-                    </svg>
-                  </span>
-                  <span style={{ minWidth: "0" }}>
-                    <span style={{ display: "block", fontSize: "13.5px", color: "#1F1F1F" }}>
-                      {"First called in May"}
+                  <span style={{ display: "flex", gap: "10px", padding: "10px 0", borderTop: "1px solid #F0F0F3" }}>
+                    <span style={{ flex: "none", marginTop: "1px", color: "#10B981" }}>
+                      <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <circle cx="12" cy="12" r="8.5">
+                        </circle>
+                        <path d="M3.5 12h17">
+                        </path>
+                        <path d="M12 3.5c2.5 2.3 3.7 5.2 3.7 8.5s-1.2 6.2-3.7 8.5c-2.5-2.3-3.7-5.2-3.7-8.5S9.5 5.8 12 3.5z">
+                        </path>
+                      </svg>
                     </span>
-                    <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
-                      {"6 months ago · phone"}
+                    <span style={{ minWidth: "0" }}>
+                      <span style={{ display: "block", fontSize: "13.5px", color: "#1F1F1F" }}>
+                        {"Speaks Hindi and English"}
+                      </span>
+                      <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
+                        {"Switches between both"}
+                      </span>
                     </span>
                   </span>
-                </span>
-                <span style={{ display: "flex", gap: "10px", padding: "10px 0", borderTop: "1px solid #F0F0F3" }}>
-                  <span style={{ flex: "none", marginTop: "1px", color: "#10B981" }}>
-                    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="8.5" r="3.5">
-                      </circle>
-                      <path d="M5 20a7 7 0 0 1 14 0">
-                      </path>
-                    </svg>
-                  </span>
-                  <span style={{ minWidth: "0" }}>
-                    <span style={{ display: "block", fontSize: "13.5px", color: "#1F1F1F" }}>
-                      {"Prefers Saturday mornings"}
+                  <span style={{ display: "flex", gap: "10px", padding: "10px 0", borderTop: "1px solid #F0F0F3" }}>
+                    <span style={{ flex: "none", marginTop: "1px", color: "#10B981" }}>
+                      <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z">
+                        </path>
+                      </svg>
                     </span>
-                    <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
-                      {"Said so twice"}
+                    <span style={{ minWidth: "0" }}>
+                      <span style={{ display: "block", fontSize: "13.5px", color: "#1F1F1F" }}>
+                        {"Likes details on WhatsApp"}
+                      </span>
+                      <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
+                        {"Same number as his calls"}
+                      </span>
                     </span>
                   </span>
-                </span>
-                <span style={{ display: "flex", gap: "10px", padding: "10px 0", borderTop: "1px solid #F0F0F3" }}>
-                  <span style={{ flex: "none", marginTop: "1px", color: "#10B981" }}>
-                    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <circle cx="12" cy="12" r="8.5">
-                      </circle>
-                      <path d="M3.5 12h17">
-                      </path>
-                      <path d="M12 3.5c2.5 2.3 3.7 5.2 3.7 8.5s-1.2 6.2-3.7 8.5c-2.5-2.3-3.7-5.2-3.7-8.5S9.5 5.8 12 3.5z">
-                      </path>
-                    </svg>
-                  </span>
-                  <span style={{ minWidth: "0" }}>
-                    <span style={{ display: "block", fontSize: "13.5px", color: "#1F1F1F" }}>
-                      {"Speaks Hindi and English"}
+                  <span style={{ display: "flex", gap: "10px", padding: "10px 0", borderTop: "1px solid #F0F0F3" }}>
+                    <span style={{ flex: "none", marginTop: "1px", color: "#10B981" }}>
+                      <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z">
+                        </path>
+                        <path d="M9.5 21h5">
+                        </path>
+                      </svg>
                     </span>
-                    <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
-                      {"Switches between both"}
+                    <span style={{ minWidth: "0" }}>
+                      <span style={{ display: "block", fontSize: "13.5px", color: "#1F1F1F" }}>
+                        {"Asked about weekend sessions"}
+                      </span>
+                      <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
+                        {"Left unfinished in July"}
+                      </span>
                     </span>
                   </span>
-                </span>
-                <span style={{ display: "flex", gap: "10px", padding: "10px 0", borderTop: "1px solid #F0F0F3" }}>
-                  <span style={{ flex: "none", marginTop: "1px", color: "#10B981" }}>
-                    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z">
-                      </path>
-                    </svg>
-                  </span>
-                  <span style={{ minWidth: "0" }}>
-                    <span style={{ display: "block", fontSize: "13.5px", color: "#1F1F1F" }}>
-                      {"Likes details on WhatsApp"}
-                    </span>
-                    <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
-                      {"Same number as his calls"}
-                    </span>
-                  </span>
-                </span>
-                <span style={{ display: "flex", gap: "10px", padding: "10px 0", borderTop: "1px solid #F0F0F3" }}>
-                  <span style={{ flex: "none", marginTop: "1px", color: "#10B981" }}>
-                    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z">
-                      </path>
-                      <path d="M9.5 21h5">
-                      </path>
-                    </svg>
-                  </span>
-                  <span style={{ minWidth: "0" }}>
-                    <span style={{ display: "block", fontSize: "13.5px", color: "#1F1F1F" }}>
-                      {"Asked about weekend sessions"}
-                    </span>
-                    <span style={{ display: "block", fontSize: "12px", color: "#8A8A8A" }}>
-                      {"Left unfinished in July"}
-                    </span>
-                  </span>
-                </span>
+                </div>
               </div>
             </div>
           </div>

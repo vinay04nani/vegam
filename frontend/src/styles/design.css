@@ -195,6 +195,15 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
 :root:has(#vg-menu:checked) .vg-mpanel{display:flex}
 :root:has(#vg-menu:checked){overflow:hidden}
 @media (max-width: 760px){.vg-mbtn{display:inline-flex!important}}
+@keyframes vg-heroout{to{transform:translateY(-70px);opacity:.15}}
+@keyframes vg-mockin{from{transform:translateY(46px) scale(.955)}to{transform:none}}
+@keyframes vg-sky{to{transform:translateY(140px) scale(1.06)}}
+@supports (animation-timeline: view()){
+  .vg-heroout{animation:vg-heroout linear both;animation-timeline:scroll(root);animation-range:120px 760px}
+  .vg-mockin{transform-origin:50% 100%;animation:vg-mockin linear both;animation-timeline:scroll(root);animation-range:0px 420px}
+  .vg-sky{animation:vg-sky linear both;animation-timeline:scroll(root);animation-range:0px 1100px}
+}
+@media (prefers-reduced-motion: reduce){.vg-heroout,.vg-mockin,.vg-sky,.vg-rv,.vg-par,.vg-zoomc,.vg-line-in{animation:none!important}}
 @media (max-width: 1000px){.vg-g3,.vg-g4{grid-template-columns:repeat(2,minmax(0,1fr))!important}.vg-mock-side{display:none!important}}
 @media (max-width: 760px){.vg-pad{padding:72px 20px!important}.vg-mockframe{height:auto!important}.vg-mock{flex-direction:column;height:auto!important}.vg-mock-mem{width:auto!important;border-left:0!important;border-top:1px solid #EDEDF0}}
 @media (max-width: 640px){.vg-g3,.vg-g4{grid-template-columns:minmax(0,1fr)!important}.vg-g3>*,.vg-g4>*{grid-column:auto!important;min-height:0!important}}

@@ -36,21 +36,26 @@ export default function ProductPage() {
         <section id="voice" style={{ background: "#FFFFFF" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: "48px 72px" }} data-s="s10 s11">
             <div style={{ flex: "1 1 420px", minWidth: "0", maxWidth: "520px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Voice"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Sounds like a person,"}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"not a phone menu."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Sounds like a person,"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"not a phone menu."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"A natural voice that listens, pauses and lets people interrupt. It answers from what you taught it and never puts anyone on hold."}
               </p>
               <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -59,7 +64,7 @@ export default function ProductPage() {
                   </span>
                   {"Picks up every call, day and night"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -68,7 +73,7 @@ export default function ProductPage() {
                   </span>
                   {"Answers in under a second"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -79,7 +84,7 @@ export default function ProductPage() {
                 </span>
               </div>
             </div>
-            <div style={{ flex: "1 1 480px", minWidth: "0" }}>
+            <div className="vg-rv" style={{ flex: "1 1 480px", minWidth: "0" }}>
               <div style={{ borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }}>
                 <div style={{ borderRadius: "20px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "24px", fontSize: "14px", lineHeight: "1.45" }}>
                   <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", paddingBottom: "14px", borderBottom: "1px solid #F0F0F3" }}>
@@ -185,21 +190,26 @@ export default function ProductPage() {
         <section id="languages" style={{ background: "#F7F7F8" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap-reverse", flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-between", gap: "48px 72px" }} data-s="s10 s11">
             <div style={{ flex: "1 1 420px", minWidth: "0", maxWidth: "520px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Languages"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Speaks their language."}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"Switches when they do."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Speaks their language."}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"Switches when they do."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"Vegham answers in the language the customer starts in. If they switch half-way, or ask it to, it follows."}
               </p>
               <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -208,7 +218,7 @@ export default function ProductPage() {
                   </span>
                   {"Choose the languages your customers speak"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -217,7 +227,7 @@ export default function ProductPage() {
                   </span>
                   {"Mixed languages in one sentence are fine"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -228,7 +238,7 @@ export default function ProductPage() {
                 </span>
               </div>
             </div>
-            <div style={{ flex: "1 1 480px", minWidth: "0" }}>
+            <div className="vg-rv" style={{ flex: "1 1 480px", minWidth: "0" }}>
               <div style={{ borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }}>
                 <div style={{ borderRadius: "20px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "24px", fontSize: "14px", lineHeight: "1.45" }}>
                   <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "12px", paddingBottom: "14px", borderBottom: "1px solid #F0F0F3" }}>
@@ -307,7 +317,7 @@ export default function ProductPage() {
         <div style={{ padding: "112px 0 0", background: "#FFFFFF" }}>
         </div>
         <section id="memory" style={{ padding: "0 16px" }}>
-          <div style={{ position: "relative", overflow: "hidden", maxWidth: "1408px", margin: "0 auto", borderRadius: "32px", background: "#12141F", color: "#FFFFFF" }}>
+          <div className="vg-zoomc" style={{ position: "relative", overflow: "hidden", maxWidth: "1408px", margin: "0 auto", borderRadius: "32px", background: "#12141F", color: "#FFFFFF" }}>
             <div aria-hidden="true" style={{ position: "absolute", inset: "0", overflow: "hidden", pointerEvents: "none", borderRadius: "inherit", opacity: "0.85" }}>
               <div className="vg-aur1" style={{ position: "absolute", left: "-15%", top: "-45%", width: "130%", height: "95%", filter: "blur(60px)", opacity: ".9", background: "radial-gradient(ellipse 30% 42% at 22% 55%, rgba(61,214,140,0.61), transparent 70%), radial-gradient(ellipse 26% 38% at 48% 45%, rgba(45,212,191,0.50), transparent 70%), radial-gradient(ellipse 28% 46% at 76% 52%, rgba(124,92,255,0.55), transparent 70%)" }}>
               </div>
@@ -320,17 +330,22 @@ export default function ProductPage() {
             </div>
             <div style={{ position: "relative", maxWidth: "1200px", margin: "0 auto", padding: "112px 32px", boxSizing: "border-box", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "56px 72px" }} data-s="s9 s11">
               <div style={{ flex: "1 1 440px", minWidth: "0" }}>
-                <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#A9AECB" }}>
+                <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#A9AECB" }}>
                   {"Long memory"}
                 </span>
                 <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "52px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#FFFFFF" }} data-s="s4">
-                  {"It remembers every person."}
-                  <br />
-                  <span style={{ color: "#8C90A8" }}>
-                    {"Even six months later."}
+                  <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                    <span className="vg-line-in" style={{ display: "block" }}>
+                      {"It remembers every person."}
+                    </span>
+                  </span>
+                  <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                    <span className="vg-line-in" style={{ display: "block", color: "#8C90A8" }}>
+                      {"Even six months later."}
+                    </span>
                   </span>
                 </h2>
-                <p style={{ margin: "20px 0 0", maxWidth: "500px", fontSize: "18px", color: "#C3C6DA" }} data-s="s16">
+                <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "500px", fontSize: "18px", color: "#C3C6DA" }} data-s="s16">
                   {"Most assistants start from zero on every call. Vegham keeps the thread: who someone is, what they asked, and where you left off."}
                 </p>
                 <div style={{ marginTop: "36px", display: "flex", flexDirection: "column", gap: "20px", maxWidth: "480px" }}>
@@ -384,7 +399,7 @@ export default function ProductPage() {
                   </div>
                 </div>
               </div>
-              <div style={{ flex: "1 1 460px", minWidth: "0" }}>
+              <div className="vg-par" style={{ flex: "1 1 460px", minWidth: "0" }}>
                 <div style={{ position: "relative", padding: "32px", borderRadius: "24px", background: "rgba(18,20,31,.72)", border: "1px solid rgba(255,255,255,.12)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)" }}>
                   <div style={{ position: "relative" }}>
                     <span aria-hidden="true" style={{ position: "absolute", left: "17.5px", top: "18px", bottom: "60px", width: "1px", background: "linear-gradient(180deg, rgba(255,255,255,.16), #10B981)" }}>
@@ -469,23 +484,28 @@ export default function ProductPage() {
           <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px 112px" }} data-s="s10 s11">
             <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: "24px" }}>
               <div>
-                <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+                <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                   {"One agent, every channel"}
                 </span>
                 <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "52px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s4">
-                  {"Wherever customers reach you,"}
-                  <br />
-                  <span style={{ color: "#8A8A8A" }}>
-                    {"Vegham answers."}
+                  <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                    <span className="vg-line-in" style={{ display: "block" }}>
+                      {"Wherever customers reach you,"}
+                    </span>
+                  </span>
+                  <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                    <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                      {"Vegham answers."}
+                    </span>
                   </span>
                 </h2>
               </div>
-              <p style={{ margin: "20px 0 0", maxWidth: "420px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "420px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"Calls, chats and a simple link. Customers pick the way they like to talk, and Vegham is already there."}
               </p>
             </div>
             <div className="vg-g3" style={{ marginTop: "48px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px" }}>
-              <div className="vg-lift" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                   <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                     <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16182A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -508,7 +528,7 @@ export default function ProductPage() {
                   </span>
                 </span>
               </div>
-              <div className="vg-lift" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                   <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                     <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#25D366">
@@ -534,7 +554,7 @@ export default function ProductPage() {
                   </span>
                 </span>
               </div>
-              <div className="vg-lift" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                   <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                     <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#FF0069">
@@ -557,7 +577,7 @@ export default function ProductPage() {
                   </span>
                 </span>
               </div>
-              <div className="vg-lift" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                   <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                     <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#0866FF">
@@ -580,7 +600,7 @@ export default function ProductPage() {
                   </span>
                 </span>
               </div>
-              <div className="vg-lift" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                   <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                     <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24">
@@ -608,7 +628,7 @@ export default function ProductPage() {
                   </span>
                 </span>
               </div>
-              <div className="vg-lift" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+              <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
                 <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                   <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                     <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16182A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -645,21 +665,26 @@ export default function ProductPage() {
         <section id="hand-over" style={{ background: "#F7F7F8" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: "48px 72px" }} data-s="s10 s11">
             <div style={{ flex: "1 1 420px", minWidth: "0", maxWidth: "520px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Hand-over"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Knows when to"}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"bring you in."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Knows when to"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"bring you in."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"When a conversation needs a person, Vegham says so, takes a message and passes it to you with a short summary. You set the rules."}
               </p>
               <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -668,7 +693,7 @@ export default function ProductPage() {
                   </span>
                   {"You choose the moments it must hand over"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -677,7 +702,7 @@ export default function ProductPage() {
                   </span>
                   {"Summary and transcript attached every time"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -688,7 +713,7 @@ export default function ProductPage() {
                 </span>
               </div>
             </div>
-            <div style={{ flex: "1 1 480px", minWidth: "0" }}>
+            <div className="vg-rv" style={{ flex: "1 1 480px", minWidth: "0" }}>
               <div style={{ borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }}>
                 <div style={{ borderRadius: "20px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "24px", fontSize: "14px", lineHeight: "1.45" }}>
                   <span style={{ display: "block", padding: "16px 18px", borderRadius: "16px", background: "#F7F7F8" }}>
@@ -757,21 +782,26 @@ export default function ProductPage() {
         <section id="follow-ups" style={{ background: "#FFFFFF" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap-reverse", flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-between", gap: "48px 72px" }} data-s="s10 s11">
             <div style={{ flex: "1 1 420px", minWidth: "0", maxWidth: "520px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Follow-ups"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Remembers what"}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"it promised."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Remembers what"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"it promised."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"“I’ll think about it” is not the end of a conversation. Vegham keeps track of who to get back to and when, and writes the message for you."}
               </p>
               <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -780,7 +810,7 @@ export default function ProductPage() {
                   </span>
                   {"Follows up once, in a friendly way"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -789,7 +819,7 @@ export default function ProductPage() {
                   </span>
                   {"Only people who agreed to hear from you"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -800,7 +830,7 @@ export default function ProductPage() {
                 </span>
               </div>
             </div>
-            <div style={{ flex: "1 1 480px", minWidth: "0" }}>
+            <div className="vg-rv" style={{ flex: "1 1 480px", minWidth: "0" }}>
               <div style={{ borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }}>
                 <div style={{ borderRadius: "20px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "24px", fontSize: "14px", lineHeight: "1.45" }}>
                   <span style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", paddingBottom: "12px" }}>
@@ -870,21 +900,26 @@ export default function ProductPage() {
         <section id="knowledge" style={{ background: "#F7F7F8" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap", flexDirection: "row", alignItems: "center", justifyContent: "space-between", gap: "48px 72px" }} data-s="s10 s11">
             <div style={{ flex: "1 1 420px", minWidth: "0", maxWidth: "520px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Knowledge"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"Knows your business."}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"Says only what is true."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"Knows your business."}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"Says only what is true."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"Paste your website or upload a price list. Vegham learns from it, shows you what it knows, and asks you about anything it could not answer."}
               </p>
               <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -893,7 +928,7 @@ export default function ProductPage() {
                   </span>
                   {"Learns from your website, files and notes"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -902,7 +937,7 @@ export default function ProductPage() {
                   </span>
                   {"Rules it always follows, and things it never says"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -913,7 +948,7 @@ export default function ProductPage() {
                 </span>
               </div>
             </div>
-            <div style={{ flex: "1 1 480px", minWidth: "0" }}>
+            <div className="vg-rv" style={{ flex: "1 1 480px", minWidth: "0" }}>
               <div style={{ borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }}>
                 <div style={{ borderRadius: "20px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "24px", fontSize: "14px", lineHeight: "1.45" }}>
                   <span style={{ display: "block", fontSize: "12.5px", color: "#8A8A8A", paddingBottom: "10px" }}>
@@ -999,21 +1034,26 @@ export default function ProductPage() {
         <section id="insights" style={{ background: "#FFFFFF" }}>
           <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", display: "flex", flexWrap: "wrap-reverse", flexDirection: "row-reverse", alignItems: "center", justifyContent: "space-between", gap: "48px 72px" }} data-s="s10 s11">
             <div style={{ flex: "1 1 420px", minWidth: "0", maxWidth: "520px" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+              <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
                 {"Insights"}
               </span>
               <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
-                {"See what happened"}
-                <br />
-                <span style={{ color: "#8A8A8A" }}>
-                  {"while you were busy."}
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block" }}>
+                    {"See what happened"}
+                  </span>
+                </span>
+                <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                  <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                    {"while you were busy."}
+                  </span>
                 </span>
               </h2>
-              <p style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
                 {"Every call and chat is summarised. See how many it answered, who it recognised, what people asked and where it needed you."}
               </p>
               <div style={{ marginTop: "28px", display: "flex", flexDirection: "column", gap: "14px" }}>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -1022,7 +1062,7 @@ export default function ProductPage() {
                   </span>
                   {"Calls, chats and missed calls saved"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -1031,7 +1071,7 @@ export default function ProductPage() {
                   </span>
                   {"What people ask most"}
                 </span>
-                <span style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
+                <span className="vg-rv" style={{ display: "flex", gap: "12px", fontSize: "16px", color: "#3D3D3D" }}>
                   <span style={{ flex: "none", marginTop: "3px", color: "#10B981" }}>
                     <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -1042,7 +1082,7 @@ export default function ProductPage() {
                 </span>
               </div>
             </div>
-            <div style={{ flex: "1 1 480px", minWidth: "0" }}>
+            <div className="vg-rv" style={{ flex: "1 1 480px", minWidth: "0" }}>
               <div style={{ borderRadius: "28px", background: "#F7F7F8", border: "1px solid #ECECEF", padding: "14px" }}>
                 <div style={{ borderRadius: "20px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "24px", fontSize: "14px", lineHeight: "1.45" }}>
                   <span style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
@@ -1116,7 +1156,7 @@ export default function ProductPage() {
           </div>
         </section>
         <section style={{ padding: "0 32px 112px", background: "#FFFFFF" }} data-s="s12">
-          <div style={{ position: "relative", overflow: "hidden", maxWidth: "1136px", margin: "0 auto", borderRadius: "28px", background: "#12141F", color: "#FFFFFF", padding: "96px 40px", textAlign: "center" }} data-s="s14">
+          <div className="vg-zoomc" style={{ position: "relative", overflow: "hidden", maxWidth: "1136px", margin: "0 auto", borderRadius: "28px", background: "#12141F", color: "#FFFFFF", padding: "96px 40px", textAlign: "center" }} data-s="s14">
             <div aria-hidden="true" style={{ position: "absolute", inset: "0", overflow: "hidden", pointerEvents: "none", borderRadius: "inherit", opacity: "1" }}>
               <div className="vg-aur1" style={{ position: "absolute", left: "-15%", top: "-45%", width: "130%", height: "95%", filter: "blur(60px)", opacity: ".9", background: "radial-gradient(ellipse 30% 42% at 22% 55%, rgba(61,214,140,0.61), transparent 70%), radial-gradient(ellipse 26% 38% at 48% 45%, rgba(45,212,191,0.50), transparent 70%), radial-gradient(ellipse 28% 46% at 76% 52%, rgba(124,92,255,0.55), transparent 70%)" }}>
               </div>
