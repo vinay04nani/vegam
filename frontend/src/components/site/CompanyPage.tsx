@@ -252,61 +252,6 @@ export default function CompanyPage() {
             </div>
           </div>
         </section>
-        <section>
-          <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "104px 32px 112px", display: "flex", flexWrap: "wrap", gap: "16px" }} data-s="s10 s11">
-            <a href="#" className="vg-lift" style={{ flex: "1 1 400px", display: "flex", flexDirection: "column", gap: "10px", padding: "32px", borderRadius: "28px", background: "#16182A", color: "#FFFFFF", textDecoration: "none" }}>
-              <span style={{ fontSize: "12px", letterSpacing: ".14em", textTransform: "uppercase", color: "#A5ABDB" }}>
-                {"How we handle your data"}
-              </span>
-              <span style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", letterSpacing: "-0.04em", fontSize: "30px", lineHeight: "1.15" }}>
-                {"Encrypted, never sold,"}
-                <br />
-                {"always yours."}
-              </span>
-              <span style={{ color: "#C3C6DA" }}>
-                {"Read our security and privacy promises →"}
-              </span>
-            </a>
-            <div style={{ flex: "1 1 400px", display: "flex", flexDirection: "column", gap: "14px", padding: "32px", borderRadius: "28px", border: "1px solid #ECECF0" }}>
-              <span style={{ fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
-                {"Press kit"}
-              </span>
-              <span style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", letterSpacing: "-0.04em", fontSize: "30px", lineHeight: "1.15" }}>
-                {"Wordmark and colours"}
-              </span>
-              <div style={{ display: "flex", alignItems: "center", gap: "18px" }}>
-                <span style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "34px", letterSpacing: "-0.045em", color: "transparent", background: "linear-gradient(100deg, #10B981 0%, #0EA5A4 25%, #3B6CF6 55%, #7C3AED 80%, #DB2777 100%)", WebkitBackgroundClip: "text", backgroundClip: "text" }}>
-                  {"vegham"}
-                </span>
-              </div>
-              <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
-                <span style={{ display: "flex", flexDirection: "column", gap: "6px", fontSize: "12px", color: "#6B6B6B" }}>
-                  <span style={{ width: "64px", height: "44px", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECF0" }}>
-                  </span>
-                  {"White"}
-                </span>
-                <span style={{ display: "flex", flexDirection: "column", gap: "6px", fontSize: "12px", color: "#6B6B6B" }}>
-                  <span style={{ width: "64px", height: "44px", borderRadius: "12px", background: "#F5F5F7", border: "1px solid #ECECF0" }}>
-                  </span>
-                  {"Mist"}
-                </span>
-                <span style={{ display: "flex", flexDirection: "column", gap: "6px", fontSize: "12px", color: "#6B6B6B" }}>
-                  <span style={{ width: "64px", height: "44px", borderRadius: "12px", background: "#16182A", border: "1px solid #ECECF0" }}>
-                  </span>
-                  {"Ink"}
-                </span>
-                <span style={{ display: "flex", flexDirection: "column", gap: "6px", fontSize: "12px", color: "#6B6B6B" }}>
-                  <span style={{ width: "64px", height: "44px", borderRadius: "12px", background: "linear-gradient(100deg, #10B981, #0EA5A4, #3B6CF6, #7C3AED, #DB2777)", border: "1px solid #ECECF0" }}>
-                  </span>
-                  {"Aurora"}
-                </span>
-              </div>
-              <a href="#" style={{ alignSelf: "flex-start", display: "inline-flex", alignItems: "center", height: "42px", padding: "0 18px", borderRadius: "999px", border: "1px solid #D4D4DA", color: "#1F1F1F", textDecoration: "none", fontSize: "14.5px" }} data-s="s1">
-                {"Download press kit (ZIP)"}
-              </a>
-            </div>
-          </div>
-        </section>
         <section style={{ padding: "0 32px 112px" }} data-s="s12">
           <div className="vg-aur-host" style={{ position: "relative", maxWidth: "1136px", margin: "0 auto", borderRadius: "28px", background: "#12141F", color: "#FFFFFF", padding: "88px 40px", textAlign: "center", overflow: "hidden" }} data-s="s13">
             <div aria-hidden="true" className="vg-aur-layer" style={{ position: "absolute", inset: "0", overflow: "hidden", pointerEvents: "none", borderRadius: "inherit" }}>
