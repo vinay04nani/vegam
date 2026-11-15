@@ -39,32 +39,32 @@ export default function SiteFooter() {
               </h3>
               <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "11px" }}>
                 <li>
-                  <Link href="/#product" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#voice" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Voice agent"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#memory" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#memory" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Long memory"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#product" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#languages" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Languages"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#product" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#follow-ups" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Follow-ups"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#product" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#hand-over" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Hand-over"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#product" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#insights" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Insights"}
                   </Link>
                 </li>
@@ -76,32 +76,32 @@ export default function SiteFooter() {
               </h3>
               <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "11px" }}>
                 <li>
-                  <Link href="/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Phone calls"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"WhatsApp"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Instagram"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Messenger"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Telegram"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/product/#channels" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Link and website"}
                   </Link>
                 </li>
@@ -113,22 +113,22 @@ export default function SiteFooter() {
               </h3>
               <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "11px" }}>
                 <li>
-                  <Link href="/#how" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/how-it-works/" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"How it works"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#pricing" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/pricing/" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Pricing"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#faq" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/help/" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Help centre"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/#control" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/security/" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Security and privacy"}
                   </Link>
                 </li>
@@ -140,12 +140,12 @@ export default function SiteFooter() {
               </h3>
               <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "11px" }}>
                 <li>
-                  <Link href="/contact/" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/company/" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"About"}
                   </Link>
                 </li>
                 <li>
-                  <Link href="/contact/" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/careers/" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Careers"}
                   </Link>
                 </li>
@@ -162,14 +162,14 @@ export default function SiteFooter() {
               </h3>
               <ul style={{ margin: "0", padding: "0", listStyle: "none", display: "flex", flexDirection: "column", gap: "11px" }}>
                 <li>
-                  <a href="#" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/privacy/" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Privacy policy"}
-                  </a>
+                  </Link>
                 </li>
                 <li>
-                  <a href="#" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                  <Link href="/terms/" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                     {"Terms of service"}
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

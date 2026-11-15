@@ -706,13 +706,13 @@ export default function LoginPage() {
                 <input type="checkbox" style={{ width: "18px", height: "18px", margin: "0", accentColor: "#16182A" }} />
                 <span>
                   {"I accept the "}
-                  <a href="#" style={{ color: "#16182A" }}>
+                  <Link href="/terms/" style={{ color: "#16182A" }}>
                     {"terms of service"}
-                  </a>
+                  </Link>
                   {" & "}
-                  <a href="#" style={{ color: "#16182A" }}>
+                  <Link href="/privacy/" style={{ color: "#16182A" }}>
                     {"privacy policy"}
-                  </a>
+                  </Link>
                 </span>
               </label>
               <Link href="/login/code/" style={{ marginTop: "18px", width: "100%", height: "48px", border: "0", borderRadius: "999px", background: "#16182A", color: "#FFFFFF", font: "inherit", fontSize: "15px", fontWeight: "500", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", boxSizing: "border-box" }} data-s="s1">

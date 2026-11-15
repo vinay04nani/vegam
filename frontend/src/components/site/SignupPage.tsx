@@ -531,7 +531,7 @@ export default function SignupPage() {
                   {"Your free pilot"}
                 </span>
                 <h2 style={{ margin: "10px 0 14px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "30px", lineHeight: "1.15", letterSpacing: "-0.03em" }}>
-                  {"Live by tomorrow. Free for 30 days."}
+                  {"Live in minutes. Free for 30 days."}
                 </h2>
                 <ul style={{ margin: "0", padding: "0", listStyle: "none" }}>
                   <li style={{ display: "flex", gap: "12px", alignItems: "flex-start", padding: "12px 0", borderTop: "1px solid rgba(255,255,255,.08)" }}>
@@ -713,13 +713,13 @@ export default function SignupPage() {
                 <input type="checkbox" style={{ width: "18px", height: "18px", margin: "0", accentColor: "#16182A" }} />
                 <span>
                   {"I accept the "}
-                  <a href="#" style={{ color: "#16182A" }}>
+                  <Link href="/terms/" style={{ color: "#16182A" }}>
                     {"terms of service"}
-                  </a>
+                  </Link>
                   {" & "}
-                  <a href="#" style={{ color: "#16182A" }}>
+                  <Link href="/privacy/" style={{ color: "#16182A" }}>
                     {"privacy policy"}
-                  </a>
+                  </Link>
                 </span>
               </label>
               <Link href="/setup/" style={{ marginTop: "18px", width: "100%", height: "48px", border: "0", borderRadius: "999px", background: "#16182A", color: "#FFFFFF", font: "inherit", fontSize: "15px", fontWeight: "500", display: "flex", alignItems: "center", justifyContent: "center", textDecoration: "none", boxSizing: "border-box" }} data-s="s1">

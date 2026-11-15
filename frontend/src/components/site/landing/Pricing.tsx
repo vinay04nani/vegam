@@ -19,7 +19,7 @@ export default function Pricing() {
                 </span>
               </h2>
             </div>
-            <Link href="/#pricing" style={{ display: "inline-flex", alignItems: "center", padding: "0 24px", borderRadius: "999px", border: "1px solid #E2E2E6", color: "#1F1F1F", textDecoration: "none", fontWeight: "500", height: "44px", background: "#FFFFFF" }} data-s="s1">
+            <Link href="/pricing/" style={{ display: "inline-flex", alignItems: "center", padding: "0 24px", borderRadius: "999px", border: "1px solid #E2E2E6", color: "#1F1F1F", textDecoration: "none", fontWeight: "500", height: "44px", background: "#FFFFFF" }} data-s="s1">
               {"Compare all plans →"}
             </Link>
           </div>

@@ -18,8 +18,10 @@ BOARDS = os.path.join(ROOT, 'design', 'canvas', 'project')
 SRC = os.path.join(ROOT, 'frontend', 'src')
 
 ROUTES = {
-    'LandingV2': '/', 'Login': '/login/', 'Otp': '/login/code/', 'Signup': '/signup/', 'Contact': '/contact/',
-    'BookDemo': '/contact/', 'Pricing': '/#pricing',
+    'LandingV2': '/', 'Product': '/product/', 'HowItWorks': '/how-it-works/', 'Pricing': '/pricing/', 'Company': '/company/',
+    'Security': '/security/', 'Help': '/help/', 'HelpArticle': '/help/connect-whatsapp/', 'Legal': '/privacy/', 'Terms': '/terms/',
+    'Careers': '/careers/', 'BookDemo': '/book-demo/', 'Contact': '/contact/',
+    'Login': '/login/', 'Otp': '/login/code/', 'Signup': '/signup/',
     'AppSetup1': '/setup/', 'AppSetup2': '/setup/voice/', 'AppSetup3': '/setup/test-call/', 'AppSetup4': '/setup/go-live/',
     'AppHome': '/app/', 'AppWelcome': '/app/welcome/', 'AppMenu': '/app/', 'AppSettings': '/app/',
     'AppConversations': '/app/conversations/', 'AppConversationChat': '/app/conversations/chat/',
@@ -31,30 +33,22 @@ LINKS = {k + '.dc.html': v for k, v in ROUTES.items()}
 
 # Links the boards leave as "#", by the text that follows the opening tag.
 TEXT_LINKS = {
-    'Product': '/#product', 'How it works': '/#how', 'Pricing': '/#pricing', 'Company': '/contact/', 'Log in': '/login/',
-    'Book a demo': '/contact/', 'Start free': '/signup/', 'Start your free pilot': '/signup/', 'Create one': '/signup/',
-    'Help centre': '/#faq', 'Voice agent': '/#product', 'Long memory': '/#memory', 'Languages': '/#product',
-    'Follow-ups': '/#product', 'Hand-over': '/#product', 'Insights': '/#product', 'Phone calls': '/#channels',
-    'WhatsApp': '/#channels', 'Instagram': '/#channels', 'Messenger': '/#channels', 'Telegram': '/#channels',
-    'Link and website': '/#channels', 'Security and privacy': '/#control', 'About': '/contact/', 'Careers': '/contact/',
-    'Contact': '/contact/', 'Talk to us': '/contact/', 'Back to home': '/', 'Go to homepage': '/', 'Sign in': '/login/',
+    'Product': '/product/', 'How it works': '/how-it-works/', 'Pricing': '/pricing/', 'Company': '/company/', 'Help centre': '/help/',
+    'Log in': '/login/', 'Sign in': '/login/', 'Book a demo': '/book-demo/', 'Start free': '/signup/', 'Start free →': '/signup/',
+    'Create one': '/signup/', 'Voice agent': '/product/#voice', 'Long memory': '/product/#memory', 'Languages': '/product/#languages',
+    'Follow-ups': '/product/#follow-ups', 'Hand-over': '/product/#hand-over', 'Insights': '/product/#insights',
+    'Phone calls': '/product/#channels', 'WhatsApp': '/product/#channels', 'Instagram': '/product/#channels',
+    'Messenger': '/product/#channels', 'Telegram': '/product/#channels', 'Link and website': '/product/#channels',
+    'Security and privacy': '/security/', 'About': '/company/', 'Careers': '/careers/', 'Contact': '/contact/', 'Contact us': '/contact/',
+    'Talk to us': '/contact/', 'See open roles': '/careers/', 'Read our security and privacy promises →': '/security/',
+    'Pick a time': '/book-demo/', 'Pick a time →': '/book-demo/', 'Book a setup call': '/book-demo/', 'Privacy policy': '/privacy/', 'Terms of service': '/terms/',
+    'privacy policy': '/privacy/', 'terms of service': '/terms/', 'Privacy': '/privacy/', 'Terms': '/terms/',
+    '← Help centre': '/help/', 'How to connect your WhatsApp Business number': '/help/connect-whatsapp/',
+    'Back to home': '/', 'Go to homepage': '/', 'Back to homepage': '/',
 }
 
-# Wording left over from the earlier, broader product.
-SWAPS = [
-    ('The AI front desk that answers, books and follows up for any business, on every channel, day and night.', 'The AI voice agent that answers your calls and messages, and remembers every person it talks to.'),
-    ('Tips for running a busier front desk', 'Notes on never missing a customer'),
-    ('>Chat receptionist</a>', '>Voice agent</a>'), ('>Voice receptionist</a>', '>Long memory</a>'), ('>Bookings and reminders</a>', '>Languages</a>'),
-    ('>Follow-ups and reviews</a>', '>Follow-ups</a>'), ('>Team inbox</a>', '>Hand-over</a>'), ('>Morning report</a>', '>Insights</a>'),
-    ('>Website chat</a>', '>Telegram</a>'), ('>Ad lead forms</a>', '>Link and website</a>'), ('English (India) · ₹ INR', 'English · ₹ INR'),
-    ('Your front desk kept working.', 'Your agent kept answering.'),
-    ('Chat receptionist', 'Voice agent'), ('Replies on WhatsApp, Instagram and your website', 'Answers every call in a natural voice'),
-    ('Voice receptionist', 'Long memory'), ('Answers calls, books and transfers', 'Remembers every person for months'),
-    ('Bookings and reminders', 'Every channel'), ('Fills your calendar, reminds the day before', 'WhatsApp, Instagram, Telegram and a link'),
-    ('Morning report', 'Insights'), ('What came in overnight, at 8 AM', 'What happened, and who needs you'),
-    ('Your front desk, though, is still answering.', 'Your agent, though, is still answering.'),
-    ('Start your free pilot', 'Start free'),
-]
+# The boards already carry the current wording; add (old, new) pairs here only for one-off fixes.
+SWAPS = []
 
 SCROLL = ('flex: 1; overflow: hidden', 'flex: 1; min-height: 0; overflow: hidden', 'flex: 1; min-width: 0; overflow: hidden')
 CAST_KEYS = ('timelineScope', 'viewTimelineName', 'viewTimeline', 'animationTimeline', 'animationRange', 'offsetDistance', 'offsetPath', 'fieldSizing')
@@ -256,29 +250,52 @@ def port_landing(keys):
     return k.text(footer)
 
 
-def port_single(board, name, rel, route, title, keys, footer_html=None, edit=None):
+def dedupe(html, tag, piece):
+    """Swap a shared block (header or footer) for a placeholder when it matches the shared one exactly."""
+    if piece and piece in html:
+        return html.replace(piece, '<x-%s></x-%s>' % (tag, tag), 1), True
+    return html, False
+
+
+def port_single(board, name, rel, route, title, keys, shared=None, edit=None):
     html = prep(body_of(read(board)))
     if edit:
         html = edit(html)
-    extra = ''
-    if footer_html:
-        k = Kids(html)
-        feet = []
-
-        def walk(nodes):
-            for n in nodes:
-                if n['tag'] == 'footer':
-                    feet.append(n)
-                else:
-                    walk(n['kids'])
-        walk(k.nodes)
-        if feet and k.text(feet[0]) == footer_html:
-            html = html[:feet[0]['start']] + '<x-footer></x-footer>' + html[feet[0]['end']:]
-            extra = 'import SiteFooter from "@/components/site/SiteFooter";'
+    extra = []
+    shared = shared or {}
+    html, used = dedupe(html, 'footer', shared.get('footer'))
+    if used:
+        extra.append('import SiteFooter from "@/components/site/SiteFooter";')
+    html, used = dedupe(html, 'header', shared.get('header'))
+    if used:
+        extra.append('import InnerHeader from "@/components/site/InnerHeader";')
     jsx, conv = to_jsx(html, keys)
     jsx = re.sub(r'<x-footer>\s*</x-footer>', '<SiteFooter />', jsx)
-    write(rel, component(name, board, jsx, conv, extra))
-    route_page(route, '@/' + rel[:-4], name, title)
+    jsx = re.sub(r'<x-header>\s*</x-header>', '<InnerHeader />', jsx)
+    write(rel, component(name, board, jsx, conv, '\n'.join(extra)))
+    if route:
+        route_page(route, '@/' + rel[:-4], name, title)
+
+
+def inner_header(keys):
+    """The light header and mobile menu shared by every page except the landing page."""
+    html = prep(body_of(read('Contact')))
+    k = Kids(html)
+    kids = k.nodes[0]['kids']
+    first = [n for n in kids if n['tag'] in ('section', 'main')][0]
+    piece = html[kids[0]['start']:first['start']].rstrip()
+    jsx, conv = to_jsx(piece, keys)
+    write('components/site/InnerHeader.tsx', component('InnerHeader', 'Contact (header and mobile menu)', jsx, conv))
+    return piece
+
+
+INNER = [('Product', 'ProductPage', '/product/', 'Product'), ('HowItWorks', 'HowItWorksPage', '/how-it-works/', 'How it works'),
+         ('Pricing', 'PricingPage', '/pricing/', 'Pricing'), ('Company', 'CompanyPage', '/company/', 'Company'),
+         ('Security', 'SecurityPage', '/security/', 'Security and privacy'), ('Help', 'HelpPage', '/help/', 'Help centre'),
+         ('HelpArticle', 'HelpArticlePage', '/help/connect-whatsapp/', 'How to connect your WhatsApp Business number'),
+         ('Legal', 'PrivacyPage', '/privacy/', 'Privacy policy'), ('Terms', 'TermsPage', '/terms/', 'Terms and conditions'),
+         ('Careers', 'CareersPage', '/careers/', 'Careers'), ('BookDemo', 'BookDemoPage', '/book-demo/', 'Book a demo'),
+         ('Contact', 'ContactPage', '/contact/', 'Contact')]
 
 
 # ---------- APP ----------
@@ -364,17 +381,16 @@ def port_setup(board, name, route, keys):
 
 
 def main():
-    boards = ['LandingV2', 'Login', 'Otp', 'Signup', 'Contact', 'NotFound'] + [b for b, *_ in APP_PAGES] + [b for b, *_ in SETUP]
+    boards = ['LandingV2', 'Login', 'Otp', 'Signup', 'NotFound'] + [b for b, *_ in INNER] + [b for b, *_ in APP_PAGES] + [b for b, *_ in SETUP]
     css, keys = build_css(boards)
     write('styles/design.css', '/* Generated from the design boards by design/tools/port.py. Edit overrides in app/globals.css. */\n' + css + '\n')
-    footer = port_landing(keys)
+    shared = {'footer': port_landing(keys), 'header': inner_header(keys)}
     port_single('Login', 'LoginPage', 'components/site/LoginPage.tsx', '/login/', 'Log in · Vegham', keys, edit=lambda h: button_link(h, 'Continue', '/login/code/'))
     port_single('Otp', 'CodePage', 'components/site/CodePage.tsx', '/login/code/', 'Enter your code · Vegham', keys, edit=lambda h: button_link(h, 'Verify and continue', '/app/'))
     port_single('Signup', 'SignupPage', 'components/site/SignupPage.tsx', '/signup/', 'Create your account · Vegham', keys, edit=lambda h: button_link(h, 'Create account', '/setup/'))
-    port_single('Contact', 'ContactPage', 'components/site/ContactPage.tsx', '/contact/', 'Contact · Vegham', keys, footer)
-    html = prep(body_of(read('NotFound')))
-    jsx, conv = to_jsx(html, keys)
-    write('components/site/NotFoundPage.tsx', component('NotFoundPage', 'NotFound', jsx, conv))
+    for b, n, r, t in INNER:
+        port_single(b, n, 'components/site/%s.tsx' % n, r, t + ' · Vegham', keys, shared)
+    port_single('NotFound', 'NotFoundPage', 'components/site/NotFoundPage.tsx', None, '', keys, shared)
     port_shell(keys)
     for b, n, r, t in APP_PAGES:
         port_app_page(b, n, r, t, keys)

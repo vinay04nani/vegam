@@ -52,11 +52,12 @@ src/
 ├─ app/
 │  ├─ layout.tsx, globals.css   # fonts, metadata, a few overrides
 │  ├─ page.tsx                  # landing page: sections in order
-│  ├─ login/, login/code/, signup/, contact/
+│  ├─ product/, how-it-works/, pricing/, company/, … # website pages
+│  ├─ login/, login/code/, signup/
 │  ├─ setup/                    # four set-up steps after sign-up
 │  └─ app/                      # the app after log in (layout.tsx wraps pages in the shell)
 ├─ components/
-│  ├─ site/                     # header, footer, landing sections, auth pages
+│  ├─ site/                     # headers, footer, landing sections, website and auth pages
 │  ├─ setup/                    # set-up steps
 │  └─ app/                      # AppShell (sidebar, profile menu, settings), NavLink, pages/
 ├─ styles/design.css            # styles taken from the design boards
@@ -80,8 +81,11 @@ The app shell keeps the boards' mechanism for menus, the settings pop-up, the th
 | Route | Page |
 |---|---|
 | `/` | Landing page |
+| `/product/`, `/how-it-works/`, `/pricing/` | Product, How it works, Pricing |
+| `/company/`, `/careers/`, `/contact/`, `/book-demo/` | Company, Careers, Contact, Book a demo |
+| `/security/`, `/privacy/`, `/terms/` | Security and privacy, Privacy policy, Terms |
+| `/help/`, `/help/connect-whatsapp/` | Help centre, a help article |
 | `/login/`, `/login/code/`, `/signup/` | Log in, code, sign up |
-| `/contact/` | Contact |
 | `/setup/`, `/setup/voice/`, `/setup/test-call/`, `/setup/go-live/` | Set-up steps |
 | `/app/`, `/app/welcome/` | Home, first-login Home |
 | `/app/conversations/`, `/app/conversations/chat/` | A call, a WhatsApp hand-over |

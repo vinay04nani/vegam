@@ -13,22 +13,22 @@ export default function SiteHeader() {
             {"vegham"}
           </span>
           <nav aria-label="Site" style={{ display: "flex", flexWrap: "wrap", gap: "32px", fontSize: "15px", color: "#D4D7E6" }}>
-            <Link href="/#product" style={{ position: "relative", textDecoration: "none" }}>
+            <Link href="/product/" style={{ position: "relative", textDecoration: "none" }}>
               {"Product"}
               <span aria-hidden="true" className="vg-navline" style={{ position: "absolute", left: "0", right: "0", bottom: "-6px", height: "1.5px", background: "#FFFFFF", opacity: "0", "--tl": "--vg-sec-product" } as CSSProperties}>
               </span>
             </Link>
-            <Link href="/#how" style={{ position: "relative", textDecoration: "none" }}>
+            <Link href="/how-it-works/" style={{ position: "relative", textDecoration: "none" }}>
               {"How it works"}
               <span aria-hidden="true" className="vg-navline" style={{ position: "absolute", left: "0", right: "0", bottom: "-6px", height: "1.5px", background: "#FFFFFF", opacity: "0", "--tl": "--vg-sec-how" } as CSSProperties}>
               </span>
             </Link>
-            <Link href="/#pricing" style={{ position: "relative", textDecoration: "none" }}>
+            <Link href="/pricing/" style={{ position: "relative", textDecoration: "none" }}>
               {"Pricing"}
               <span aria-hidden="true" className="vg-navline" style={{ position: "absolute", left: "0", right: "0", bottom: "-6px", height: "1.5px", background: "#FFFFFF", opacity: "0", "--tl": "--vg-sec-pricing" } as CSSProperties}>
               </span>
             </Link>
-            <Link href="/contact/" style={{ textDecoration: "none" }}>
+            <Link href="/company/" style={{ textDecoration: "none" }}>
               {"Company"}
             </Link>
           </nav>
@@ -36,7 +36,7 @@ export default function SiteHeader() {
             <Link href="/login/" style={{ display: "inline-flex", alignItems: "center", height: "40px", padding: "0 20px", borderRadius: "999px", background: "#FFFFFF", color: "#12141F", textDecoration: "none", fontSize: "15px", fontWeight: "500" }} data-s="s1 s2">
               {"Log in"}
             </Link>
-            <Link href="/contact/" style={{ display: "inline-flex", alignItems: "center", height: "40px", padding: "0 20px", borderRadius: "999px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.2)", color: "#FFFFFF", textDecoration: "none", fontSize: "15px", fontWeight: "500" }} data-s="s1 s2">
+            <Link href="/book-demo/" style={{ display: "inline-flex", alignItems: "center", height: "40px", padding: "0 20px", borderRadius: "999px", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.2)", color: "#FFFFFF", textDecoration: "none", fontSize: "15px", fontWeight: "500" }} data-s="s1 s2">
               {"Book a demo"}
             </Link>
           </div>
@@ -62,31 +62,31 @@ export default function SiteHeader() {
           </label>
         </div>
         <nav aria-label="Mobile" style={{ marginTop: "28px" }}>
-          <Link href="/#product" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: "1px solid rgba(255,255,255,.1)", color: "#FFFFFF", textDecoration: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "28px", letterSpacing: "-0.03em" }}>
+          <Link href="/product/" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: "1px solid rgba(255,255,255,.1)", color: "#FFFFFF", textDecoration: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "28px", letterSpacing: "-0.03em" }}>
             {"Product"}
             <span aria-hidden="true" style={{ fontSize: "18px", color: "#8C90A8" }} data-s="s16">
               {"→"}
             </span>
           </Link>
-          <Link href="/#how" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: "1px solid rgba(255,255,255,.1)", color: "#FFFFFF", textDecoration: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "28px", letterSpacing: "-0.03em" }}>
+          <Link href="/how-it-works/" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: "1px solid rgba(255,255,255,.1)", color: "#FFFFFF", textDecoration: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "28px", letterSpacing: "-0.03em" }}>
             {"How it works"}
             <span aria-hidden="true" style={{ fontSize: "18px", color: "#8C90A8" }} data-s="s16">
               {"→"}
             </span>
           </Link>
-          <Link href="/#pricing" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: "1px solid rgba(255,255,255,.1)", color: "#FFFFFF", textDecoration: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "28px", letterSpacing: "-0.03em" }}>
+          <Link href="/pricing/" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: "1px solid rgba(255,255,255,.1)", color: "#FFFFFF", textDecoration: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "28px", letterSpacing: "-0.03em" }}>
             {"Pricing"}
             <span aria-hidden="true" style={{ fontSize: "18px", color: "#8C90A8" }} data-s="s16">
               {"→"}
             </span>
           </Link>
-          <Link href="/contact/" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: "1px solid rgba(255,255,255,.1)", color: "#FFFFFF", textDecoration: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "28px", letterSpacing: "-0.03em" }}>
+          <Link href="/company/" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: "1px solid rgba(255,255,255,.1)", color: "#FFFFFF", textDecoration: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "28px", letterSpacing: "-0.03em" }}>
             {"Company"}
             <span aria-hidden="true" style={{ fontSize: "18px", color: "#8C90A8" }} data-s="s16">
               {"→"}
             </span>
           </Link>
-          <Link href="/#faq" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: "1px solid rgba(255,255,255,.1)", color: "#FFFFFF", textDecoration: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "28px", letterSpacing: "-0.03em" }}>
+          <Link href="/help/" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: "1px solid rgba(255,255,255,.1)", color: "#FFFFFF", textDecoration: "none", fontFamily: "var(--font-tight), sans-serif", fontSize: "28px", letterSpacing: "-0.03em" }}>
             {"Help centre"}
             <span aria-hidden="true" style={{ fontSize: "18px", color: "#8C90A8" }} data-s="s16">
               {"→"}

@@ -2,6 +2,177 @@
   "v": 3,
   "attachments": {},
   "boards": {
+    "AppAgent.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Your agent · live preview",
+      "w": 1440,
+      "x": 3120,
+      "y": 21140
+    },
+    "AppAgentKnowledge.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Your agent · knowledge",
+      "w": 1440,
+      "x": 1600,
+      "y": 22320
+    },
+    "AppAgentLanguages.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Your agent · languages",
+      "w": 1440,
+      "x": 4640,
+      "y": 21140
+    },
+    "AppAgentMemory.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Your agent · memory",
+      "w": 1440,
+      "x": 80,
+      "y": 22320
+    },
+    "AppAgentTest.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Your agent · test call",
+      "w": 1440,
+      "x": 3120,
+      "y": 22320
+    },
+    "AppConversationChat.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Conversations · WhatsApp hand-over",
+      "w": 1440,
+      "x": 1600,
+      "y": 19960
+    },
+    "AppConversations.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Conversations · a returning caller",
+      "w": 1440,
+      "x": 80,
+      "y": 19960
+    },
+    "AppFollowups.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Follow-ups",
+      "w": 1440,
+      "x": 80,
+      "y": 21140
+    },
+    "AppHome.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Home",
+      "w": 1440,
+      "x": 1600,
+      "y": 18780
+    },
+    "AppInsights.dc.html": {
+      "expand": "fill",
+      "h": 2560,
+      "is_interactive": true,
+      "title": "App · Insights (full analytics)",
+      "w": 1440,
+      "x": 6160,
+      "y": 17600
+    },
+    "AppMenu.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Profile menu",
+      "w": 1440,
+      "x": 3120,
+      "y": 18780
+    },
+    "AppPeople.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · People",
+      "w": 1440,
+      "x": 3120,
+      "y": 19960
+    },
+    "AppPerson.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · People · one person’s memory",
+      "w": 1440,
+      "x": 4640,
+      "y": 19960
+    },
+    "AppSettings.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Settings pop-up",
+      "w": 1440,
+      "x": 4640,
+      "y": 18780
+    },
+    "AppSetup1.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Setup 1/4 · your business (first thing after sign-up, press Play)",
+      "w": 1440,
+      "x": 80,
+      "y": 17600
+    },
+    "AppSetup2.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Setup 2/4 · pick a voice",
+      "w": 1440,
+      "x": 1600,
+      "y": 17600
+    },
+    "AppSetup3.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Setup 3/4 · test call",
+      "w": 1440,
+      "x": 3120,
+      "y": 17600
+    },
+    "AppSetup4.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Setup 4/4 · go live",
+      "w": 1440,
+      "x": 4640,
+      "y": 17600
+    },
+    "AppWelcome.dc.html": {
+      "expand": "fill",
+      "h": 960,
+      "is_interactive": true,
+      "title": "App · Home · first login",
+      "w": 1440,
+      "x": 80,
+      "y": 18780
+    },
     "AuthStates.dc.html": {
       "expand": "fill",
       "h": 900,
@@ -92,15 +263,15 @@
     },
     "HowItWorks.dc.html": {
       "expand": "fill",
-      "h": 5450,
-      "title": "How it works",
+      "h": 6030,
+      "title": "How it works · four steps",
       "w": 1440,
       "x": 7600,
       "y": 5640
     },
     "LandingV2.dc.html": {
       "expand": "fill",
-      "h": 9650,
+      "h": 8000,
       "title": "Landing page v3 · voice agent, long memory, every channel",
       "w": 1440,
       "x": 4560,
@@ -130,102 +301,6 @@
       "x": -80,
       "y": 8997
     },
-    "ObA.dc.html": {
-      "expand": "fill",
-      "h": 900,
-      "title": "Onboarding · Prototype: click Continue",
-      "w": 1440,
-      "x": -80,
-      "y": 10357
-    },
-    "ObA1.dc.html": {
-      "expand": "fill",
-      "h": 900,
-      "title": "Onboarding · 1 · Your business",
-      "w": 1440,
-      "x": 1440,
-      "y": 10357
-    },
-    "ObA2.dc.html": {
-      "expand": "fill",
-      "h": 900,
-      "title": "Onboarding · 2 · Teach Vegham",
-      "w": 1440,
-      "x": 2960,
-      "y": 10357
-    },
-    "ObA3.dc.html": {
-      "expand": "fill",
-      "h": 900,
-      "title": "Onboarding · 3 · Your assistant",
-      "w": 1440,
-      "x": -80,
-      "y": 11493
-    },
-    "ObA4.dc.html": {
-      "expand": "fill",
-      "h": 900,
-      "title": "Onboarding · 4 · Channels",
-      "w": 1440,
-      "x": 1440,
-      "y": 11493
-    },
-    "ObA5.dc.html": {
-      "expand": "fill",
-      "h": 900,
-      "title": "Onboarding · 5 · Test drive",
-      "w": 1440,
-      "x": -80,
-      "y": 12535
-    },
-    "ObA6.dc.html": {
-      "expand": "fill",
-      "h": 900,
-      "title": "Onboarding · 6 · Review",
-      "w": 1440,
-      "x": 1440,
-      "y": 12535
-    },
-    "ObA7.dc.html": {
-      "expand": "fill",
-      "h": 900,
-      "title": "Onboarding · You’re live",
-      "w": 1440,
-      "x": 2960,
-      "y": 12535
-    },
-    "ObAwa.dc.html": {
-      "expand": "fill",
-      "h": 900,
-      "title": "Onboarding · 4 · Connect WhatsApp (Meta sign-up)",
-      "w": 1440,
-      "x": 2960,
-      "y": 11493
-    },
-    "ObMobile.dc.html": {
-      "expand": "fill",
-      "h": 1720,
-      "title": "Onboarding on phones",
-      "w": 1440,
-      "x": 1440,
-      "y": 13577
-    },
-    "ObMotion.dc.html": {
-      "expand": "fill",
-      "h": 1180,
-      "title": "Onboarding motion",
-      "w": 1440,
-      "x": 2960,
-      "y": 13577
-    },
-    "ObStates.dc.html": {
-      "expand": "fill",
-      "h": 910,
-      "title": "Onboarding · when things go differently",
-      "w": 1440,
-      "x": -80,
-      "y": 13577
-    },
     "Otp.dc.html": {
       "expand": "fill",
       "h": 960,
@@ -244,18 +319,19 @@
     },
     "Pricing.dc.html": {
       "expand": "fill",
-      "h": 7450,
-      "title": "Pricing",
+      "h": 5540,
+      "title": "Pricing · plans, compare, billing",
       "w": 1440,
       "x": 9120,
       "y": 5640
     },
     "Product.dc.html": {
       "expand": "fill",
-      "h": 8000,
+      "h": 7750,
       "w": 1440,
       "x": 6080,
-      "y": 5640
+      "y": 5640,
+      "title": "Product · voice, languages, memory, channels"
     },
     "Security.dc.html": {
       "expand": "fill",
@@ -504,177 +580,6 @@
       "w": 1440,
       "x": 18320,
       "y": -3012
-    },
-    "AppSetup1.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Setup 1/4 · your business (first thing after sign-up, press Play)",
-      "w": 1440,
-      "x": 80,
-      "y": 17600,
-      "is_interactive": true
-    },
-    "AppSetup2.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Setup 2/4 · pick a voice",
-      "w": 1440,
-      "x": 1600,
-      "y": 17600,
-      "is_interactive": true
-    },
-    "AppSetup3.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Setup 3/4 · test call",
-      "w": 1440,
-      "x": 3120,
-      "y": 17600,
-      "is_interactive": true
-    },
-    "AppSetup4.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Setup 4/4 · go live",
-      "w": 1440,
-      "x": 4640,
-      "y": 17600,
-      "is_interactive": true
-    },
-    "AppWelcome.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Home · first login",
-      "w": 1440,
-      "x": 80,
-      "y": 18780,
-      "is_interactive": true
-    },
-    "AppHome.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Home",
-      "w": 1440,
-      "x": 1600,
-      "y": 18780,
-      "is_interactive": true
-    },
-    "AppMenu.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Profile menu",
-      "w": 1440,
-      "x": 3120,
-      "y": 18780,
-      "is_interactive": true
-    },
-    "AppSettings.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Settings pop-up",
-      "w": 1440,
-      "x": 4640,
-      "y": 18780,
-      "is_interactive": true
-    },
-    "AppConversations.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Conversations · a returning caller",
-      "w": 1440,
-      "x": 80,
-      "y": 19960,
-      "is_interactive": true
-    },
-    "AppConversationChat.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Conversations · WhatsApp hand-over",
-      "w": 1440,
-      "x": 1600,
-      "y": 19960,
-      "is_interactive": true
-    },
-    "AppPeople.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · People",
-      "w": 1440,
-      "x": 3120,
-      "y": 19960,
-      "is_interactive": true
-    },
-    "AppPerson.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · People · one person’s memory",
-      "w": 1440,
-      "x": 4640,
-      "y": 19960,
-      "is_interactive": true
-    },
-    "AppFollowups.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Follow-ups",
-      "w": 1440,
-      "x": 80,
-      "y": 21140,
-      "is_interactive": true
-    },
-    "AppInsights.dc.html": {
-      "expand": "fill",
-      "h": 2560,
-      "title": "App · Insights (full analytics)",
-      "w": 1440,
-      "x": 6160,
-      "y": 17600,
-      "is_interactive": true
-    },
-    "AppAgent.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Your agent · live preview",
-      "w": 1440,
-      "x": 3120,
-      "y": 21140,
-      "is_interactive": true
-    },
-    "AppAgentLanguages.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Your agent · languages",
-      "w": 1440,
-      "x": 4640,
-      "y": 21140,
-      "is_interactive": true
-    },
-    "AppAgentMemory.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Your agent · memory",
-      "w": 1440,
-      "x": 80,
-      "y": 22320,
-      "is_interactive": true
-    },
-    "AppAgentKnowledge.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Your agent · knowledge",
-      "w": 1440,
-      "x": 1600,
-      "y": 22320,
-      "is_interactive": true
-    },
-    "AppAgentTest.dc.html": {
-      "expand": "fill",
-      "h": 960,
-      "title": "App · Your agent · test call",
-      "w": 1440,
-      "x": 3120,
-      "y": 22320,
-      "is_interactive": true
     }
   },
   "createdOnFiles": {
@@ -693,6 +598,14 @@
     "app"
   ],
   "notes": {
+    "app": {
+      "kind": "title1",
+      "maxW": 6000,
+      "text": "App · after sign-up and log in: calls, WhatsApp and memory",
+      "w": 240,
+      "x": 80,
+      "y": 17300
+    },
     "wfAuth": {
       "kind": "title1",
       "maxW": 8000,
@@ -724,14 +637,6 @@
       "w": 240,
       "x": 80,
       "y": -3312
-    },
-    "app": {
-      "kind": "title1",
-      "maxW": 6000,
-      "text": "App · after sign-up and log in: calls, WhatsApp and memory",
-      "w": 240,
-      "x": 80,
-      "y": 17300
     }
   },
   "order": [
@@ -759,18 +664,6 @@
     "Contact.dc.html",
     "HelpArticle.dc.html",
     "SiteStates.dc.html",
-    "ObMobile.dc.html",
-    "ObMotion.dc.html",
-    "ObA.dc.html",
-    "ObA1.dc.html",
-    "ObA2.dc.html",
-    "ObA3.dc.html",
-    "ObA4.dc.html",
-    "ObA5.dc.html",
-    "ObA6.dc.html",
-    "ObA7.dc.html",
-    "ObAwa.dc.html",
-    "ObStates.dc.html",
     "WfFlow.dc.html",
     "WfLanding.dc.html",
     "WfProduct.dc.html",
