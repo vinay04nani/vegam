@@ -1,7 +1,8 @@
 """Landing v4: scroll story below the hero (hero unchanged).
 
 - Channels: a hub draws lines to the cards, which arrive in a wave
-- Long memory: pinned; the thread draws May -> July -> November and the greeting appears word by word
+- Long memory: pinned; an incoming call from Rohan: days since you last spoke count up, his memories appear,
+  then Vegham answers and the remembered parts light up
 - What it does: cards arrive in a wave; bars grow, numbers count, chips pop, rows slide
 - How it works: pinned; the four steps slide across with a progress bar
 - Light touches: icons draw, QR pops, pricing lands with Growth last, banner aurora brightens, footer wordmark rises
@@ -11,7 +12,7 @@ Pinning only happens where scroll-driven animations are supported, on screens at
 import os, re, sys
 D = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, D)
 import land3 as L
-from land3 import ic, eyebrow, h2, lead, chip, sample, aurora, tile, CARD, TIGHT, G, GT, BTN_W
+from land3 import ic, eyebrow, h2, lead, sample, aurora, tile, wave, CARD, TIGHT, G, GT, BTN_W
 
 AUR = 'linear-gradient(90deg, #10B981 0%, #0EA5A4 35%, #3B6CF6 70%, #7C3AED 100%)'
 
@@ -49,42 +50,47 @@ def channels():
 
 
 # ---------------------------------------------------------------- MEMORY (pinned)
-STEPS = [(4, 16), (28, 40), (52, 64)]
-
-
 def memory():
-    def moment(k, when, where, logo, text):
-        a, b = STEPS[k]
-        last = k == 2
-        dot = ('<span class="vg-mdot" style="position: relative; z-index: 1; width: 36px; height: 36px; flex: none; border-radius: 50%%; background: #10B981; border: 1px solid #10B981; '
-               'display: inline-flex; align-items: center; justify-content: center; color: #FFFFFF; %s">%s</span>') % (crng(a, b), logo)
-        return ('<div class="vg-mstep" style="display: flex; gap: 18px; %s">%s<div style="flex: 1; min-width: 0; padding-bottom: %s"><span style="display: flex; align-items: baseline; gap: 10px">'
-                '<b style="font-weight: 500; font-size: 15px; color: #FFFFFF">%s</b><span style="font-size: 13px; color: #8C90A8">%s</span></span>'
-                '<span style="display: block; margin-top: 6px; font-size: 14.5px; line-height: 1.5; color: %s">%s</span></div></div>') % (crng(a, b), dot, '0' if last else '30px', when, where, '#FFFFFF' if last else '#B4B8CC', text)
+    """Pinned. The right card is an incoming call from Rohan: the days since you last spoke count up,
+    the memories he left behind appear one by one, then Vegham answers and the remembered parts light up."""
+    def chip(k, icon, text, src, open_loop=False):
+        a = 30 + k * 6
+        border = 'rgba(16,185,129,.55)' if open_loop else 'rgba(255,255,255,.1)'
+        return ('<span class="vg-mchip" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; background: rgba(255,255,255,.06); border: 1px solid %s; font-size: 13.5px; color: #FFFFFF; %s">'
+                '<span style="color: #3DD68C; display: inline-flex">%s</span>%s<span style="font-size: 12px; color: #8C90A8">%s</span></span>') % (border, crng(a, a + 6), ic(icon, 14), text, src)
 
-    words = '“Hi Rohan, good to hear from you again. Still looking at Saturday mornings? I can send the details on WhatsApp, like last time.”'.split(' ')
-    n = len(words)
-    greet = ' '.join('<span class="vg-mword" style="%s">%s</span>' % (crng(66 + i * 22 // n, 68 + i * 22 // n), w) for i, w in enumerate(words))
-    bubble = '<span class="vg-mbubble" style="display: block; padding: 14px 16px; border-radius: 16px 16px 16px 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); %s">%s</span>' % (crng(60, 66), greet)
-    thread = ('<span aria-hidden="true" style="position: absolute; left: 17.5px; top: 18px; bottom: 60px; width: 1px; background: rgba(255,255,255,.16)"></span>'
-              '<span aria-hidden="true" class="vg-mthread" style="position: absolute; left: 17.5px; top: 18px; bottom: 60px; width: 1px; background: linear-gradient(180deg, rgba(16,185,129,.5), #10B981); transform-origin: top; %s"></span>') % crng(4, 60)
-    tl = ('<div style="position: relative">' + thread
-          + moment(0, 'May', 'First phone call', ic(L.I_PHONE, 16), 'Rohan asks about weekend sessions and says Saturday mornings suit him best.')
-          + moment(1, 'July', 'WhatsApp message', ic(L.I_CHAT, 16), 'He asks for the details again, in Hindi. The conversation is left unfinished.')
-          + moment(2, 'November', 'Calls again, today', ic(L.I_PHONE, 16), bubble) + '</div>')
+    def hl(k, text):
+        a = 70 + k * 5
+        return ('<span class="vg-mhl" style="color: #FFFFFF; background-image: linear-gradient(#10B981, #10B981); background-repeat: no-repeat; background-position: 0 100%%; background-size: 100%% 2px; padding-bottom: 1px; %s">%s</span>') % (crng(a, a + 5), text)
 
-    def pt(k, t, d):
-        a, b = STEPS[k]
+    head = ('<div style="display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.1)">'
+            '<span style="width: 44px; height: 44px; flex: none; border-radius: 50%; background: rgba(255,255,255,.08); display: inline-flex; align-items: center; justify-content: center; ' + TIGHT + '; font-size: 18px">R</span>'
+            '<span style="flex: 1; min-width: 0"><b style="display: block; font-weight: 500; font-size: 16px">Rohan Mehta</b><span style="font-size: 13px; color: #8C90A8">Incoming call · +91 98•• ••21</span></span>'
+            '<span style="text-align: right"><span style="display: block; font-size: 12px; color: #8C90A8">Last spoke</span>'
+            '<b style="font-weight: 500; font-size: 15px; color: #3DD68C"><span class="vg-mdays" role="img" aria-label="184" style="--to: 184; ' + crng(4, 28) + '"></span> days ago</b></span></div>')
+    chips = ('<span style="display: block; margin-top: 20px; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: #8C90A8">What Vegham remembers</span>'
+             '<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px">'
+             + chip(0, L.I_USER, 'Rohan Mehta', 'May · call')
+             + chip(1, L.I_GLOBE, 'Hindi and English', 'July · WhatsApp')
+             + chip(2, L.I_CLOCK, 'Saturday mornings', 'May · call')
+             + chip(3, L.I_CHAT, 'Details on WhatsApp', 'July · WhatsApp')
+             + chip(4, L.I_MEM, 'Weekend sessions, left unfinished', 'July', True) + '</div>')
+    reply = ('<div class="vg-mbubble" style="margin-top: 22px; %s"><span style="display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: #8C90A8">%s<span>Vegham picks up</span></span>'
+             '<span style="display: block; margin-top: 10px; padding: 14px 16px; border-radius: 16px 16px 16px 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); font-size: 15px; line-height: 1.6; color: #D6D8E6">'
+             '“Hi %s, good to hear from you again. Still thinking about the %s? %s is open, and I can send the details %s, like last time.”</span></div>') % (
+        crng(62, 68), wave(14, G, 16), hl(0, 'Rohan'), hl(1, 'weekend sessions'), hl(2, 'Saturday morning'), hl(3, 'on WhatsApp'))
+
+    def pt(a, b, t, d):
         return ('<div class="vg-mstep" style="display: flex; gap: 14px; %s"><span style="flex: none; margin-top: 3px; color: #3DD68C">%s</span><span><b style="display: block; font-weight: 500; color: #FFFFFF">%s</b>'
                 '<span style="font-size: 15px; color: #B4B8CC">%s</span></span></div>') % (crng(a, b), ic(L.I_CHECK, 18, 'currentColor', 2.2), t, d)
     left = ('<div style="flex: 1 1 440px; min-width: 0">%s%s%s<div style="margin-top: 32px; display: flex; flex-direction: column; gap: 18px; max-width: 480px">%s%s%s</div></div>') % (
         eyebrow('Long memory', True), h2('It remembers every person.', 'Even six months later.', True),
         lead('Most assistants start from zero on every call. Vegham keeps the thread: who someone is, what they asked, and where you left off.', True, mw=500),
-        pt(0, 'Who they are', 'Name, language and how they like to be contacted.'),
-        pt(1, 'What they wanted', 'Questions, preferences and anything left unfinished.'),
-        pt(2, 'One person, not five', 'A call and a WhatsApp from the same number are the same customer.'))
-    right = ('<div style="flex: 1 1 460px; min-width: 0"><div style="position: relative; padding: 32px; border-radius: 24px; background: rgba(18,20,31,.72); border: 1px solid rgba(255,255,255,.12); '
-             'backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)">%s<div style="margin-top: 22px; text-align: right">%s</div></div></div>') % (tl, sample(True))
+        pt(30, 42, 'Who they are', 'Name, language and how they like to be contacted.'),
+        pt(44, 58, 'What they wanted', 'Questions, preferences and anything left unfinished.'),
+        pt(70, 82, 'One person, not five', 'A call and a WhatsApp from the same number are the same customer.'))
+    right = ('<div style="flex: 1 1 460px; min-width: 0"><div style="position: relative; padding: 28px; border-radius: 24px; background: rgba(18,20,31,.72); border: 1px solid rgba(255,255,255,.12); '
+             'backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)">%s%s%s<div style="margin-top: 18px; text-align: right">%s</div></div></div>') % (head, chips, reply, sample(True))
     return ('<section class="vg-pinwrap vg-pin-mem" style="padding: 0 16px; view-timeline-name: --vg-mem"><div class="vg-sticky">'
             '<div style="position: relative; overflow: hidden; width: 100%%; max-width: 1408px; margin: 0 auto; border-radius: 32px; background: #12141F; color: #FFFFFF">%s'
             '<div class="vg-pinpad" style="position: relative; max-width: 1200px; margin: 0 auto; padding: 112px 32px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: 48px 72px">%s%s</div></div></div></section>') % (aurora(.85), left, right)
@@ -216,13 +222,14 @@ EXTRA = '''
 @keyframes vg-bright{from{opacity:.25}to{opacity:1}}
 @keyframes vg-rise{from{opacity:0;transform:translateY(30%)}to{opacity:1;transform:none}}
 @keyframes vg-mstep{from{opacity:.22}to{opacity:1}}
-@keyframes vg-mdot{from{background:#1B1E2D;border-color:rgba(255,255,255,.14)}to{background:#10B981;border-color:#10B981}}
-@keyframes vg-mword{from{opacity:.12}to{opacity:1}}
 @keyframes vg-mbubble{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes vg-mchip{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes vg-mhl{from{background-size:0% 2px;color:#D6D8E6}to{background-size:100% 2px;color:#FFFFFF}}
 @keyframes vg-hslide{from{transform:none}to{transform:translateX(calc(-100% + min(1136px, 100vw - 96px)))}}
 @keyframes vg-hfocus{from{opacity:.4;transform:scale(.97)}to{opacity:1;transform:none}}
 .vg-ico *{stroke-dasharray:1;stroke-dashoffset:0}
-.vg-num{counter-reset:vgn var(--to)}
+.vg-num,.vg-mdays{counter-reset:vgn var(--to)}
+.vg-mdays::after{content:counter(vgn)}
 .vg-num::after{content:counter(vgn)}
 @supports (animation-timeline: view()){
 @media (prefers-reduced-motion: no-preference){
@@ -244,10 +251,10 @@ EXTRA = '''
   .vg-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;padding-top:40px;box-sizing:border-box}
   .vg-pinpad{padding-top:64px!important;padding-bottom:64px!important}
   .vg-pin-mem .vg-mstep{animation:vg-mstep linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mdot{animation:vg-mdot linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mthread{animation:vg-growy linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mword{animation:vg-mword linear both;animation-timeline:--vg-mem}
+  .vg-pin-mem .vg-mdays{counter-reset:vgn var(--vg-n);animation:vg-count linear both;animation-timeline:--vg-mem}
+  .vg-pin-mem .vg-mchip{animation:vg-mchip linear both;animation-timeline:--vg-mem}
   .vg-pin-mem .vg-mbubble{animation:vg-mbubble linear both;animation-timeline:--vg-mem}
+  .vg-pin-mem .vg-mhl{animation:vg-mhl linear both;animation-timeline:--vg-mem}
   .vg-pin-how .vg-hview{overflow:visible}
   .vg-pin-how .vg-htrack{display:flex!important;width:max-content;animation:vg-hslide linear both;animation-timeline:--vg-how}
   .vg-pin-how .vg-hstep{flex:none;width:440px;box-sizing:border-box;animation:vg-hfocus linear both;animation-timeline:--vg-how}

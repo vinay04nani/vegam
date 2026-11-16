@@ -37,7 +37,7 @@ export default function Memory() {
                   {"Most assistants start from zero on every call. Vegham keeps the thread: who someone is, what they asked, and where you left off."}
                 </p>
                 <div style={{ marginTop: "32px", display: "flex", flexDirection: "column", gap: "18px", maxWidth: "480px" }}>
-                  <div className="vg-mstep" style={{ display: "flex", gap: "14px", animationRange: "contain 4% contain 16%" } as CSSProperties}>
+                  <div className="vg-mstep" style={{ display: "flex", gap: "14px", animationRange: "contain 30% contain 42%" } as CSSProperties}>
                     <span style={{ flex: "none", marginTop: "3px", color: "#3DD68C" }}>
                       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -53,7 +53,7 @@ export default function Memory() {
                       </span>
                     </span>
                   </div>
-                  <div className="vg-mstep" style={{ display: "flex", gap: "14px", animationRange: "contain 28% contain 40%" } as CSSProperties}>
+                  <div className="vg-mstep" style={{ display: "flex", gap: "14px", animationRange: "contain 44% contain 58%" } as CSSProperties}>
                     <span style={{ flex: "none", marginTop: "3px", color: "#3DD68C" }}>
                       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -69,7 +69,7 @@ export default function Memory() {
                       </span>
                     </span>
                   </div>
-                  <div className="vg-mstep" style={{ display: "flex", gap: "14px", animationRange: "contain 52% contain 64%" } as CSSProperties}>
+                  <div className="vg-mstep" style={{ display: "flex", gap: "14px", animationRange: "contain 70% contain 82%" } as CSSProperties}>
                     <span style={{ flex: "none", marginTop: "3px", color: "#3DD68C" }}>
                       <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M5 12.5l4.5 4.5L19 7.5">
@@ -88,169 +88,162 @@ export default function Memory() {
                 </div>
               </div>
               <div style={{ flex: "1 1 460px", minWidth: "0" }}>
-                <div style={{ position: "relative", padding: "32px", borderRadius: "24px", background: "rgba(18,20,31,.72)", border: "1px solid rgba(255,255,255,.12)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)" }}>
-                  <div style={{ position: "relative" }}>
-                    <span aria-hidden="true" style={{ position: "absolute", left: "17.5px", top: "18px", bottom: "60px", width: "1px", background: "rgba(255,255,255,.16)" }}>
+                <div style={{ position: "relative", padding: "28px", borderRadius: "24px", background: "rgba(18,20,31,.72)", border: "1px solid rgba(255,255,255,.12)", backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "14px", paddingBottom: "18px", borderBottom: "1px solid rgba(255,255,255,.1)" }}>
+                    <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "50%", background: "rgba(255,255,255,.08)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-tight), sans-serif", fontSize: "18px" }} data-s="s16">
+                      {"R"}
                     </span>
-                    <span aria-hidden="true" className="vg-mthread" style={{ position: "absolute", left: "17.5px", top: "18px", bottom: "60px", width: "1px", background: "linear-gradient(180deg, rgba(16,185,129,.5), #10B981)", transformOrigin: "top", animationRange: "contain 4% contain 60%" } as CSSProperties}>
+                    <span style={{ flex: "1", minWidth: "0" }}>
+                      <b style={{ display: "block", fontWeight: "500", fontSize: "16px" }}>
+                        {"Rohan Mehta"}
+                      </b>
+                      <span style={{ fontSize: "13px", color: "#8C90A8" }}>
+                        {"Incoming call · +91 98•• ••21"}
+                      </span>
                     </span>
-                    <div className="vg-mstep" style={{ display: "flex", gap: "18px", animationRange: "contain 4% contain 16%" } as CSSProperties}>
-                      <span className="vg-mdot" style={{ position: "relative", zIndex: "1", width: "36px", height: "36px", flex: "none", borderRadius: "50%", background: "#10B981", border: "1px solid #10B981", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", animationRange: "contain 4% contain 16%" } as CSSProperties}>
-                        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2">
+                    <span style={{ textAlign: "right" }}>
+                      <span style={{ display: "block", fontSize: "12px", color: "#8C90A8" }}>
+                        {"Last spoke"}
+                      </span>
+                      <b style={{ fontWeight: "500", fontSize: "15px", color: "#3DD68C" }}>
+                        <span className="vg-mdays" role="img" aria-label="184" style={{ "--to": "184", animationRange: "contain 4% contain 28%" } as CSSProperties}>
+                        </span>
+                        {" days ago"}
+                      </b>
+                    </span>
+                  </div>
+                  <span style={{ display: "block", marginTop: "20px", fontSize: "11.5px", letterSpacing: ".12em", textTransform: "uppercase", color: "#8C90A8" }}>
+                    {"What Vegham remembers"}
+                  </span>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginTop: "12px" }}>
+                    <span className="vg-mchip" style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 12px", borderRadius: "12px", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", fontSize: "13.5px", color: "#FFFFFF", animationRange: "contain 30% contain 36%" } as CSSProperties}>
+                      <span style={{ color: "#3DD68C", display: "inline-flex" }}>
+                        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="8.5" r="3.5">
+                          </circle>
+                          <path d="M5 20a7 7 0 0 1 14 0">
                           </path>
                         </svg>
                       </span>
-                      <div style={{ flex: "1", minWidth: "0", paddingBottom: "30px" }}>
-                        <span style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
-                          <b style={{ fontWeight: "500", fontSize: "15px", color: "#FFFFFF" }}>
-                            {"May"}
-                          </b>
-                          <span style={{ fontSize: "13px", color: "#8C90A8" }}>
-                            {"First phone call"}
-                          </span>
-                        </span>
-                        <span style={{ display: "block", marginTop: "6px", fontSize: "14.5px", lineHeight: "1.5", color: "#B4B8CC" }}>
-                          {"Rohan asks about weekend sessions and says Saturday mornings suit him best."}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="vg-mstep" style={{ display: "flex", gap: "18px", animationRange: "contain 28% contain 40%" } as CSSProperties}>
-                      <span className="vg-mdot" style={{ position: "relative", zIndex: "1", width: "36px", height: "36px", flex: "none", borderRadius: "50%", background: "#10B981", border: "1px solid #10B981", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", animationRange: "contain 28% contain 40%" } as CSSProperties}>
-                        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      {"Rohan Mehta"}
+                      <span style={{ fontSize: "12px", color: "#8C90A8" }}>
+                        {"May · call"}
+                      </span>
+                    </span>
+                    <span className="vg-mchip" style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 12px", borderRadius: "12px", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", fontSize: "13.5px", color: "#FFFFFF", animationRange: "contain 36% contain 42%" } as CSSProperties}>
+                      <span style={{ color: "#3DD68C", display: "inline-flex" }}>
+                        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="8.5">
+                          </circle>
+                          <path d="M3.5 12h17">
+                          </path>
+                          <path d="M12 3.5c2.5 2.3 3.7 5.2 3.7 8.5s-1.2 6.2-3.7 8.5c-2.5-2.3-3.7-5.2-3.7-8.5S9.5 5.8 12 3.5z">
+                          </path>
+                        </svg>
+                      </span>
+                      {"Hindi and English"}
+                      <span style={{ fontSize: "12px", color: "#8C90A8" }}>
+                        {"July · WhatsApp"}
+                      </span>
+                    </span>
+                    <span className="vg-mchip" style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 12px", borderRadius: "12px", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", fontSize: "13.5px", color: "#FFFFFF", animationRange: "contain 42% contain 48%" } as CSSProperties}>
+                      <span style={{ color: "#3DD68C", display: "inline-flex" }}>
+                        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="8.5">
+                          </circle>
+                          <path d="M12 7.5V12l3 2">
+                          </path>
+                        </svg>
+                      </span>
+                      {"Saturday mornings"}
+                      <span style={{ fontSize: "12px", color: "#8C90A8" }}>
+                        {"May · call"}
+                      </span>
+                    </span>
+                    <span className="vg-mchip" style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 12px", borderRadius: "12px", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", fontSize: "13.5px", color: "#FFFFFF", animationRange: "contain 48% contain 54%" } as CSSProperties}>
+                      <span style={{ color: "#3DD68C", display: "inline-flex" }}>
+                        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                           <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z">
                           </path>
                         </svg>
                       </span>
-                      <div style={{ flex: "1", minWidth: "0", paddingBottom: "30px" }}>
-                        <span style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
-                          <b style={{ fontWeight: "500", fontSize: "15px", color: "#FFFFFF" }}>
-                            {"July"}
-                          </b>
-                          <span style={{ fontSize: "13px", color: "#8C90A8" }}>
-                            {"WhatsApp message"}
-                          </span>
-                        </span>
-                        <span style={{ display: "block", marginTop: "6px", fontSize: "14.5px", lineHeight: "1.5", color: "#B4B8CC" }}>
-                          {"He asks for the details again, in Hindi. The conversation is left unfinished."}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="vg-mstep" style={{ display: "flex", gap: "18px", animationRange: "contain 52% contain 64%" } as CSSProperties}>
-                      <span className="vg-mdot" style={{ position: "relative", zIndex: "1", width: "36px", height: "36px", flex: "none", borderRadius: "50%", background: "#10B981", border: "1px solid #10B981", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#FFFFFF", animationRange: "contain 52% contain 64%" } as CSSProperties}>
-                        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2">
+                      {"Details on WhatsApp"}
+                      <span style={{ fontSize: "12px", color: "#8C90A8" }}>
+                        {"July · WhatsApp"}
+                      </span>
+                    </span>
+                    <span className="vg-mchip" style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "8px 12px", borderRadius: "12px", background: "rgba(255,255,255,.06)", border: "1px solid rgba(16,185,129,.55)", fontSize: "13.5px", color: "#FFFFFF", animationRange: "contain 54% contain 60%" } as CSSProperties}>
+                      <span style={{ color: "#3DD68C", display: "inline-flex" }}>
+                        <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z">
+                          </path>
+                          <path d="M9.5 21h5">
                           </path>
                         </svg>
                       </span>
-                      <div style={{ flex: "1", minWidth: "0", paddingBottom: "0" }}>
-                        <span style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
-                          <b style={{ fontWeight: "500", fontSize: "15px", color: "#FFFFFF" }}>
-                            {"November"}
-                          </b>
-                          <span style={{ fontSize: "13px", color: "#8C90A8" }}>
-                            {"Calls again, today"}
-                          </span>
-                        </span>
-                        <span style={{ display: "block", marginTop: "6px", fontSize: "14.5px", lineHeight: "1.5", color: "#FFFFFF" }}>
-                          <span className="vg-mbubble" style={{ display: "block", padding: "14px 16px", borderRadius: "16px 16px 16px 4px", background: "rgba(255,255,255,.08)", border: "1px solid rgba(255,255,255,.12)", animationRange: "contain 60% contain 66%" } as CSSProperties}>
-                            <span className="vg-mword" style={{ animationRange: "contain 66% contain 68%" } as CSSProperties}>
-                              {"“Hi"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 66% contain 68%" } as CSSProperties}>
-                              {"Rohan,"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 67% contain 69%" } as CSSProperties}>
-                              {"good"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 68% contain 70%" } as CSSProperties}>
-                              {"to"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 69% contain 71%" } as CSSProperties}>
-                              {"hear"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 70% contain 72%" } as CSSProperties}>
-                              {"from"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 71% contain 73%" } as CSSProperties}>
-                              {"you"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 72% contain 74%" } as CSSProperties}>
-                              {"again."}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 73% contain 75%" } as CSSProperties}>
-                              {"Still"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 74% contain 76%" } as CSSProperties}>
-                              {"looking"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 75% contain 77%" } as CSSProperties}>
-                              {"at"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 76% contain 78%" } as CSSProperties}>
-                              {"Saturday"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 77% contain 79%" } as CSSProperties}>
-                              {"mornings?"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 78% contain 80%" } as CSSProperties}>
-                              {"I"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 79% contain 81%" } as CSSProperties}>
-                              {"can"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 80% contain 82%" } as CSSProperties}>
-                              {"send"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 81% contain 83%" } as CSSProperties}>
-                              {"the"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 82% contain 84%" } as CSSProperties}>
-                              {"details"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 83% contain 85%" } as CSSProperties}>
-                              {"on"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 84% contain 86%" } as CSSProperties}>
-                              {"WhatsApp,"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 85% contain 87%" } as CSSProperties}>
-                              {"like"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 86% contain 88%" } as CSSProperties}>
-                              {"last"}
-                            </span>
-                            {" "}
-                            <span className="vg-mword" style={{ animationRange: "contain 87% contain 89%" } as CSSProperties}>
-                              {"time.”"}
-                            </span>
-                          </span>
-                        </span>
-                      </div>
-                    </div>
+                      {"Weekend sessions, left unfinished"}
+                      <span style={{ fontSize: "12px", color: "#8C90A8" }}>
+                        {"July"}
+                      </span>
+                    </span>
                   </div>
-                  <div style={{ marginTop: "22px", textAlign: "right" }}>
+                  <div className="vg-mbubble" style={{ marginTop: "22px", animationRange: "contain 62% contain 68%" } as CSSProperties}>
+                    <span style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "12.5px", color: "#8C90A8" }}>
+                      <span aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: "3px", height: "16px" }}>
+                        <span className="vg-wave" style={{ width: "3px", height: "3px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "6px", borderRadius: "2px", background: "#10B981", animationDelay: "0.12s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "10px", borderRadius: "2px", background: "#10B981", animationDelay: "0.24s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#10B981", animationDelay: "0.36s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "13px", borderRadius: "2px", background: "#10B981", animationDelay: "0.48s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "8px", borderRadius: "2px", background: "#10B981", animationDelay: "0.60s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "4px", borderRadius: "2px", background: "#10B981", animationDelay: "0.72s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "11px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "15px", borderRadius: "2px", background: "#10B981", animationDelay: "0.12s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "7px", borderRadius: "2px", background: "#10B981", animationDelay: "0.24s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "4px", borderRadius: "2px", background: "#10B981", animationDelay: "0.36s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "9px", borderRadius: "2px", background: "#10B981", animationDelay: "0.48s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "12px", borderRadius: "2px", background: "#10B981", animationDelay: "0.60s" }}>
+                        </span>
+                        <span className="vg-wave" style={{ width: "3px", height: "6px", borderRadius: "2px", background: "#10B981", animationDelay: "0.72s" }}>
+                        </span>
+                      </span>
+                      <span>
+                        {"Vegham picks up"}
+                      </span>
+                    </span>
+                    <span style={{ display: "block", marginTop: "10px", padding: "14px 16px", borderRadius: "16px 16px 16px 4px", background: "rgba(255,255,255,.08)", border: "1px solid rgba(255,255,255,.12)", fontSize: "15px", lineHeight: "1.6", color: "#D6D8E6" }}>
+                      {"“Hi "}
+                      <span className="vg-mhl" style={{ color: "#FFFFFF", backgroundImage: "linear-gradient(#10B981, #10B981)", backgroundRepeat: "no-repeat", backgroundPosition: "0 100%", backgroundSize: "100% 2px", paddingBottom: "1px", animationRange: "contain 70% contain 75%" } as CSSProperties}>
+                        {"Rohan"}
+                      </span>
+                      {", good to hear from you again. Still thinking about the "}
+                      <span className="vg-mhl" style={{ color: "#FFFFFF", backgroundImage: "linear-gradient(#10B981, #10B981)", backgroundRepeat: "no-repeat", backgroundPosition: "0 100%", backgroundSize: "100% 2px", paddingBottom: "1px", animationRange: "contain 75% contain 80%" } as CSSProperties}>
+                        {"weekend sessions"}
+                      </span>
+                      {"? "}
+                      <span className="vg-mhl" style={{ color: "#FFFFFF", backgroundImage: "linear-gradient(#10B981, #10B981)", backgroundRepeat: "no-repeat", backgroundPosition: "0 100%", backgroundSize: "100% 2px", paddingBottom: "1px", animationRange: "contain 80% contain 85%" } as CSSProperties}>
+                        {"Saturday morning"}
+                      </span>
+                      {" is open, and I can send the details "}
+                      <span className="vg-mhl" style={{ color: "#FFFFFF", backgroundImage: "linear-gradient(#10B981, #10B981)", backgroundRepeat: "no-repeat", backgroundPosition: "0 100%", backgroundSize: "100% 2px", paddingBottom: "1px", animationRange: "contain 85% contain 90%" } as CSSProperties}>
+                        {"on WhatsApp"}
+                      </span>
+                      {", like last time.”"}
+                    </span>
+                  </div>
+                  <div style={{ marginTop: "18px", textAlign: "right" }}>
                     <span style={{ fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", color: "#8C90A8" }}>
                       {"Sample data"}
                     </span>

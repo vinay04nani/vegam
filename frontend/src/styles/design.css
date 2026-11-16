@@ -216,13 +216,14 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
 @keyframes vg-bright{from{opacity:.25}to{opacity:1}}
 @keyframes vg-rise{from{opacity:0;transform:translateY(30%)}to{opacity:1;transform:none}}
 @keyframes vg-mstep{from{opacity:.22}to{opacity:1}}
-@keyframes vg-mdot{from{background:#1B1E2D;border-color:rgba(255,255,255,.14)}to{background:#10B981;border-color:#10B981}}
-@keyframes vg-mword{from{opacity:.12}to{opacity:1}}
 @keyframes vg-mbubble{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes vg-mchip{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes vg-mhl{from{background-size:0% 2px;color:#D6D8E6}to{background-size:100% 2px;color:#FFFFFF}}
 @keyframes vg-hslide{from{transform:none}to{transform:translateX(calc(-100% + min(1136px, 100vw - 96px)))}}
 @keyframes vg-hfocus{from{opacity:.4;transform:scale(.97)}to{opacity:1;transform:none}}
 .vg-ico *{stroke-dasharray:1;stroke-dashoffset:0}
-.vg-num{counter-reset:vgn var(--to)}
+.vg-num,.vg-mdays{counter-reset:vgn var(--to)}
+.vg-mdays::after{content:counter(vgn)}
 .vg-num::after{content:counter(vgn)}
 @supports (animation-timeline: view()){
 @media (prefers-reduced-motion: no-preference){
@@ -244,10 +245,10 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
   .vg-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;padding-top:40px;box-sizing:border-box}
   .vg-pinpad{padding-top:64px!important;padding-bottom:64px!important}
   .vg-pin-mem .vg-mstep{animation:vg-mstep linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mdot{animation:vg-mdot linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mthread{animation:vg-growy linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mword{animation:vg-mword linear both;animation-timeline:--vg-mem}
+  .vg-pin-mem .vg-mdays{counter-reset:vgn var(--vg-n);animation:vg-count linear both;animation-timeline:--vg-mem}
+  .vg-pin-mem .vg-mchip{animation:vg-mchip linear both;animation-timeline:--vg-mem}
   .vg-pin-mem .vg-mbubble{animation:vg-mbubble linear both;animation-timeline:--vg-mem}
+  .vg-pin-mem .vg-mhl{animation:vg-mhl linear both;animation-timeline:--vg-mem}
   .vg-pin-how .vg-hview{overflow:visible}
   .vg-pin-how .vg-htrack{display:flex!important;width:max-content;animation:vg-hslide linear both;animation-timeline:--vg-how}
   .vg-pin-how .vg-hstep{flex:none;width:440px;box-sizing:border-box;animation:vg-hfocus linear both;animation-timeline:--vg-how}
