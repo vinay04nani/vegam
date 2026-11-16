@@ -3,270 +3,237 @@ import type { CSSProperties } from "react";
 
 export default function Memory() {
   return (
-      <section id="memory" className="vg-pinwrap vg-pin-mem" style={{ padding: "0 16px", viewTimelineName: "--vg-mem" } as CSSProperties}>
+      <section id="memory" className="vg-pinwrap vg-pin-mom" style={{ background: "#F7F7F8", viewTimelineName: "--vg-mom" } as CSSProperties}>
         <div className="vg-sticky">
-          <div style={{ position: "relative", overflow: "hidden", width: "100%", maxWidth: "1408px", margin: "0 auto", borderRadius: "32px", background: "#12141F", color: "#FFFFFF" }}>
-            <div aria-hidden="true" style={{ position: "absolute", inset: "0", overflow: "hidden", pointerEvents: "none", borderRadius: "inherit", opacity: "0.85" }}>
-              <div className="vg-aur1" style={{ position: "absolute", left: "-15%", top: "-45%", width: "130%", height: "95%", filter: "blur(60px)", opacity: ".9", background: "radial-gradient(ellipse 30% 42% at 22% 55%, rgba(61,214,140,0.61), transparent 70%), radial-gradient(ellipse 26% 38% at 48% 45%, rgba(45,212,191,0.50), transparent 70%), radial-gradient(ellipse 28% 46% at 76% 52%, rgba(124,92,255,0.55), transparent 70%)" }}>
+          <div className="vg-pinpad" style={{ width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", boxSizing: "border-box" }} data-s="s10 s11">
+            <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: "24px" }}>
+              <div>
+                <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
+                  {"Moments it handles"}
+                </span>
+                <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "48px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s3">
+                  <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                    <span className="vg-line-in" style={{ display: "block" }}>
+                      {"Every kind of call."}
+                    </span>
+                  </span>
+                  <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
+                    <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
+                      {"Handled the way you would."}
+                    </span>
+                  </span>
+                </h2>
               </div>
-              <div className="vg-aur2" style={{ position: "absolute", left: "-10%", top: "-30%", width: "120%", height: "80%", filter: "blur(70px)", opacity: ".8", background: "radial-gradient(ellipse 22% 36% at 36% 50%, rgba(79,124,255,0.44), transparent 70%), radial-gradient(ellipse 24% 40% at 66% 40%, rgba(61,214,140,0.39), transparent 70%), radial-gradient(ellipse 18% 30% at 90% 60%, rgba(236,72,153,0.24), transparent 70%)" }}>
-              </div>
-              <div className="vg-curtain" style={{ position: "absolute", left: "0", right: "0", top: "0", height: "65%", opacity: ".35", backgroundImage: "repeating-linear-gradient(90deg, rgba(255,255,255,.07) 0 1px, transparent 1px 9px, rgba(255,255,255,.04) 9px 11px, transparent 11px 23px)", WebkitMaskImage: "linear-gradient(180deg, transparent 0%, #000 25%, #000 45%, transparent 100%)", maskImage: "linear-gradient(180deg, transparent 0%, #000 25%, #000 45%, transparent 100%)" }}>
-              </div>
-              <div style={{ position: "absolute", inset: "0", background: "linear-gradient(180deg, rgba(18,20,31,0) 30%, rgba(18,20,31,.9) 100%)" }}>
+              <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "420px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+                {"New callers, regulars, unhappy customers, other languages and late-night messages. Here is what Vegham does with each."}
+              </p>
+            </div>
+            <div className="vg-molabels" style={{ marginTop: "36px", display: "flex", gap: "28px", overflow: "hidden" }}>
+              <span className="vg-molabel" style={{ padding: "8px 0", borderBottom: "2px solid #E6E6EA", fontSize: "14px", color: "#141414", whiteSpace: "nowrap", animationRange: "contain 0% contain 14%" } as CSSProperties}>
+                {"New caller"}
+              </span>
+              <span className="vg-molabel" style={{ padding: "8px 0", borderBottom: "2px solid #E6E6EA", fontSize: "14px", color: "#141414", whiteSpace: "nowrap", animationRange: "contain 14% contain 35%" } as CSSProperties}>
+                {"Returning caller"}
+              </span>
+              <span className="vg-molabel" style={{ padding: "8px 0", borderBottom: "2px solid #E6E6EA", fontSize: "14px", color: "#141414", whiteSpace: "nowrap", animationRange: "contain 35% contain 56%" } as CSSProperties}>
+                {"Upset customer"}
+              </span>
+              <span className="vg-molabel" style={{ padding: "8px 0", borderBottom: "2px solid #E6E6EA", fontSize: "14px", color: "#141414", whiteSpace: "nowrap", animationRange: "contain 56% contain 77%" } as CSSProperties}>
+                {"Another language"}
+              </span>
+              <span className="vg-molabel" style={{ padding: "8px 0", borderBottom: "2px solid #E6E6EA", fontSize: "14px", color: "#141414", whiteSpace: "nowrap", animationRange: "contain 77% contain 98%" } as CSSProperties}>
+                {"After hours"}
+              </span>
+            </div>
+            <div aria-hidden="true" style={{ height: "2px", borderRadius: "2px", background: "#E6E6EA", overflow: "hidden" }}>
+              <span className="vg-mofill" style={{ display: "block", height: "100%", background: "linear-gradient(90deg, #10B981 0%, #0EA5A4 35%, #3B6CF6 70%, #7C3AED 100%)", transformOrigin: "left", animationRange: "contain 4% contain 92%" } as CSSProperties}>
+              </span>
+            </div>
+            <div className="vg-moview" style={{ marginTop: "28px" }}>
+              <div className="vg-motrack" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px", animationRange: "contain 4% contain 92%" } as CSSProperties}>
+                <div className="vg-mocard" style={{ display: "flex", flexDirection: "column", gap: "18px", padding: "26px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", boxSizing: "border-box", animationRange: "contain 0% contain 4%" } as CSSProperties}>
+                  <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ width: "36px", height: "36px", borderRadius: "11px", background: "#F5F5F7", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#16182A" }}>
+                        <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2">
+                          </path>
+                        </svg>
+                      </span>
+                      <b style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "19px", letterSpacing: "-0.02em" }} data-s="s15">
+                        {"New caller"}
+                      </b>
+                    </span>
+                    <span style={{ fontSize: "12px", color: "#8A8A8A", whiteSpace: "nowrap" }}>
+                      {"Phone call · 8:10 AM"}
+                    </span>
+                  </span>
+                  <span style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "14.5px", lineHeight: "1.45", minHeight: "150px" }}>
+                    <span className="vg-mobub" style={{ alignSelf: "flex-end", maxWidth: "80%", background: "#F1F1F4", color: "#1F1F1F", padding: "10px 14px", borderRadius: "16px 16px 4px 16px", animationRange: "contain 0% contain 1%" } as CSSProperties}>
+                      {"How much is a first visit?"}
+                    </span>
+                    <span className="vg-mobub" style={{ alignSelf: "flex-start", maxWidth: "88%", background: "#16182A", color: "#FFFFFF", padding: "10px 14px", borderRadius: "16px 16px 16px 4px", animationRange: "contain 0% contain 3%" } as CSSProperties}>
+                      {"It’s ₹800. Saturday 10 AM is free, shall I hold it and send the details on WhatsApp?"}
+                    </span>
+                  </span>
+                  <span className="vg-moout" style={{ display: "inline-flex", alignItems: "center", gap: "8px", alignSelf: "flex-start", height: "30px", padding: "0 12px", borderRadius: "999px", border: "1px solid rgba(16,185,129,.45)", color: "#0B8F63", fontSize: "13px", fontWeight: "500", animationRange: "contain 3% contain 7%" } as CSSProperties} data-s="s1">
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                    {"Answered from your price list"}
+                  </span>
+                </div>
+                <div className="vg-mocard" style={{ display: "flex", flexDirection: "column", gap: "18px", padding: "26px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", boxSizing: "border-box", animationRange: "contain 13% contain 25%" } as CSSProperties}>
+                  <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ width: "36px", height: "36px", borderRadius: "11px", background: "#F5F5F7", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#16182A" }}>
+                        <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z">
+                          </path>
+                          <path d="M9.5 21h5">
+                          </path>
+                        </svg>
+                      </span>
+                      <b style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "19px", letterSpacing: "-0.02em" }} data-s="s15">
+                        {"Returning caller"}
+                      </b>
+                    </span>
+                    <span style={{ fontSize: "12px", color: "#8A8A8A", whiteSpace: "nowrap" }}>
+                      {"Phone call · 2:15 PM"}
+                    </span>
+                  </span>
+                  <span style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "14.5px", lineHeight: "1.45", minHeight: "150px" }}>
+                    <span className="vg-mobub" style={{ alignSelf: "flex-start", maxWidth: "88%", background: "#16182A", color: "#FFFFFF", padding: "10px 14px", borderRadius: "16px 16px 16px 4px", animationRange: "contain 16% contain 20%" } as CSSProperties}>
+                      {"Hi Rohan, good to hear from you again. Still thinking about the weekend sessions?"}
+                    </span>
+                    <span className="vg-mobub" style={{ alignSelf: "flex-end", maxWidth: "80%", background: "#F1F1F4", color: "#1F1F1F", padding: "10px 14px", borderRadius: "16px 16px 4px 16px", animationRange: "contain 20% contain 24%" } as CSSProperties}>
+                      {"Yes! Is Saturday morning open?"}
+                    </span>
+                  </span>
+                  <span className="vg-moout" style={{ display: "inline-flex", alignItems: "center", gap: "8px", alignSelf: "flex-start", height: "30px", padding: "0 12px", borderRadius: "999px", border: "1px solid rgba(16,185,129,.45)", color: "#0B8F63", fontSize: "13px", fontWeight: "500", animationRange: "contain 24% contain 28%" } as CSSProperties} data-s="s1">
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                    {"Remembered him after six months"}
+                  </span>
+                </div>
+                <div className="vg-mocard" style={{ display: "flex", flexDirection: "column", gap: "18px", padding: "26px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", boxSizing: "border-box", animationRange: "contain 34% contain 46%" } as CSSProperties}>
+                  <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ width: "36px", height: "36px", borderRadius: "11px", background: "#F5F5F7", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#16182A" }}>
+                        <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M4 12h11">
+                          </path>
+                          <path d="M11 7l5 5-5 5">
+                          </path>
+                          <path d="M20 5v14">
+                          </path>
+                        </svg>
+                      </span>
+                      <b style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "19px", letterSpacing: "-0.02em" }} data-s="s15">
+                        {"Upset customer"}
+                      </b>
+                    </span>
+                    <span style={{ fontSize: "12px", color: "#8A8A8A", whiteSpace: "nowrap" }}>
+                      {"WhatsApp · 4:30 PM"}
+                    </span>
+                  </span>
+                  <span style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "14.5px", lineHeight: "1.45", minHeight: "150px" }}>
+                    <span className="vg-mobub" style={{ alignSelf: "flex-end", maxWidth: "80%", background: "#F1F1F4", color: "#1F1F1F", padding: "10px 14px", borderRadius: "16px 16px 4px 16px", animationRange: "contain 37% contain 41%" } as CSSProperties}>
+                      {"This is the second time my booking was wrong."}
+                    </span>
+                    <span className="vg-mobub" style={{ alignSelf: "flex-start", maxWidth: "88%", background: "#16182A", color: "#FFFFFF", padding: "10px 14px", borderRadius: "16px 16px 16px 4px", animationRange: "contain 41% contain 45%" } as CSSProperties}>
+                      {"I’m really sorry. I’m getting the owner for you right now."}
+                    </span>
+                  </span>
+                  <span className="vg-moout" style={{ display: "inline-flex", alignItems: "center", gap: "8px", alignSelf: "flex-start", height: "30px", padding: "0 12px", borderRadius: "999px", border: "1px solid rgba(16,185,129,.45)", color: "#0B8F63", fontSize: "13px", fontWeight: "500", animationRange: "contain 45% contain 49%" } as CSSProperties} data-s="s1">
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                    {"Handed to you with a summary"}
+                  </span>
+                </div>
+                <div className="vg-mocard" style={{ display: "flex", flexDirection: "column", gap: "18px", padding: "26px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", boxSizing: "border-box", animationRange: "contain 55% contain 67%" } as CSSProperties}>
+                  <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ width: "36px", height: "36px", borderRadius: "11px", background: "#F5F5F7", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#16182A" }}>
+                        <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="8.5">
+                          </circle>
+                          <path d="M3.5 12h17">
+                          </path>
+                          <path d="M12 3.5c2.5 2.3 3.7 5.2 3.7 8.5s-1.2 6.2-3.7 8.5c-2.5-2.3-3.7-5.2-3.7-8.5S9.5 5.8 12 3.5z">
+                          </path>
+                        </svg>
+                      </span>
+                      <b style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "19px", letterSpacing: "-0.02em" }} data-s="s15">
+                        {"Another language"}
+                      </b>
+                    </span>
+                    <span style={{ fontSize: "12px", color: "#8A8A8A", whiteSpace: "nowrap" }}>
+                      {"Phone call · 6:30 PM"}
+                    </span>
+                  </span>
+                  <span style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "14.5px", lineHeight: "1.45", minHeight: "150px" }}>
+                    <span className="vg-mobub" style={{ alignSelf: "flex-end", maxWidth: "80%", background: "#F1F1F4", color: "#1F1F1F", padding: "10px 14px", borderRadius: "16px 16px 4px 16px", animationRange: "contain 58% contain 62%" } as CSSProperties}>
+                      {"Hindi mein baat kar sakte hain?"}
+                    </span>
+                    <span className="vg-mobub" style={{ alignSelf: "flex-start", maxWidth: "88%", background: "#16182A", color: "#FFFFFF", padding: "10px 14px", borderRadius: "16px 16px 16px 4px", animationRange: "contain 62% contain 66%" } as CSSProperties}>
+                      {"Bilkul! Bataiye, main kaise madad karoon?"}
+                    </span>
+                  </span>
+                  <span className="vg-moout" style={{ display: "inline-flex", alignItems: "center", gap: "8px", alignSelf: "flex-start", height: "30px", padding: "0 12px", borderRadius: "999px", border: "1px solid rgba(16,185,129,.45)", color: "#0B8F63", fontSize: "13px", fontWeight: "500", animationRange: "contain 66% contain 70%" } as CSSProperties} data-s="s1">
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                    {"Switched to Hindi"}
+                  </span>
+                </div>
+                <div className="vg-mocard" style={{ display: "flex", flexDirection: "column", gap: "18px", padding: "26px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", boxSizing: "border-box", animationRange: "contain 76% contain 88%" } as CSSProperties}>
+                  <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
+                      <span style={{ width: "36px", height: "36px", borderRadius: "11px", background: "#F5F5F7", display: "inline-flex", alignItems: "center", justifyContent: "center", color: "#16182A" }}>
+                        <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                          <circle cx="12" cy="12" r="8.5">
+                          </circle>
+                          <path d="M12 7.5V12l3 2">
+                          </path>
+                        </svg>
+                      </span>
+                      <b style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "19px", letterSpacing: "-0.02em" }} data-s="s15">
+                        {"After hours"}
+                      </b>
+                    </span>
+                    <span style={{ fontSize: "12px", color: "#8A8A8A", whiteSpace: "nowrap" }}>
+                      {"Instagram · 11:42 PM"}
+                    </span>
+                  </span>
+                  <span style={{ display: "flex", flexDirection: "column", gap: "8px", fontSize: "14.5px", lineHeight: "1.45", minHeight: "150px" }}>
+                    <span className="vg-mobub" style={{ alignSelf: "flex-end", maxWidth: "80%", background: "#F1F1F4", color: "#1F1F1F", padding: "10px 14px", borderRadius: "16px 16px 4px 16px", animationRange: "contain 79% contain 83%" } as CSSProperties}>
+                      {"Are you open tomorrow?"}
+                    </span>
+                    <span className="vg-mobub" style={{ alignSelf: "flex-start", maxWidth: "88%", background: "#16182A", color: "#FFFFFF", padding: "10px 14px", borderRadius: "16px 16px 16px 4px", animationRange: "contain 83% contain 87%" } as CSSProperties}>
+                      {"Yes, from 9 AM. Want me to save you a spot?"}
+                    </span>
+                  </span>
+                  <span className="vg-moout" style={{ display: "inline-flex", alignItems: "center", gap: "8px", alignSelf: "flex-start", height: "30px", padding: "0 12px", borderRadius: "999px", border: "1px solid rgba(16,185,129,.45)", color: "#0B8F63", fontSize: "13px", fontWeight: "500", animationRange: "contain 87% contain 91%" } as CSSProperties} data-s="s1">
+                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                    {"Replied at 11:42 PM and added a follow-up"}
+                  </span>
+                </div>
               </div>
             </div>
-            <div className="vg-pinpad" style={{ position: "relative", maxWidth: "1200px", margin: "0 auto", padding: "96px 32px", boxSizing: "border-box" }} data-s="s11">
-              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: "32px" }}>
-                <div style={{ flex: "1 1 420px", minWidth: "0" }}>
-                  <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#A9AECB" }}>
-                    {"Long memory"}
-                  </span>
-                  <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "48px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#FFFFFF" }} data-s="s3">
-                    <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
-                      <span className="vg-line-in" style={{ display: "block" }}>
-                        {"It remembers every person."}
-                      </span>
-                    </span>
-                    <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
-                      <span className="vg-line-in" style={{ display: "block", color: "#8C90A8" }}>
-                        {"Even six months later."}
-                      </span>
-                    </span>
-                  </h2>
-                  <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#C3C6DA" }} data-s="s16">
-                    {"Most assistants start from zero on every call. Vegham keeps the thread, so the conversation picks up where it stopped."}
-                  </p>
-                </div>
-                <div style={{ textAlign: "right" }}>
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: "10px", height: "30px", padding: "0 12px", borderRadius: "999px", background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.12)", fontSize: "13px", color: "#D6D8E6" }} data-s="s1">
-                    <span aria-hidden="true" style={{ display: "inline-flex", alignItems: "center", gap: "3px", height: "14px" }}>
-                      <span className="vg-wave" style={{ width: "3px", height: "3px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
-                      </span>
-                      <span className="vg-wave" style={{ width: "3px", height: "5px", borderRadius: "2px", background: "#10B981", animationDelay: "0.12s" }}>
-                      </span>
-                      <span className="vg-wave" style={{ width: "3px", height: "9px", borderRadius: "2px", background: "#10B981", animationDelay: "0.24s" }}>
-                      </span>
-                      <span className="vg-wave" style={{ width: "3px", height: "4px", borderRadius: "2px", background: "#10B981", animationDelay: "0.36s" }}>
-                      </span>
-                      <span className="vg-wave" style={{ width: "3px", height: "11px", borderRadius: "2px", background: "#10B981", animationDelay: "0.48s" }}>
-                      </span>
-                      <span className="vg-wave" style={{ width: "3px", height: "7px", borderRadius: "2px", background: "#10B981", animationDelay: "0.60s" }}>
-                      </span>
-                      <span className="vg-wave" style={{ width: "3px", height: "4px", borderRadius: "2px", background: "#10B981", animationDelay: "0.72s" }}>
-                      </span>
-                      <span className="vg-wave" style={{ width: "3px", height: "9px", borderRadius: "2px", background: "#10B981", animationDelay: "0.00s" }}>
-                      </span>
-                      <span className="vg-wave" style={{ width: "3px", height: "13px", borderRadius: "2px", background: "#10B981", animationDelay: "0.12s" }}>
-                      </span>
-                      <span className="vg-wave" style={{ width: "3px", height: "6px", borderRadius: "2px", background: "#10B981", animationDelay: "0.24s" }}>
-                      </span>
-                    </span>
-                    {" Rohan is calling"}
-                  </span>
-                  <span style={{ display: "block", marginTop: "10px", fontFamily: "var(--font-tight), sans-serif", fontSize: "96px", lineHeight: "1", letterSpacing: "-0.04em", color: "#3DD68C" }}>
-                    <span className="vg-mdays" role="img" aria-label="184" style={{ "--to": "184", animationRange: "contain 3% contain 22%" } as CSSProperties}>
-                    </span>
-                  </span>
-                  <span style={{ display: "block", marginTop: "6px", fontSize: "14px", color: "#B4B8CC" }}>
-                    {"days since you last spoke"}
-                  </span>
-                </div>
-              </div>
-              <div style={{ marginTop: "44px", paddingTop: "36px", borderTop: "1px solid rgba(255,255,255,.12)" }}>
-                <span style={{ display: "block", fontSize: "12px", letterSpacing: ".14em", textTransform: "uppercase", color: "#8C90A8" }}>
-                  {"Vegham picks up"}
-                </span>
-                <div style={{ marginTop: "14px" }}>
-                  <p style={{ margin: "0", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "36px", lineHeight: "1.32", letterSpacing: "-0.02em", color: "#FFFFFF" }} data-s="s7">
-                    <span className="vg-mword" style={{ animationRange: "contain 26% contain 29%" } as CSSProperties}>
-                      {"“Hi"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 27% contain 30%" } as CSSProperties}>
-                      <span className="vg-mgreen" style={{ color: "#3DD68C", backgroundImage: "linear-gradient(#10B981, #10B981)", backgroundRepeat: "no-repeat", backgroundPosition: "0 100%", backgroundSize: "100% 2px", animationRange: "contain 29% contain 33%" } as CSSProperties}>
-                        {"Rohan"}
-                        <sup style={{ fontSize: ".42em", marginLeft: "2px", verticalAlign: "super" }}>
-                          {"1"}
-                        </sup>
-                      </span>
-                      {","}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 29% contain 32%" } as CSSProperties}>
-                      {"good"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 31% contain 34%" } as CSSProperties}>
-                      {"to"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 33% contain 36%" } as CSSProperties}>
-                      {"hear"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 35% contain 38%" } as CSSProperties}>
-                      {"from"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 37% contain 40%" } as CSSProperties}>
-                      {"you"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 39% contain 42%" } as CSSProperties}>
-                      {"again."}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 41% contain 44%" } as CSSProperties}>
-                      {"Still"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 43% contain 46%" } as CSSProperties}>
-                      {"thinking"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 45% contain 48%" } as CSSProperties}>
-                      {"about"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 47% contain 50%" } as CSSProperties}>
-                      {"the"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 49% contain 52%" } as CSSProperties}>
-                      <span className="vg-mgreen" style={{ color: "#3DD68C", backgroundImage: "linear-gradient(#10B981, #10B981)", backgroundRepeat: "no-repeat", backgroundPosition: "0 100%", backgroundSize: "100% 2px", animationRange: "contain 51% contain 55%" } as CSSProperties}>
-                        {"weekend sessions"}
-                        <sup style={{ fontSize: ".42em", marginLeft: "2px", verticalAlign: "super" }}>
-                          {"2"}
-                        </sup>
-                      </span>
-                      {"?"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 51% contain 54%" } as CSSProperties}>
-                      <span className="vg-mgreen" style={{ color: "#3DD68C", backgroundImage: "linear-gradient(#10B981, #10B981)", backgroundRepeat: "no-repeat", backgroundPosition: "0 100%", backgroundSize: "100% 2px", animationRange: "contain 53% contain 57%" } as CSSProperties}>
-                        {"Saturday morning"}
-                        <sup style={{ fontSize: ".42em", marginLeft: "2px", verticalAlign: "super" }}>
-                          {"3"}
-                        </sup>
-                      </span>
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 52% contain 55%" } as CSSProperties}>
-                      {"is"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 54% contain 57%" } as CSSProperties}>
-                      {"open,"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 56% contain 59%" } as CSSProperties}>
-                      {"and"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 58% contain 61%" } as CSSProperties}>
-                      {"I"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 60% contain 63%" } as CSSProperties}>
-                      {"can"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 62% contain 65%" } as CSSProperties}>
-                      {"send"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 64% contain 67%" } as CSSProperties}>
-                      {"the"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 66% contain 69%" } as CSSProperties}>
-                      {"details"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 68% contain 71%" } as CSSProperties}>
-                      <span className="vg-mgreen" style={{ color: "#3DD68C", backgroundImage: "linear-gradient(#10B981, #10B981)", backgroundRepeat: "no-repeat", backgroundPosition: "0 100%", backgroundSize: "100% 2px", animationRange: "contain 70% contain 74%" } as CSSProperties}>
-                        {"on WhatsApp"}
-                        <sup style={{ fontSize: ".42em", marginLeft: "2px", verticalAlign: "super" }}>
-                          {"4"}
-                        </sup>
-                      </span>
-                      {","}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 70% contain 73%" } as CSSProperties}>
-                      {"like"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 72% contain 75%" } as CSSProperties}>
-                      {"last"}
-                    </span>
-                    {" "}
-                    <span className="vg-mword" style={{ animationRange: "contain 74% contain 77%" } as CSSProperties}>
-                      {"time.”"}
-                    </span>
-                  </p>
-                </div>
-                <div className="vg-g4" style={{ marginTop: "32px", display: "grid", gridTemplateColumns: "repeat(4, minmax(0, 1fr))", gap: "20px" }}>
-                  <div className="vg-mnote" style={{ display: "flex", gap: "12px", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,.12)", animationRange: "contain 29% contain 34%" } as CSSProperties}>
-                    <span style={{ width: "22px", height: "22px", flex: "none", borderRadius: "50%", border: "1px solid rgba(16,185,129,.6)", color: "#3DD68C", fontSize: "11.5px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                      {"1"}
-                    </span>
-                    <span style={{ fontSize: "13.5px", lineHeight: "1.45" }}>
-                      <b style={{ display: "block", fontWeight: "500", color: "#FFFFFF" }}>
-                        {"Rohan Mehta"}
-                      </b>
-                      <span style={{ color: "#8C90A8" }}>
-                        {"from his first call, in May"}
-                      </span>
-                    </span>
-                  </div>
-                  <div className="vg-mnote" style={{ display: "flex", gap: "12px", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,.12)", animationRange: "contain 51% contain 56%" } as CSSProperties}>
-                    <span style={{ width: "22px", height: "22px", flex: "none", borderRadius: "50%", border: "1px solid rgba(16,185,129,.6)", color: "#3DD68C", fontSize: "11.5px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                      {"2"}
-                    </span>
-                    <span style={{ fontSize: "13.5px", lineHeight: "1.45" }}>
-                      <b style={{ display: "block", fontWeight: "500", color: "#FFFFFF" }}>
-                        {"Weekend sessions"}
-                      </b>
-                      <span style={{ color: "#8C90A8" }}>
-                        {"asked in May, left unfinished"}
-                      </span>
-                    </span>
-                  </div>
-                  <div className="vg-mnote" style={{ display: "flex", gap: "12px", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,.12)", animationRange: "contain 53% contain 58%" } as CSSProperties}>
-                    <span style={{ width: "22px", height: "22px", flex: "none", borderRadius: "50%", border: "1px solid rgba(16,185,129,.6)", color: "#3DD68C", fontSize: "11.5px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                      {"3"}
-                    </span>
-                    <span style={{ fontSize: "13.5px", lineHeight: "1.45" }}>
-                      <b style={{ display: "block", fontWeight: "500", color: "#FFFFFF" }}>
-                        {"Saturday mornings"}
-                      </b>
-                      <span style={{ color: "#8C90A8" }}>
-                        {"said so twice"}
-                      </span>
-                    </span>
-                  </div>
-                  <div className="vg-mnote" style={{ display: "flex", gap: "12px", paddingTop: "16px", borderTop: "1px solid rgba(255,255,255,.12)", animationRange: "contain 70% contain 75%" } as CSSProperties}>
-                    <span style={{ width: "22px", height: "22px", flex: "none", borderRadius: "50%", border: "1px solid rgba(16,185,129,.6)", color: "#3DD68C", fontSize: "11.5px", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
-                      {"4"}
-                    </span>
-                    <span style={{ fontSize: "13.5px", lineHeight: "1.45" }}>
-                      <b style={{ display: "block", fontWeight: "500", color: "#FFFFFF" }}>
-                        {"Details on WhatsApp"}
-                      </b>
-                      <span style={{ color: "#8C90A8" }}>
-                        {"how he liked it in July"}
-                      </span>
-                    </span>
-                  </div>
-                </div>
-                <div style={{ marginTop: "18px", textAlign: "right" }}>
-                  <span style={{ fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", color: "#8C90A8" }}>
-                    {"Sample data"}
-                  </span>
-                </div>
-              </div>
+            <div style={{ marginTop: "14px", textAlign: "right" }}>
+              <span style={{ fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", color: "#A3A3A3" }}>
+                {"Sample data"}
+              </span>
             </div>
           </div>
         </div>

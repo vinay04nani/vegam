@@ -1,8 +1,8 @@
 """Landing v4: scroll story below the hero (hero unchanged).
 
 - Channels: a hub draws lines to the cards, which arrive in a wave
-- Long memory: pinned, editorial: a big days-since-last-call counter, then the greeting in large type; the
-  remembered parts turn green and their notes appear
+- Moments it handles (replaces the memory section): pinned; five scenarios slide across, the centred one
+  brightens, its messages appear and then its outcome
 - What it does: cards arrive in a wave; bars grow, numbers count, chips pop, rows slide
 - How it works: pinned; the four steps slide across with a progress bar
 - Light touches: icons draw, QR pops, pricing lands with Growth last, banner aurora brightens, footer wordmark rises
@@ -49,48 +49,63 @@ def channels():
     return html
 
 
-# ---------------------------------------------------------------- MEMORY (pinned)
+# ---------------------------------------------------------------- MOMENTS IT HANDLES (pinned; replaces the memory section)
+MOMENTS = [
+    ('phone', L.I_PHONE, 'New caller', 'Phone call · 8:10 AM',
+     [('How much is a first visit?', False), ('It’s ₹800. Saturday 10 AM is free, shall I hold it and send the details on WhatsApp?', True)],
+     'Answered from your price list'),
+    ('mem', L.I_MEM, 'Returning caller', 'Phone call · 2:15 PM',
+     [('Hi Rohan, good to hear from you again. Still thinking about the weekend sessions?', True), ('Yes! Is Saturday morning open?', False)],
+     'Remembered him after six months'),
+    ('hand', L.I_HAND, 'Upset customer', 'WhatsApp · 4:30 PM',
+     [('This is the second time my booking was wrong.', False), ('I’m really sorry. I’m getting the owner for you right now.', True)],
+     'Handed to you with a summary'),
+    ('globe', L.I_GLOBE, 'Another language', 'Phone call · 6:30 PM',
+     [('Hindi mein baat kar sakte hain?', False), ('Bilkul! Bataiye, main kaise madad karoon?', True)],
+     'Switched to Hindi'),
+    ('clock', L.I_CLOCK, 'After hours', 'Instagram · 11:42 PM',
+     [('Are you open tomorrow?', False), ('Yes, from 9 AM. Want me to save you a spot?', True)],
+     'Replied at 11:42 PM and added a follow-up'),
+]
+
+
 def memory():
-    """Pinned, editorial: a big "days since Rohan last called" counter, then Vegham's greeting in large type.
-    The words light up as you scroll; the parts it remembered turn green and their notes appear below."""
-    tokens = [('“Hi', None), ('Rohan,', 1), ('good', None), ('to', None), ('hear', None), ('from', None), ('you', None), ('again.', None),
-              ('Still', None), ('thinking', None), ('about', None), ('the', None), ('weekend sessions?', 2), ('Saturday morning', 3),
-              ('is', None), ('open,', None), ('and', None), ('I', None), ('can', None), ('send', None), ('the', None), ('details', None),
-              ('on WhatsApp,', 4), ('like', None), ('last', None), ('time.”', None)]
-    notes = {1: ('Rohan Mehta', 'from his first call, in May'), 2: ('Weekend sessions', 'asked in May, left unfinished'),
-             3: ('Saturday mornings', 'said so twice'), 4: ('Details on WhatsApp', 'how he liked it in July')}
-    n = len(tokens)
-    when = {}
-    parts = []
-    for i, (w, k) in enumerate(tokens):
-        a = 26 + i * 50 // n
-        if k:
-            when[k] = a
-            word = w.rstrip(',?.')
-            tail = w[len(word):]
-            parts.append('<span class="vg-mword" style="%s"><span class="vg-mgreen" style="color: #3DD68C; background-image: linear-gradient(#10B981, #10B981); background-repeat: no-repeat; background-position: 0 100%%; background-size: 100%% 2px; %s">%s<sup style="font-size: .42em; margin-left: 2px; vertical-align: super">%d</sup></span>%s</span>'
-                         % (crng(a, a + 3), crng(a + 2, a + 6), word, k, tail))
+    """Moments it handles: five short scenarios that slide across while the section holds in place.
+    The card in the middle brightens, its messages appear one by one, then its outcome."""
+    def t(i):
+        return 4 + i * 21
+
+    def c(a, b):
+        return crng(max(0, a), max(1, b))
+
+    def bubble(text, me, a, b):
+        if me:
+            st = 'align-self: flex-start; max-width: 88%; background: #16182A; color: #FFFFFF; padding: 10px 14px; border-radius: 16px 16px 16px 4px'
         else:
-            parts.append('<span class="vg-mword" style="%s">%s</span>' % (crng(a, a + 3), w))
-    quote = ('<p style="margin: 0; %s; font-weight: 400; font-size: 36px; line-height: 1.32; letter-spacing: -0.02em; color: #FFFFFF">%s</p>') % (TIGHT, ' '.join(parts))
-    foot = ''.join(('<div class="vg-mnote" style="display: flex; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.12); %s">'
-                    '<span style="width: 22px; height: 22px; flex: none; border-radius: 50%%; border: 1px solid rgba(16,185,129,.6); color: #3DD68C; font-size: 11.5px; display: inline-flex; align-items: center; justify-content: center">%d</span>'
-                    '<span style="font-size: 13.5px; line-height: 1.45"><b style="display: block; font-weight: 500; color: #FFFFFF">%s</b><span style="color: #8C90A8">%s</span></span></div>') % (crng(when[k] + 2, when[k] + 7), k, t, d) for k, (t, d) in notes.items())
-    counter = ('<div style="text-align: right"><span style="display: inline-flex; align-items: center; gap: 10px; height: 30px; padding: 0 12px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); font-size: 13px; color: #D6D8E6">%s Rohan is calling</span>'
-               '<span style="display: block; margin-top: 10px; %s; font-size: 96px; line-height: 1; letter-spacing: -0.04em; color: #3DD68C"><span class="vg-mdays" role="img" aria-label="184" style="--to: 184; %s"></span></span>'
-               '<span style="display: block; margin-top: 6px; font-size: 14px; color: #B4B8CC">days since you last spoke</span></div>') % (wave(10, G, 14), TIGHT, crng(3, 22))
-    head = ('<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px">'
-            '<div style="flex: 1 1 420px; min-width: 0">%s%s%s</div>%s</div>') % (
-        eyebrow('Long memory', True), h2('It remembers every person.', 'Even six months later.', True, size=48),
-        lead('Most assistants start from zero on every call. Vegham keeps the thread, so the conversation picks up where it stopped.', True, mw=480), counter)
-    body = ('%s<div style="margin-top: 44px; padding-top: 36px; border-top: 1px solid rgba(255,255,255,.12)">'
-            '<span style="display: block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #8C90A8">Vegham picks up</span>'
-            '<div style="margin-top: 14px">%s</div>'
-            '<div class="vg-g4" style="margin-top: 32px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">%s</div>'
-            '<div style="margin-top: 18px; text-align: right">%s</div></div>') % (head, quote, foot, sample(True))
-    return ('<section class="vg-pinwrap vg-pin-mem" style="padding: 0 16px; view-timeline-name: --vg-mem"><div class="vg-sticky">'
-            '<div style="position: relative; overflow: hidden; width: 100%%; max-width: 1408px; margin: 0 auto; border-radius: 32px; background: #12141F; color: #FFFFFF">%s'
-            '<div class="vg-pinpad" style="position: relative; max-width: 1200px; margin: 0 auto; padding: 96px 32px; box-sizing: border-box">%s</div></div></div></section>') % (aurora(.85), body)
+            st = 'align-self: flex-end; max-width: 80%; background: #F1F1F4; color: #1F1F1F; padding: 10px 14px; border-radius: 16px 16px 4px 16px'
+        return '<span class="vg-mobub" style="%s; %s">%s</span>' % (st, c(a, b), text)
+
+    cards = []
+    for i, (k, icon, label, meta, msgs, outcome) in enumerate(MOMENTS):
+        ti = t(i)
+        bubbles = bubble(msgs[0][0], msgs[0][1], ti - 9, ti - 5) + bubble(msgs[1][0], msgs[1][1], ti - 5, ti - 1)
+        cards.append(
+            ('<div class="vg-mocard" style="display: flex; flex-direction: column; gap: 18px; padding: 26px; border-radius: 24px; background: #FFFFFF; border: 1px solid #ECECEF; box-sizing: border-box; %s">'
+             '<span style="display: flex; align-items: center; justify-content: space-between; gap: 12px"><span style="display: inline-flex; align-items: center; gap: 10px"><span style="width: 36px; height: 36px; border-radius: 11px; background: #F5F5F7; display: inline-flex; align-items: center; justify-content: center; color: #16182A">%s</span>'
+             '<b style="%s; font-weight: 500; font-size: 19px; letter-spacing: -0.02em">%s</b></span><span style="font-size: 12px; color: #8A8A8A; white-space: nowrap">%s</span></span>'
+             '<span style="display: flex; flex-direction: column; gap: 8px; font-size: 14.5px; line-height: 1.45; min-height: 150px">%s</span>'
+             '<span class="vg-moout" style="display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; height: 30px; padding: 0 12px; border-radius: 999px; border: 1px solid rgba(16,185,129,.45); color: %s; font-size: 13px; font-weight: 500; %s">%s%s</span></div>')
+            % (c(ti - 12, ti), ic(icon, 17), TIGHT, label, meta, bubbles, GT, c(ti - 1, ti + 3), ic(L.I_CHECK, 14, 'currentColor', 2.4), outcome))
+    labels = ''.join('<span class="vg-molabel" style="padding: 8px 0; border-bottom: 2px solid #E6E6EA; font-size: 14px; color: #141414; white-space: nowrap; %s">%s</span>' % (c(t(i) - 11, t(i) + 10), m[2]) for i, m in enumerate(MOMENTS))
+    bar = '<div aria-hidden="true" style="height: 2px; border-radius: 2px; background: #E6E6EA; overflow: hidden"><span class="vg-mofill" style="display: block; height: 100%%; background: %s; transform-origin: left; %s"></span></div>' % (AUR, crng(4, 92))
+    head = ('<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px"><div>%s%s</div>%s</div>') % (
+        eyebrow('Moments it handles'), h2('Every kind of call.', 'Handled the way you would.', size=48),
+        lead('New callers, regulars, unhappy customers, other languages and late-night messages. Here is what Vegham does with each.', mw=420))
+    return ('<section class="vg-pinwrap vg-pin-mom" style="background: #F7F7F8; view-timeline-name: --vg-mom"><div class="vg-sticky">'
+            '<div class="vg-pinpad" style="width: 100%%; max-width: 1200px; margin: 0 auto; padding: 104px 32px; box-sizing: border-box">%s'
+            '<div class="vg-molabels" style="margin-top: 36px; display: flex; gap: 28px; overflow: hidden">%s</div>%s'
+            '<div class="vg-moview" style="margin-top: 28px"><div class="vg-motrack" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; %s">%s</div></div>'
+            '<div style="margin-top: 14px; text-align: right">%s</div></div></div></section>') % (head, labels, bar, crng(4, 92), ''.join(cards), sample())
 
 
 # ---------------------------------------------------------------- WHAT IT DOES
@@ -224,6 +239,7 @@ EXTRA = '''
 @keyframes vg-mgreen{from{color:#FFFFFF;background-size:0% 2px}to{color:#3DD68C;background-size:100% 2px}}
 @keyframes vg-mchip{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
 @keyframes vg-mhl{from{background-size:0% 2px;color:#D6D8E6}to{background-size:100% 2px;color:#FFFFFF}}
+@keyframes vg-molabel{0%,100%{color:#8A8A8A;border-bottom-color:#E6E6EA}25%,75%{color:#141414;border-bottom-color:#10B981}}
 @keyframes vg-hslide{from{transform:none}to{transform:translateX(calc(-100% + min(1136px, 100vw - 96px)))}}
 @keyframes vg-hfocus{from{opacity:.4;transform:scale(.97)}to{opacity:1;transform:none}}
 .vg-ico *{stroke-dasharray:1;stroke-dashoffset:0}
@@ -245,15 +261,17 @@ EXTRA = '''
 }
 @media (prefers-reduced-motion: no-preference) and (min-width: 761px) and (min-height: 680px){
   .vg-pinwrap{position:relative}
-  .vg-pin-mem{height:250vh}
   .vg-pin-how{height:280vh}
   .vg-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;padding-top:40px;box-sizing:border-box}
   .vg-pinpad{padding-top:64px!important;padding-bottom:64px!important}
-  .vg-pin-mem .vg-mstep{animation:vg-mstep linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mdays{counter-reset:vgn var(--vg-n);animation:vg-count linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mword{animation:vg-mword linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mgreen{animation:vg-mgreen linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mnote{animation:vg-mbubble linear both;animation-timeline:--vg-mem}
+  .vg-pin-mom{height:320vh}
+  .vg-pin-mom .vg-moview{overflow:hidden;padding:6px 0;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 3%,#000 97%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 3%,#000 97%,transparent 100%)}
+  .vg-pin-mom .vg-motrack{display:flex!important;width:max-content;animation:vg-hslide linear both;animation-timeline:--vg-mom}
+  .vg-pin-mom .vg-mocard{flex:none;width:400px;animation:vg-hfocus linear both;animation-timeline:--vg-mom}
+  .vg-pin-mom .vg-mobub{animation:vg-mbubble linear both;animation-timeline:--vg-mom}
+  .vg-pin-mom .vg-moout{animation:vg-popin linear both;animation-timeline:--vg-mom}
+  .vg-pin-mom .vg-molabel{animation:vg-molabel linear both;animation-timeline:--vg-mom}
+  .vg-pin-mom .vg-mofill{animation:vg-growx linear both;animation-timeline:--vg-mom}
   .vg-pin-how .vg-hview{overflow:visible}
   .vg-pin-how .vg-htrack{display:flex!important;width:max-content;animation:vg-hslide linear both;animation-timeline:--vg-how}
   .vg-pin-how .vg-hstep{flex:none;width:440px;box-sizing:border-box;animation:vg-hfocus linear both;animation-timeline:--vg-how}

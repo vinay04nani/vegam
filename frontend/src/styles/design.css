@@ -221,6 +221,7 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
 @keyframes vg-mgreen{from{color:#FFFFFF;background-size:0% 2px}to{color:#3DD68C;background-size:100% 2px}}
 @keyframes vg-mchip{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
 @keyframes vg-mhl{from{background-size:0% 2px;color:#D6D8E6}to{background-size:100% 2px;color:#FFFFFF}}
+@keyframes vg-molabel{0%,100%{color:#8A8A8A;border-bottom-color:#E6E6EA}25%,75%{color:#141414;border-bottom-color:#10B981}}
 @keyframes vg-hslide{from{transform:none}to{transform:translateX(calc(-100% + min(1136px, 100vw - 96px)))}}
 @keyframes vg-hfocus{from{opacity:.4;transform:scale(.97)}to{opacity:1;transform:none}}
 .vg-ico *{stroke-dasharray:1;stroke-dashoffset:0}
@@ -242,15 +243,17 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
 }
 @media (prefers-reduced-motion: no-preference) and (min-width: 761px) and (min-height: 680px){
   .vg-pinwrap{position:relative}
-  .vg-pin-mem{height:250vh}
   .vg-pin-how{height:280vh}
   .vg-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;padding-top:40px;box-sizing:border-box}
   .vg-pinpad{padding-top:64px!important;padding-bottom:64px!important}
-  .vg-pin-mem .vg-mstep{animation:vg-mstep linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mdays{counter-reset:vgn var(--vg-n);animation:vg-count linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mword{animation:vg-mword linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mgreen{animation:vg-mgreen linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mnote{animation:vg-mbubble linear both;animation-timeline:--vg-mem}
+  .vg-pin-mom{height:320vh}
+  .vg-pin-mom .vg-moview{overflow:hidden;padding:6px 0;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 3%,#000 97%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 3%,#000 97%,transparent 100%)}
+  .vg-pin-mom .vg-motrack{display:flex!important;width:max-content;animation:vg-hslide linear both;animation-timeline:--vg-mom}
+  .vg-pin-mom .vg-mocard{flex:none;width:400px;animation:vg-hfocus linear both;animation-timeline:--vg-mom}
+  .vg-pin-mom .vg-mobub{animation:vg-mbubble linear both;animation-timeline:--vg-mom}
+  .vg-pin-mom .vg-moout{animation:vg-popin linear both;animation-timeline:--vg-mom}
+  .vg-pin-mom .vg-molabel{animation:vg-molabel linear both;animation-timeline:--vg-mom}
+  .vg-pin-mom .vg-mofill{animation:vg-growx linear both;animation-timeline:--vg-mom}
   .vg-pin-how .vg-hview{overflow:visible}
   .vg-pin-how .vg-htrack{display:flex!important;width:max-content;animation:vg-hslide linear both;animation-timeline:--vg-how}
   .vg-pin-how .vg-hstep{flex:none;width:440px;box-sizing:border-box;animation:vg-hfocus linear both;animation-timeline:--vg-how}
