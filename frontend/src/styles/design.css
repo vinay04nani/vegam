@@ -280,36 +280,6 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
 @keyframes vg-reveal2{from{opacity:0;transform:translateY(56px)}to{opacity:1;transform:none}}
 @keyframes vg-hero{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes vg-pill{to{max-width:900px;margin-top:12px;padding:8px 10px 8px 24px;background:rgba(255,255,255,.82);border-color:#E4E4EA;box-shadow:0 12px 32px -16px rgba(22,24,42,.25);border-radius:999px;-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}}
-@supports (animation-timeline: view()){
-@media (prefers-reduced-motion: no-preference){
-  .vg-hubline{stroke-dasharray:1;animation:vg-dash linear both;animation-timeline:view();animation-range:entry 30% cover 45%}
-  .vg-hubdot{animation:vg-hubdot linear both;animation-timeline:view();animation-range:entry 20% cover 35%}
-  .vg-growbar{animation:vg-growy linear both;animation-timeline:view()}
-  .vg-drawx{animation:vg-growx linear both;animation-timeline:view()}
-  .vg-pop{animation:vg-popin linear both;animation-timeline:view()}
-  .vg-slide{animation:vg-slidein linear both;animation-timeline:view()}
-  .vg-ico *{animation:vg-dash linear both;animation-timeline:view();animation-range:entry 40% cover 50%}
-  .vg-num{counter-reset:vgn var(--vg-n);animation:vg-count linear both;animation-timeline:view();animation-range:entry 30% cover 50%}
-  .vg-brighten{animation:vg-bright linear both;animation-timeline:view();animation-range:entry 10% cover 50%}
-  .vg-aurtext.vg-rise{animation:vg-rise linear both,vg-aurtext 16s ease-in-out infinite alternate;animation-timeline:view(),auto;animation-range:entry 0% cover 35%,normal}
-}
-@media (prefers-reduced-motion: no-preference) and (min-width: 761px) and (min-height: 680px){
-  .vg-pinwrap{position:relative}
-  .vg-pin-mem{height:250vh}
-  .vg-pin-how{height:280vh}
-  .vg-sticky{position:sticky;top:0;height:100vh;display:flex;align-items:center;padding-top:40px;box-sizing:border-box}
-  .vg-pinpad{padding-top:64px!important;padding-bottom:64px!important}
-  .vg-pin-mem .vg-mstep{animation:vg-mstep linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mdays{counter-reset:vgn var(--vg-n);animation:vg-count linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mchip{animation:vg-mchip linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mbubble{animation:vg-mbubble linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mhl{animation:vg-mhl linear both;animation-timeline:--vg-mem}
-  .vg-pin-how .vg-hview{overflow:visible}
-  .vg-pin-how .vg-htrack{display:flex!important;width:max-content;animation:vg-hslide linear both;animation-timeline:--vg-how}
-  .vg-pin-how .vg-hstep{flex:none;width:440px;box-sizing:border-box;animation:vg-hfocus linear both;animation-timeline:--vg-how}
-  .vg-pin-how .vg-hfill{animation:vg-growx linear both;animation-timeline:--vg-how}
-}
-}
 .vg-num.vg-pct::after{content:counter(vgn) "%"}
 @keyframes vg-phl{from{background-size:0% 100%}to{background-size:100% 100%}}
 @supports (animation-timeline: view()){
@@ -328,6 +298,12 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
 }
 }
 @media (max-width: 900px){.vg-tour{grid-template-columns:minmax(0,1fr)!important}.vg-tside{display:none}}
+@keyframes vg-ringdraw{from{stroke-dashoffset:.92}to{stroke-dashoffset:0}}
+@supports (animation-timeline: view()){
+@media (prefers-reduced-motion: no-preference){
+  .vg-ring{animation:vg-ringdraw linear both;animation-timeline:view()}
+}
+}
 .vg-knob{background:var(--text)}
 a:focus-visible,button:focus-visible,input:focus-visible,label:focus-visible,summary:focus-visible{outline:2px solid #10B981;outline-offset:3px;border-radius:12px}
 .app{--bg:#FFFFFF;--side:#F9F9FA;--soft:#EFEFF2;--soft2:#F4F4F6;--line:#ECECF0;--text:#16171D;--mut:#6E6F78;--mut2:#9A9BA3;--ink:#16182A;--inkfg:#FFFFFF;--card:#FFFFFF;--pop:#FFFFFF;--shadow:0 24px 60px -24px rgba(22,24,42,.28), 0 0 0 1px rgba(22,24,42,.06);--scrim:rgba(18,20,31,.28);--good:#1F9D6B;--goodbg:#E8F6EF;--warn:#B4500A;--warnbg:#FFF1E5;--acc:#10B981;background:var(--bg);color:var(--text);transition:background .25s,color .25s}
