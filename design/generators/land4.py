@@ -114,6 +114,9 @@ _bento = L.bento
 
 def bento():
     html = _bento()
+    # It now follows the channels section directly, so less space above it.
+    assert 'padding: 120px 32px 112px' in html
+    html = html.replace('padding: 120px 32px 112px', 'padding: 56px 32px 112px', 1)
     # cards arrive in a wave, by row and column
     pos = [(0, 0), (0, 2), (1, 0), (1, 1), (1, 2), (2, 0), (2, 1)]
     i = [0]
@@ -284,6 +287,8 @@ L.RESPONSIVE += EXTRA
 L.channels, L.memory, L.bento, L.global_, L.how, L.control, L.pricing, L.cta = channels, memory, bento, global_, how, control, pricing, cta
 # The landing page has no pricing section; plans live on the Pricing page.
 L.pricing = lambda: ''
+# The Moments it handles section is not on the landing page either (kept above in case it comes back).
+L.memory = lambda: ''
 
 _footer = L.footer
 

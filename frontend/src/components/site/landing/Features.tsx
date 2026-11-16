@@ -4,7 +4,7 @@ import type { CSSProperties } from "react";
 export default function Features() {
   return (
       <section id="product" style={{ viewTimelineName: "--vg-sec-product", background: "linear-gradient(180deg, #FFFFFF 0%, #F7F7F8 100%)" } as CSSProperties}>
-        <div className="vg-pad" style={{ maxWidth: "1200px", margin: "0 auto", padding: "120px 32px 112px" }} data-s="s11">
+        <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "56px 32px 112px" }} data-s="s11">
           <div style={{ textAlign: "center" }}>
             <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
               {"What Vegham does"}

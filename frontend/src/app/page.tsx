@@ -4,7 +4,6 @@ import SiteHeader from "@/components/site/SiteHeader";
 import SiteFooter from "@/components/site/SiteFooter";
 import Hero from "@/components/site/landing/Hero";
 import Channels from "@/components/site/landing/Channels";
-import Memory from "@/components/site/landing/Memory";
 import Features from "@/components/site/landing/Features";
 import Anywhere from "@/components/site/landing/Anywhere";
 import HowItWorks from "@/components/site/landing/HowItWorks";
@@ -18,7 +17,6 @@ export default function LandingPage() {
       <SiteHeader />
       <Hero />
       <Channels />
-      <Memory />
       <Features />
       <Anywhere />
       <HowItWorks />
