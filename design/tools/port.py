@@ -180,6 +180,10 @@ def build_css(boards):
                     seen.add(rule)
                     out.append(rule)
     css = '\n'.join(out)
+    # Reveals fade and slide only; no blur.
+    for a, b in ((';filter:blur(8px)}to{opacity:1;transform:none;filter:none}}', '}to{opacity:1;transform:none}}'),
+                 (';filter:blur(6px)}to{opacity:1;transform:none;filter:none}}', '}to{opacity:1;transform:none}}')):
+        css = css.replace(a, b)
     css += '\n.vg-hdr-in.vg-hdr-dark{animation-name:vg-pill-dark}'
     css += '\na:focus-visible,button:focus-visible,input:focus-visible,label:focus-visible,summary:focus-visible{outline-color:#10B981}'
 

@@ -78,13 +78,13 @@ a{color:inherit}
 #vg-yr:checked~* .vg-y{display:inline}
 #vg-mo:checked~.vg-billing label[for=vg-mo],#vg-yr:checked~.vg-billing label[for=vg-yr]{background:#16182A;color:#FFFFFF}
 .vg-billing label{cursor:pointer;transition:background .2s,color .2s}
-@keyframes vg-reveal2{from{opacity:0;transform:translateY(56px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}
+@keyframes vg-reveal2{from{opacity:0;transform:translateY(56px)}to{opacity:1;transform:none}}
 @keyframes vg-word{from{color:#D4D4D8}to{color:#141414}}
 @keyframes vg-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes vg-zoom{from{transform:scale(.9);border-radius:48px}to{transform:scale(1);border-radius:0}}
 @keyframes vg-zoomc{from{transform:scale(.92)}to{transform:scale(1)}}
 @keyframes vg-par{from{transform:translateY(40px)}to{transform:translateY(-40px)}}
-@keyframes vg-hero{from{opacity:0;transform:translateY(24px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes vg-hero{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 .vg-hero{animation:vg-hero 1s cubic-bezier(.2,.7,.2,1) both}
 @supports (animation-timeline: view()){
   .vg-rv{animation:vg-reveal2 linear both;animation-timeline:view();animation-range:entry 0% cover 30%}
@@ -254,6 +254,8 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
   .vg-pin-how .vg-hfill{animation:vg-growx linear both;animation-timeline:--vg-how}
 }
 }
+@keyframes vg-reveal2{from{opacity:0;transform:translateY(56px)}to{opacity:1;transform:none}}
+@keyframes vg-hero{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @keyframes vg-cloud{from{transform:translateX(var(--f))}to{transform:translateX(var(--t))}}
 .vg-cloud{animation-timing-function:linear;animation-iteration-count:infinite}
 @keyframes vg3-spin{to{transform:rotate(360deg)}}
@@ -272,6 +274,7 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
 .vg3-orb{animation:vg3-breathe 6s ease-in-out infinite}
 @media (prefers-reduced-motion: reduce){.vg3-spin,.vg3-ring,.vg3-ring2,.vg3-rib,.vg3-rib2,.vg3-float,.vg3-orb{animation:none!important}}
 @keyframes vg-pill{to{max-width:900px;margin-top:12px;padding:8px 10px 8px 24px;background:rgba(255,255,255,.82);border-color:#E4E4EA;box-shadow:0 12px 32px -16px rgba(22,24,42,.25);border-radius:999px;-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}}
+.vg-num.vg-pct::after{content:counter(vgn) "%"}
 .vg-knob{background:var(--text)}
 a:focus-visible,button:focus-visible,input:focus-visible,label:focus-visible,summary:focus-visible{outline:2px solid #10B981;outline-offset:3px;border-radius:12px}
 .app{--bg:#FFFFFF;--side:#F9F9FA;--soft:#EFEFF2;--soft2:#F4F4F6;--line:#ECECF0;--text:#16171D;--mut:#6E6F78;--mut2:#9A9BA3;--ink:#16182A;--inkfg:#FFFFFF;--card:#FFFFFF;--pop:#FFFFFF;--shadow:0 24px 60px -24px rgba(22,24,42,.28), 0 0 0 1px rgba(22,24,42,.06);--scrim:rgba(18,20,31,.28);--good:#1F9D6B;--goodbg:#E8F6EF;--warn:#B4500A;--warnbg:#FFF1E5;--acc:#10B981;background:var(--bg);color:var(--text);transition:background .25s,color .25s}
