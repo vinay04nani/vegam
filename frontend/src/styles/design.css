@@ -276,6 +276,16 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
 @media (prefers-reduced-motion: reduce){.vg3-spin,.vg3-ring,.vg3-ring2,.vg3-rib,.vg3-rib2,.vg3-float,.vg3-orb{animation:none!important}}
 @keyframes vg-pill{to{max-width:900px;margin-top:12px;padding:8px 10px 8px 24px;background:rgba(255,255,255,.82);border-color:#E4E4EA;box-shadow:0 12px 32px -16px rgba(22,24,42,.25);border-radius:999px;-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px)}}
 .vg-num.vg-pct::after{content:counter(vgn) "%"}
+@keyframes vg-phl{from{background-size:0% 100%}to{background-size:100% 100%}}
+@supports (animation-timeline: view()){
+@media (prefers-reduced-motion: no-preference) and (min-width: 761px) and (min-height: 680px){
+  .vg-pin-pmem{height:240vh}
+  .vg-pin-pmem .vg-pstep{animation:vg-mstep linear both;animation-timeline:--vg-pmem}
+  .vg-pin-pmem .vg-phl{animation:vg-phl linear both;animation-timeline:--vg-pmem}
+  .vg-pin-pmem .vg-pfield{animation:vg-slidein linear both;animation-timeline:--vg-pmem}
+  .vg-pin-pmem .vg-pfoot{animation:vg-mbubble linear both;animation-timeline:--vg-pmem}
+}
+}
 .vg-knob{background:var(--text)}
 a:focus-visible,button:focus-visible,input:focus-visible,label:focus-visible,summary:focus-visible{outline:2px solid #10B981;outline-offset:3px;border-radius:12px}
 .app{--bg:#FFFFFF;--side:#F9F9FA;--soft:#EFEFF2;--soft2:#F4F4F6;--line:#ECECF0;--text:#16171D;--mut:#6E6F78;--mut2:#9A9BA3;--ink:#16182A;--inkfg:#FFFFFF;--card:#FFFFFF;--pop:#FFFFFF;--shadow:0 24px 60px -24px rgba(22,24,42,.28), 0 0 0 1px rgba(22,24,42,.06);--scrim:rgba(18,20,31,.28);--good:#1F9D6B;--goodbg:#E8F6EF;--warn:#B4500A;--warnbg:#FFF1E5;--acc:#10B981;background:var(--bg);color:var(--text);transition:background .25s,color .25s}
