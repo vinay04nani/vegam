@@ -1,8 +1,8 @@
 """Landing v4: scroll story below the hero (hero unchanged).
 
 - Channels: a hub draws lines to the cards, which arrive in a wave
-- Long memory: pinned; an incoming call from Rohan: days since you last spoke count up, his memories appear,
-  then Vegham answers and the remembered parts light up
+- Long memory: pinned, editorial: a big days-since-last-call counter, then the greeting in large type; the
+  remembered parts turn green and their notes appear
 - What it does: cards arrive in a wave; bars grow, numbers count, chips pop, rows slide
 - How it works: pinned; the four steps slide across with a progress bar
 - Light touches: icons draw, QR pops, pricing lands with Growth last, banner aurora brightens, footer wordmark rises
@@ -51,49 +51,46 @@ def channels():
 
 # ---------------------------------------------------------------- MEMORY (pinned)
 def memory():
-    """Pinned. The right card is an incoming call from Rohan: the days since you last spoke count up,
-    the memories he left behind appear one by one, then Vegham answers and the remembered parts light up."""
-    def chip(k, icon, text, src, open_loop=False):
-        a = 30 + k * 6
-        border = 'rgba(16,185,129,.55)' if open_loop else 'rgba(255,255,255,.1)'
-        return ('<span class="vg-mchip" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 12px; background: rgba(255,255,255,.06); border: 1px solid %s; font-size: 13.5px; color: #FFFFFF; %s">'
-                '<span style="color: #3DD68C; display: inline-flex">%s</span>%s<span style="font-size: 12px; color: #8C90A8">%s</span></span>') % (border, crng(a, a + 6), ic(icon, 14), text, src)
-
-    def hl(k, text):
-        a = 70 + k * 5
-        return ('<span class="vg-mhl" style="color: #FFFFFF; background-image: linear-gradient(#10B981, #10B981); background-repeat: no-repeat; background-position: 0 100%%; background-size: 100%% 2px; padding-bottom: 1px; %s">%s</span>') % (crng(a, a + 5), text)
-
-    head = ('<div style="display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid rgba(255,255,255,.1)">'
-            '<span style="width: 44px; height: 44px; flex: none; border-radius: 50%; background: rgba(255,255,255,.08); display: inline-flex; align-items: center; justify-content: center; ' + TIGHT + '; font-size: 18px">R</span>'
-            '<span style="flex: 1; min-width: 0"><b style="display: block; font-weight: 500; font-size: 16px">Rohan Mehta</b><span style="font-size: 13px; color: #8C90A8">Incoming call · +91 98•• ••21</span></span>'
-            '<span style="text-align: right"><span style="display: block; font-size: 12px; color: #8C90A8">Last spoke</span>'
-            '<b style="font-weight: 500; font-size: 15px; color: #3DD68C"><span class="vg-mdays" role="img" aria-label="184" style="--to: 184; ' + crng(4, 28) + '"></span> days ago</b></span></div>')
-    chips = ('<span style="display: block; margin-top: 20px; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: #8C90A8">What Vegham remembers</span>'
-             '<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px">'
-             + chip(0, L.I_USER, 'Rohan Mehta', 'May · call')
-             + chip(1, L.I_GLOBE, 'Hindi and English', 'July · WhatsApp')
-             + chip(2, L.I_CLOCK, 'Saturday mornings', 'May · call')
-             + chip(3, L.I_CHAT, 'Details on WhatsApp', 'July · WhatsApp')
-             + chip(4, L.I_MEM, 'Weekend sessions, left unfinished', 'July', True) + '</div>')
-    reply = ('<div class="vg-mbubble" style="margin-top: 22px; %s"><span style="display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: #8C90A8">%s<span>Vegham picks up</span></span>'
-             '<span style="display: block; margin-top: 10px; padding: 14px 16px; border-radius: 16px 16px 16px 4px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); font-size: 15px; line-height: 1.6; color: #D6D8E6">'
-             '“Hi %s, good to hear from you again. Still thinking about the %s? %s is open, and I can send the details %s, like last time.”</span></div>') % (
-        crng(62, 68), wave(14, G, 16), hl(0, 'Rohan'), hl(1, 'weekend sessions'), hl(2, 'Saturday morning'), hl(3, 'on WhatsApp'))
-
-    def pt(a, b, t, d):
-        return ('<div class="vg-mstep" style="display: flex; gap: 14px; %s"><span style="flex: none; margin-top: 3px; color: #3DD68C">%s</span><span><b style="display: block; font-weight: 500; color: #FFFFFF">%s</b>'
-                '<span style="font-size: 15px; color: #B4B8CC">%s</span></span></div>') % (crng(a, b), ic(L.I_CHECK, 18, 'currentColor', 2.2), t, d)
-    left = ('<div style="flex: 1 1 440px; min-width: 0">%s%s%s<div style="margin-top: 32px; display: flex; flex-direction: column; gap: 18px; max-width: 480px">%s%s%s</div></div>') % (
-        eyebrow('Long memory', True), h2('It remembers every person.', 'Even six months later.', True),
-        lead('Most assistants start from zero on every call. Vegham keeps the thread: who someone is, what they asked, and where you left off.', True, mw=500),
-        pt(30, 42, 'Who they are', 'Name, language and how they like to be contacted.'),
-        pt(44, 58, 'What they wanted', 'Questions, preferences and anything left unfinished.'),
-        pt(70, 82, 'One person, not five', 'A call and a WhatsApp from the same number are the same customer.'))
-    right = ('<div style="flex: 1 1 460px; min-width: 0"><div style="position: relative; padding: 28px; border-radius: 24px; background: rgba(18,20,31,.72); border: 1px solid rgba(255,255,255,.12); '
-             'backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px)">%s%s%s<div style="margin-top: 18px; text-align: right">%s</div></div></div>') % (head, chips, reply, sample(True))
+    """Pinned, editorial: a big "days since Rohan last called" counter, then Vegham's greeting in large type.
+    The words light up as you scroll; the parts it remembered turn green and their notes appear below."""
+    tokens = [('“Hi', None), ('Rohan,', 1), ('good', None), ('to', None), ('hear', None), ('from', None), ('you', None), ('again.', None),
+              ('Still', None), ('thinking', None), ('about', None), ('the', None), ('weekend sessions?', 2), ('Saturday morning', 3),
+              ('is', None), ('open,', None), ('and', None), ('I', None), ('can', None), ('send', None), ('the', None), ('details', None),
+              ('on WhatsApp,', 4), ('like', None), ('last', None), ('time.”', None)]
+    notes = {1: ('Rohan Mehta', 'from his first call, in May'), 2: ('Weekend sessions', 'asked in May, left unfinished'),
+             3: ('Saturday mornings', 'said so twice'), 4: ('Details on WhatsApp', 'how he liked it in July')}
+    n = len(tokens)
+    when = {}
+    parts = []
+    for i, (w, k) in enumerate(tokens):
+        a = 26 + i * 50 // n
+        if k:
+            when[k] = a
+            word = w.rstrip(',?.')
+            tail = w[len(word):]
+            parts.append('<span class="vg-mword" style="%s"><span class="vg-mgreen" style="color: #3DD68C; background-image: linear-gradient(#10B981, #10B981); background-repeat: no-repeat; background-position: 0 100%%; background-size: 100%% 2px; %s">%s<sup style="font-size: .42em; margin-left: 2px; vertical-align: super">%d</sup></span>%s</span>'
+                         % (crng(a, a + 3), crng(a + 2, a + 6), word, k, tail))
+        else:
+            parts.append('<span class="vg-mword" style="%s">%s</span>' % (crng(a, a + 3), w))
+    quote = ('<p style="margin: 0; %s; font-weight: 400; font-size: 36px; line-height: 1.32; letter-spacing: -0.02em; color: #FFFFFF">%s</p>') % (TIGHT, ' '.join(parts))
+    foot = ''.join(('<div class="vg-mnote" style="display: flex; gap: 12px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.12); %s">'
+                    '<span style="width: 22px; height: 22px; flex: none; border-radius: 50%%; border: 1px solid rgba(16,185,129,.6); color: #3DD68C; font-size: 11.5px; display: inline-flex; align-items: center; justify-content: center">%d</span>'
+                    '<span style="font-size: 13.5px; line-height: 1.45"><b style="display: block; font-weight: 500; color: #FFFFFF">%s</b><span style="color: #8C90A8">%s</span></span></div>') % (crng(when[k] + 2, when[k] + 7), k, t, d) for k, (t, d) in notes.items())
+    counter = ('<div style="text-align: right"><span style="display: inline-flex; align-items: center; gap: 10px; height: 30px; padding: 0 12px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); font-size: 13px; color: #D6D8E6">%s Rohan is calling</span>'
+               '<span style="display: block; margin-top: 10px; %s; font-size: 96px; line-height: 1; letter-spacing: -0.04em; color: #3DD68C"><span class="vg-mdays" role="img" aria-label="184" style="--to: 184; %s"></span></span>'
+               '<span style="display: block; margin-top: 6px; font-size: 14px; color: #B4B8CC">days since you last spoke</span></div>') % (wave(10, G, 14), TIGHT, crng(3, 22))
+    head = ('<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 32px">'
+            '<div style="flex: 1 1 420px; min-width: 0">%s%s%s</div>%s</div>') % (
+        eyebrow('Long memory', True), h2('It remembers every person.', 'Even six months later.', True, size=48),
+        lead('Most assistants start from zero on every call. Vegham keeps the thread, so the conversation picks up where it stopped.', True, mw=480), counter)
+    body = ('%s<div style="margin-top: 44px; padding-top: 36px; border-top: 1px solid rgba(255,255,255,.12)">'
+            '<span style="display: block; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: #8C90A8">Vegham picks up</span>'
+            '<div style="margin-top: 14px">%s</div>'
+            '<div class="vg-g4" style="margin-top: 32px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">%s</div>'
+            '<div style="margin-top: 18px; text-align: right">%s</div></div>') % (head, quote, foot, sample(True))
     return ('<section class="vg-pinwrap vg-pin-mem" style="padding: 0 16px; view-timeline-name: --vg-mem"><div class="vg-sticky">'
             '<div style="position: relative; overflow: hidden; width: 100%%; max-width: 1408px; margin: 0 auto; border-radius: 32px; background: #12141F; color: #FFFFFF">%s'
-            '<div class="vg-pinpad" style="position: relative; max-width: 1200px; margin: 0 auto; padding: 112px 32px; box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; gap: 48px 72px">%s%s</div></div></div></section>') % (aurora(.85), left, right)
+            '<div class="vg-pinpad" style="position: relative; max-width: 1200px; margin: 0 auto; padding: 96px 32px; box-sizing: border-box">%s</div></div></div></section>') % (aurora(.85), body)
 
 
 # ---------------------------------------------------------------- WHAT IT DOES
@@ -223,6 +220,8 @@ EXTRA = '''
 @keyframes vg-rise{from{opacity:0;transform:translateY(30%)}to{opacity:1;transform:none}}
 @keyframes vg-mstep{from{opacity:.22}to{opacity:1}}
 @keyframes vg-mbubble{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes vg-mword{from{opacity:.14}to{opacity:1}}
+@keyframes vg-mgreen{from{color:#FFFFFF;background-size:0% 2px}to{color:#3DD68C;background-size:100% 2px}}
 @keyframes vg-mchip{from{opacity:0;transform:translateY(12px) scale(.94)}to{opacity:1;transform:none}}
 @keyframes vg-mhl{from{background-size:0% 2px;color:#D6D8E6}to{background-size:100% 2px;color:#FFFFFF}}
 @keyframes vg-hslide{from{transform:none}to{transform:translateX(calc(-100% + min(1136px, 100vw - 96px)))}}
@@ -252,9 +251,9 @@ EXTRA = '''
   .vg-pinpad{padding-top:64px!important;padding-bottom:64px!important}
   .vg-pin-mem .vg-mstep{animation:vg-mstep linear both;animation-timeline:--vg-mem}
   .vg-pin-mem .vg-mdays{counter-reset:vgn var(--vg-n);animation:vg-count linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mchip{animation:vg-mchip linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mbubble{animation:vg-mbubble linear both;animation-timeline:--vg-mem}
-  .vg-pin-mem .vg-mhl{animation:vg-mhl linear both;animation-timeline:--vg-mem}
+  .vg-pin-mem .vg-mword{animation:vg-mword linear both;animation-timeline:--vg-mem}
+  .vg-pin-mem .vg-mgreen{animation:vg-mgreen linear both;animation-timeline:--vg-mem}
+  .vg-pin-mem .vg-mnote{animation:vg-mbubble linear both;animation-timeline:--vg-mem}
   .vg-pin-how .vg-hview{overflow:visible}
   .vg-pin-how .vg-htrack{display:flex!important;width:max-content;animation:vg-hslide linear both;animation-timeline:--vg-how}
   .vg-pin-how .vg-hstep{flex:none;width:440px;box-sizing:border-box;animation:vg-hfocus linear both;animation-timeline:--vg-how}
