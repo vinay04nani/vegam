@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export default function Conversations() {
   return (
-      <main data-wide="true" style={{ flex: "1", minWidth: "0", height: "100%", display: "flex", flexDirection: "column", background: "var(--bg)" }}>
+      <main style={{ flex: "1", minWidth: "0", height: "100%", display: "flex", flexDirection: "column", background: "var(--bg)" }}>
         <div style={{ flex: "1", minHeight: "0", overflow: "hidden", position: "relative" }} data-s="scroll">
           <div style={{ display: "flex", height: "100%", position: "relative" }}>
-            <div style={{ width: "330px", flex: "none", borderRight: "1px solid var(--line)", display: "flex", flexDirection: "column" }}>
+            <div style={{ width: "296px", flex: "none", borderRight: "1px solid var(--line)", display: "flex", flexDirection: "column" }}>
               <div className="hd" style={{ padding: "0 12px 0 20px" }}>
                 <h1>
                   {"Conversations"}
@@ -324,7 +324,7 @@ export default function Conversations() {
               </div>
             </div>
             <div style={{ flex: "1", minWidth: "0", display: "flex", flexDirection: "column" }}>
-              <div className="hd">
+              <div className="hd" style={{ height: "auto", minHeight: "64px", paddingTop: "10px", paddingBottom: "10px" }}>
                 <span style={{ display: "flex", alignItems: "center", gap: "12px", flex: "1", minWidth: "0" }}>
                   <span style={{ position: "relative", flex: "none" }}>
                     <span className="av" style={{ width: "36px", height: "36px", fontSize: "14px", background: "var(--soft)", color: "var(--text)" }}>
@@ -372,16 +372,6 @@ export default function Conversations() {
                     </path>
                   </svg>
                 </span>
-                <span style={{ width: "1px", height: "22px", background: "var(--line)", margin: "0 4px" }}>
-                </span>
-                <label htmlFor="ov-notif" className="ibtn" aria-label="Notifications" style={{ position: "relative" }}>
-                  <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0">
-                    </path>
-                  </svg>
-                  <span style={{ position: "absolute", top: "7px", right: "8px", width: "7px", height: "7px", borderRadius: "50%", background: "#10B981", boxShadow: "0 0 0 2px var(--bg)" }}>
-                  </span>
-                </label>
               </div>
               <div style={{ flex: "1", overflow: "hidden", padding: "22px 32px", display: "flex", flexDirection: "column", gap: "16px" }} data-s="scroll">
                 <div className="rc">

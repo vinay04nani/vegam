@@ -6,27 +6,10 @@ export default function Person() {
       <main style={{ flex: "1", minWidth: "0", height: "100%", display: "flex", flexDirection: "column", background: "var(--bg)" }}>
         <div style={{ flex: "1", minHeight: "0", overflow: "hidden", position: "relative" }} data-s="scroll">
           <div style={{ display: "flex", flexDirection: "column", height: "100%", position: "relative" }}>
-            <div className="hd" style={{ paddingLeft: "28px" }}>
-              <Link href="/app/people/" style={{ cursor: "pointer", display: "flex", alignItems: "center", gap: "6px", fontSize: "13px", color: "var(--mut)", flex: "1" }}>
-                {"People "}
-                <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 6l6 6-6 6">
-                  </path>
-                </svg>
-                <span style={{ color: "var(--text)", fontWeight: "500" }}>
-                  {"Rohan Mehra"}
-                </span>
+            <div style={{ padding: "18px 28px 0", fontSize: "13px" }}>
+              <Link href="/app/people/" style={{ color: "var(--mut)" }}>
+                {"← People"}
               </Link>
-              <span style={{ width: "1px", height: "22px", background: "var(--line)", margin: "0 4px" }}>
-              </span>
-              <label htmlFor="ov-notif" className="ibtn" aria-label="Notifications" style={{ position: "relative" }}>
-                <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0">
-                  </path>
-                </svg>
-                <span style={{ position: "absolute", top: "7px", right: "8px", width: "7px", height: "7px", borderRadius: "50%", background: "#10B981", boxShadow: "0 0 0 2px var(--bg)" }}>
-                </span>
-              </label>
             </div>
             <div style={{ flex: "1", display: "flex", minHeight: "0" }}>
               <div style={{ flex: "1", minWidth: "0", overflow: "hidden", padding: "22px 28px", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", alignContent: "start" }} data-s="scroll">

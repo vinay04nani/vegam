@@ -6,7 +6,7 @@ export default function SetupGoLive() {
       <div className="app" style={{ position: "relative", minHeight: "100dvh", display: "flex", overflow: "hidden", fontFamily: "var(--font-inter), system-ui, sans-serif", fontSize: "14px", lineHeight: "1.45" }}>
         <div style={{ position: "relative", flex: "1", minHeight: "100dvh", background: "var(--bg)", display: "flex", flexDirection: "column" }}>
           <div style={{ height: "64px", flex: "none", display: "flex", alignItems: "center", padding: "0 32px", borderBottom: "1px solid var(--line)" }}>
-            <span style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "22px", letterSpacing: "-0.045em", background: "linear-gradient(90deg, #10B981, #0EA5A4, #3B6CF6, #7C3AED, #DB2777)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+            <span style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "22px", letterSpacing: "-0.045em", color: "#10B981" }}>
               <Link href="/" aria-label="Vegham home page" style={{ color: "inherit", textDecoration: "none" }}>
                 {"vegham"}
               </Link>

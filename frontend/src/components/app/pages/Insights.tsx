@@ -6,15 +6,7 @@ export default function Insights() {
       <main style={{ flex: "1", minWidth: "0", height: "100%", display: "flex", flexDirection: "column", background: "var(--bg)" }}>
         <div style={{ flex: "1", minHeight: "0", overflow: "hidden", position: "relative" }} data-s="scroll">
           <div style={{ display: "flex", flexDirection: "column", height: "100%", position: "relative" }}>
-            <div className="hd" style={{ paddingLeft: "28px", height: "68px" }}>
-              <span style={{ flex: "1" }}>
-                <b style={{ display: "block", fontSize: "18px", fontWeight: "600" }} data-s="s16">
-                  {"Insights"}
-                </b>
-                <span style={{ fontSize: "12.5px", color: "var(--mut)" }}>
-                  {"9 Oct – 7 Nov · calls and WhatsApp"}
-                </span>
-              </span>
+            <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "8px", padding: "16px 28px 0" }}>
               <span className="perm">
                 <span className="">
                   {"7 days"}

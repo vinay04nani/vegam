@@ -15,21 +15,20 @@ export default function AppShell({ children }: { children: ReactNode }) {
         <input className="vh" type="radio" name="ov" id="ov-biz" aria-label="biz" />
         <input className="vh" type="radio" name="th" id="th-light" defaultChecked aria-label="light theme" />
         <input className="vh" type="radio" name="th" id="th-dark" aria-label="dark theme" />
-        <input className="vh" type="checkbox" id="a-col" aria-label="Collapse sidebar" />
         <aside className="side" aria-label="App" style={{ flex: "none", height: "100%", display: "flex", flexDirection: "column", padding: "12px 10px", gap: "6px", overflow: "hidden" }}>
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 4px 6px 8px", minHeight: "40px" }} data-s="s2">
-            <span className="lbl" style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "22px", letterSpacing: "-0.045em", color: "transparent", background: "linear-gradient(100deg, #10B981 0%, #0EA5A4 25%, #10B981 55%, #10B981 80%, #DB2777 100%)", WebkitBackgroundClip: "text", backgroundClip: "text" }}>
+            <span className="lbl" style={{ fontFamily: "var(--font-tight), sans-serif", fontWeight: "600", fontSize: "22px", letterSpacing: "-0.045em", color: "#10B981" }}>
               <Link href="/app/" aria-label="Home" style={{ color: "inherit", textDecoration: "none" }}>
                 {"vegham"}
               </Link>
             </span>
-            <label htmlFor="a-col" className="ibtn" title="Collapse sidebar" aria-label="Collapse sidebar">
-              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="4" width="18" height="16" rx="3">
-                </rect>
-                <path d="M9 4v16">
+            <label htmlFor="ov-notif" className="ibtn" aria-label="Notifications" style={{ position: "relative" }}>
+              <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0">
                 </path>
               </svg>
+              <span style={{ position: "absolute", top: "7px", right: "8px", width: "7px", height: "7px", borderRadius: "50%", background: "#10B981", boxShadow: "0 0 0 2px var(--bg)" }}>
+              </span>
             </label>
           </div>
           <button type="button" className="nv hide-col" style={{ border: "1px solid var(--line)", background: "var(--bg)", height: "44px", marginBottom: "4px", width: "100%", textAlign: "left", cursor: "pointer" }}>
@@ -54,7 +53,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
           <nav aria-label="Main" style={{ display: "flex", flexDirection: "column", gap: "1px", marginTop: "6px" }}>
             <NavLink href="/app/" className="nv on" aria-current="page" title="Home">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z">
+                <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8">
+                </path>
+                <path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z">
                 </path>
               </svg>
               <span className="lbl">
@@ -63,9 +64,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </NavLink>
             <NavLink href="/app/conversations/" className="nv" title="Conversations">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z">
-                </path>
-                <path d="M8 11h8M8 14h5">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
                 </path>
               </svg>
               <span className="lbl">
@@ -77,9 +76,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </NavLink>
             <NavLink href="/app/people/" className="nv" title="People">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="8" r="4">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2">
+                </path>
+                <circle cx="9" cy="7" r="4">
                 </circle>
-                <path d="M4 21a8 8 0 0 1 16 0">
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87">
+                </path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75">
                 </path>
               </svg>
               <span className="lbl">
@@ -88,11 +91,15 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </NavLink>
             <NavLink href="/app/follow-ups/" className="nv" title="Follow-ups">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 2l4 4-4 4">
+                <path d="M8 2v4">
                 </path>
-                <path d="M3 11V9a3 3 0 0 1 3-3h15M7 22l-4-4 4-4">
+                <path d="M16 2v4">
                 </path>
-                <path d="M21 13v2a3 3 0 0 1-3 3H3">
+                <rect x="3" y="4" width="18" height="18" rx="2">
+                </rect>
+                <path d="M3 10h18">
+                </path>
+                <path d="m9 16 2 2 4-4">
                 </path>
               </svg>
               <span className="lbl">
@@ -104,7 +111,13 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </NavLink>
             <NavLink href="/app/insights/" className="nv" title="Insights">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 20V5M4 20h16M8 16l4-4 3 3 5-6">
+                <path d="M3 3v16a2 2 0 0 0 2 2h16">
+                </path>
+                <path d="M18 17V9">
+                </path>
+                <path d="M13 17V5">
+                </path>
+                <path d="M8 17v-3">
                 </path>
               </svg>
               <span className="lbl">
@@ -116,13 +129,17 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </span>
             <NavLink href="/app/agent/" className="nv" title="Agent">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 14v-2a8 8 0 0 1 16 0v2">
+                <path d="M2 10v3">
                 </path>
-                <rect x="3" y="14" width="4" height="6" rx="1.5">
-                </rect>
-                <rect x="17" y="14" width="4" height="6" rx="1.5">
-                </rect>
-                <path d="M20 20a3 3 0 0 1-3 2h-3">
+                <path d="M6 6v11">
+                </path>
+                <path d="M10 3v18">
+                </path>
+                <path d="M14 8v7">
+                </path>
+                <path d="M18 5v13">
+                </path>
+                <path d="M22 10v3">
                 </path>
               </svg>
               <span className="lbl">
@@ -131,9 +148,17 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </NavLink>
             <NavLink href="/app/agent/languages/" className="nv" title="Languages">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 5h9M8.5 3v2M6 5c0 4 3 7 6 8M11 5c0 4-3 7-7 8">
+                <path d="m5 8 6 6">
                 </path>
-                <path d="M13 21l4-9 4 9M14.5 18h5">
+                <path d="m4 14 6-6 2-3">
+                </path>
+                <path d="M2 5h12">
+                </path>
+                <path d="M7 2h1">
+                </path>
+                <path d="m22 22-5-10-5 10">
+                </path>
+                <path d="M14 18h6">
                 </path>
               </svg>
               <span className="lbl">
@@ -142,11 +167,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </NavLink>
             <NavLink href="/app/agent/memory/" className="nv" title="Memory">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M3 12a9 9 0 1 0 3-6.7L3 8">
+                <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8">
                 </path>
                 <path d="M3 3v5h5">
                 </path>
-                <path d="M12 7v5l3 2">
+                <path d="M12 7v5l4 2">
                 </path>
               </svg>
               <span className="lbl">
@@ -155,9 +180,9 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </NavLink>
             <NavLink href="/app/agent/knowledge/" className="nv" title="Knowledge">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z">
+                <path d="M12 7v14">
                 </path>
-                <path d="M19 19v2H6">
+                <path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z">
                 </path>
               </svg>
               <span className="lbl">
@@ -166,11 +191,15 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </NavLink>
             <NavLink href="/app/agent/channels/" className="nv" title="Channels">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 3v4M15 3v4">
+                <circle cx="18" cy="5" r="3">
+                </circle>
+                <circle cx="6" cy="12" r="3">
+                </circle>
+                <circle cx="18" cy="19" r="3">
+                </circle>
+                <path d="m8.59 13.51 6.83 3.98">
                 </path>
-                <path d="M7 7h10v4a5 5 0 0 1-10 0z">
-                </path>
-                <path d="M12 16v5">
+                <path d="m15.41 6.51-6.82 3.98">
                 </path>
               </svg>
               <span className="lbl">
@@ -179,9 +208,11 @@ export default function AppShell({ children }: { children: ReactNode }) {
             </NavLink>
             <NavLink href="/app/agent/test-call/" className="nv" title="Test call">
               <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 3h6M10 3v6L4 19a1.5 1.5 0 0 0 1.3 2h13.4a1.5 1.5 0 0 0 1.3-2L14 9V3">
+                <path d="M13 2a9 9 0 0 1 9 9">
                 </path>
-                <path d="M7 15h10">
+                <path d="M13 6a5 5 0 0 1 5 5">
+                </path>
+                <path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384">
                 </path>
               </svg>
               <span className="lbl">
@@ -861,7 +892,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
         <div className="ov ov-notif" style={{ position: "absolute", inset: "0", zIndex: "30" }}>
           <label htmlFor="ov-none" aria-label="Close notifications" style={{ position: "absolute", inset: "0" }}>
           </label>
-          <div className="popin" role="dialog" aria-label="Notifications" style={{ position: "absolute", right: "16px", top: "54px", width: "400px", borderRadius: "18px", background: "var(--pop)", boxShadow: "var(--shadow)", overflow: "hidden", paddingBottom: "8px" }}>
+          <div className="popin" role="dialog" aria-label="Notifications" style={{ position: "absolute", left: "272px", top: "12px", width: "400px", borderRadius: "18px", background: "var(--pop)", boxShadow: "var(--shadow)", overflow: "hidden", paddingBottom: "8px" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 18px 6px" }}>
               <b style={{ fontSize: "15px", fontWeight: "600" }}>
                 {"Notifications"}

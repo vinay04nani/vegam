@@ -6,31 +6,13 @@ export default function AgentLanguages() {
       <main style={{ flex: "1", minWidth: "0", height: "100%", display: "flex", flexDirection: "column", background: "var(--bg)" }}>
         <div style={{ flex: "1", minHeight: "0", overflow: "hidden", position: "relative" }} data-s="scroll">
           <div style={{ display: "flex", flexDirection: "column", height: "100%", position: "relative" }}>
-            <div className="hd" style={{ paddingLeft: "28px", height: "68px" }}>
-              <span style={{ flex: "1" }}>
-                <b style={{ display: "block", fontSize: "18px", fontWeight: "600" }} data-s="s16">
-                  {"Languages"}
-                </b>
-                <span style={{ fontSize: "12.5px", color: "var(--mut)" }}>
-                  {"What your receptionist speaks, and when it switches"}
-                </span>
-              </span>
+            <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "8px", padding: "16px 28px 0" }}>
               <span className="obtn">
                 {"Discard"}
               </span>
               <span className="pbtn">
                 {"Save"}
               </span>
-              <span style={{ width: "1px", height: "22px", background: "var(--line)", margin: "0 4px" }}>
-              </span>
-              <label htmlFor="ov-notif" className="ibtn" aria-label="Notifications" style={{ position: "relative" }}>
-                <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0">
-                  </path>
-                </svg>
-                <span style={{ position: "absolute", top: "7px", right: "8px", width: "7px", height: "7px", borderRadius: "50%", background: "#10B981", boxShadow: "0 0 0 2px var(--bg)" }}>
-                </span>
-              </label>
             </div>
             <div style={{ flex: "1", display: "flex", minHeight: "0" }}>
               <div style={{ flex: "1", overflow: "hidden", padding: "24px 32px", display: "grid", gridTemplateColumns: "1.25fr 1fr", gap: "20px", alignContent: "start" }} data-s="scroll">

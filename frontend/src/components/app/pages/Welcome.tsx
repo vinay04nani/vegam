@@ -6,29 +6,9 @@ export default function Welcome() {
       <main style={{ flex: "1", minWidth: "0", height: "100%", display: "flex", flexDirection: "column", background: "var(--bg)" }}>
         <div style={{ flex: "1", minHeight: "0", overflow: "hidden", position: "relative" }} data-s="scroll">
           <div style={{ display: "flex", flexDirection: "column", height: "100%", position: "relative" }}>
-            <div className="hd" style={{ paddingLeft: "28px" }}>
-              <h1>
-                {"Home"}
-              </h1>
-              <span style={{ fontSize: "14px", color: "var(--mut2)" }}>
-              </span>
+            <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", gap: "8px", padding: "16px 28px 0" }}>
               <span style={{ flex: "1" }}>
               </span>
-              <span style={{ display: "inline-flex", alignItems: "center", gap: "8px", height: "30px", padding: "0 12px", borderRadius: "999px", background: "var(--goodbg)", color: "var(--good)", fontSize: "12.5px", fontWeight: "500" }} data-s="s1">
-                <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "var(--good)" }}>
-                </span>
-                {"Answering calls and WhatsApp"}
-              </span>
-              <span style={{ width: "1px", height: "22px", background: "var(--line)", margin: "0 4px" }}>
-              </span>
-              <label htmlFor="ov-notif" className="ibtn" aria-label="Notifications" style={{ position: "relative" }}>
-                <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 0 0 4 0">
-                  </path>
-                </svg>
-                <span style={{ position: "absolute", top: "7px", right: "8px", width: "7px", height: "7px", borderRadius: "50%", background: "#10B981", boxShadow: "0 0 0 2px var(--bg)" }}>
-                </span>
-              </label>
             </div>
             <div style={{ flex: "1", overflow: "hidden", padding: "40px 32px", display: "flex", justifyContent: "center" }} data-s="scroll">
               <div style={{ width: "100%", maxWidth: "760px", display: "flex", flexDirection: "column", gap: "22px" }}>
