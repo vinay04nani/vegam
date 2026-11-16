@@ -225,7 +225,7 @@ export default function CareersPage() {
                     </Link>
                   </li>
                   <li>
-                    <Link href="/product/#memory" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
+                    <Link href="/product/#people" className="vg-flink" style={{ fontSize: "14px", color: "#6B6B6B", textDecoration: "none" }}>
                       {"Long memory"}
                     </Link>
                   </li>

@@ -1,7 +1,7 @@
 """Product page v6: no app screenshots. Drawn illustrations instead, in a different visual language from the landing page.
 
 - Hero: big statement and a row of capability chips that jump to each chapter
-- Long memory: how a note gets written (from product4)
+- One call, start to finish: a pinned line diagram; a dot travels along seven steps of a call and lights each one
 - Chapters with a sticky index; each has its own drawn illustration that builds as it scrolls into view
 - How it compares: voicemail, a phone menu, a simple chatbot and Vegham
 - Closing banner
@@ -148,6 +148,60 @@ CHAPTERS = [
 ]
 
 
+
+# ---------------------------------------------------------------- ONE CALL, START TO FINISH (pinned)
+FLOW = [
+    ('Rings', 'A customer calls your number.', '+91 98•• ••21 is calling'),
+    ('Picks up', 'In under a second, in a natural voice.', '“Hi, thanks for calling Nila &amp; Co.”'),
+    ('Knows who it is', 'Recognises the number and recalls the person.', 'Rohan Mehta · last called 6 months ago'),
+    ('Answers', 'From your prices, hours and notes.', '“Saturday 10 AM is free. Shall I hold it?”'),
+    ('Hands over if needed', 'Brings you in when a person should decide.', 'Not needed this time'),
+    ('Writes a summary', 'What was asked, said and agreed.', 'Booked Sat 10 AM for 5 · details sent on WhatsApp'),
+    ('Plans the follow-up', 'Anything it promised goes on your list.', 'Reminder on Friday evening'),
+]
+
+
+def flow():
+    n = len(FLOW)
+    pos = lambda i: 6 + i * 84 // (n - 1)
+    crng = lambda a, b: 'animation-range: contain %d%% contain %d%%' % (max(0, a), b)
+    cols = ''.join(('<div class="vg-fstep" style="position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; %s">'
+                    '<span class="vg-fnode" style="position: relative; z-index: 1; width: 28px; height: 28px; border-radius: 50%%; background: %s; border: 2px solid %s; box-sizing: border-box; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; %s">%s</span>'
+                    '<b style="margin-top: 6px; %s; font-weight: 500; font-size: 18px; line-height: 1.2; letter-spacing: -0.02em">%s</b>'
+                    '<span style="font-size: 14px; color: #5C5C5C; line-height: 1.45">%s</span>'
+                    '<span style="font-size: 13px; color: %s; line-height: 1.45; padding: 8px 10px; border-radius: 10px; background: #F7F7F8">%s</span></div>')
+                   % (crng(pos(i) - 4, pos(i) + 2), G, G, crng(pos(i) - 3, pos(i) + 1), CK(13), TIGHT, t, d, GT, ex) for i, (t, d, ex) in enumerate(FLOW))
+    line = ('<div aria-hidden="true" class="vg-fline" style="position: absolute; top: 13px; left: 14px; width: calc((100%% - %dpx) * %d / %d + %dpx); height: 2px; background: #E6E6EA">'
+            '<span class="vg-ffill" style="position: absolute; inset: 0; background: %s; transform-origin: left; %s"></span>'
+            '<span class="vg-fdot" style="position: absolute; top: -6px; left: 100%%; width: 14px; height: 14px; margin-left: -7px; border-radius: 50%%; background: %s; box-shadow: 0 0 0 6px rgba(16,185,129,.18); %s"></span></div>') % (
+        16 * (n - 1), n - 1, n, 16 * (n - 1), G, crng(6, 90), G, crng(6, 90))
+    grid = '<div class="vg-fgrid" style="position: relative; margin-top: 56px; display: grid; grid-template-columns: repeat(%d, minmax(0, 1fr)); gap: 16px">%s%s</div>' % (n, line, cols)
+    head = ('<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px"><div>%s%s</div>%s</div>') % (
+        eyebrow('One call, start to finish'), h2('What happens in the minute', 'after your phone rings.', size=48),
+        lead('Every call goes through the same seven steps, whether it is a new customer or someone you have known for years.', mw=420))
+    return ('<section id="one-call" class="vg-pinwrap vg-pin-flow" style="background: #FFFFFF; view-timeline-name: --vg-flow"><div class="vg-sticky">'
+            '<div class="vg-pinpad" style="width: 100%%; max-width: 1200px; margin: 0 auto; padding: 96px 32px; box-sizing: border-box">%s%s'
+            '<div style="margin-top: 18px; text-align: right">%s</div></div></div></section>') % (head, grid, L.sample())
+
+
+L.RESPONSIVE += """
+@keyframes vg-fnode{from{background:#FFFFFF;border-color:#D5D5DB;color:transparent}to{background:#10B981;border-color:#10B981;color:#FFFFFF}}
+@keyframes vg-fstep{from{opacity:.3}to{opacity:1}}
+@keyframes vg-fdot{from{left:0%}to{left:100%}}
+@supports (animation-timeline: view()){
+@media (prefers-reduced-motion: no-preference) and (min-width: 1001px) and (min-height: 680px){
+  .vg-pin-flow{height:230vh}
+  .vg-pin-flow .vg-fstep{animation:vg-fstep linear both;animation-timeline:--vg-flow}
+  .vg-pin-flow .vg-fnode{animation:vg-fnode linear both;animation-timeline:--vg-flow}
+  .vg-pin-flow .vg-ffill{animation:vg-growx linear both;animation-timeline:--vg-flow}
+  .vg-pin-flow .vg-fdot{animation:vg-fdot linear both;animation-timeline:--vg-flow}
+}
+}
+@media (max-width: 1000px){.vg-fgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:28px!important}.vg-fline{display:none}}
+@media (max-width: 560px){.vg-fgrid{grid-template-columns:minmax(0,1fr)!important}}
+"""
+
+
 def hero():
     chips = ''.join('<a href="#%s" class="vg-hero" style="animation-delay: %.2fs; display: inline-flex; align-items: center; height: 38px; padding: 0 16px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E6E6EA; color: #141414; text-decoration: none; font-size: 14.5px">%s</a>'
                     % (a, .45 + i * .04, label) for i, (a, label, *_r) in enumerate(CHAPTERS))
@@ -202,7 +256,7 @@ L.RESPONSIVE += """
 
 
 def product():
-    return (hero() + P4.product_memory().replace('<section', '<section id="memory"', 1) + chapters() + compare() + P5.closing())
+    return (hero() + flow() + chapters() + compare() + P5.closing())
 
 
 if __name__ == '__main__':

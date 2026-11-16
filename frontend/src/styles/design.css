@@ -298,6 +298,20 @@ section[data-s~="s28"]{content-visibility:auto;contain-intrinsic-size:auto 640px
 }
 }
 @media (max-width: 900px){.vg-tour{grid-template-columns:minmax(0,1fr)!important}.vg-tside{display:none}}
+@keyframes vg-fnode{from{background:#FFFFFF;border-color:#D5D5DB;color:transparent}to{background:#10B981;border-color:#10B981;color:#FFFFFF}}
+@keyframes vg-fstep{from{opacity:.3}to{opacity:1}}
+@keyframes vg-fdot{from{left:0%}to{left:100%}}
+@supports (animation-timeline: view()){
+@media (prefers-reduced-motion: no-preference) and (min-width: 1001px) and (min-height: 680px){
+  .vg-pin-flow{height:230vh}
+  .vg-pin-flow .vg-fstep{animation:vg-fstep linear both;animation-timeline:--vg-flow}
+  .vg-pin-flow .vg-fnode{animation:vg-fnode linear both;animation-timeline:--vg-flow}
+  .vg-pin-flow .vg-ffill{animation:vg-growx linear both;animation-timeline:--vg-flow}
+  .vg-pin-flow .vg-fdot{animation:vg-fdot linear both;animation-timeline:--vg-flow}
+}
+}
+@media (max-width: 1000px){.vg-fgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:28px!important}.vg-fline{display:none}}
+@media (max-width: 560px){.vg-fgrid{grid-template-columns:minmax(0,1fr)!important}}
 @keyframes vg-ringdraw{from{stroke-dashoffset:.92}to{stroke-dashoffset:0}}
 @supports (animation-timeline: view()){
 @media (prefers-reduced-motion: no-preference){

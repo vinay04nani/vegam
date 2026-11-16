@@ -62,218 +62,162 @@ export default function ProductPage() {
             </div>
           </div>
         </section>
-        <section id="memory" className="vg-pinwrap vg-pin-pmem" style={{ padding: "0 16px", background: "#FFFFFF", viewTimelineName: "--vg-pmem" } as CSSProperties}>
+        <section id="one-call" className="vg-pinwrap vg-pin-flow" style={{ background: "#FFFFFF", viewTimelineName: "--vg-flow" } as CSSProperties}>
           <div className="vg-sticky">
-            <div style={{ position: "relative", width: "100%", maxWidth: "1408px", margin: "0 auto", borderRadius: "32px", background: "linear-gradient(180deg, #F7F7F8 0%, #F1F2F4 100%)" }}>
-              <div className="vg-pinpad" style={{ position: "relative", maxWidth: "1200px", margin: "0 auto", padding: "104px 32px", boxSizing: "border-box", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "48px 64px" }} data-s="s10 s11">
-                <div style={{ flex: "1 1 400px", minWidth: "0", maxWidth: "500px" }}>
+            <div className="vg-pinpad" style={{ width: "100%", maxWidth: "1200px", margin: "0 auto", padding: "96px 32px", boxSizing: "border-box" }} data-s="s11">
+              <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", gap: "24px" }}>
+                <div>
                   <span className="vg-rv" style={{ display: "inline-block", fontSize: "12px", letterSpacing: "0.14em", textTransform: "uppercase", color: "#6B6B6B" }}>
-                    {"Long memory"}
+                    {"One call, start to finish"}
                   </span>
-                  <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "44px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s5">
+                  <h2 style={{ margin: "16px 0 0", maxWidth: "760px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "400", fontSize: "48px", lineHeight: "1.06", letterSpacing: "-0.045em", color: "#141414" }} data-s="s3">
                     <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
                       <span className="vg-line-in" style={{ display: "block" }}>
-                        {"It writes a note after every call."}
+                        {"What happens in the minute"}
                       </span>
                     </span>
                     <span className="vg-line" style={{ display: "block", overflow: "hidden", paddingBottom: "0.1em", marginBottom: "-0.1em" }}>
                       <span className="vg-line-in" style={{ display: "block", color: "#8A8A8A" }}>
-                        {"And reads it before the next."}
+                        {"after your phone rings."}
                       </span>
                     </span>
                   </h2>
-                  <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "480px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
-                    {"Vegham does not keep a pile of recordings to search later. It keeps the few things that matter about each person, and you can see and change every one of them."}
-                  </p>
-                  <div style={{ marginTop: "32px", display: "flex", flexDirection: "column", gap: "20px" }}>
-                    <div className="vg-pstep" style={{ display: "flex", gap: "16px", animationRange: "contain 2% contain 10%" } as CSSProperties}>
-                      <span style={{ width: "32px", height: "32px", flex: "none", borderRadius: "50%", border: "1px solid rgba(16,185,129,.45)", color: "#0B8F63", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "600" }}>
-                        {"1"}
-                      </span>
-                      <span>
-                        <b style={{ display: "block", fontWeight: "500", fontSize: "16px" }}>
-                          {"It listens"}
-                        </b>
-                        <span style={{ fontSize: "15px", color: "#5C5C5C" }}>
-                          {"The whole call or chat, in whatever language it happens."}
-                        </span>
-                      </span>
-                    </div>
-                    <div className="vg-pstep" style={{ display: "flex", gap: "16px", animationRange: "contain 14% contain 72%" } as CSSProperties}>
-                      <span style={{ width: "32px", height: "32px", flex: "none", borderRadius: "50%", border: "1px solid rgba(16,185,129,.45)", color: "#0B8F63", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "600" }}>
-                        {"2"}
-                      </span>
-                      <span>
-                        <b style={{ display: "block", fontWeight: "500", fontSize: "16px" }}>
-                          {"It writes down what matters"}
-                        </b>
-                        <span style={{ fontSize: "15px", color: "#5C5C5C" }}>
-                          {"Names, preferences, plans and anything left unfinished."}
-                        </span>
-                      </span>
-                    </div>
-                    <div className="vg-pstep" style={{ display: "flex", gap: "16px", animationRange: "contain 76% contain 86%" } as CSSProperties}>
-                      <span style={{ width: "32px", height: "32px", flex: "none", borderRadius: "50%", border: "1px solid rgba(16,185,129,.45)", color: "#0B8F63", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "13px", fontWeight: "600" }}>
-                        {"3"}
-                      </span>
-                      <span>
-                        <b style={{ display: "block", fontWeight: "500", fontSize: "16px" }}>
-                          {"It uses it next time"}
-                        </b>
-                        <span style={{ fontSize: "15px", color: "#5C5C5C" }}>
-                          {"On any channel, so nobody has to repeat themselves."}
-                        </span>
-                      </span>
-                    </div>
-                  </div>
                 </div>
-                <div style={{ flex: "1 1 480px", minWidth: "0" }}>
-                  <div style={{ borderRadius: "28px", background: "#FFFFFF", border: "1px solid #ECECEF", padding: "22px 24px", boxShadow: "0 24px 60px -36px rgba(22,24,42,.35)" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", paddingBottom: "12px", borderBottom: "1px solid #F0F0F3" }}>
-                      <span style={{ display: "inline-flex", alignItems: "center", gap: "10px" }}>
-                        <span style={{ width: "34px", height: "34px", borderRadius: "50%", background: "#F1F1F4", display: "inline-flex", alignItems: "center", justifyContent: "center", fontWeight: "600", fontSize: "13px" }}>
-                          {"R"}
-                        </span>
-                        <span>
-                          <b style={{ display: "block", fontWeight: "600", fontSize: "14.5px" }}>
-                            {"Rohan Mehta"}
-                          </b>
-                          <span style={{ fontSize: "12.5px", color: "#8A8A8A" }}>
-                            {"Phone call · 14 May · 1:52"}
-                          </span>
-                        </span>
-                      </span>
-                      <span style={{ fontSize: "12px", color: "#8A8A8A" }}>
-                        {"Transcript"}
-                      </span>
-                    </div>
-                    <div style={{ padding: "6px 0 10px" }}>
-                      <div style={{ display: "flex", gap: "12px", padding: "8px 0" }}>
-                        <span style={{ width: "64px", flex: "none", fontSize: "12.5px", color: "#6B6B6B", fontWeight: "500" }}>
-                          {"Rohan"}
-                        </span>
-                        <span style={{ flex: "1", fontSize: "14.5px", lineHeight: "1.55", color: "#2B2B2B" }}>
-                          {"Hi, do you do group sessions on weekends? We would be "}
-                          <span className="vg-phl" style={{ backgroundImage: "linear-gradient(rgba(16,185,129,.2), rgba(16,185,129,.2))", backgroundRepeat: "no-repeat", backgroundSize: "100% 100%", borderRadius: "4px", padding: "0 2px", color: "#141414", animationRange: "contain 8% contain 16%" } as CSSProperties}>
-                            {"three of us"}
-                          </span>
-                          {"."}
-                        </span>
-                      </div>
-                      <div style={{ display: "flex", gap: "12px", padding: "8px 0" }}>
-                        <span style={{ width: "64px", flex: "none", fontSize: "12.5px", color: "#0B8F63", fontWeight: "500" }}>
-                          {"Vegham"}
-                        </span>
-                        <span style={{ flex: "1", fontSize: "14.5px", lineHeight: "1.55", color: "#5C5C5C" }}>
-                          {"Yes, on Saturdays from 9 to 2. It is ₹350 each."}
-                        </span>
-                      </div>
-                      <div style={{ display: "flex", gap: "12px", padding: "8px 0" }}>
-                        <span style={{ width: "64px", flex: "none", fontSize: "12.5px", color: "#6B6B6B", fontWeight: "500" }}>
-                          {"Rohan"}
-                        </span>
-                        <span style={{ flex: "1", fontSize: "14.5px", lineHeight: "1.55", color: "#2B2B2B" }}>
-                          <span className="vg-phl" style={{ backgroundImage: "linear-gradient(rgba(16,185,129,.2), rgba(16,185,129,.2))", backgroundRepeat: "no-repeat", backgroundSize: "100% 100%", borderRadius: "4px", padding: "0 2px", color: "#141414", animationRange: "contain 26% contain 34%" } as CSSProperties}>
-                            {"Saturday mornings"}
-                          </span>
-                          {" would be best. Can you "}
-                          <span className="vg-phl" style={{ backgroundImage: "linear-gradient(rgba(16,185,129,.2), rgba(16,185,129,.2))", backgroundRepeat: "no-repeat", backgroundSize: "100% 100%", borderRadius: "4px", padding: "0 2px", color: "#141414", animationRange: "contain 44% contain 52%" } as CSSProperties}>
-                            {"send the details on WhatsApp"}
-                          </span>
-                          {"? "}
-                          <span className="vg-phl" style={{ backgroundImage: "linear-gradient(rgba(16,185,129,.2), rgba(16,185,129,.2))", backgroundRepeat: "no-repeat", backgroundSize: "100% 100%", borderRadius: "4px", padding: "0 2px", color: "#141414", animationRange: "contain 62% contain 70%" } as CSSProperties}>
-                            {"I’ll think about it"}
-                          </span>
-                          {" and call back."}
-                        </span>
-                      </div>
-                    </div>
-                    <div style={{ marginTop: "4px", padding: "14px 16px 4px", borderRadius: "16px", background: "#F7F7F8" }}>
-                      <span style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "12.5px", fontWeight: "500", color: "#141414" }}>
-                        <span style={{ color: "#10B981", display: "inline-flex" }}>
-                          <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z">
-                            </path>
-                            <path d="M9.5 21h5">
-                            </path>
-                          </svg>
-                        </span>
-                        {"Written to Rohan’s memory"}
-                      </span>
-                      <div style={{ marginTop: "8px" }}>
-                        <div className="vg-pfield" style={{ display: "flex", alignItems: "center", gap: "12px", padding: "11px 0", borderTop: "1px solid #F0F0F3", animationRange: "contain 12% contain 20%" } as CSSProperties}>
-                          <span style={{ width: "96px", flex: "none", fontSize: "12.5px", color: "#8A8A8A" }}>
-                            {"Group size"}
-                          </span>
-                          <span style={{ flex: "1", fontSize: "14.5px", fontWeight: "500", color: "#141414" }}>
-                            {"3 people"}
-                          </span>
-                          <span style={{ color: "#10B981", display: "inline-flex" }}>
-                            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M5 12.5l4.5 4.5L19 7.5">
-                              </path>
-                            </svg>
-                          </span>
-                        </div>
-                        <div className="vg-pfield" style={{ display: "flex", alignItems: "center", gap: "12px", padding: "11px 0", borderTop: "1px solid #F0F0F3", animationRange: "contain 30% contain 38%" } as CSSProperties}>
-                          <span style={{ width: "96px", flex: "none", fontSize: "12.5px", color: "#8A8A8A" }}>
-                            {"Prefers"}
-                          </span>
-                          <span style={{ flex: "1", fontSize: "14.5px", fontWeight: "500", color: "#141414" }}>
-                            {"Saturday mornings"}
-                          </span>
-                          <span style={{ color: "#10B981", display: "inline-flex" }}>
-                            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M5 12.5l4.5 4.5L19 7.5">
-                              </path>
-                            </svg>
-                          </span>
-                        </div>
-                        <div className="vg-pfield" style={{ display: "flex", alignItems: "center", gap: "12px", padding: "11px 0", borderTop: "1px solid #F0F0F3", animationRange: "contain 48% contain 56%" } as CSSProperties}>
-                          <span style={{ width: "96px", flex: "none", fontSize: "12.5px", color: "#8A8A8A" }}>
-                            {"Contact"}
-                          </span>
-                          <span style={{ flex: "1", fontSize: "14.5px", fontWeight: "500", color: "#141414" }}>
-                            {"Details on WhatsApp"}
-                          </span>
-                          <span style={{ color: "#10B981", display: "inline-flex" }}>
-                            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M5 12.5l4.5 4.5L19 7.5">
-                              </path>
-                            </svg>
-                          </span>
-                        </div>
-                        <div className="vg-pfield" style={{ display: "flex", alignItems: "center", gap: "12px", padding: "11px 0", borderTop: "1px solid #F0F0F3", animationRange: "contain 66% contain 74%" } as CSSProperties}>
-                          <span style={{ width: "96px", flex: "none", fontSize: "12.5px", color: "#8A8A8A" }}>
-                            {"Open loop"}
-                          </span>
-                          <span style={{ flex: "1", fontSize: "14.5px", fontWeight: "500", color: "#0B8F63" }}>
-                            {"Will think about it · follow up"}
-                          </span>
-                          <span style={{ color: "#10B981", display: "inline-flex" }}>
-                            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M5 12.5l4.5 4.5L19 7.5">
-                              </path>
-                            </svg>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="vg-pfoot" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "10px", marginTop: "14px", fontSize: "13px", color: "#6B6B6B", animationRange: "contain 84% contain 94%" } as CSSProperties}>
-                      <span>
-                        {"Kept for 12 months · change it in Settings"}
-                      </span>
-                      <span style={{ display: "inline-flex", alignItems: "center", height: "30px", padding: "0 12px", borderRadius: "999px", border: "1px solid #E2E2E6", color: "#141414" }} data-s="s1">
-                        {"Forget Rohan"}
-                      </span>
-                    </div>
-                  </div>
-                  <div style={{ padding: "10px 6px 0", textAlign: "right" }}>
-                    <span style={{ fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", color: "#A3A3A3" }}>
-                      {"Sample data"}
-                    </span>
-                  </div>
+                <p className="vg-rv" style={{ margin: "20px 0 0", maxWidth: "420px", fontSize: "18px", color: "#5C5C5C" }} data-s="s16">
+                  {"Every call goes through the same seven steps, whether it is a new customer or someone you have known for years."}
+                </p>
+              </div>
+              <div className="vg-fgrid" style={{ position: "relative", marginTop: "56px", display: "grid", gridTemplateColumns: "repeat(7, minmax(0, 1fr))", gap: "16px" }}>
+                <div aria-hidden="true" className="vg-fline" style={{ position: "absolute", top: "13px", left: "14px", width: "calc((100% - 96px) * 6 / 7 + 96px)", height: "2px", background: "#E6E6EA" }}>
+                  <span className="vg-ffill" style={{ position: "absolute", inset: "0", background: "#10B981", transformOrigin: "left", animationRange: "contain 6% contain 90%" } as CSSProperties}>
+                  </span>
+                  <span className="vg-fdot" style={{ position: "absolute", top: "-6px", left: "100%", width: "14px", height: "14px", marginLeft: "-7px", borderRadius: "50%", background: "#10B981", boxShadow: "0 0 0 6px rgba(16,185,129,.18)", animationRange: "contain 6% contain 90%" } as CSSProperties}>
+                  </span>
                 </div>
+                <div className="vg-fstep" style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px", animationRange: "contain 2% contain 8%" } as CSSProperties}>
+                  <span className="vg-fnode" style={{ position: "relative", zIndex: "1", width: "28px", height: "28px", borderRadius: "50%", background: "#10B981", border: "2px solid #10B981", boxSizing: "border-box", color: "#FFFFFF", display: "inline-flex", alignItems: "center", justifyContent: "center", animationRange: "contain 3% contain 7%" } as CSSProperties}>
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                  </span>
+                  <b style={{ marginTop: "6px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "18px", lineHeight: "1.2", letterSpacing: "-0.02em" }} data-s="s16">
+                    {"Rings"}
+                  </b>
+                  <span style={{ fontSize: "14px", color: "#5C5C5C", lineHeight: "1.45" }}>
+                    {"A customer calls your number."}
+                  </span>
+                  <span style={{ fontSize: "13px", color: "#0B8F63", lineHeight: "1.45", padding: "8px 10px", borderRadius: "10px", background: "#F7F7F8" }}>
+                    {"+91 98•• ••21 is calling"}
+                  </span>
+                </div>
+                <div className="vg-fstep" style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px", animationRange: "contain 16% contain 22%" } as CSSProperties}>
+                  <span className="vg-fnode" style={{ position: "relative", zIndex: "1", width: "28px", height: "28px", borderRadius: "50%", background: "#10B981", border: "2px solid #10B981", boxSizing: "border-box", color: "#FFFFFF", display: "inline-flex", alignItems: "center", justifyContent: "center", animationRange: "contain 17% contain 21%" } as CSSProperties}>
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                  </span>
+                  <b style={{ marginTop: "6px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "18px", lineHeight: "1.2", letterSpacing: "-0.02em" }} data-s="s16">
+                    {"Picks up"}
+                  </b>
+                  <span style={{ fontSize: "14px", color: "#5C5C5C", lineHeight: "1.45" }}>
+                    {"In under a second, in a natural voice."}
+                  </span>
+                  <span style={{ fontSize: "13px", color: "#0B8F63", lineHeight: "1.45", padding: "8px 10px", borderRadius: "10px", background: "#F7F7F8" }}>
+                    {"“Hi, thanks for calling Nila & Co.”"}
+                  </span>
+                </div>
+                <div className="vg-fstep" style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px", animationRange: "contain 30% contain 36%" } as CSSProperties}>
+                  <span className="vg-fnode" style={{ position: "relative", zIndex: "1", width: "28px", height: "28px", borderRadius: "50%", background: "#10B981", border: "2px solid #10B981", boxSizing: "border-box", color: "#FFFFFF", display: "inline-flex", alignItems: "center", justifyContent: "center", animationRange: "contain 31% contain 35%" } as CSSProperties}>
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                  </span>
+                  <b style={{ marginTop: "6px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "18px", lineHeight: "1.2", letterSpacing: "-0.02em" }} data-s="s16">
+                    {"Knows who it is"}
+                  </b>
+                  <span style={{ fontSize: "14px", color: "#5C5C5C", lineHeight: "1.45" }}>
+                    {"Recognises the number and recalls the person."}
+                  </span>
+                  <span style={{ fontSize: "13px", color: "#0B8F63", lineHeight: "1.45", padding: "8px 10px", borderRadius: "10px", background: "#F7F7F8" }}>
+                    {"Rohan Mehta · last called 6 months ago"}
+                  </span>
+                </div>
+                <div className="vg-fstep" style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px", animationRange: "contain 44% contain 50%" } as CSSProperties}>
+                  <span className="vg-fnode" style={{ position: "relative", zIndex: "1", width: "28px", height: "28px", borderRadius: "50%", background: "#10B981", border: "2px solid #10B981", boxSizing: "border-box", color: "#FFFFFF", display: "inline-flex", alignItems: "center", justifyContent: "center", animationRange: "contain 45% contain 49%" } as CSSProperties}>
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                  </span>
+                  <b style={{ marginTop: "6px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "18px", lineHeight: "1.2", letterSpacing: "-0.02em" }} data-s="s16">
+                    {"Answers"}
+                  </b>
+                  <span style={{ fontSize: "14px", color: "#5C5C5C", lineHeight: "1.45" }}>
+                    {"From your prices, hours and notes."}
+                  </span>
+                  <span style={{ fontSize: "13px", color: "#0B8F63", lineHeight: "1.45", padding: "8px 10px", borderRadius: "10px", background: "#F7F7F8" }}>
+                    {"“Saturday 10 AM is free. Shall I hold it?”"}
+                  </span>
+                </div>
+                <div className="vg-fstep" style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px", animationRange: "contain 58% contain 64%" } as CSSProperties}>
+                  <span className="vg-fnode" style={{ position: "relative", zIndex: "1", width: "28px", height: "28px", borderRadius: "50%", background: "#10B981", border: "2px solid #10B981", boxSizing: "border-box", color: "#FFFFFF", display: "inline-flex", alignItems: "center", justifyContent: "center", animationRange: "contain 59% contain 63%" } as CSSProperties}>
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                  </span>
+                  <b style={{ marginTop: "6px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "18px", lineHeight: "1.2", letterSpacing: "-0.02em" }} data-s="s16">
+                    {"Hands over if needed"}
+                  </b>
+                  <span style={{ fontSize: "14px", color: "#5C5C5C", lineHeight: "1.45" }}>
+                    {"Brings you in when a person should decide."}
+                  </span>
+                  <span style={{ fontSize: "13px", color: "#0B8F63", lineHeight: "1.45", padding: "8px 10px", borderRadius: "10px", background: "#F7F7F8" }}>
+                    {"Not needed this time"}
+                  </span>
+                </div>
+                <div className="vg-fstep" style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px", animationRange: "contain 72% contain 78%" } as CSSProperties}>
+                  <span className="vg-fnode" style={{ position: "relative", zIndex: "1", width: "28px", height: "28px", borderRadius: "50%", background: "#10B981", border: "2px solid #10B981", boxSizing: "border-box", color: "#FFFFFF", display: "inline-flex", alignItems: "center", justifyContent: "center", animationRange: "contain 73% contain 77%" } as CSSProperties}>
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                  </span>
+                  <b style={{ marginTop: "6px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "18px", lineHeight: "1.2", letterSpacing: "-0.02em" }} data-s="s16">
+                    {"Writes a summary"}
+                  </b>
+                  <span style={{ fontSize: "14px", color: "#5C5C5C", lineHeight: "1.45" }}>
+                    {"What was asked, said and agreed."}
+                  </span>
+                  <span style={{ fontSize: "13px", color: "#0B8F63", lineHeight: "1.45", padding: "8px 10px", borderRadius: "10px", background: "#F7F7F8" }}>
+                    {"Booked Sat 10 AM for 5 · details sent on WhatsApp"}
+                  </span>
+                </div>
+                <div className="vg-fstep" style={{ position: "relative", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "10px", animationRange: "contain 86% contain 92%" } as CSSProperties}>
+                  <span className="vg-fnode" style={{ position: "relative", zIndex: "1", width: "28px", height: "28px", borderRadius: "50%", background: "#10B981", border: "2px solid #10B981", boxSizing: "border-box", color: "#FFFFFF", display: "inline-flex", alignItems: "center", justifyContent: "center", animationRange: "contain 87% contain 91%" } as CSSProperties}>
+                    <svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5">
+                      </path>
+                    </svg>
+                  </span>
+                  <b style={{ marginTop: "6px", fontFamily: "var(--font-tight), sans-serif", fontWeight: "500", fontSize: "18px", lineHeight: "1.2", letterSpacing: "-0.02em" }} data-s="s16">
+                    {"Plans the follow-up"}
+                  </b>
+                  <span style={{ fontSize: "14px", color: "#5C5C5C", lineHeight: "1.45" }}>
+                    {"Anything it promised goes on your list."}
+                  </span>
+                  <span style={{ fontSize: "13px", color: "#0B8F63", lineHeight: "1.45", padding: "8px 10px", borderRadius: "10px", background: "#F7F7F8" }}>
+                    {"Reminder on Friday evening"}
+                  </span>
+                </div>
+              </div>
+              <div style={{ marginTop: "18px", textAlign: "right" }}>
+                <span style={{ fontSize: "11px", letterSpacing: "0.1em", textTransform: "uppercase", color: "#A3A3A3" }}>
+                  {"Sample data"}
+                </span>
               </div>
             </div>
           </div>

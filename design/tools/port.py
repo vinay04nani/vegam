@@ -35,7 +35,7 @@ LINKS = {k + '.dc.html': v for k, v in ROUTES.items()}
 TEXT_LINKS = {
     'Product': '/product/', 'How it works': '/how-it-works/', 'Pricing': '/pricing/', 'Company': '/company/', 'Help centre': '/help/',
     'Log in': '/login/', 'Sign in': '/login/', 'Book a demo': '/book-demo/', 'Start free': '/signup/', 'Start free →': '/signup/',
-    'Create one': '/signup/', 'Voice agent': '/product/#voice', 'Long memory': '/product/#memory', 'Languages': '/product/#languages',
+    'Create one': '/signup/', 'Voice agent': '/product/#voice', 'Long memory': '/product/#people', 'Languages': '/product/#languages',
     'Follow-ups': '/product/#follow-ups', 'Hand-over': '/product/#hand-over', 'Insights': '/product/#insights',
     'Phone calls': '/product/#channels', 'WhatsApp': '/product/#channels', 'Instagram': '/product/#channels',
     'Messenger': '/product/#channels', 'Telegram': '/product/#channels', 'Link and website': '/product/#channels',
