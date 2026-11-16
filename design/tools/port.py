@@ -304,6 +304,10 @@ def port_single(board, name, rel, route, title, keys, shared=None, edit=None):
     if used:
         extra.append('import InnerHeader from "@/components/site/InnerHeader";')
     jsx, conv = to_jsx(html, keys)
+    if 'src="shots/' in jsx:
+        # Screenshots live in public/shots; prefix them with the site's base path.
+        jsx = re.sub(r'src="(shots/[^"]+)"', r'src={withBase("/\1")}', jsx)
+        extra.append('import { withBase } from "@/lib/paths";')
     jsx = re.sub(r'<x-footer>\s*</x-footer>', '<SiteFooter />', jsx)
     jsx = re.sub(r'<x-header>\s*</x-header>', '<InnerHeader />', jsx)
     write(rel, component(name, board, jsx, conv, '\n'.join(extra)))
@@ -417,6 +421,13 @@ def port_setup(board, name, route, keys):
 def main():
     boards = ['LandingV2', 'Login', 'Otp', 'Signup', 'NotFound'] + [b for b, *_ in INNER] + [b for b, *_ in APP_PAGES] + [b for b, *_ in SETUP]
     css, keys = build_css(boards)
+    shots = os.path.join(BOARDS, 'shots')
+    if os.path.isdir(shots):
+        import shutil
+        dst = os.path.join(ROOT, 'frontend', 'public', 'shots')
+        os.makedirs(dst, exist_ok=True)
+        for f in os.listdir(shots):
+            shutil.copy(os.path.join(shots, f), dst)
     write('styles/design.css', '/* Generated from the design boards by design/tools/port.py. Edit overrides in app/globals.css. */\n' + css + '\n')
     shared = {'footer': port_landing(keys), 'header': inner_header(keys)}
     port_single('Login', 'LoginPage', 'components/site/LoginPage.tsx', '/login/', 'Log in · Vegham', keys, edit=lambda h: button_link(h, 'Continue', '/login/code/'))
