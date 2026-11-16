@@ -23,10 +23,10 @@ export default function Control() {
           <div className="vg-g3" style={{ marginTop: "56px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "40px" }}>
             <div className="vg-rv" style={{ padding: "32px 0 0", borderTop: "1px solid #E2E2E6" }}>
               <span style={{ color: "#10B981" }}>
-                <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z">
+                <svg aria-hidden="true" className="vg-ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path pathLength="1" d="M12 3a6 6 0 0 0-4 10.5V17h8v-3.5A6 6 0 0 0 12 3z">
                   </path>
-                  <path d="M9.5 21h5">
+                  <path pathLength="1" d="M9.5 21h5">
                   </path>
                 </svg>
               </span>
@@ -39,10 +39,10 @@ export default function Control() {
             </div>
             <div className="vg-rv" style={{ padding: "32px 0 0", borderTop: "1px solid #E2E2E6" }}>
               <span style={{ color: "#10B981" }}>
-                <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 3.5l7 2.5v5.5c0 4.3-2.9 7.4-7 9-4.1-1.6-7-4.7-7-9V6z">
+                <svg aria-hidden="true" className="vg-ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path pathLength="1" d="M12 3.5l7 2.5v5.5c0 4.3-2.9 7.4-7 9-4.1-1.6-7-4.7-7-9V6z">
                   </path>
-                  <path d="M9 12l2.2 2.2L15.2 10">
+                  <path pathLength="1" d="M9 12l2.2 2.2L15.2 10">
                   </path>
                 </svg>
               </span>
@@ -55,12 +55,12 @@ export default function Control() {
             </div>
             <div className="vg-rv" style={{ padding: "32px 0 0", borderTop: "1px solid #E2E2E6" }}>
               <span style={{ color: "#10B981" }}>
-                <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M4 12h11">
+                <svg aria-hidden="true" className="vg-ico" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path pathLength="1" d="M4 12h11">
                   </path>
-                  <path d="M11 7l5 5-5 5">
+                  <path pathLength="1" d="M11 7l5 5-5 5">
                   </path>
-                  <path d="M20 5v14">
+                  <path pathLength="1" d="M20 5v14">
                   </path>
                 </svg>
               </span>

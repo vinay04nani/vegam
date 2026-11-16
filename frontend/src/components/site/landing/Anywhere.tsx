@@ -1,5 +1,5 @@
 // Ported from design board LandingV2 (Anywhere) by design/tools/port.py. Sample data is inline.
-
+import type { CSSProperties } from "react";
 
 export default function Anywhere() {
   return (
@@ -187,7 +187,7 @@ export default function Anywhere() {
                   </span>
                 </div>
                 <div style={{ marginTop: "22px", paddingTop: "20px", borderTop: "1px solid #F0F0F3", display: "flex", alignItems: "center", gap: "16px", textAlign: "left" }}>
-                  <span aria-hidden="true" style={{ width: "76px", height: "76px", flex: "none", borderRadius: "12px", border: "1px solid #ECECEF", backgroundColor: "#FFFFFF", backgroundImage: "linear-gradient(45deg, #16182A 25%, transparent 25%, transparent 75%, #16182A 75%), linear-gradient(45deg, #16182A 25%, transparent 25%, transparent 75%, #16182A 75%)", backgroundSize: "12px 12px", backgroundPosition: "6px 6px, 12px 12px", backgroundOrigin: "content-box", backgroundClip: "content-box", padding: "8px", boxSizing: "border-box" }}>
+                  <span aria-hidden="true" className="vg-pop" style={{ animationRange: "entry 30% cover 55%", width: "76px", height: "76px", flex: "none", borderRadius: "12px", border: "1px solid #ECECEF", backgroundColor: "#FFFFFF", backgroundImage: "linear-gradient(45deg, #16182A 25%, transparent 25%, transparent 75%, #16182A 75%), linear-gradient(45deg, #16182A 25%, transparent 25%, transparent 75%, #16182A 75%)", backgroundSize: "12px 12px", backgroundPosition: "6px 6px, 12px 12px", backgroundOrigin: "content-box", backgroundClip: "content-box", padding: "8px", boxSizing: "border-box" } as CSSProperties}>
                   </span>
                   <span style={{ fontSize: "13.5px", color: "#5C5C5C" }}>
                     {"Scan to talk."}

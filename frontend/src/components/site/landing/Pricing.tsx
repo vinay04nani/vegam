@@ -29,7 +29,7 @@ export default function Pricing() {
             </Link>
           </div>
           <div className="vg-g3" style={{ marginTop: "48px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px" }}>
-            <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414" }}>
+            <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414", animationRange: "entry 4% cover 30%" } as CSSProperties}>
               <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "16px", fontWeight: "500" }}>
                 {"Starter"}
               </span>
@@ -72,7 +72,7 @@ export default function Pricing() {
                 </span>
               </span>
             </div>
-            <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "#16182A", border: "1px solid transparent", color: "#FFFFFF" }}>
+            <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "#16182A", border: "1px solid transparent", color: "#FFFFFF", animationRange: "entry 16% cover 42%" } as CSSProperties}>
               <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "16px", fontWeight: "500" }}>
                 {"Growth"}
                 <span style={{ padding: "3px 10px", borderRadius: "999px", background: "rgba(255,255,255,.12)", fontSize: "12px" }} data-s="s1">
@@ -118,7 +118,7 @@ export default function Pricing() {
                 </span>
               </span>
             </div>
-            <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414" }}>
+            <div className="vg-rv" style={{ padding: "28px", borderRadius: "24px", background: "#FFFFFF", border: "1px solid #ECECEF", color: "#141414", animationRange: "entry 10% cover 36%" } as CSSProperties}>
               <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "16px", fontWeight: "500" }}>
                 {"Pro"}
               </span>

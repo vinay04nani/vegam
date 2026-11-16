@@ -26,7 +26,7 @@ export default function Features() {
             </p>
           </div>
           <div className="vg-g3" style={{ marginTop: "56px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px" }}>
-            <div className="vg-lift vg-rv" style={{ gridColumn: "span 2", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 2", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden", animationRange: "entry 4% cover 30%" } as CSSProperties}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -162,7 +162,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden", animationRange: "entry 14% cover 40%" } as CSSProperties}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -182,42 +182,42 @@ export default function Features() {
                 </span>
               </span>
               <div style={{ marginTop: "auto", display: "flex", flexWrap: "wrap", gap: "8px" }}>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B", animationRange: "entry 14% cover 30%" } as CSSProperties} data-s="s1">
                   {"English"}
                 </span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B", animationRange: "entry 16% cover 32%" } as CSSProperties} data-s="s1">
                   {"हिन्दी"}
                 </span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B", animationRange: "entry 18% cover 34%" } as CSSProperties} data-s="s1">
                   {"தமிழ்"}
                 </span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B", animationRange: "entry 20% cover 36%" } as CSSProperties} data-s="s1">
                   {"Español"}
                 </span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B", animationRange: "entry 22% cover 38%" } as CSSProperties} data-s="s1">
                   {"العربية"}
                 </span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B", animationRange: "entry 24% cover 40%" } as CSSProperties} data-s="s1">
                   {"Français"}
                 </span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B", animationRange: "entry 26% cover 42%" } as CSSProperties} data-s="s1">
                   {"Português"}
                 </span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B", animationRange: "entry 28% cover 44%" } as CSSProperties} data-s="s1">
                   {"Deutsch"}
                 </span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B", animationRange: "entry 30% cover 46%" } as CSSProperties} data-s="s1">
                   {"తెలుగు"}
                 </span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", background: "#F5F5F7", fontSize: "14px", color: "#2B2B2B", animationRange: "entry 32% cover 48%" } as CSSProperties} data-s="s1">
                   {"Bahasa"}
                 </span>
-                <span style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", border: "1px dashed #D5D5DB", fontSize: "14px", color: "#6B6B6B" }} data-s="s1">
+                <span className="vg-pop" style={{ display: "inline-flex", alignItems: "center", height: "32px", padding: "0 13px", borderRadius: "999px", border: "1px dashed #D5D5DB", fontSize: "14px", color: "#6B6B6B", animationRange: "entry 34% cover 50%" } as CSSProperties} data-s="s1">
                   {"and more"}
                 </span>
               </div>
             </div>
-            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden", animationRange: "entry 10% cover 36%" } as CSSProperties}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -253,7 +253,7 @@ export default function Features() {
                     </path>
                   </svg>
                 </span>
-                <span aria-hidden="true" style={{ flex: "1", height: "1px", background: "linear-gradient(90deg, #E2E2E6, #10B981)" }}>
+                <span aria-hidden="true" className="vg-drawx" style={{ flex: "1", height: "1px", background: "linear-gradient(90deg, #E2E2E6, #10B981)", transformOrigin: "left", animationRange: "entry 20% cover 45%" } as CSSProperties}>
                 </span>
                 <span style={{ display: "inline-flex", alignItems: "center", gap: "8px", height: "40px", padding: "0 14px 0 6px", borderRadius: "999px", border: "1px solid rgba(16,185,129,.45)", fontSize: "14px", fontWeight: "500" }} data-s="s1 s2">
                   <span style={{ width: "28px", height: "28px", borderRadius: "50%", background: "#F1F1F4", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "12px" }}>
@@ -263,7 +263,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden", animationRange: "entry 15% cover 41%" } as CSSProperties}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -281,7 +281,7 @@ export default function Features() {
                 </span>
               </span>
               <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: "8px", fontSize: "13.5px" }}>
-                <span style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "10px 14px", borderRadius: "12px", background: "#F7F7F8" }}>
+                <span className="vg-slide" style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "10px 14px", borderRadius: "12px", background: "#F7F7F8", animationRange: "entry 16% cover 36%" } as CSSProperties}>
                   <span>
                     {"Asked for a quote"}
                   </span>
@@ -289,7 +289,7 @@ export default function Features() {
                     {"12 weeks ago"}
                   </span>
                 </span>
-                <span style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "10px 14px", borderRadius: "12px", background: "#F7F7F8" }}>
+                <span className="vg-slide" style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "10px 14px", borderRadius: "12px", background: "#F7F7F8", animationRange: "entry 22% cover 42%" } as CSSProperties}>
                   <span>
                     {"Wanted to bring a friend"}
                   </span>
@@ -297,7 +297,7 @@ export default function Features() {
                     {"5 weeks ago"}
                   </span>
                 </span>
-                <span style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "10px 14px", borderRadius: "12px", border: "1px solid rgba(16,185,129,.45)" }}>
+                <span className="vg-slide" style={{ display: "flex", justifyContent: "space-between", gap: "12px", padding: "10px 14px", borderRadius: "12px", border: "1px solid rgba(16,185,129,.45)", animationRange: "entry 28% cover 48%" } as CSSProperties}>
                   <span>
                     {"Brings both up on today’s call"}
                   </span>
@@ -307,7 +307,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "320px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden", animationRange: "entry 20% cover 46%" } as CSSProperties}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -348,7 +348,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 1", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden", animationRange: "entry 16% cover 42%" } as CSSProperties}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -410,7 +410,7 @@ export default function Features() {
                 </span>
               </div>
             </div>
-            <div className="vg-lift vg-rv" style={{ gridColumn: "span 2", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden" }}>
+            <div className="vg-lift vg-rv" style={{ gridColumn: "span 2", background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "28px", minHeight: "300px", boxSizing: "border-box", display: "flex", flexDirection: "column", gap: "20px", overflow: "hidden", animationRange: "entry 21% cover 47%" } as CSSProperties}>
               <span>
                 <span style={{ display: "inline-flex", width: "40px", height: "40px", borderRadius: "12px", background: "#F5F5F7", alignItems: "center", justifyContent: "center", color: "#16182A" }} data-s="s2">
                   <svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -431,35 +431,36 @@ export default function Features() {
               </span>
               <div style={{ marginTop: "auto", display: "flex", flexWrap: "wrap", alignItems: "flex-end", gap: "28px" }}>
                 <div style={{ flex: "1 1 260px", display: "flex", alignItems: "flex-end", gap: "8px", height: "110px" }}>
-                  <span style={{ flex: "1", height: "38%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "38%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 10% cover 34%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "52%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "52%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 12% cover 36%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "44%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "44%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 14% cover 38%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "66%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "66%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 16% cover 40%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "58%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "58%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 18% cover 42%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "80%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "80%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 20% cover 44%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "72%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "72%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 22% cover 46%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "90%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "90%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 24% cover 48%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "64%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "64%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 26% cover 50%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "84%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "84%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 28% cover 52%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "96%", borderRadius: "6px 6px 2px 2px", background: "#10B981" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "96%", borderRadius: "6px 6px 2px 2px", background: "#10B981", transformOrigin: "bottom", animationRange: "entry 30% cover 54%" } as CSSProperties}>
                   </span>
-                  <span style={{ flex: "1", height: "76%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE" }}>
+                  <span className="vg-growbar" style={{ flex: "1", height: "76%", borderRadius: "6px 6px 2px 2px", background: "#E9E9EE", transformOrigin: "bottom", animationRange: "entry 32% cover 56%" } as CSSProperties}>
                   </span>
                 </div>
                 <div style={{ display: "flex", gap: "28px" }}>
                   <span>
                     <span style={{ display: "block", fontFamily: "var(--font-tight), sans-serif", fontSize: "34px", letterSpacing: "-0.03em", lineHeight: "1.1" }}>
-                      {"412"}
+                      <span className="vg-num" role="img" aria-label="412" style={{ "--to": "412" } as CSSProperties}>
+                      </span>
                     </span>
                     <span style={{ fontSize: "13px", color: "#6B6B6B" }}>
                       {"callers recognised"}
@@ -467,7 +468,8 @@ export default function Features() {
                   </span>
                   <span>
                     <span style={{ display: "block", fontFamily: "var(--font-tight), sans-serif", fontSize: "34px", letterSpacing: "-0.03em", lineHeight: "1.1" }}>
-                      {"0"}
+                      <span className="vg-num" role="img" aria-label="0" style={{ "--to": "0" } as CSSProperties}>
+                      </span>
                     </span>
                     <span style={{ fontSize: "13px", color: "#6B6B6B" }}>
                       {"calls missed"}
@@ -475,7 +477,8 @@ export default function Features() {
                   </span>
                   <span>
                     <span style={{ display: "block", fontFamily: "var(--font-tight), sans-serif", fontSize: "34px", letterSpacing: "-0.03em", lineHeight: "1.1" }}>
-                      {"23"}
+                      <span className="vg-num" role="img" aria-label="23" style={{ "--to": "23" } as CSSProperties}>
+                      </span>
                     </span>
                     <span style={{ fontSize: "13px", color: "#6B6B6B" }}>
                       {"follow-ups due"}

@@ -5,7 +5,7 @@ import type { CSSProperties } from "react";
 export default function SiteHeader() {
   return (
     <>
-      <div aria-hidden="true" className="vg-bar" style={{ position: "fixed", left: "0", top: "0", zIndex: "50", width: "100%", height: "2px", background: "#16182A", transform: "scaleX(0)", transformOrigin: "left" }}>
+      <div aria-hidden="true" className="vg-bar" style={{ position: "fixed", left: "0", top: "0", zIndex: "50", width: "100%", height: "3px", background: "linear-gradient(90deg, #10B981 0%, #0EA5A4 35%, #3B6CF6 70%, #7C3AED 100%)", transform: "scaleX(0)", transformOrigin: "left" }}>
       </div>
       <header style={{ position: "sticky", top: "0", zIndex: "40", padding: "0 16px", marginBottom: "-78px" }}>
         <div className="vg-hdr-in vg-hdr-dark" style={{ maxWidth: "1200px", margin: "0 auto", padding: "18px 32px", border: "1px solid transparent", boxSizing: "border-box", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "16px 24px" }} data-s="s11">

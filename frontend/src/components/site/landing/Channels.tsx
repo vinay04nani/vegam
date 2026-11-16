@@ -1,5 +1,5 @@
 // Ported from design board LandingV2 (Channels) by design/tools/port.py. Sample data is inline.
-
+import type { CSSProperties } from "react";
 
 export default function Channels() {
   return (
@@ -27,8 +27,23 @@ export default function Channels() {
               {"Calls, chats and a simple link. Customers pick the way they like to talk, and Vegham is already there."}
             </p>
           </div>
-          <div className="vg-g3" style={{ marginTop: "48px", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px" }}>
-            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+          <div aria-hidden="true" className="vg-hub" style={{ position: "relative", height: "92px", marginTop: "40px" }}>
+            <svg viewBox="0 0 1136 92" preserveAspectRatio="none" style={{ position: "absolute", inset: "0", width: "100%", height: "100%", overflow: "visible" }}>
+              <path className="vg-hubline" d="M568 22 C568 60, 189 46, 189 92" fill="none" stroke="#10B981" strokeOpacity=".55" strokeWidth="1.5" vectorEffect="non-scaling-stroke" pathLength="1">
+              </path>
+              <path className="vg-hubline" d="M568 22 C568 60, 568 46, 568 92" fill="none" stroke="#10B981" strokeOpacity=".55" strokeWidth="1.5" vectorEffect="non-scaling-stroke" pathLength="1">
+              </path>
+              <path className="vg-hubline" d="M568 22 C568 60, 947 46, 947 92" fill="none" stroke="#10B981" strokeOpacity=".55" strokeWidth="1.5" vectorEffect="non-scaling-stroke" pathLength="1">
+              </path>
+            </svg>
+            <span className="vg-hubdot" style={{ position: "absolute", left: "50%", top: "0", transform: "translateX(-50%)", display: "inline-flex", alignItems: "center", gap: "8px", height: "30px", padding: "0 12px 0 8px", borderRadius: "999px", background: "#FFFFFF", border: "1px solid rgba(16,185,129,.45)", fontSize: "13px", fontWeight: "500", color: "#0B8F63", whiteSpace: "nowrap" }} data-s="s1">
+              <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#10B981", boxShadow: "0 0 0 4px rgba(16,185,129,.15)" }}>
+              </span>
+              {"One agent"}
+            </span>
+          </div>
+          <div className="vg-g3" style={{ marginTop: "0", display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: "16px" }}>
+            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px", animationRange: "entry 4% cover 30%" } as CSSProperties}>
               <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                 <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                   <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16182A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -51,7 +66,7 @@ export default function Channels() {
                 </span>
               </span>
             </div>
-            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px", animationRange: "entry 9% cover 35%" } as CSSProperties}>
               <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                 <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#25D366">
@@ -77,7 +92,7 @@ export default function Channels() {
                 </span>
               </span>
             </div>
-            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px", animationRange: "entry 14% cover 40%" } as CSSProperties}>
               <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                 <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#FF0069">
@@ -100,7 +115,7 @@ export default function Channels() {
                 </span>
               </span>
             </div>
-            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px", animationRange: "entry 12% cover 38%" } as CSSProperties}>
               <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                 <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#0866FF">
@@ -123,7 +138,7 @@ export default function Channels() {
                 </span>
               </span>
             </div>
-            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px", animationRange: "entry 17% cover 43%" } as CSSProperties}>
               <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                 <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                   <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24">
@@ -151,7 +166,7 @@ export default function Channels() {
                 </span>
               </span>
             </div>
-            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px" }}>
+            <div className="vg-lift vg-rv" style={{ background: "#FFFFFF", border: "1px solid #ECECEF", borderRadius: "24px", padding: "24px", display: "flex", flexDirection: "column", gap: "14px", animationRange: "entry 22% cover 48%" } as CSSProperties}>
               <span style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
                 <span style={{ width: "44px", height: "44px", flex: "none", borderRadius: "12px", background: "#FFFFFF", border: "1px solid #ECECEF", display: "inline-flex", alignItems: "center", justifyContent: "center" }}>
                   <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16182A" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
