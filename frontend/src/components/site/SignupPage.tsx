@@ -7,7 +7,7 @@ export default function SignupPage() {
       <div style={{ fontFamily: "var(--font-inter), system-ui, sans-serif", color: "#1F1F1F", background: "#FFFFFF", fontSize: "16px", lineHeight: "1.6" }}>
         <div style={{ display: "flex", flexWrap: "wrap", minHeight: "960px", background: "#FFFFFF" }}>
           <div style={{ flex: "1 1 560px", minWidth: "0", padding: "16px", boxSizing: "border-box" }}>
-            <div style={{ position: "relative", height: "100%", minHeight: "680px", borderRadius: "28px", overflow: "hidden", display: "flex", alignItems: "flex-end", justifyContent: "center", padding: "40px 32px", boxSizing: "border-box" }} data-s="s23">
+            <div style={{ position: "relative", height: "100%", minHeight: "680px", borderRadius: "28px", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 32px", boxSizing: "border-box" }} data-s="s23">
               <svg aria-hidden="true" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: "0", width: "100%", height: "100%", display: "block" }}>
                 <defs>
                   <linearGradient id="vga-sky-signup" x1="0" y1="0" x2="0" y2="1">
