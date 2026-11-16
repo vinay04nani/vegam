@@ -282,6 +282,8 @@ EXTRA = '''
 
 L.RESPONSIVE += EXTRA
 L.channels, L.memory, L.bento, L.global_, L.how, L.control, L.pricing, L.cta = channels, memory, bento, global_, how, control, pricing, cta
+# The landing page has no pricing section; plans live on the Pricing page.
+L.pricing = lambda: ''
 
 _footer = L.footer
 

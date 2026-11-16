@@ -249,7 +249,7 @@ def route_page(route, imp, name, title, extra=''):
 
 # ---------- SITE ----------
 LANDING_SECTIONS = [('Hero', None), ('Channels', 'channels'), ('Memory', 'memory'), ('Features', 'product'), ('Anywhere', 'anywhere'),
-                    ('HowItWorks', 'how'), ('Control', 'control'), ('Pricing', 'pricing'), ('Faq', 'faq'), ('Cta', 'start')]
+                    ('HowItWorks', 'how'), ('Control', 'control'), ('Faq', 'faq'), ('Cta', 'start')]
 
 
 def port_landing(keys):

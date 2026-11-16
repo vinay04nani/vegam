@@ -9,7 +9,6 @@ import Features from "@/components/site/landing/Features";
 import Anywhere from "@/components/site/landing/Anywhere";
 import HowItWorks from "@/components/site/landing/HowItWorks";
 import Control from "@/components/site/landing/Control";
-import Pricing from "@/components/site/landing/Pricing";
 import Faq from "@/components/site/landing/Faq";
 import Cta from "@/components/site/landing/Cta";
 
@@ -24,7 +23,6 @@ export default function LandingPage() {
       <Anywhere />
       <HowItWorks />
       <Control />
-      <Pricing />
       <Faq />
       <Cta />
       <SiteFooter />
