@@ -1,7 +1,7 @@
 """Product page v6: no app screenshots. Drawn illustrations instead, in a different visual language from the landing page.
 
 - Hero: big statement and a row of capability chips that jump to each chapter
-- One call, start to finish: a pinned line diagram; a dot travels along seven steps of a call and lights each one
+- Every call: six simple cards for what happens on each call (they fade up in a wave; nothing is pinned)
 - Chapters with a sticky index; each has its own drawn illustration that builds as it scrolls into view
 - How it compares: voicemail, a phone menu, a simple chatbot and Vegham
 - Closing banner
@@ -202,6 +202,33 @@ L.RESPONSIVE += """
 """
 
 
+
+# ---------------------------------------------------------------- EVERY CALL: six simple cards (no pinning)
+STEPS6 = [
+    (L.I_PHONE, 'Picks up', 'In under a second, in a natural voice, day or night.', '“Hi, thanks for calling Nila &amp; Co.”'),
+    (L.I_USER, 'Knows who it is', 'Recognises the number and recalls the person.', 'Rohan Mehta · last called 6 months ago'),
+    (L.I_BOOK, 'Answers', 'From your prices, hours and notes. Nothing made up.', '“Saturday 10 AM is free. Shall I hold it?”'),
+    (L.I_HAND, 'Hands over if needed', 'Brings you in when a person should decide.', 'Not needed this time'),
+    (L.I_CHAT, 'Writes a summary', 'What was asked, said and agreed, ready for you.', 'Booked Sat 10 AM for 5'),
+    (L.I_CLOCK, 'Plans the follow-up', 'Anything it promised goes on your list.', 'Reminder on Friday evening'),
+]
+
+
+def every_call():
+    cards = ''.join(('<div class="vg-lift vg-rv" style="display: flex; flex-direction: column; gap: 14px; padding: 26px; border-radius: 24px; background: #FFFFFF; border: 1px solid #ECECEF; animation-range: entry %d%% cover %d%%">'
+                     '<span style="display: flex; align-items: center; justify-content: space-between"><span style="width: 42px; height: 42px; border-radius: 13px; background: #F5F5F7; color: %s; display: inline-flex; align-items: center; justify-content: center">%s</span>'
+                     '<span style="font-size: 13px; color: #A3A3A3; font-variant-numeric: tabular-nums">%02d</span></span>'
+                     '<span><b style="display: block; %s; font-weight: 500; font-size: 21px; letter-spacing: -0.02em">%s</b><span style="display: block; margin-top: 6px; font-size: 15px; color: #5C5C5C">%s</span></span>'
+                     '<span style="margin-top: auto; display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; padding: 8px 12px; border-radius: 12px; background: #F7F7F8; font-size: 13px; color: %s">%s</span></div>')
+                    % (4 + (i % 3) * 5 + (i // 3) * 7, 30 + (i % 3) * 5 + (i // 3) * 7, INK, ic(icon, 19), i + 1, TIGHT, t, d, GT, ex) for i, (icon, t, d, ex) in enumerate(STEPS6))
+    return ('<section id="one-call" style="background: #F7F7F8"><div class="vg-pad" style="max-width: 1200px; margin: 0 auto; padding: 104px 32px">'
+            '<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 24px"><div>%s%s</div>%s</div>'
+            '<div class="vg-g3" style="margin-top: 48px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">%s</div>'
+            '<div style="margin-top: 14px; text-align: right">%s</div></div></section>') % (
+        eyebrow('Every call'), h2('Six things happen', 'every time your phone rings.', size=48),
+        lead('Whether it is a new customer or someone you have known for years.', mw=380), cards, L.sample())
+
+
 def hero():
     chips = ''.join('<a href="#%s" class="vg-hero" style="animation-delay: %.2fs; display: inline-flex; align-items: center; height: 38px; padding: 0 16px; border-radius: 999px; background: #FFFFFF; border: 1px solid #E6E6EA; color: #141414; text-decoration: none; font-size: 14.5px">%s</a>'
                     % (a, .45 + i * .04, label) for i, (a, label, *_r) in enumerate(CHAPTERS))
@@ -256,7 +283,7 @@ L.RESPONSIVE += """
 
 
 def product():
-    return (hero() + flow() + chapters() + compare() + P5.closing())
+    return (hero() + every_call() + chapters() + compare() + P5.closing())
 
 
 if __name__ == '__main__':
