@@ -353,7 +353,7 @@ def port_shell(keys):
         cls = n['attrs'].get('class') or ''
         if n['tag'] == 'main':
             parts.append('<x-slot></x-slot>')
-        elif 'ov-pal' in cls or n['tag'] == 'style':
+        elif n['tag'] == 'style':
             continue
         elif n['tag'] == 'input' and re.match(r'(bz|st)-', n['attrs'].get('id', '')):
             continue

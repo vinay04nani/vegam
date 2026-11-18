@@ -31,6 +31,20 @@ export default function AppShell({ children }: { children: ReactNode }) {
               </span>
             </label>
           </div>
+          <label htmlFor="ov-pal" className="nv hide-col" style={{ border: "1px solid var(--line)", background: "var(--bg)", height: "38px", margin: "2px 0 2px", cursor: "pointer" }}>
+            <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="7">
+              </circle>
+              <path d="m20 20-3.5-3.5">
+              </path>
+            </svg>
+            <span className="lbl">
+              {"Search"}
+            </span>
+            <span className="lbl" style={{ marginLeft: "auto", fontSize: "11.5px", color: "var(--mut2)", border: "1px solid var(--line)", borderRadius: "6px", padding: "0 6px", lineHeight: "18px" }}>
+              {"⌘K"}
+            </span>
+          </label>
           <button type="button" className="nv hide-col" style={{ border: "1px solid var(--line)", background: "var(--bg)", height: "44px", marginBottom: "4px", width: "100%", textAlign: "left", cursor: "pointer" }}>
             <span style={{ width: "24px", height: "24px", borderRadius: "7px", background: "var(--ink)", color: "var(--inkfg)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "12px", fontWeight: "600", flex: "none" }}>
               {"N"}
@@ -886,6 +900,158 @@ export default function AppShell({ children }: { children: ReactNode }) {
                   </span>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+        <div className="ov ov-pal" style={{ position: "absolute", inset: "0", zIndex: "40", justifyContent: "center", alignItems: "flex-start", paddingTop: "110px" }}>
+          <label htmlFor="ov-none" aria-label="Close search" style={{ position: "absolute", inset: "0", background: "var(--scrim)" }}>
+          </label>
+          <div className="popin" role="dialog" aria-label="Search" style={{ position: "relative", width: "640px", borderRadius: "18px", background: "var(--pop)", boxShadow: "var(--shadow)", overflow: "hidden" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", padding: "16px 18px", borderBottom: "1px solid var(--line)" }}>
+              <span style={{ color: "var(--mut)", display: "inline-flex" }}>
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="7">
+                  </circle>
+                  <path d="m20 20-3.5-3.5">
+                  </path>
+                </svg>
+              </span>
+              <span style={{ flex: "1", fontSize: "16px" }}>
+                {"rohan"}
+                <span style={{ display: "inline-block", width: "1.5px", height: "18px", background: "var(--text)", verticalAlign: "middle", marginLeft: "1px" }}>
+                </span>
+              </span>
+              <label htmlFor="ov-none" className="kb" style={{ padding: "2px 8px", border: "1px solid var(--line)", borderRadius: "6px", fontSize: "12px", color: "var(--mut)", cursor: "pointer" }}>
+                {"esc"}
+              </label>
+            </div>
+            <div style={{ padding: "6px 8px 10px" }}>
+              <span style={{ display: "block", padding: "10px 12px 4px", fontSize: "11.5px", color: "var(--mut2)" }}>
+                {"Ask Vegham"}
+              </span>
+              <div className="mi" style={{ height: "40px", background: "var(--soft2)" }} data-s="s2">
+                <span style={{ color: "var(--mut)", display: "inline-flex" }}>
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
+                    </path>
+                  </svg>
+                </span>
+                {"When did Rohan last call, and what did he want?"}
+                <span className="kb" style={{ marginLeft: "auto", fontSize: "11.5px", color: "var(--mut2)" }}>
+                  {"↵"}
+                </span>
+              </div>
+              <span style={{ display: "block", padding: "10px 12px 4px", fontSize: "11.5px", color: "var(--mut2)" }}>
+                {"People"}
+              </span>
+              <Link href="/app/people/rohan-mehra/" className="mi" style={{ height: "40px" }} data-s="s2">
+                <span style={{ color: "var(--mut)", display: "inline-flex" }}>
+                  <span style={{ width: "22px", height: "22px", borderRadius: "50%", background: "var(--soft)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: "600", color: "var(--text)" }}>
+                    {"R"}
+                  </span>
+                </span>
+                {"Rohan Mehta "}
+                <span style={{ color: "var(--mut)", fontSize: "12.5px" }}>
+                  {"· +91 98•• ••21 · 4 conversations"}
+                </span>
+                <span className="kb" style={{ marginLeft: "auto", fontSize: "11.5px", color: "var(--mut2)" }}>
+                </span>
+              </Link>
+              <Link href="/app/people/" className="mi" style={{ height: "40px" }} data-s="s2">
+                <span style={{ color: "var(--mut)", display: "inline-flex" }}>
+                  <span style={{ width: "22px", height: "22px", borderRadius: "50%", background: "var(--soft)", display: "inline-flex", alignItems: "center", justifyContent: "center", fontSize: "11px", fontWeight: "600", color: "var(--text)" }}>
+                    {"R"}
+                  </span>
+                </span>
+                {"Rohan Iyer "}
+                <span style={{ color: "var(--mut)", fontSize: "12.5px" }}>
+                  {"· Instagram · new this week"}
+                </span>
+                <span className="kb" style={{ marginLeft: "auto", fontSize: "11.5px", color: "var(--mut2)" }}>
+                </span>
+              </Link>
+              <span style={{ display: "block", padding: "10px 12px 4px", fontSize: "11.5px", color: "var(--mut2)" }}>
+                {"Conversations"}
+              </span>
+              <Link href="/app/conversations/" className="mi" style={{ height: "40px" }} data-s="s2">
+                <span style={{ color: "var(--mut)", display: "inline-flex" }}>
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z">
+                    </path>
+                  </svg>
+                </span>
+                {"Rohan Mehta · call, today 6:12 PM "}
+                <span style={{ color: "var(--mut)", fontSize: "12.5px" }}>
+                  {"· booked Saturday 10 AM for 5"}
+                </span>
+                <span className="kb" style={{ marginLeft: "auto", fontSize: "11.5px", color: "var(--mut2)" }}>
+                </span>
+              </Link>
+              <span style={{ display: "block", padding: "10px 12px 4px", fontSize: "11.5px", color: "var(--mut2)" }}>
+                {"Go to"}
+              </span>
+              <Link href="/app/follow-ups/" className="mi" style={{ height: "40px" }} data-s="s2">
+                <span style={{ color: "var(--mut)", display: "inline-flex" }}>
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M8 2v4">
+                    </path>
+                    <path d="M16 2v4">
+                    </path>
+                    <rect x="3" y="4" width="18" height="18" rx="2">
+                    </rect>
+                    <path d="M3 10h18">
+                    </path>
+                    <path d="m9 16 2 2 4-4">
+                    </path>
+                  </svg>
+                </span>
+                {"Follow-ups"}
+                <span className="kb" style={{ marginLeft: "auto", fontSize: "11.5px", color: "var(--mut2)" }}>
+                </span>
+              </Link>
+              <Link href="/app/agent/memory/" className="mi" style={{ height: "40px" }} data-s="s2">
+                <span style={{ color: "var(--mut)", display: "inline-flex" }}>
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8">
+                    </path>
+                    <path d="M3 3v5h5">
+                    </path>
+                    <path d="M12 7v5l4 2">
+                    </path>
+                  </svg>
+                </span>
+                {"Memory"}
+                <span className="kb" style={{ marginLeft: "auto", fontSize: "11.5px", color: "var(--mut2)" }}>
+                </span>
+              </Link>
+              <Link href="/app/insights/" className="mi" style={{ height: "40px" }} data-s="s2">
+                <span style={{ color: "var(--mut)", display: "inline-flex" }}>
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 3v16a2 2 0 0 0 2 2h16">
+                    </path>
+                    <path d="M18 17V9">
+                    </path>
+                    <path d="M13 17V5">
+                    </path>
+                    <path d="M8 17v-3">
+                    </path>
+                  </svg>
+                </span>
+                {"Insights"}
+                <span className="kb" style={{ marginLeft: "auto", fontSize: "11.5px", color: "var(--mut2)" }}>
+                </span>
+              </Link>
+            </div>
+            <div style={{ display: "flex", gap: "16px", padding: "10px 18px", borderTop: "1px solid var(--line)", fontSize: "12px", color: "var(--mut2)" }}>
+              <span>
+                {"↑↓ to move"}
+              </span>
+              <span>
+                {"↵ to open"}
+              </span>
+              <span>
+                {"Tab to ask Vegham"}
+              </span>
             </div>
           </div>
         </div>

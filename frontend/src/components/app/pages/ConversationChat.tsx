@@ -7,22 +7,18 @@ export default function ConversationChat() {
         <div style={{ flex: "1", minHeight: "0", overflow: "hidden", position: "relative" }} data-s="scroll">
           <div style={{ display: "flex", height: "100%", position: "relative" }}>
             <div style={{ width: "296px", flex: "none", borderRight: "1px solid var(--line)", display: "flex", flexDirection: "column" }}>
-              <div className="hd" style={{ padding: "0 12px 0 20px" }}>
-                <h1>
-                  {"Conversations"}
-                </h1>
-                <span style={{ flex: "1" }}>
-                </span>
-                <label htmlFor="ov-pal" className="ibtn">
-                  <svg aria-hidden="true" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+              <div style={{ padding: "14px 16px 0" }}>
+                <label htmlFor="ov-pal" className="fld" style={{ height: "36px", gap: "8px", color: "var(--mut2)", cursor: "pointer" }}>
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
                     <circle cx="11" cy="11" r="7">
                     </circle>
-                    <path d="M20 20l-3.5-3.5">
+                    <path d="m20 20-3.5-3.5">
                     </path>
                   </svg>
+                  {"Search conversations"}
                 </label>
               </div>
-              <div style={{ display: "flex", gap: "6px", padding: "12px 16px 6px" }}>
+              <div style={{ display: "flex", gap: "6px", padding: "10px 16px 6px" }}>
                 <span className="chip2 on">
                   {"All"}
                 </span>
