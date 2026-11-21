@@ -21,7 +21,7 @@ B. The Assignor wishes to assign the Vegam IP to the Company, and the Company wi
 - all copyright in the software, documentation and other works, for the full term of copyright, for all media and modes of exploitation;
 - all rights in the "Vegam" name, logo and other trademarks, with the goodwill attached to them, and any applications to register them;
 - all rights in confidential information, know-how and trade secrets relating to Vegam;
-- the GitHub repository `vinay04nani/vegam` [and any domains, social media accounts and third-party accounts listed in the Schedule]; and
+- the GitHub repository `vinaytenneti/vegam` [and any domains, social media accounts and third-party accounts listed in the Schedule]; and
 - the right to sue for past, present and future infringement.
 
 1.2 This assignment is not subject to the default limits in section 19 of the Copyright Act, 1957: it is worldwide, for the full term of copyright, and does not lapse if the rights are not exercised within one year.
@@ -49,7 +49,7 @@ This Deed is governed by the laws of India. The courts at Visakhapatnam, Andhra 
 
 | Asset | Details |
 |---|---|
-| Source code repository | github.com/vinay04nani/vegam |
+| Source code repository | github.com/vinaytenneti/vegam |
 | Domains | [list] |
 | Trademark applications | [application numbers] |
 | Copyright registrations | [registration numbers] |
